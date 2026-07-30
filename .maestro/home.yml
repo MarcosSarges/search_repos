@@ -1,0 +1,5 @@
+appId: host.exp.Exponent
+---
+# 10.0.2.2 = host visto de dentro do emulador Android (Metro na porta 8081)
+- openLink: exp://10.0.2.2:8081
+- assertVisible: 'Welcome!'
