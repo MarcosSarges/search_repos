@@ -1,50 +1,235 @@
-# Welcome to your Expo app 👋
+# SearchRepos
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+App React Native (Expo + TypeScript) para buscar repositórios em **GitHub** e **GitLab**, com troca de fonte em tempo de execução, Design System tipado, cache e Clean Architecture.
 
-## Get started
+> Teste técnico — Desenvolvedor React Native.
 
-1. Install dependencies
+## Stack
 
-   ```bash
-   npm install
-   ```
+- Expo SDK 54 · TypeScript (strict) — alias `@/*` → `src/*`
+- React Navigation (Stack + Tabs) — ponto de entrada em `App.tsx`
+- styled-components (ThemeProvider do Design System)
+- [Storybook](https://storybookjs.github.io/react-native/) (Design System no dispositivo)
+- Jest + React Native Testing Library (unitário / componente / integração)
+- [Maestro](https://docs.maestro.dev/) (testes ponta a ponta via Expo Go)
+- ESLint + Prettier (+ Husky no pre-commit)
 
-2. Start the app
+## Instalação e execução
 
-   ```bash
-   npx expo start
-   ```
+### Pré-requisitos
 
-In the output, you'll find options to open the app in a
+- Node.js 20+
+- [pnpm](https://pnpm.io/)
+- Expo Go (dispositivo) ou emulador iOS/Android
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+### Setup
 
 ```bash
-npm run reset-project
+pnpm install
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### Variáveis de ambiente (opcional)
 
-## Learn more
+Crie um arquivo `.env` na raiz (não commitar tokens):
 
-To learn more about developing your project with Expo, look at the following resources:
+```bash
+GITHUB_TOKEN=ghp_xxx   # opcional — aumenta o limite de requisições da API do GitHub
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Sem token, as APIs públicas funcionam com limites mais baixos (trate o código HTTP 429 na interface).
 
-## Join the community
+### Scripts
 
-Join our community of developers creating universal apps.
+```bash
+pnpm start              # servidor de desenvolvimento Expo (app)
+pnpm storybook          # Storybook no dispositivo (Design System)
+pnpm storybook:android  # Storybook no Android
+pnpm storybook:ios      # Storybook no iOS
+pnpm android            # Android
+pnpm ios                # iOS
+pnpm web                # Web
+pnpm lint               # ESLint
+pnpm test               # Jest (unitário / componente / integração)
+# ponta a ponta: ver “Como rodar os testes”
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+### Storybook (Design System)
+
+Desenvolvimento isolado dos componentes do Design System com [Storybook for React Native](https://storybookjs.github.io/react-native/) (troca do ponto de entrada via `STORYBOOK_ENABLED`):
+
+```bash
+pnpm storybook
+# depois abra no Expo Go / emulador
+```
+
+Stories do Design System em `src/components/ds/**/*.stories.tsx`. Exemplos do template ficam em `.rnstorybook/stories/`.
+
+## Funcionalidades
+
+- Seletor de fonte de dados (GitHub / GitLab) em tempo de execução
+- Busca de repositórios com paginação / rolagem infinita e pull-to-refresh
+- Detalhes do repositório
+- Lista de issues paginada
+- Design System tipado + tela Showcase (claro/escuro)
+- Cache via biblioteca de data fetching (TanStack Query)
+- Estados de carregamento, vazio e erro (limite de taxa, sem conexão)
+
+## Decisões
+
+Seção dedicada às escolhas técnicas do projeto — o *porquê*, não só o *o quê*.
+
+### Arquitetura (Clean Architecture)
+
+Optei por Clean Architecture porque o requisito central é **desacoplamento** e **troca de fonte em tempo de execução**:
+
+1. O **domínio** define contratos (`Repository`, entidades `Repo` / `Issue`) sem depender de React Native, HTTP ou bibliotecas de cache.
+2. Os **casos de uso** orquestram a regra de negócio sem saber se a fonte é GitHub ou GitLab.
+3. A **infraestrutura** traduz cada API (formatos e paginação diferentes) para o mesmo contrato.
+4. A **apresentação** consome hooks e casos de uso — nunca Axios ou fetch direto.
+
+Assim, a interface permanece idêntica ao trocar a fonte: mesma lista, mesmos estados, mesma paginação.
+
+#### Camadas
+
+| Camada | Responsabilidade |
+| --- | --- |
+| `domain/` | Entidades e interfaces de repositório — zero dependência externa |
+| `application/` | Casos de uso (busca, detalhes, issues) |
+| `infrastructure/` | Implementações GitHub/GitLab, HTTP, mappers, injeção de dependências, tema |
+| `presentation/` | Telas, hooks de interface, Design System |
+
+A estrutura de pastas pode evoluir; o que importa é a inversão de dependências: alto nível não importa baixo nível concreto.
+
+### Navegação — por que sair do Expo Router
+
+O projeto usa **React Navigation** (Stack + Tabs) a partir do `App.tsx`, sem roteamento baseado em arquivos. Motivos:
+
+1. **Familiaridade** — o fluxo de navegadores tipados (`createNativeStackNavigator`, `createBottomTabNavigator`, listas de parâmetros) é o que já domino no dia a dia; menos atrito para montar fluxos (busca → detalhes → issues, modal, abas) sem renegociar convenções de rotas por arquivo.
+2. **Acoplamento** — o Expo Router amarra o ponto de entrada, a estrutura de pastas (`app/`), deep linking e layouts ao sistema de arquivos. Com React Navigation a navegação fica isolada em `src/navigation/`, as telas em `src/screens/`, e o ponto de entrada (`App.tsx`) só compõe provedores e o navegador — alinhado à ideia de apresentação desacoplada da infraestrutura de roteamento do Expo.
+3. **Gestão de telas e controle** — com nomes repetidos (por exemplo, várias stacks com “Details” / “Issues”) e fluxos aninhados, listas de parâmetros explícitas e `navigate` / `goBack` tipados dão mais controle do que rotas implícitas por caminho. Evita ambiguidade de `href` iguais em grupos diferentes e deixa claro *qual* navegador recebe a ação.
+
+Compromisso consciente: perdemos o roteamento baseado em arquivos e as rotas tipadas “de graça” do Expo Router; ganhamos previsibilidade e um grafo de navegação explícito, fácil de ler e de testar.
+
+### Troca de fonte (GitHub / GitLab) sem impactar a interface
+
+1. **Contrato único** no domínio (ex.: `RepoRepository` com `search`, `getById`, `listIssues`).
+2. **Duas implementações** na infraestrutura (`GitHubRepositoryImpl`, `GitLabRepositoryImpl`), cada uma com HTTP e mappers próprios.
+3. **Uma decisão em um único lugar** (fábrica / store / injeção de dependências) escolhe a implementação ativa.
+4. Telas e hooks dependem do **contrato**, não de `if (provider === 'github')` espalhados.
+
+Resultado: trocar GitHub ↔ GitLab não exige reiniciar o aplicativo nem alterar a interface; a fonte ativa fica visível (rótulo ou indicador no cabeçalho) e pode ser alterada a qualquer momento.
+
+### Design System
+
+- Tokens tipados em `src/components/ds/tokens/`: `spacing`, `sizes`, `colors` (claro/escuro), `radius`
+- **styled-components** + `AppThemeProvider` / `useTheme` / `useAppTheme` (alternância claro/escuro)
+- Componentes base com props controladas (`variant`, `size`, `tone`): Text/Heading, Button, Input, Card, Badge, Avatar
+- Desenvolvimento no **Storybook** no dispositivo (`pnpm storybook`) — stories ao lado dos componentes
+- Tela Showcase no aplicativo com variações e chave claro/escuro
+- Telas evitam `style` solto; preferem props do Design System
+
+Não reaproveitei o tema do template Expo (`ThemedText` com override de cor por instância) como Design System final — não atende tokens / `variant` / `size` do enunciado.
+
+Storybook via troca do ponto de entrada (`STORYBOOK_ENABLED=true`): o Metro troca o entry do aplicativo pelo Storybook, sem embutir a interface do Storybook no pacote de produção.
+
+### Cache
+
+TanStack Query para:
+
+- exibir dados desatualizados enquanto revalida
+- carregamento discreto em nova busca
+- invalidação coerente ao trocar a fonte de dados
+
+A biblioteca fica fora do domínio: casos de uso puros; cache e orquestração de fetch na borda presentation / infrastructure.
+
+### Testes
+
+| Camada | Ferramenta | Motivo |
+| --- | --- | --- |
+| Unitário / componente | Jest + React Native Testing Library | Casos de uso em Node puro; componentes do Design System |
+| Ponta a ponta | [Maestro](https://docs.maestro.dev/) | Fluxos em YAML; no Expo Go usa `openLink` + `appId: host.exp.Exponent` (indicado no ecossistema Expo) |
+
+Prioridade unitária: casos de uso de domínio / application. Escopo ponta a ponta previsto: troca de fonte, busca → detalhes → issues, vazio / erro quando reproduzível.
+
+### Compromissos (trade-offs)
+
+| Escolher | Prós | Contras |
+| --- | --- | --- |
+| Clean Architecture | Testável, troca de provedor isolada, interface estável | Mais arquivos e boilerplate no início |
+| React Navigation (sem Expo Router) | Familiaridade, menos acoplamento ao sistema de arquivos, controle tipado de stacks | Sem roteamento por arquivo / rotas tipadas do Expo Router |
+| Interfaces no domínio + implementações na infraestrutura | Diferenças de API encapsuladas em mappers | Precisa de injeção de dependências / fábrica cuidadosa |
+| TanStack Query em presentation / infrastructure | Cache e experiência de uso boas | Não “vaza” para o domínio — consultas fora dos casos de uso puros |
+| Design System próprio + Storybook | Tipagem, consistência e catálogo no dispositivo | Custo de manter tokens e stories |
+| Maestro para ponta a ponta | Fluxos YAML simples, alinhado ao Expo | Precisa de emulador ou dispositivo; configuração separada do Jest |
+
+## Como rodar os testes
+
+### Unitário / componente (Jest)
+
+```bash
+pnpm test
+```
+
+### Ponta a ponta (Maestro)
+
+Fluxos em `.maestro/` no **Expo Go**, no padrão da [documentação do Maestro](https://docs.maestro.dev/get-started/supported-platform/react-native#expo-go-vs.-standalone-builds): use `openLink` (não `launchApp` com o pacote do projeto).
+
+1. Expo Go instalado no **emulador Android**
+2. Metro no ar: `pnpm start`
+3. Rode (o script força o dispositivo Android — sem isso o Maestro pode cair no iOS e falhar com *Package host.exp.Exponent is not installed*):
+
+```bash
+pnpm test:e2e
+# maestro --device emulator-5554 test .maestro/
+```
+
+O fluxo usa `openLink: exp://10.0.2.2:8081` (host do Mac visto do emulador Android). Em dispositivo físico, troque pelo endereço IP do Metro (ex.: `exp://192.168.x.x:8081`).
+
+Smoke: `.maestro/home.yml` — abre o projeto e verifica que `Welcome!` está visível.
+
+Integração contínua / insights: [testes ponta a ponta no EAS](https://docs.expo.dev/eas/workflows/examples/e2e-tests/) · [Maestro insights](https://docs.expo.dev/eas-insights/maestro/).
+
+## Declaração de uso de IA
+
+Uso de **Cursor** (assistente de código) durante o desenvolvimento, de forma assistida — não como geração “caixa-preta” sem revisão.
+
+### O que foi gerado / fortemente assistido
+
+- Scaffold inicial do projeto Expo e ajustes de tooling (ESLint, Prettier, Jest, Husky)
+- Setup do Storybook (React Native) e estrutura inicial do Design System
+- Estrutura e redação deste README alinhada aos requisitos do teste
+- Planejamento da arquitetura e do Design System a partir do enunciado
+
+### O que foi adaptado / revisado
+
+- Decisões de camadas (domínio isolado, mappers por API, injeção de dependências em um ponto só)
+- Escopo do Design System (tokens e props controladas conforme a seção 6 do teste)
+- Escolha do Maestro como executor dos testes ponta a ponta
+- Scripts e pacotes alinhados ao Expo SDK 54 e ao uso de pnpm
+
+### O que foi rejeitado / evitado
+
+- Aceitar o tema e componentes do template Expo como Design System final
+- Espalhar `if (github|gitlab)` na interface
+- Commitar tokens de API ou `.env` com credenciais
+- Entregar código gerado sem entendimento das decisões (inversão de dependência, contratos, cache)
+
+Instruções típicas: análise do enunciado, plano de passos (Design System → arquitetura → múltiplos provedores), e redação do README com as seções obrigatórias do teste.
+
+## O que eu faria diferente com mais tempo
+
+- Persistência da fonte ativa e do tema (AsyncStorage)
+- Autenticação opcional GitLab via `.env` com a mesma experiência de desenvolvimento do GitHub
+- Cobertura de testes mais ampla (mappers, hooks de interface, fluxos de erro)
+- Suite Maestro mais completa (smoke + regressão crítica) e integração contínua com Maestro Cloud / GitHub Actions
+- Acessibilidade (rótulos, contraste, tamanhos de toque)
+- Offline-first mais agressivo e tratamento fino de limite de taxa por provedor
+- Integração contínua (lint + Jest + ponta a ponta) no GitHub Actions
+
+## Status
+
+Projeto em evolução a partir do template Expo. A seção **Decisões** descreve as escolhas-alvo do teste; funcionalidades e pastas serão preenchidas conforme a implementação (começando pelo Design System).
+
+## Licença
+
+Uso privado / avaliação técnica.
