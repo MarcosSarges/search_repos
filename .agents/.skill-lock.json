@@ -7,11 +7,7 @@
       "contentHash": "e3d5c4dec38bff044207b31229fb28114d5fdb79f2c7200f3ec49a13a70024e1",
       "installedAt": "2026-07-30T20:19:38.791Z",
       "updatedAt": "2026-07-30T20:19:38.822Z",
-      "agents": [
-        "cursor",
-        "claude-code",
-        "windsurf"
-      ],
+      "agents": ["cursor", "claude-code", "windsurf"],
       "method": "copy",
       "global": false
     }
