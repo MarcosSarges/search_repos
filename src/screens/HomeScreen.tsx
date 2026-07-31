@@ -1,84 +1,44 @@
-import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
-import type { CompositeScreenProps } from '@react-navigation/native';
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Image } from 'expo-image';
-import { Platform, Pressable, StyleSheet } from 'react-native';
+import { Pressable } from 'react-native';
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import type { RootStackParamList, TabsParamList } from '@/navigation/types';
+import { Icon, Typography } from '@/components/ds/atoms';
+import { Container, Header } from '@/components/ds/molecules';
+import { DataSourceLogo } from '@/components/ds/organisms';
+import { useAppTheme } from '@/components/ds/theme';
+import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
 
-type Props = CompositeScreenProps<
-  BottomTabScreenProps<TabsParamList, 'Home'>,
-  NativeStackScreenProps<RootStackParamList>
->;
+export function HomeScreen() {
+  const { mode } = useAppTheme();
+  const toggleMode = useSessionPreferencesStore((state) => state.toggleMode);
+  const toggleDataSource = useSessionPreferencesStore((state) => state.toggleDataSource);
+  const themeIconName = mode === 'light' ? 'moon-outline' : 'sunny-outline';
+  const themeA11yLabel = mode === 'light' ? 'Switch to dark mode' : 'Switch to light mode';
 
-export function HomeScreen({ navigation }: Props) {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">src/screens/HomeScreen.tsx</ThemedText> to see
-          changes. Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Pressable onPress={() => navigation.navigate('Modal')}>
-          <ThemedText type="subtitle">Step 2: Open modal</ThemedText>
-        </Pressable>
-        <ThemedText>
-          Tap the Explore tab to learn more about what&apos;s included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Design System</ThemedText>
-        <ThemedText>
-          Componentes tipados em <ThemedText type="defaultSemiBold">src/components/ds</ThemedText> —
-          rode <ThemedText type="defaultSemiBold">pnpm storybook</ThemedText> para desenvolver no
-          Storybook.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <Container tone="background" flex padding="md">
+      <Header
+        title="Search Repos"
+        leading={
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="Switch data source"
+            onPress={() => toggleDataSource()}
+            testID="home-data-source-toggle">
+            <DataSourceLogo size="lg" />
+          </Pressable>
+        }
+        trailing={
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel={themeA11yLabel}
+            onPress={() => toggleMode()}
+            testID="home-theme-toggle">
+            <Icon name={themeIconName} variant="lg" />
+          </Pressable>
+        }
+      />
+      <Typography variant="body" tone="muted">
+        Choose GitHub or GitLab from the header, then search repositories.
+      </Typography>
+    </Container>
   );
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
