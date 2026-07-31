@@ -1,6 +1,7 @@
-import { render, screen } from '@/test';
-import { getTheme } from '@/components/ds/theme';
+import { getTheme, useAppTheme } from '@/components/ds/theme';
 import { sizes } from '@/components/ds/tokens';
+import { act, fireEvent, render, screen } from '@/test';
+import { Pressable } from 'react-native';
 
 import { Typography, type TypographyProps } from '../Typography';
 
@@ -48,6 +49,43 @@ describe('Typography atom (DS-03, DS-09)', () => {
     expect(screen.getByTestId('typo').props.style).toEqual(
       expect.objectContaining({
         color: '#0FBF3E',
+      }),
+    );
+  });
+
+  it('WHEN tone is primary and dataSource flips THEN text color updates to the new primary', async () => {
+    function Harness() {
+      const { setDataSource } = useAppTheme();
+      return (
+        <>
+          <Typography tone="primary" testID="typo">
+            Primary
+          </Typography>
+          <Pressable
+            testID="flip-datasource"
+            onPress={() => {
+              setDataSource('gitlab');
+            }}
+          />
+        </>
+      );
+    }
+
+    await render(<Harness />, { themeMode: 'light' });
+
+    expect(screen.getByTestId('typo').props.style).toEqual(
+      expect.objectContaining({
+        color: '#0FBF3E',
+      }),
+    );
+
+    await act(async () => {
+      fireEvent.press(screen.getByTestId('flip-datasource'));
+    });
+
+    expect(screen.getByTestId('typo').props.style).toEqual(
+      expect.objectContaining({
+        color: '#FC6D26',
       }),
     );
   });
