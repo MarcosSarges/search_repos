@@ -1,20 +1,11 @@
-export type AppErrorCode =
-  | 'rate_limit'
-  | 'network'
-  | 'not_found'
-  | 'empty_query'
-  | 'unknown';
+export type AppErrorCode = 'rate_limit' | 'network' | 'not_found' | 'empty_query' | 'unknown';
 
 export type AppError = Error & {
   code: AppErrorCode;
   cause?: unknown;
 };
 
-export function createAppError(
-  code: AppErrorCode,
-  message: string,
-  cause?: unknown,
-): AppError {
+export function createAppError(code: AppErrorCode, message: string, cause?: unknown): AppError {
   const error = new Error(message) as AppError;
   error.name = 'AppError';
   error.code = code;
