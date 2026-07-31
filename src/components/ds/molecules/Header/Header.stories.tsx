@@ -25,7 +25,7 @@ export const WithTrailing: Story = {
     title: 'Search Repos',
     trailing: (
       <Pressable accessibilityRole="button" accessibilityLabel="Settings">
-        <Icon name="settings-outline" size="lg" />
+        <Icon name="settings-outline" variant="lg" />
       </Pressable>
     ),
   },

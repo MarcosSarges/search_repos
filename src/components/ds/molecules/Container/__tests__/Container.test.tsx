@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 
 import { render, screen } from '@/test';
 import { getTheme } from '@/components/ds/theme';
@@ -15,14 +15,10 @@ describe('Container molecule (DS-07, DS-09)', () => {
     );
 
     const node = screen.getByTestId('ds-container');
-    expect(StyleSheet.flatten(node.props.style)).toEqual(
-      expect.objectContaining({
-        paddingTop: spacing.md,
-        paddingBottom: spacing.md,
-        paddingLeft: spacing.md,
-        paddingRight: spacing.md,
-      }),
-    );
+    expect(node).toHaveStyleRule('padding-top', spacing.md);
+    expect(node).toHaveStyleRule('padding-bottom', spacing.md);
+    expect(node).toHaveStyleRule('padding-left', spacing.md);
+    expect(node).toHaveStyleRule('padding-right', spacing.md);
   });
 
   it('WHEN padding is xl THEN it applies theme.spacing.xl as padding', async () => {
@@ -33,14 +29,10 @@ describe('Container molecule (DS-07, DS-09)', () => {
     );
 
     const node = screen.getByTestId('ds-container');
-    expect(StyleSheet.flatten(node.props.style)).toEqual(
-      expect.objectContaining({
-        paddingTop: spacing.xl,
-        paddingBottom: spacing.xl,
-        paddingLeft: spacing.xl,
-        paddingRight: spacing.xl,
-      }),
-    );
+    expect(node).toHaveStyleRule('padding-top', spacing.xl);
+    expect(node).toHaveStyleRule('padding-bottom', spacing.xl);
+    expect(node).toHaveStyleRule('padding-left', spacing.xl);
+    expect(node).toHaveStyleRule('padding-right', spacing.xl);
   });
 
   it('WHEN padding is xs THEN it applies theme.spacing.xs as padding', async () => {
@@ -51,14 +43,10 @@ describe('Container molecule (DS-07, DS-09)', () => {
     );
 
     const node = screen.getByTestId('ds-container');
-    expect(StyleSheet.flatten(node.props.style)).toEqual(
-      expect.objectContaining({
-        paddingTop: spacing.xs,
-        paddingBottom: spacing.xs,
-        paddingLeft: spacing.xs,
-        paddingRight: spacing.xs,
-      }),
-    );
+    expect(node).toHaveStyleRule('padding-top', spacing.xs);
+    expect(node).toHaveStyleRule('padding-bottom', spacing.xs);
+    expect(node).toHaveStyleRule('padding-left', spacing.xs);
+    expect(node).toHaveStyleRule('padding-right', spacing.xs);
   });
 
   it('WHEN tone is surface THEN background uses theme.colors.surface', async () => {
@@ -70,11 +58,9 @@ describe('Container molecule (DS-07, DS-09)', () => {
     );
 
     const theme = getTheme('light');
-    const node = screen.getByTestId('ds-container');
-    expect(StyleSheet.flatten(node.props.style)).toEqual(
-      expect.objectContaining({
-        backgroundColor: theme.colors.surface,
-      }),
+    expect(screen.getByTestId('ds-container')).toHaveStyleRule(
+      'background-color',
+      theme.colors.surface,
     );
   });
 
@@ -87,11 +73,9 @@ describe('Container molecule (DS-07, DS-09)', () => {
     );
 
     const theme = getTheme('dark');
-    const node = screen.getByTestId('ds-container');
-    expect(StyleSheet.flatten(node.props.style)).toEqual(
-      expect.objectContaining({
-        backgroundColor: theme.colors.background,
-      }),
+    expect(screen.getByTestId('ds-container')).toHaveStyleRule(
+      'background-color',
+      theme.colors.background,
     );
   });
 

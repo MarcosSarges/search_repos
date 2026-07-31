@@ -15,9 +15,7 @@ export function Header({ title, trailing }: HeaderProps) {
     <StyledHeader testID="ds-header" accessibilityRole="header">
       <DataSourceLogo size="lg" />
       <HeaderTitleSlot>
-        <Typography variant="heading" size="lg">
-          {title}
-        </Typography>
+        <Typography variant="heading">{title}</Typography>
       </HeaderTitleSlot>
       {trailing}
     </StyledHeader>

@@ -24,7 +24,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     name: 'search',
-    size: 'md',
+    variant: 'md',
     tone: 'default',
   },
 };
@@ -32,7 +32,7 @@ export const Default: Story = {
 export const Primary: Story = {
   args: {
     name: 'star',
-    size: 'lg',
+    variant: 'lg',
     tone: 'primary',
   },
 };
@@ -40,7 +40,7 @@ export const Primary: Story = {
 export const Muted: Story = {
   args: {
     name: 'information-circle',
-    size: 'sm',
+    variant: 'sm',
     tone: 'muted',
   },
 };
@@ -48,7 +48,7 @@ export const Muted: Story = {
 export const Danger: Story = {
   args: {
     name: 'alert-circle',
-    size: 'md',
+    variant: 'md',
     tone: 'danger',
   },
 };

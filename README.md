@@ -125,8 +125,8 @@ O Design System em `src/components/ds/` segue **Atomic Design**:
 
 | Nível | Pasta | O que entra |
 | --- | --- | --- |
-| Tokens | `tokens/` | `spacing`, `sizes`, `colors` (claro/escuro), `radius`, tipografia (`fontFamily` / `fontWeight` / `lineHeight` por variant), mapa de `primary` por data-source |
-| Atoms | `atoms/` | Typography, Icon, Spacer, Loading — props controladas (`variant` / `size` / `tone` / edge); sem `style` público |
+| Tokens | `tokens/` | `spacing` (+ `SpacerEdge`), `sizes`, `colors`, `radius`, `tone` / `toneColorMap`, tipografia / icon / loading por **variant**, mapa de `primary` por data-source |
+| Atoms | `atoms/` | Typography, Icon, Spacer, Loading — selecionam `variant` / `tone` / edge dos tokens; sem `style` público; Icon/Loading sem `size` na API |
 | Molecules | `molecules/` | Container, Header — compostos de tokens/atoms (+ organism de logo no Header) |
 | Organisms | `organisms/` | `DataSourceLogo` nesta fatia; **telas de produto** (busca, detalhes, issues) serão organisms sob o DS nas features seguintes |
 
@@ -134,12 +134,12 @@ O Design System em `src/components/ds/` segue **Atomic Design**:
 
 | Arquivo | Papel |
 | --- | --- |
-| `index.ts` | export público |
-| `<Name>.tsx` | composição apenas |
+| `index.ts` | export público (`Name` + `NameProps`) |
+| `<Name>.tsx` | composição + defaults de a11y + `...rest` (exceto Spacer: props fechadas) |
 | `<Name>.stories.tsx` | Storybook |
-| `styles.tsx` | **único** lugar que instancia `styled(...)` |
+| `styles.tsx` | **único** lugar que instancia `styled(...)` — sem unions de domínio |
 
-Estilos do DS usam sempre `styled-components` (sem `StyleSheet` / `style` solto para chrome). Lookups de variant/tone/size/asset usam object maps, não `switch`.
+Estilos do DS usam sempre `styled-components` (template para CSS; `.attrs` só para props de host third-party como Ionicons/ActivityIndicator). Lookups via object maps nos tokens, não `switch`.
 
 **Por que logos de marca são organisms:** assets oficiais (GitHub Invertocat claro/escuro, GitLab SVG) e regras de marca não são ícones de UI genéricos. Imports de SVG de marca ficam **somente** em `DataSourceLogo` — molecules/telas consomem o organism, nunca o arquivo SVG direto.
 

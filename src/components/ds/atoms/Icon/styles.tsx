@@ -1,22 +1,13 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import styled from 'styled-components/native';
+import { styled } from 'styled-components/native';
 
-import type { Size } from '@/components/ds/tokens';
-
-export type IconTone = 'default' | 'muted' | 'primary' | 'danger';
-
-const toneColorMap = {
-  default: 'text',
-  muted: 'muted',
-  primary: 'primary',
-  danger: 'danger',
-} as const satisfies Record<IconTone, 'text' | 'muted' | 'primary' | 'danger'>;
+import type { IconVariant, Tone } from '@/components/ds/tokens';
+import { toneColorMap } from '@/components/ds/tokens';
 
 export const StyledIcon = styled(Ionicons).attrs<{
-  $size: Size;
-  $tone: IconTone;
-}>(({ theme, $size, $tone }) => ({
-  size: theme.sizes[$size],
+  $variant: IconVariant;
+  $tone: Tone;
+}>(({ theme, $variant, $tone }) => ({
+  size: theme.icon[$variant].size,
   color: theme.colors[toneColorMap[$tone]],
-  accessibilityRole: 'image' as const,
 }))``;

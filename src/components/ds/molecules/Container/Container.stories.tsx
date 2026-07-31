@@ -33,6 +33,6 @@ export const Compact: Story = {
   args: {
     padding: 'xs',
     tone: 'background',
-    children: <Typography size="sm">Compact padding</Typography>,
+    children: <Typography variant="caption">Compact padding</Typography>,
   },
 };

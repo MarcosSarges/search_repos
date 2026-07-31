@@ -1,16 +1,18 @@
-import { View } from 'react-native';
-import styled from 'styled-components/native';
+import { css, styled } from 'styled-components/native';
 
-import type { Spacing } from '@/components/ds/tokens';
+import type { Spacing, SurfaceTone } from '@/components/ds/tokens';
 
-export type ContainerTone = 'background' | 'surface';
-
-export const StyledContainer = styled(View)<{
+export const StyledContainer = styled.View<{
   $padding: Spacing;
-  $tone: ContainerTone;
+  $tone: SurfaceTone;
   $flex: boolean;
 }>`
   padding: ${({ theme, $padding }) => theme.spacing[$padding]}px;
   background-color: ${({ theme, $tone }) => theme.colors[$tone]};
-  ${({ $flex }) => ($flex ? 'flex: 1;' : '')}
+  ${({ $flex }) =>
+    $flex
+      ? css`
+          flex: 1;
+        `
+      : css``}
 `;

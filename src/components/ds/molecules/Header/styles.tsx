@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import styled from 'styled-components/native';
+import { styled } from 'styled-components/native';
 
 export const StyledHeader = styled(View)`
   flex-direction: row;

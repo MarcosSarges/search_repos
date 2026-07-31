@@ -2,6 +2,8 @@ import type { DataSource } from '@/domain/entities/data-source';
 
 import { primaryByDataSource } from '../tokens/brand-primary';
 import { colors, type ColorToken } from '../tokens/colors';
+import { icon } from '../tokens/icon';
+import { loading } from '../tokens/loading';
 import { radius } from '../tokens/radius';
 import { sizes } from '../tokens/sizes';
 import { spacing } from '../tokens/spacing';
@@ -17,6 +19,8 @@ export type AppTheme = {
   sizes: typeof sizes;
   radius: typeof radius;
   typography: typeof typography;
+  icon: typeof icon;
+  loading: typeof loading;
 };
 
 const DEFAULT_DATA_SOURCE: DataSource = 'github';
@@ -35,6 +39,8 @@ export function getTheme(mode: ThemeMode, dataSource: DataSource = DEFAULT_DATA_
     sizes,
     radius,
     typography,
+    icon,
+    loading,
   };
 }
 

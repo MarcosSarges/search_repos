@@ -1,11 +1,25 @@
-import type { Size } from '@/components/ds/tokens';
+import { type ActivityIndicatorProps } from 'react-native';
+
+import type { LoadingVariant } from '@/components/ds/tokens';
 
 import { StyledLoading } from './styles';
 
-export type LoadingProps = {
-  size?: Size;
+export type LoadingProps = Omit<ActivityIndicatorProps, 'style' | 'size' | 'color'> & {
+  variant?: LoadingVariant;
 };
 
-export function Loading({ size = 'md' }: LoadingProps) {
-  return <StyledLoading testID="ds-loading" $size={size} />;
+export function Loading({
+  variant = 'sm',
+  accessibilityRole = 'progressbar',
+  testID = 'ds-loading',
+  ...rest
+}: LoadingProps) {
+  return (
+    <StyledLoading
+      $variant={variant}
+      accessibilityRole={accessibilityRole}
+      testID={testID}
+      {...rest}
+    />
+  );
 }

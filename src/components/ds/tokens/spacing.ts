@@ -7,3 +7,15 @@ export const spacing = {
 } as const;
 
 export type Spacing = keyof typeof spacing;
+
+export type SpacerEdge = 'top' | 'bottom' | 'left' | 'right';
+
+/**
+ * Maps spacer edge to the layout axis dimension used by styles.
+ */
+export const spacerEdgeAxis = {
+  top: 'height',
+  bottom: 'height',
+  left: 'width',
+  right: 'width',
+} as const satisfies Record<SpacerEdge, 'height' | 'width'>;

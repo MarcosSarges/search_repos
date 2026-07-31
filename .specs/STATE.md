@@ -90,13 +90,61 @@
 - **Date**: 2026-07-31
 - **Status**: active
 
+### AD-012
+- **Decision**: Cada peça do DS em pasta própria com `index.ts`, `<Name>.tsx`, `<Name>.stories.tsx` e `styles.tsx`; styled-components vivem **somente** em `styles.tsx`; estilos do DS usam **sempre** `styled` (nunca `StyleSheet` / style solto para chrome do DS).
+- **Reason**: Separação composição vs estilo; catálogo Storybook previsível; evita misturar markup e CSS-in-JS no mesmo arquivo.
+- **Trade-off**: Mais arquivos por componente.
+- **Scope**: `src/components/ds/atoms|molecules|organisms/**`
+- **Date**: 2026-07-31
+- **Status**: active
+
+### AD-013
+- **Decision**: Lookups de variant/tone/size no DS usam **object maps**, não `switch`/`case`.
+- **Reason**: Extensão tipada mais barata; menos branches; alinhado ao padrão de tokens.
+- **Trade-off**: Maps precisam ser exaustivos no tipo (ok com `satisfies` / `Record`).
+- **Scope**: `src/components/ds/**` (styled layers + helpers de token)
+- **Date**: 2026-07-31
+- **Status**: active
+
+### AD-014
+- **Decision**: Tokens tipográficos definem a variação completa por variant (`body` | `label` | `caption` | `heading`, …): `fontFamily`, `fontWeight`, `fontSize`, `lineHeight`. O atom Typography só seleciona `variant` (+ `tone`); **não** compõe `size` × metrics.
+- **Reason**: Variações pertencem aos tokens, não aos componentes — evita lógica tipográfica no styled layer e special-cases.
+- **Trade-off**: Novos tamanhos = novas variants de token (ex. `bodySm`), não prop `size` no Typography.
+- **Scope**: `src/components/ds/tokens/**`, atom `Typography`
+- **Date**: 2026-07-31
+- **Status**: active
+
+### AD-015
+- **Decision**: Nesta fatia `ds-conventions`, `fontFamily` tipográfico usa família de **sistema** do RN; sem bundling `expo-font` / arquivos `.ttf` novos.
+- **Reason**: Confirmado no Specify — desacopla refactor de loading de fontes custom.
+- **Trade-off**: Custom typefaces ficam para feature posterior.
+- **Scope**: `ds-conventions`, tokens tipográficos
+- **Date**: 2026-07-31
+- **Status**: active
+
+### AD-016
+- **Decision**: Variantes de `tone` (content: `default`\|`muted`\|`primary`\|`danger`; surface: `background`\|`surface`) e o mapa `toneColorMap` vivem em `tokens/tone.ts` — tipagem de definição no token, não em `styles.tsx` dos componentes.
+- **Reason**: Tokens definem variações; atoms/molecules só consomem.
+- **Trade-off**: Um módulo a mais em tokens; tones de surface e content compartilham o mesmo arquivo.
+- **Scope**: `src/components/ds/tokens/tone.ts`, Typography, Icon, Container
+- **Date**: 2026-07-31
+- **Status**: active
+
+### AD-017
+- **Decision**: Padrão unificado dos atoms: (1) variações tipadas nos tokens (`variant` / `tone` / `SpacerEdge`); Icon e Loading usam `variant` em vez de `size?: Size`; (2) props `Omit<Host,'style'|controlled>` + `...rest`, exceto Spacer (props fechadas edge+size); (3) styled template para CSS, `.attrs` só para props de host third-party; (4) defaults de a11y na composição (`Name.tsx`), não em `styles.tsx`; (5) `styles.tsx` não exporta unions de domínio.
+- **Reason**: Eliminar divergências de tipagem/code style entre atoms e reforçar “tokens definem a variação”.
+- **Trade-off**: Icon/Loading perdem a prop `size` genérica; novos tamanhos = novas variants de token.
+- **Scope**: `src/components/ds/atoms/**`, `src/components/ds/tokens/**`
+- **Date**: 2026-07-31
+- **Status**: active
+
 ## Handoff
 
-- **Feature**: design-system (`.specs/features/design-system/`)
-- **Phase / Task**: Tasks — `tasks.md` Draft; aguardando aprovação do usuário
-- **Completed**: Spec + context confirmados; Design Approach A aprovado; AD-009..011 gravados
+- **Feature**: ds-atom-patterns (AD-017 unify)
+- **Phase / Task**: Complete — gate green
+- **Completed**: icon/loading tokens; SpacerEdge in tokens; Icon/Loading variant API; Spacer optional size; AD-017; README
 - **In-progress**: none
-- **Next step**: User aprova tasks → Execute (offer sub-agents se >~8 tasks)
-- **Blockers**: none — waiting on tasks approval
-- **Uncommitted files**: `.specs/`, `src/domain/`, `src/application/`, `src/assets/`, DS parcial
-- **Branch**: current working branch
+- **Next step**: Commit changes if desired; next product feature
+- **Blockers**: none
+- **Uncommitted files**: DS tokens/atoms/theme/README/STATE + prior .specs artifacts
+- **Branch**: `feat/design-system`

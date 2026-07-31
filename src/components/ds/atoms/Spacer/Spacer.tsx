@@ -1,9 +1,9 @@
-import type { Spacing } from '@/components/ds/tokens';
+import type { SpacerEdge, Spacing } from '@/components/ds/tokens';
 
-import { StyledSpacer, type SpacerEdge } from './styles';
+import { StyledSpacer } from './styles';
 
 type SpacerBase = {
-  size: Spacing;
+  size?: Spacing;
 };
 
 export type SpacerProps = SpacerBase &
@@ -37,6 +37,7 @@ function resolveEdge(props: SpacerProps): SpacerEdge {
 
 export function Spacer(props: SpacerProps) {
   const edge = resolveEdge(props);
+  const size = props.size ?? 'md';
 
-  return <StyledSpacer testID="ds-spacer" $edge={edge} $spacing={props.size} />;
+  return <StyledSpacer testID="ds-spacer" $edge={edge} $spacing={size} />;
 }

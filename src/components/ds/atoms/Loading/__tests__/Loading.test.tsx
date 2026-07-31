@@ -22,15 +22,21 @@ describe('Loading atom (DS-06, DS-09)', () => {
     expect(node.props.color).toBe('#5FED83');
   });
 
-  it('WHEN size is lg THEN ActivityIndicator uses large size', async () => {
-    await render(<Loading size="lg" />);
+  it('WHEN variant is lg THEN ActivityIndicator uses large size from loading token', async () => {
+    await render(<Loading variant="lg" />);
 
     expect(screen.getByTestId('ds-loading').props.size).toBe('large');
   });
 
-  it('WHEN public props are inspected THEN style is not part of the controlled API', () => {
+  it('WHEN public props are inspected THEN style size and color are not part of the controlled API', () => {
     type HasStyle = 'style' extends keyof LoadingProps ? true : false;
+    type HasSize = 'size' extends keyof LoadingProps ? true : false;
+    type HasColor = 'color' extends keyof LoadingProps ? true : false;
     const hasStyle: HasStyle = false;
+    const hasSize: HasSize = false;
+    const hasColor: HasColor = false;
     expect(hasStyle).toBe(false);
+    expect(hasSize).toBe(false);
+    expect(hasColor).toBe(false);
   });
 });

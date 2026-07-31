@@ -1,13 +1,13 @@
 import type { ReactNode } from 'react';
 
-import type { Spacing } from '@/components/ds/tokens';
+import type { Spacing, SurfaceTone } from '@/components/ds/tokens';
 
-import { StyledContainer, type ContainerTone } from './styles';
+import { StyledContainer } from './styles';
 
 export type ContainerProps = {
   children?: ReactNode;
   padding?: Spacing;
-  tone?: ContainerTone;
+  tone?: SurfaceTone;
   flex?: boolean;
 };
 

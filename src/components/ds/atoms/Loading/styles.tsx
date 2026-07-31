@@ -1,20 +1,11 @@
 import { ActivityIndicator } from 'react-native';
-import styled from 'styled-components/native';
+import { styled } from 'styled-components/native';
 
-import type { Size } from '@/components/ds/tokens';
-
-const indicatorSizeMap = {
-  xs: 'small',
-  sm: 'small',
-  md: 'small',
-  lg: 'large',
-  xl: 'large',
-} as const satisfies Record<Size, 'small' | 'large'>;
+import type { LoadingVariant } from '@/components/ds/tokens';
 
 export const StyledLoading = styled(ActivityIndicator).attrs<{
-  $size: Size;
-}>(({ theme, $size }) => ({
+  $variant: LoadingVariant;
+}>(({ theme, $variant }) => ({
   color: theme.colors.primary,
-  size: indicatorSizeMap[$size],
-  accessibilityRole: 'progressbar' as const,
+  size: theme.loading[$variant].indicatorSize,
 }))``;
