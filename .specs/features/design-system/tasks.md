@@ -355,9 +355,9 @@ T12 → T13
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] Globals/controls for `themeMode` and `dataSource` wired into provider
-- [ ] DS stories listed for Typography, Icon, Spacer, Loading, Container, Header, DataSourceLogo
-- [ ] Gate: `pnpm lint`
+- [x] Globals/controls for `themeMode` and `dataSource` wired into provider
+- [x] DS stories listed for Typography, Icon, Spacer, Loading, Container, Header, DataSourceLogo
+- [x] Gate: `pnpm lint`
 
 **Tests**: none  
 **Gate**: full  

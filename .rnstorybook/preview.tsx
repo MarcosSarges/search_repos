@@ -1,9 +1,40 @@
 import type { Preview } from '@storybook/react-native';
 import { View } from 'react-native';
 
-import { AppThemeProvider, spacing } from '../src/components/ds';
+import { AppThemeProvider, spacing, type ThemeMode } from '../src/components/ds';
+import type { DataSource } from '../src/domain/entities/data-source';
 
 const preview: Preview = {
+  globalTypes: {
+    themeMode: {
+      name: 'Theme',
+      description: 'Light / dark theme mode',
+      toolbar: {
+        icon: 'circlehollow',
+        items: [
+          { value: 'light', title: 'Light', icon: 'sun' },
+          { value: 'dark', title: 'Dark', icon: 'moon' },
+        ],
+        dynamicTitle: true,
+      },
+    },
+    dataSource: {
+      name: 'Data source',
+      description: 'GitHub / GitLab brand primary + logo',
+      toolbar: {
+        icon: 'repository',
+        items: [
+          { value: 'github', title: 'GitHub' },
+          { value: 'gitlab', title: 'GitLab' },
+        ],
+        dynamicTitle: true,
+      },
+    },
+  },
+  initialGlobals: {
+    themeMode: 'light',
+    dataSource: 'github',
+  },
   parameters: {
     controls: {
       matchers: {
@@ -11,15 +42,28 @@ const preview: Preview = {
         date: /Date$/,
       },
     },
+    options: {
+      storySort: {
+        order: ['DS', ['Atoms', 'Molecules', 'Organisms'], '*'],
+      },
+    },
   },
   decorators: [
-    (Story) => (
-      <AppThemeProvider>
-        <View style={{ flex: 1, padding: spacing.md }}>
-          <Story />
-        </View>
-      </AppThemeProvider>
-    ),
+    (Story, context) => {
+      const themeMode = (context.globals.themeMode as ThemeMode) ?? 'light';
+      const dataSource = (context.globals.dataSource as DataSource) ?? 'github';
+
+      return (
+        <AppThemeProvider
+          key={`${themeMode}-${dataSource}`}
+          initialMode={themeMode}
+          initialDataSource={dataSource}>
+          <View style={{ flex: 1, padding: spacing.md }}>
+            <Story />
+          </View>
+        </AppThemeProvider>
+      );
+    },
   ],
 };
 
