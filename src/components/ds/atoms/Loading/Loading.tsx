@@ -1,25 +1,11 @@
-import { ActivityIndicator } from 'react-native';
-
 import type { Size } from '@/components/ds/tokens';
-import { useTheme } from '@/components/ds/theme';
+
+import { StyledLoading } from './styles';
 
 export type LoadingProps = {
   size?: Size;
 };
 
-function mapIndicatorSize(size: Size): 'small' | 'large' {
-  return size === 'lg' || size === 'xl' ? 'large' : 'small';
-}
-
 export function Loading({ size = 'md' }: LoadingProps) {
-  const theme = useTheme();
-
-  return (
-    <ActivityIndicator
-      testID="ds-loading"
-      color={theme.colors.primary}
-      size={mapIndicatorSize(size)}
-      accessibilityRole="progressbar"
-    />
-  );
+  return <StyledLoading testID="ds-loading" $size={size} />;
 }
