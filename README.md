@@ -191,14 +191,32 @@ Integração contínua / insights: [testes ponta a ponta no EAS](https://docs.ex
 
 ## Declaração de uso de IA
 
-Uso de **Cursor** (assistente de código) durante o desenvolvimento, de forma assistida — não como geração “caixa-preta” sem revisão.
+O projeto foi desenvolvido com o **Cursor** como editor e assistente de código. Após o setup inicial, as funcionalidades passaram a seguir o processo de **Spec-Driven Development (SDD)** da skill [`tlc-spec-driven`](.cursor/skills/tlc-spec-driven/SKILL.md): especificação → desenho quando necessário → tarefas → implementação → verificação.
+
+O foco do desenvolvimento é definir regras de negócio, critérios de aceitação, decisões e trade-offs. A IA acelera a escrita e a estruturação do código, mas cada entrega é revisada e validada contra a especificação; a responsabilidade pelas decisões e pelo resultado final permanece humana.
+
+### Seleção de modelos por afinidade
+
+- **Claude Opus 4.8:** planejamento, análise de requisitos e desenho de soluções que exigem mais raciocínio.
+- **Cursor Auto:** implementação das tarefas especificadas, priorizando eficiência de tokens e execução no contexto do repositório.
+- **GPT:** documentação e redação técnica, por melhor adequação a conteúdo textual estruturado.
+
+Essa seleção é pragmática: o modelo é escolhido conforme a natureza da etapa, não como substituto da validação técnica.
+
+### Otimização de contexto
+
+O ambiente de desenvolvimento também possui o [RTK (Rust Token Killer)](https://github.com/rtk-ai/rtk) instalado e integrado ao Cursor. A ferramenta intercepta e compacta a saída de comandos de terminal — como `git`, testes, lint e logs — antes de ela entrar no contexto do agente, reduzindo ruído e o consumo de tokens de entrada.
+
+O RTK não reduz diretamente os tokens gerados pelo modelo nem garante a mesma redução no custo total: sua atuação é limitada à saída de comandos do shell. Quando for necessária uma investigação detalhada, o output completo continua disponível para consulta.
 
 ### O que foi gerado / fortemente assistido
 
 - Scaffold inicial do projeto Expo e ajustes de tooling (ESLint, Prettier, Jest, Husky)
 - Setup do Storybook (React Native) e estrutura inicial do Design System
-- Estrutura e redação deste README alinhada aos requisitos do teste
 - Planejamento da arquitetura e do Design System a partir do enunciado
+- Especificações, critérios de aceitação e planos das features em `.specs/features/`
+- Implementação de funcionalidades a partir dessas especificações
+- Estrutura e redação deste README alinhada aos requisitos do teste
 
 ### O que foi adaptado / revisado
 
@@ -206,15 +224,16 @@ Uso de **Cursor** (assistente de código) durante o desenvolvimento, de forma as
 - Escopo do Design System (tokens e props controladas conforme a seção 6 do teste)
 - Escolha do Maestro como executor dos testes ponta a ponta
 - Scripts e pacotes alinhados ao Expo SDK 54 e ao uso de pnpm
+- Código e testes confrontados com os critérios de aceitação definidos antes da implementação
 
 ### O que foi rejeitado / evitado
 
 - Aceitar o tema e componentes do template Expo como Design System final
 - Espalhar `if (github|gitlab)` na interface
 - Commitar tokens de API ou `.env` com credenciais
-- Entregar código gerado sem entendimento das decisões (inversão de dependência, contratos, cache)
+- Entregar código de IA sem entendimento, revisão e validação das decisões (inversão de dependência, contratos, cache)
 
-Instruções típicas: análise do enunciado, plano de passos (Design System → arquitetura → múltiplos provedores), e redação do README com as seções obrigatórias do teste.
+Instruções típicas: análise do enunciado, especificação de regras e critérios de aceitação, plano de passos (Design System → arquitetura → múltiplos provedores), implementação de tarefas e redação do README com as seções obrigatórias do teste.
 
 ## O que eu faria diferente com mais tempo
 
