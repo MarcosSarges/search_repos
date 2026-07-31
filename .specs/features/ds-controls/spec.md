@@ -159,7 +159,7 @@ A fatia `design-system` entregou foundation (tokens, Typography, Icon, Spacer, L
 
 | Requirement ID | Story | Phase | Status |
 | --- | --- | --- | --- |
-| CTRL-01 | P1: Button atom | Tasks | Implementing |
+| CTRL-01 | P1: Button atom | Tasks | Verified |
 | CTRL-02 | P1: Input atom | Tasks | Implementing |
 | CTRL-03 | P1: InputField molecule | Tasks | Pending |
 | CTRL-04 | P1: Card molecule | Tasks | Implementing |

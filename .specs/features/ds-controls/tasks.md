@@ -111,16 +111,17 @@ T6
 
 **Done when**:
 
-- [ ] Folder: `index.ts`, `Button.tsx`, `Button.stories.tsx`, `styles.tsx`, `__tests__`
-- [ ] `variant` primary uses `theme.colors.primary`; outline/ghost via object maps; no `switch` lookup; no public `style`
-- [ ] `loading` shows Loading (size map sm|md→sm, lg→lg), blocks press, keeps min size; hides leading/label/trailing
-- [ ] `disabled` blocks press; slots render when not loading
-- [ ] Exported from atoms barrel
-- [ ] Gate: `pnpm test`
+- [x] Folder: `index.ts`, `Button.tsx`, `Button.stories.tsx`, `styles.tsx`, `__tests__`
+- [x] `variant` primary uses `theme.colors.primary`; outline/ghost via object maps; no `switch` lookup; no public `style`
+- [x] `loading` shows Loading (size map sm|md→sm, lg→lg), blocks press, keeps min size; hides leading/label/trailing
+- [x] `disabled` blocks press; slots render when not loading
+- [x] Exported from atoms barrel
+- [x] Gate: `pnpm test`
 
 **Tests**: unit  
 **Gate**: quick  
-**Commit**: `feat(ds): add Button atom`
+**Commit**: `feat(ds): add Button atom`  
+**Status**: Done
 
 ---
 
