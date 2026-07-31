@@ -330,11 +330,11 @@ T12 → T13
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] Uses `DataSourceLogo` (no direct SVG import)
-- [ ] Trailing slot optional
-- [ ] Stories `DS/Molecules/Header`
-- [ ] Unit tests: title + DataSourceLogo present; Header source has no brand SVG import
-- [ ] Gate: `pnpm test`
+- [x] Uses `DataSourceLogo` (no direct SVG import)
+- [x] Trailing slot optional
+- [x] Stories `DS/Molecules/Header`
+- [x] Unit tests: title + DataSourceLogo present; Header source has no brand SVG import
+- [x] Gate: `pnpm test`
 
 **Tests**: unit  
 **Gate**: quick  
