@@ -48,7 +48,7 @@ describe('Input atom (CTRL-02)', () => {
     await render(<Input value="hello" onChangeText={onChangeText} />);
 
     const field = screen.getByTestId('ds-input-field');
-    expect(field.props.value).toBe('hello');
+    expect(field).toHaveProp('value', 'hello');
 
     fireEvent.changeText(field, 'hello!');
     expect(onChangeText).toHaveBeenCalledWith('hello!');
@@ -80,8 +80,8 @@ describe('Input atom (CTRL-02)', () => {
     await render(<Input editable={false} value="locked" onChangeText={onChangeText} />);
 
     const field = screen.getByTestId('ds-input-field');
-    expect(field.props.editable).toBe(false);
-    expect(field.props.accessibilityState).toEqual(expect.objectContaining({ disabled: true }));
+    expect(field).toHaveProp('editable', false);
+    expect(field).toHaveProp('accessibilityState', expect.objectContaining({ disabled: true }));
 
     fireEvent.changeText(field, 'nope');
     expect(onChangeText).not.toHaveBeenCalled();
@@ -91,7 +91,7 @@ describe('Input atom (CTRL-02)', () => {
     await render(<Input value="only" onChangeText={() => undefined} />);
 
     expect(screen.getByTestId('ds-input')).toBeTruthy();
-    expect(screen.getByTestId('ds-input-field').props.value).toBe('only');
+    expect(screen.getByTestId('ds-input-field')).toHaveProp('value', 'only');
     expect(screen.queryByTestId('leading')).toBeNull();
     expect(screen.queryByTestId('trailing')).toBeNull();
   });

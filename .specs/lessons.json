@@ -3,7 +3,7 @@
   "promote_threshold": 2,
   "window_days": 45,
   "quarantine_threshold": 2,
-  "next_id": 12,
+  "next_id": 13,
   "lessons": [
     {
       "id": "L-001",
@@ -202,6 +202,24 @@
       ],
       "created": "2026-07-31T14:33:47Z",
       "last_seen": "2026-07-31T14:33:47Z"
+    },
+    {
+      "id": "L-012",
+      "key": "spec_precision_gap::when an ac requires a specific ds atom e g typography assert that component or its variant props not only the rendered text string",
+      "text": "When an AC requires a specific DS atom (e.g. Typography), assert that component or its variant props, not only the rendered text string",
+      "signal": "spec_precision_gap",
+      "scope": "src/components/ds",
+      "status": "candidate",
+      "features": [
+        "ds-controls"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "CTRL-03 AC1 / InputField.test.tsx:18 (src/components/ds)"
+      ],
+      "created": "2026-07-31T19:40:55Z",
+      "last_seen": "2026-07-31T19:40:55Z"
     }
   ]
 }

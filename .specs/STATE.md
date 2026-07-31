@@ -141,10 +141,10 @@
 ## Handoff
 
 - **Feature**: ds-controls
-- **Phase / Task**: Execute Batch 2 complete (phases 3–4: T4→T5→T6)
-- **Completed**: T1–T6 (tokens, Button, Input, InputField, Card, README Atomic table); CTRL-01..05 Verified
+- **Phase / Task**: Complete — Verifier PASS
+- **Completed**: T1–T6 (d8f2a06…3a7a3b7); validation PASS (125 tests; sensor 3/3 killed; 1 Typography precision gap on InputField label — non-blocking)
 - **In-progress**: none
-- **Next step**: Verifier (author ≠ verifier) on ds-controls
+- **Next step**: Optional commit of `validation.md` / STATE; next product feature or Badge/Avatar
 - **Blockers**: none
-- **Uncommitted files**: none expected after Batch 2 commits
+- **Uncommitted files**: `.specs/STATE.md`, `.specs/features/ds-controls/validation.md` (if present)
 - **Branch**: `feat/design-system`

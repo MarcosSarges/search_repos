@@ -9,7 +9,7 @@ Implement these tasks with the `tlc-spec-driven` skill: **activate it by name an
 ---
 
 **Design**: `.specs/features/ds-controls/design.md`  
-**Status**: Approved — Execute with sub-agents (user 2026-07-31)
+**Status**: Done — Verifier PASS (2026-07-31)
 
 ---
 

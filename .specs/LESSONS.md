@@ -80,6 +80,12 @@ Seen once or not yet corroborated. Tracked, not trusted.
 - evidence: DSC-03 AC6 precise token values; typography.test.ts:12 (ds/tokens)
 - last seen: 2026-07-31T14:33:47Z
 
+### L-012 — When an AC requires a specific DS atom (e.g. Typography), assert that component or its variant props, not only the rendered text string
+- signal: `spec_precision_gap` · recurrence: 1 feature(s) · scope: `src/components/ds` · harmful: 0
+- features: ds-controls
+- evidence: CTRL-03 AC1 / InputField.test.tsx:18 (src/components/ds)
+- last seen: 2026-07-31T19:40:55Z
+
 ## Quarantined (failed when applied — ignore)
 
 A confirmed lesson that recurred alongside failure. Kept for the maintainer to review.
