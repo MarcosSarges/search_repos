@@ -1,4 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
+import * as SplashScreen from 'expo-splash-screen';
 import 'react-native-gesture-handler';
 import 'react-native-reanimated';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -6,6 +7,10 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { AppThemeProvider } from '@/components/ds';
 import { RootNavigator } from '@/navigation/RootNavigator';
 import Constants from 'expo-constants';
+
+void SplashScreen.preventAutoHideAsync().catch(() => {
+  /* native splash unavailable (e.g. tests / web) */
+});
 
 function App() {
   return (

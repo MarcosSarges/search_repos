@@ -14,12 +14,6 @@ import { AppThemeProvider, type ThemeMode } from '@/components/ds';
 import type { DataSource } from '@/domain/entities/data-source';
 import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
 
-type ProvidersProps = {
-  children: ReactNode;
-  themeMode?: ThemeMode;
-  dataSource?: DataSource;
-};
-
 const initialSafeAreaMetrics = {
   frame: { x: 0, y: 0, width: 390, height: 844 },
   insets: { top: 0, left: 0, right: 0, bottom: 0 },
@@ -35,12 +29,10 @@ function seedSessionPreferences(themeMode?: ThemeMode, dataSource?: DataSource) 
   }
 }
 
-export function AllTheProviders({ children, themeMode = 'light', dataSource }: ProvidersProps) {
+export function AllTheProviders({ children }: { children: ReactNode }) {
   return (
     <SafeAreaProvider initialMetrics={initialSafeAreaMetrics}>
-      <AppThemeProvider initialMode={themeMode} initialDataSource={dataSource}>
-        {children}
-      </AppThemeProvider>
+      <AppThemeProvider>{children}</AppThemeProvider>
     </SafeAreaProvider>
   );
 }
@@ -65,11 +57,7 @@ export async function render(
 
   return rtlRender(ui, {
     ...options,
-    wrapper: ({ children }) => (
-      <AllTheProviders themeMode={themeMode} dataSource={dataSource}>
-        {children}
-      </AllTheProviders>
-    ),
+    wrapper: ({ children }) => <AllTheProviders>{children}</AllTheProviders>,
   });
 }
 
@@ -87,11 +75,7 @@ export async function renderHook<Result, Props>(
 
   return rtlRenderHook(callback, {
     ...options,
-    wrapper: ({ children }) => (
-      <AllTheProviders themeMode={themeMode} dataSource={dataSource}>
-        {children}
-      </AllTheProviders>
-    ),
+    wrapper: ({ children }) => <AllTheProviders>{children}</AllTheProviders>,
   });
 }
 

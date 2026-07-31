@@ -24,10 +24,6 @@ type AppThemeProviderProps = {
   initialDataSource?: DataSource;
 };
 
-void SplashScreen.preventAutoHideAsync().catch(() => {
-  /* already prevented or native unavailable in tests */
-});
-
 export function AppThemeProvider({
   children,
   initialMode,

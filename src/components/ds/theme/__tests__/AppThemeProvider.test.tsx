@@ -2,12 +2,12 @@ import { useEffect } from 'react';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { Text, View } from 'react-native';
-import { render as rtlRender, waitFor } from '@testing-library/react-native';
+import { waitFor } from '@testing-library/react-native';
 
 import { act, render, renderHook, screen } from '@/test';
 import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
 
-import { AppThemeProvider, useAppTheme, useTheme } from '../';
+import { useAppTheme, useTheme } from '../';
 
 describe('AppThemeProvider dataSource (DS-02 / TPH-05..06)', () => {
   it('WHEN provider mounts without initialDataSource THEN dataSource defaults to github', async () => {
