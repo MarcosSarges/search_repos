@@ -1,31 +1,39 @@
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+
 import { render, screen } from '@/test';
 import { sizes } from '@/components/ds/tokens';
 
+import { resolveLogoAsset } from '../styles';
 import { DataSourceLogo, type DataSourceLogoProps } from '../DataSourceLogo';
 
-describe('DataSourceLogo organism (DS-10, DS-11)', () => {
+describe('DataSourceLogo organism (DSC-04 / DS-10)', () => {
   it('WHEN dataSource is github and mode is light THEN it uses the black Invertocat asset', async () => {
     await render(<DataSourceLogo dataSource="github" />, { themeMode: 'light' });
 
     expect(screen.getByTestId('ds-datasource-logo-github-black')).toBeTruthy();
+    expect(resolveLogoAsset('github', 'light')).toBe('github-black');
   });
 
   it('WHEN dataSource is github and mode is dark THEN it uses the white Invertocat asset', async () => {
     await render(<DataSourceLogo dataSource="github" />, { themeMode: 'dark' });
 
     expect(screen.getByTestId('ds-datasource-logo-github-white')).toBeTruthy();
+    expect(resolveLogoAsset('github', 'dark')).toBe('github-white');
   });
 
   it('WHEN dataSource is gitlab THEN it uses a GitLab logo SVG from assets/gitlab', async () => {
     await render(<DataSourceLogo dataSource="gitlab" />, { themeMode: 'light' });
 
     expect(screen.getByTestId('ds-datasource-logo-gitlab')).toBeTruthy();
+    expect(resolveLogoAsset('gitlab', 'light')).toBe('gitlab');
   });
 
   it('WHEN dataSource is gitlab in dark mode THEN it still uses the GitLab logo asset', async () => {
     await render(<DataSourceLogo dataSource="gitlab" />, { themeMode: 'dark' });
 
     expect(screen.getByTestId('ds-datasource-logo-gitlab')).toBeTruthy();
+    expect(resolveLogoAsset('gitlab', 'dark')).toBe('gitlab');
   });
 
   it('WHEN size token is provided THEN the logo scales to that size token in px', async () => {
@@ -42,6 +50,20 @@ describe('DataSourceLogo organism (DS-10, DS-11)', () => {
     const node = screen.getByTestId('ds-datasource-logo-github-black');
     expect(node.props.width).toBe(sizes.md);
     expect(node.props.height).toBe(sizes.md);
+  });
+
+  it('WHEN logoComponentMap source is inspected THEN each asset key maps to the matching SVG import', () => {
+    const source = readFileSync(join(__dirname, '../styles.tsx'), 'utf8');
+    expect(source).toContain(
+      "import GitHubInvertocatBlack from '@/assets/github/GitHub_Invertocat_Black.svg'",
+    );
+    expect(source).toContain(
+      "import GitHubInvertocatWhite from '@/assets/github/GitHub_Invertocat_White_Clearspace.svg'",
+    );
+    expect(source).toContain("import GitLabLogo from '@/assets/gitlab/gitlab-logo-500-rgb.svg'");
+    expect(source).toContain("'github-black': GitHubInvertocatBlack");
+    expect(source).toContain("'github-white': GitHubInvertocatWhite");
+    expect(source).toContain('gitlab: GitLabLogo');
   });
 
   it('WHEN public props are inspected THEN style is not part of the controlled API', () => {
