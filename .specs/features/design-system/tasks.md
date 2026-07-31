@@ -306,10 +306,10 @@ T12 → T13
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] Padding via spacing tokens; no public `style`
-- [ ] Stories `DS/Molecules/Container`
-- [ ] Unit tests for padding token application
-- [ ] Gate: `pnpm test`
+- [x] Padding via spacing tokens; no public `style`
+- [x] Stories `DS/Molecules/Container`
+- [x] Unit tests for padding token application
+- [x] Gate: `pnpm test`
 
 **Tests**: unit  
 **Gate**: quick  
