@@ -1,11 +1,11 @@
 import { getTheme, useAppTheme } from '@/components/ds/theme';
-import { sizes } from '@/components/ds/tokens';
+import { sizes, typography } from '@/components/ds/tokens';
 import { act, fireEvent, render, screen } from '@/test';
 import { Pressable } from 'react-native';
 
 import { Typography, type TypographyProps } from '../Typography';
 
-describe('Typography atom (DS-03, DS-09)', () => {
+describe('Typography atom (DSC-03)', () => {
   it('WHEN rendered with body variant and size THEN it uses theme size tokens', async () => {
     await render(
       <Typography variant="body" size="lg">
@@ -90,7 +90,7 @@ describe('Typography atom (DS-03, DS-09)', () => {
     );
   });
 
-  it('WHEN variant is heading THEN it renders with heading weight', async () => {
+  it('WHEN variant is heading THEN it applies typography token metrics', async () => {
     await render(
       <Typography variant="heading" testID="heading">
         Title
@@ -99,8 +99,26 @@ describe('Typography atom (DS-03, DS-09)', () => {
 
     expect(screen.getByTestId('heading').props.style).toEqual(
       expect.objectContaining({
-        fontWeight: '600',
+        fontFamily: typography.heading.fontFamily,
+        fontWeight: typography.heading.fontWeight,
+        lineHeight: typography.heading.lineHeight,
         fontSize: sizes.xl,
+      }),
+    );
+  });
+
+  it('WHEN variant is body THEN it applies body fontFamily weight and lineHeight from tokens', async () => {
+    await render(
+      <Typography variant="body" testID="body">
+        Body
+      </Typography>,
+    );
+
+    expect(screen.getByTestId('body').props.style).toEqual(
+      expect.objectContaining({
+        fontFamily: typography.body.fontFamily,
+        fontWeight: typography.body.fontWeight,
+        lineHeight: typography.body.lineHeight,
       }),
     );
   });
