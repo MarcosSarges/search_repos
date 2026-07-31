@@ -9,5 +9,5 @@
     },
     "types": ["jest"]
   },
-  "include": ["**/*.ts", "**/*.tsx", ".rnstorybook/**/*.ts", ".rnstorybook/**/*.tsx"]
+  "include": ["**/*.ts", "**/*.tsx", ".rnstorybook/**/*.ts", ".rnstorybook/**/*.tsx", "svg.d.ts"]
 }
