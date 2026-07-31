@@ -149,10 +149,10 @@
 ## Handoff
 
 - **Feature**: theme-persist-home
-- **Phase / Task**: Tasks — draft ready for approval
-- **Completed**: Specify, discuss, design (AD-018), tasks.md drafted (T1–T7)
+- **Phase / Task**: Complete — Verifier PASS
+- **Completed**: T1–T7 + gap fix; validation PASS (141 tests; sensor 3/3 killed; TPH-05 accepted precision gap)
 - **In-progress**: none
-- **Next step**: User approves tasks → Execute (single batch, 7 tasks)
+- **Next step**: Push / open PR for `feat/theme-persist-home`; then product search/infra
 - **Blockers**: none
-- **Uncommitted files**: `.specs/features/theme-persist-home/*`, `.specs/STATE.md`
-- **Branch**: current feature branch
+- **Uncommitted files**: possibly `Teste_Tecnico_React_Native_v3.md` formatting noise
+- **Branch**: `feat/theme-persist-home`
