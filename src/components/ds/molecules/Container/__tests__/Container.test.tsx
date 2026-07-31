@@ -17,7 +17,10 @@ describe('Container molecule (DS-07, DS-09)', () => {
     const node = screen.getByTestId('ds-container');
     expect(StyleSheet.flatten(node.props.style)).toEqual(
       expect.objectContaining({
-        padding: spacing.md,
+        paddingTop: spacing.md,
+        paddingBottom: spacing.md,
+        paddingLeft: spacing.md,
+        paddingRight: spacing.md,
       }),
     );
   });
@@ -32,7 +35,10 @@ describe('Container molecule (DS-07, DS-09)', () => {
     const node = screen.getByTestId('ds-container');
     expect(StyleSheet.flatten(node.props.style)).toEqual(
       expect.objectContaining({
-        padding: spacing.xl,
+        paddingTop: spacing.xl,
+        paddingBottom: spacing.xl,
+        paddingLeft: spacing.xl,
+        paddingRight: spacing.xl,
       }),
     );
   });
@@ -47,7 +53,10 @@ describe('Container molecule (DS-07, DS-09)', () => {
     const node = screen.getByTestId('ds-container');
     expect(StyleSheet.flatten(node.props.style)).toEqual(
       expect.objectContaining({
-        padding: spacing.xs,
+        paddingTop: spacing.xs,
+        paddingBottom: spacing.xs,
+        paddingLeft: spacing.xs,
+        paddingRight: spacing.xs,
       }),
     );
   });

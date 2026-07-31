@@ -1,10 +1,8 @@
 import type { ReactNode } from 'react';
-import { View } from 'react-native';
 
 import type { Spacing } from '@/components/ds/tokens';
-import { useTheme } from '@/components/ds/theme';
 
-type ContainerTone = 'background' | 'surface';
+import { StyledContainer, type ContainerTone } from './styles';
 
 export type ContainerProps = {
   children?: ReactNode;
@@ -19,17 +17,9 @@ export function Container({
   tone = 'background',
   flex = false,
 }: ContainerProps) {
-  const theme = useTheme();
-
   return (
-    <View
-      testID="ds-container"
-      style={{
-        padding: theme.spacing[padding],
-        backgroundColor: theme.colors[tone],
-        ...(flex ? { flex: 1 } : null),
-      }}>
+    <StyledContainer testID="ds-container" $padding={padding} $tone={tone} $flex={flex}>
       {children}
-    </View>
+    </StyledContainer>
   );
 }
