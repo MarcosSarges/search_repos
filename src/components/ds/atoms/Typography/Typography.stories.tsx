@@ -1,12 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react-native';
 import { View } from 'react-native';
 
-import { Text } from './Text';
 import { spacing } from '@/components/ds/tokens';
 
+import { Typography } from './Typography';
+
 const meta = {
-  title: 'Design System/Text',
-  component: Text,
+  title: 'DS/Atoms/Typography',
+  component: Typography,
   decorators: [
     (Story) => (
       <View style={{ gap: spacing.sm }}>
@@ -14,7 +15,7 @@ const meta = {
       </View>
     ),
   ],
-} satisfies Meta<typeof Text>;
+} satisfies Meta<typeof Typography>;
 
 export default meta;
 
@@ -25,6 +26,14 @@ export const Body: Story = {
     children: 'Body text — Design System',
     variant: 'body',
     size: 'md',
+    tone: 'default',
+  },
+};
+
+export const Heading: Story = {
+  args: {
+    children: 'Heading',
+    variant: 'heading',
     tone: 'default',
   },
 };
@@ -44,6 +53,15 @@ export const Muted: Story = {
     variant: 'caption',
     size: 'sm',
     tone: 'muted',
+  },
+};
+
+export const Primary: Story = {
+  args: {
+    children: 'Primary tone',
+    variant: 'body',
+    size: 'md',
+    tone: 'primary',
   },
 };
 
