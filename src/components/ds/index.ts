@@ -1,4 +1,4 @@
 export * from './tokens';
 export * from './theme';
-export { Text } from './components/Text';
-export type { TextProps } from './components/Text';
+export * from './atoms';
+// molecules / organisms barrels are wired when components land (T9–T11)
