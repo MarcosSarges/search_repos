@@ -169,15 +169,16 @@ T6
 
 **Done when**:
 
-- [ ] Non-empty `error` shows error message (not helperText) and passes `state="error"` to Input
-- [ ] Empty `error` treated as no error; helperText may show
-- [ ] `leading`/`trailing`/value handlers forwarded to Input
-- [ ] No public `style`; AD-012 shape; exported from molecules barrel
-- [ ] Gate: `pnpm test`
+- [x] Non-empty `error` shows error message (not helperText) and passes `state="error"` to Input
+- [x] Empty `error` treated as no error; helperText may show
+- [x] `leading`/`trailing`/value handlers forwarded to Input
+- [x] No public `style`; AD-012 shape; exported from molecules barrel
+- [x] Gate: `pnpm test`
 
 **Tests**: unit  
 **Gate**: quick  
-**Commit**: `feat(ds): add InputField molecule`
+**Commit**: `feat(ds): add InputField molecule`  
+**Status**: Done
 
 ---
 
