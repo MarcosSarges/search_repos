@@ -125,9 +125,9 @@ O Design System em `src/components/ds/` segue **Atomic Design**:
 
 | Nível | Pasta | O que entra |
 | --- | --- | --- |
-| Tokens | `tokens/` | `spacing` (+ `SpacerEdge`), `sizes`, `colors`, `radius`, `tone` / `toneColorMap`, tipografia / icon / loading por **variant**, mapa de `primary` por data-source |
-| Atoms | `atoms/` | Typography, Icon, Spacer, Loading — selecionam `variant` / `tone` / edge dos tokens; sem `style` público; Icon/Loading sem `size` na API |
-| Molecules | `molecules/` | Container, Header — compostos de tokens/atoms (+ organism de logo no Header) |
+| Tokens | `tokens/` | `spacing` (+ `SpacerEdge`), `sizes`, `colors`, `radius`, `tone` / `toneColorMap`, tipografia / icon / loading / button / input / card por **variant** ou maps, mapa de `primary` por data-source |
+| Atoms | `atoms/` | Typography, Icon, Spacer, Loading, Button, Input — selecionam `variant` / `tone` / edge / state dos tokens; sem `style` público; Icon/Loading sem `size` na API |
+| Molecules | `molecules/` | Container, Header, InputField, Card — compostos de tokens/atoms (+ organism de logo no Header); Badge/Avatar deferidos |
 | Organisms | `organisms/` | `DataSourceLogo` nesta fatia; **telas de produto** (busca, detalhes, issues) serão organisms sob o DS nas features seguintes |
 
 **Shape de cada componente** (`atoms` / `molecules` / `organisms`):

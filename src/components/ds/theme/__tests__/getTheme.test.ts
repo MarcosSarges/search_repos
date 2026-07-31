@@ -1,5 +1,8 @@
 import { getTheme } from '../theme';
+import { button } from '../../tokens/button';
+import { card } from '../../tokens/card';
 import { colors } from '../../tokens/colors';
+import { input } from '../../tokens/input';
 
 describe('getTheme primary by dataSource (DS-02)', () => {
   it('WHEN dataSource is github and mode is light THEN primary is #0FBF3E', () => {
@@ -37,5 +40,15 @@ describe('getTheme primary by dataSource (DS-02)', () => {
     expect(theme.colors).toEqual(expect.objectContaining(modeColors));
     expect(theme.mode).toBe('dark');
     expect(theme.dataSource).toBe('github');
+  });
+});
+
+describe('getTheme control token slices (CTRL foundation)', () => {
+  it('WHEN getTheme is called THEN theme exposes button input and card token slices', () => {
+    const theme = getTheme('light');
+
+    expect(theme.button).toBe(button);
+    expect(theme.input).toBe(input);
+    expect(theme.card).toBe(card);
   });
 });

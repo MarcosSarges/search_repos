@@ -140,11 +140,11 @@
 
 ## Handoff
 
-- **Feature**: ds-atom-patterns (AD-017 unify)
-- **Phase / Task**: Complete — gate green
-- **Completed**: icon/loading tokens; SpacerEdge in tokens; Icon/Loading variant API; Spacer optional size; AD-017; README
+- **Feature**: ds-controls
+- **Phase / Task**: Complete — Verifier PASS
+- **Completed**: T1–T6 (d8f2a06…3a7a3b7); validation PASS (125 tests; sensor 3/3 killed; 1 Typography precision gap on InputField label — non-blocking)
 - **In-progress**: none
-- **Next step**: Commit changes if desired; next product feature
+- **Next step**: Optional commit of `validation.md` / STATE; next product feature or Badge/Avatar
 - **Blockers**: none
-- **Uncommitted files**: DS tokens/atoms/theme/README/STATE + prior .specs artifacts
+- **Uncommitted files**: `.specs/STATE.md`, `.specs/features/ds-controls/validation.md` (if present)
 - **Branch**: `feat/design-system`
