@@ -125,10 +125,21 @@ O Design System em `src/components/ds/` segue **Atomic Design**:
 
 | Nível | Pasta | O que entra |
 | --- | --- | --- |
-| Tokens | `tokens/` | `spacing`, `sizes`, `colors` (claro/escuro), `radius`, mapa de `primary` por data-source |
+| Tokens | `tokens/` | `spacing`, `sizes`, `colors` (claro/escuro), `radius`, tipografia (`fontFamily` / `fontWeight` / `lineHeight` por variant), mapa de `primary` por data-source |
 | Atoms | `atoms/` | Typography, Icon, Spacer, Loading — props controladas (`variant` / `size` / `tone` / edge); sem `style` público |
 | Molecules | `molecules/` | Container, Header — compostos de tokens/atoms (+ organism de logo no Header) |
 | Organisms | `organisms/` | `DataSourceLogo` nesta fatia; **telas de produto** (busca, detalhes, issues) serão organisms sob o DS nas features seguintes |
+
+**Shape de cada componente** (`atoms` / `molecules` / `organisms`):
+
+| Arquivo | Papel |
+| --- | --- |
+| `index.ts` | export público |
+| `<Name>.tsx` | composição apenas |
+| `<Name>.stories.tsx` | Storybook |
+| `styles.tsx` | **único** lugar que instancia `styled(...)` |
+
+Estilos do DS usam sempre `styled-components` (sem `StyleSheet` / `style` solto para chrome). Lookups de variant/tone/size/asset usam object maps, não `switch`.
 
 **Por que logos de marca são organisms:** assets oficiais (GitHub Invertocat claro/escuro, GitLab SVG) e regras de marca não são ícones de UI genéricos. Imports de SVG de marca ficam **somente** em `DataSourceLogo` — molecules/telas consomem o organism, nunca o arquivo SVG direto.
 
