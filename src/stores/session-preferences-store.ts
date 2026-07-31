@@ -11,10 +11,13 @@ export const SESSION_PREFERENCES_STORAGE_KEY = 'searchrepos:session-preferences'
 export type SessionPreferencesState = {
   mode: ThemeMode;
   dataSource: DataSource;
+  /** True after persist rehydrate finishes (success or storage error). Not persisted. */
+  hasHydrated: boolean;
   setMode: (mode: ThemeMode) => void;
   toggleMode: () => void;
   setDataSource: (dataSource: DataSource) => void;
   toggleDataSource: () => void;
+  setHasHydrated: (hasHydrated: boolean) => void;
   /** Restores defaults in memory and clears the persist storage key. */
   reset: () => void;
 };
@@ -49,16 +52,16 @@ export type CreateSessionPreferencesStoreOptions = {
   storage?: StateStorage;
 };
 
-export function createSessionPreferencesStore(
-  options: CreateSessionPreferencesStoreOptions = {},
-) {
+export function createSessionPreferencesStore(options: CreateSessionPreferencesStoreOptions = {}) {
   let clearPersisted: () => void = () => {};
+  let markHydrated: () => void = () => {};
 
   const store = create<SessionPreferencesState>()(
     persist(
       (set) => ({
         mode: systemThemeMode(),
         dataSource: 'github',
+        hasHydrated: false,
         setMode: (mode) => set({ mode }),
         toggleMode: () => set((state) => ({ mode: state.mode === 'light' ? 'dark' : 'light' })),
         setDataSource: (dataSource) => set({ dataSource }),
@@ -66,6 +69,7 @@ export function createSessionPreferencesStore(
           set((state) => ({
             dataSource: state.dataSource === 'github' ? 'gitlab' : 'github',
           })),
+        setHasHydrated: (hasHydrated) => set({ hasHydrated }),
         reset: () => {
           set({ mode: systemThemeMode(), dataSource: 'github' });
           clearPersisted();
@@ -92,12 +96,19 @@ export function createSessionPreferencesStore(
             ...sanitized,
           };
         },
+        onRehydrateStorage: () => () => {
+          // Always mark ready — success or storage read/parse failure (TPH-04 / splash gate).
+          markHydrated();
+        },
       },
     ),
   );
 
   clearPersisted = () => {
     store.persist.clearStorage();
+  };
+  markHydrated = () => {
+    store.setState({ hasHydrated: true });
   };
 
   return store;

@@ -89,6 +89,36 @@ describe('session-preferences store (TPH-01..04)', () => {
     expect(store.getState().dataSource).toBe('github');
   });
 
+  it('WHEN storage has corrupt JSON THEN mode falls back to system scheme and dataSource is github', async () => {
+    const memory = createMemoryStorage();
+    await memory.setItem(SESSION_PREFERENCES_STORAGE_KEY, '{not-valid-json');
+
+    jest.spyOn(Appearance, 'getColorScheme').mockReturnValue('dark');
+    const store = createSessionPreferencesStore({ storage: memory });
+    await store.persist.rehydrate();
+
+    expect(store.getState().mode).toBe('dark');
+    expect(store.getState().dataSource).toBe('github');
+  });
+
+  it('WHEN storage getItem throws THEN store still becomes ready with system mode and github', async () => {
+    const failingStorage = {
+      getItem: async () => {
+        throw new Error('read failed');
+      },
+      setItem: async () => undefined,
+      removeItem: async () => undefined,
+    };
+
+    jest.spyOn(Appearance, 'getColorScheme').mockReturnValue('light');
+    const store = createSessionPreferencesStore({ storage: failingStorage });
+    await store.persist.rehydrate();
+
+    expect(store.getState().mode).toBe('light');
+    expect(store.getState().dataSource).toBe('github');
+    expect(store.getState().hasHydrated).toBe(true);
+  });
+
   it('WHEN reset is called THEN in-memory defaults apply and storage key is cleared', async () => {
     const memory = createMemoryStorage();
     const store = createSessionPreferencesStore({ storage: memory });

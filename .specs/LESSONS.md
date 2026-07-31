@@ -86,6 +86,30 @@ Seen once or not yet corroborated. Tracked, not trusted.
 - evidence: CTRL-03 AC1 / InputField.test.tsx:18 (src/components/ds)
 - last seen: 2026-07-31T19:40:55Z
 
+### L-013 — Add store tests for corrupt JSON and storage read failures asserting system mode plus github fallback.
+- signal: `ac_gap` · recurrence: 1 feature(s) · scope: `stores/persist` · harmful: 0
+- features: theme-persist-home
+- evidence: TPH-04 | session-preferences-store.test.ts (no corrupt/read-fail test) (stores/persist)
+- last seen: 2026-07-31T21:10:04Z
+
+### L-014 — After UI toggle actions assert the persist storage key contains the new mode or dataSource value.
+- signal: `ac_gap` · recurrence: 1 feature(s) · scope: `screens/persist` · harmful: 0
+- features: theme-persist-home
+- evidence: TPH-09 | HomeScreen.test.tsx:30-40 (mode toggle only in-memory) (screens/persist)
+- last seen: 2026-07-31T21:10:04Z
+
+### L-015 — Hydration gates need a runtime test that children are absent before onFinishHydration not only static source regex.
+- signal: `spec_precision_gap` · recurrence: 1 feature(s) · scope: `providers/hydration` · harmful: 0
+- features: theme-persist-home
+- evidence: TPH-05 | AppThemeProvider.test.tsx:120-125 (source inspection only) (providers/hydration)
+- last seen: 2026-07-31T21:10:05Z
+
+### L-016 — Run pnpm lint before Verifier gate or exclude auto-generated storybook requires from eslint until formatted.
+- signal: `gate_fail` · recurrence: 1 feature(s) · scope: `tooling/lint` · harmful: 0
+- features: theme-persist-home
+- evidence: validation.md gate | .rnstorybook/storybook.requires.ts prettier 13 errors (tooling/lint)
+- last seen: 2026-07-31T21:10:05Z
+
 ## Quarantined (failed when applied — ignore)
 
 A confirmed lesson that recurred alongside failure. Kept for the maintainer to review.

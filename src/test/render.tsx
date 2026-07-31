@@ -20,13 +20,15 @@ const initialSafeAreaMetrics = {
 };
 
 function seedSessionPreferences(themeMode?: ThemeMode, dataSource?: DataSource) {
-  const { setMode, setDataSource } = useSessionPreferencesStore.getState();
+  const state = useSessionPreferencesStore.getState();
   if (themeMode !== undefined) {
-    setMode(themeMode);
+    state.setMode(themeMode);
   }
   if (dataSource !== undefined) {
-    setDataSource(dataSource);
+    state.setDataSource(dataSource);
   }
+  // Jest mock reset restores hasHydrated:false; re-arm gate for each render.
+  state.setHasHydrated(true);
 }
 
 export function AllTheProviders({ children }: { children: ReactNode }) {
@@ -44,7 +46,7 @@ type CustomRenderOptions = Omit<RenderOptions, 'wrapper'> & {
 
 async function waitForSessionHydration() {
   await waitFor(() => {
-    expect(useSessionPreferencesStore.persist.hasHydrated()).toBe(true);
+    expect(useSessionPreferencesStore.getState().hasHydrated).toBe(true);
   });
 }
 
