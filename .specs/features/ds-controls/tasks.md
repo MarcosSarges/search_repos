@@ -140,16 +140,17 @@ T6
 
 **Done when**:
 
-- [ ] AD-012 folder shape; no public `style`; object maps for state chrome
-- [ ] leading → field → trailing order; controlled value/onChangeText work
-- [ ] `state="error"` vs default border from tokens
-- [ ] Stories: default, slots, error
-- [ ] Exported from atoms barrel
-- [ ] Gate: `pnpm test`
+- [x] AD-012 folder shape; no public `style`; object maps for state chrome
+- [x] leading → field → trailing order; controlled value/onChangeText work
+- [x] `state="error"` vs default border from tokens
+- [x] Stories: default, slots, error
+- [x] Exported from atoms barrel
+- [x] Gate: `pnpm test`
 
 **Tests**: unit  
 **Gate**: quick  
-**Commit**: `feat(ds): add Input atom`
+**Commit**: `feat(ds): add Input atom`  
+**Status**: Done
 
 ---
 

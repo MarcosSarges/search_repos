@@ -160,7 +160,7 @@ A fatia `design-system` entregou foundation (tokens, Typography, Icon, Spacer, L
 | Requirement ID | Story | Phase | Status |
 | --- | --- | --- | --- |
 | CTRL-01 | P1: Button atom | Tasks | Verified |
-| CTRL-02 | P1: Input atom | Tasks | Implementing |
+| CTRL-02 | P1: Input atom | Tasks | Verified |
 | CTRL-03 | P1: InputField molecule | Tasks | Pending |
 | CTRL-04 | P1: Card molecule | Tasks | Implementing |
 | CTRL-05 | P1: Atomic docs + barrels | Tasks | Pending |
@@ -169,7 +169,7 @@ A fatia `design-system` entregou foundation (tokens, Typography, Icon, Spacer, L
 
 **Status values:** Pending → In Design → In Tasks → Implementing → Verified
 
-**Coverage:** 5 total, 5 mapped to tasks (T1 foundation for CTRL-01/02/04; T2–T6 pending)
+**Coverage:** 5 total, 5 mapped to tasks (T1–T3 done; T4–T6 pending)
 
 ---
 
