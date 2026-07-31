@@ -1,9 +1,6 @@
-import { View } from 'react-native';
-
 import type { Spacing } from '@/components/ds/tokens';
-import { useTheme } from '@/components/ds/theme';
 
-type SpacerEdge = 'top' | 'bottom' | 'left' | 'right';
+import { StyledSpacer, type SpacerEdge } from './styles';
 
 type SpacerBase = {
   size: Spacing;
@@ -17,20 +14,29 @@ export type SpacerProps = SpacerBase &
     | { right: true; top?: never; bottom?: never; left?: never }
   );
 
+const edgeFlagMap = {
+  top: 'top',
+  bottom: 'bottom',
+  left: 'left',
+  right: 'right',
+} as const satisfies Record<SpacerEdge, SpacerEdge>;
+
 function resolveEdge(props: SpacerProps): SpacerEdge {
-  if (props.top) return 'top';
-  if (props.bottom) return 'bottom';
-  if (props.left) return 'left';
-  if (props.right) return 'right';
-  throw new Error('Spacer requires exactly one edge: top | bottom | left | right');
+  const flags: SpacerEdge[] = [];
+  if (props.top) flags.push(edgeFlagMap.top);
+  if (props.bottom) flags.push(edgeFlagMap.bottom);
+  if (props.left) flags.push(edgeFlagMap.left);
+  if (props.right) flags.push(edgeFlagMap.right);
+
+  if (flags.length !== 1) {
+    throw new Error('Spacer requires exactly one edge: top | bottom | left | right');
+  }
+
+  return flags[0];
 }
 
 export function Spacer(props: SpacerProps) {
-  const theme = useTheme();
   const edge = resolveEdge(props);
-  const value = theme.spacing[props.size];
 
-  const style = edge === 'top' || edge === 'bottom' ? { height: value } : { width: value };
-
-  return <View testID="ds-spacer" style={style} />;
+  return <StyledSpacer testID="ds-spacer" $edge={edge} $spacing={props.size} />;
 }
