@@ -2,8 +2,8 @@ import type { StorybookConfig } from '@storybook/react-native';
 
 const main: StorybookConfig = {
   stories: [
-    './stories/**/*.stories.?(ts|tsx|js|jsx)',
-    '../src/components/ds/**/*.stories.?(ts|tsx|js|jsx)', // paths relative to this file
+    // Primary catalog: Design System (Atomic Design)
+    '../src/components/ds/**/*.stories.?(ts|tsx|js|jsx)',
   ],
   deviceAddons: ['@storybook/addon-ondevice-controls', '@storybook/addon-ondevice-actions'],
 };

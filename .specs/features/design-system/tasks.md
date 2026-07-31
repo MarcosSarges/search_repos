@@ -9,7 +9,7 @@ Implement these tasks with the `tlc-spec-driven` skill: **activate it by name an
 ---
 
 **Design**: `.specs/features/design-system/design.md`  
-**Status**: In Progress
+**Status**: Complete (Batch 2 T9–T13)
 
 ---
 
@@ -378,10 +378,10 @@ T12 → T13
 - Skill: `tlc-spec-driven`
 
 **Done when**:
-- [ ] README documents tokens/atoms/molecules/organisms + logo rationale
-- [ ] Template demos removed or clearly separated from DS
-- [ ] Barrel exports only Atomic public API
-- [ ] Gate: `pnpm test` && `pnpm lint`
+- [x] README documents tokens/atoms/molecules/organisms + logo rationale
+- [x] Template demos removed or clearly separated from DS
+- [x] Barrel exports only Atomic public API
+- [x] Gate: `pnpm test` && `pnpm lint`
 
 **Tests**: none  
 **Gate**: build  
