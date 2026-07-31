@@ -1,5 +1,5 @@
-import styled from 'styled-components/native';
 import { Text as RNText, type TextProps as RNTextProps } from 'react-native';
+import styled from 'styled-components/native';
 
 import type { Size } from '@/components/ds/tokens';
 

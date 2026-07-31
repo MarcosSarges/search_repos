@@ -26,9 +26,7 @@ describe('Header molecule (DS-08, DS-09)', () => {
   });
 
   it('WHEN trailing is provided THEN it renders the trailing action', async () => {
-    await render(
-      <Header title="Home" trailing={<View testID="ds-header-trailing" />} />,
-    );
+    await render(<Header title="Home" trailing={<View testID="ds-header-trailing" />} />);
 
     expect(screen.getByTestId('ds-header-trailing')).toBeTruthy();
   });

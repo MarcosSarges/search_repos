@@ -30,8 +30,7 @@ export function Spacer(props: SpacerProps) {
   const edge = resolveEdge(props);
   const value = theme.spacing[props.size];
 
-  const style =
-    edge === 'top' || edge === 'bottom' ? { height: value } : { width: value };
+  const style = edge === 'top' || edge === 'bottom' ? { height: value } : { width: value };
 
   return <View testID="ds-spacer" style={style} />;
 }

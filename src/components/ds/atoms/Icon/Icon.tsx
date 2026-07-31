@@ -13,10 +13,7 @@ export type IconProps = {
   tone?: IconTone;
 };
 
-function resolveToneColor(
-  tone: IconTone,
-  colors: ReturnType<typeof useTheme>['colors'],
-): string {
+function resolveToneColor(tone: IconTone, colors: ReturnType<typeof useTheme>['colors']): string {
   switch (tone) {
     case 'muted':
       return colors.muted;

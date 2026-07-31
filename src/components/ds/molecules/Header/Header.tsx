@@ -24,8 +24,7 @@ export function Header({ title, trailing }: HeaderProps) {
         paddingHorizontal: theme.spacing.md,
         backgroundColor: theme.colors.background,
       }}
-      accessibilityRole="header"
-    >
+      accessibilityRole="header">
       <DataSourceLogo size="lg" />
       <View style={{ flex: 1 }}>
         <Typography variant="heading" size="lg">

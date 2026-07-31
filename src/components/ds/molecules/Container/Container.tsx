@@ -28,8 +28,7 @@ export function Container({
         padding: theme.spacing[padding],
         backgroundColor: theme.colors[tone],
         ...(flex ? { flex: 1 } : null),
-      }}
-    >
+      }}>
       {children}
     </View>
   );
