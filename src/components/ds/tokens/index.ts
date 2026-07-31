@@ -12,3 +12,6 @@ export type { Size } from './sizes';
 
 export { spacing } from './spacing';
 export type { Spacing } from './spacing';
+
+export { typography, SYSTEM_FONT_FAMILY } from './typography';
+export type { TypographyToken, TypographyVariant } from './typography';

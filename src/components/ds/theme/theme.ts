@@ -5,6 +5,7 @@ import { colors, type ColorToken } from '../tokens/colors';
 import { radius } from '../tokens/radius';
 import { sizes } from '../tokens/sizes';
 import { spacing } from '../tokens/spacing';
+import { typography } from '../tokens/typography';
 
 export type ThemeMode = 'light' | 'dark';
 
@@ -15,6 +16,7 @@ export type AppTheme = {
   spacing: typeof spacing;
   sizes: typeof sizes;
   radius: typeof radius;
+  typography: typeof typography;
 };
 
 const DEFAULT_DATA_SOURCE: DataSource = 'github';
@@ -32,6 +34,7 @@ export function getTheme(mode: ThemeMode, dataSource: DataSource = DEFAULT_DATA_
     spacing,
     sizes,
     radius,
+    typography,
   };
 }
 
