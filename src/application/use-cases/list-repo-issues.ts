@@ -1,9 +1,4 @@
-import {
-  createAppError,
-  type Issue,
-  type PaginatedResult,
-  type RepoRepository,
-} from '@/domain';
+import { createAppError, type Issue, type PaginatedResult, type RepoRepository } from '@/domain';
 
 export type ListRepoIssuesInput = {
   repoId: string;

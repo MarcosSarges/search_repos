@@ -62,7 +62,7 @@ pnpm storybook
 # depois abra no Expo Go / emulador
 ```
 
-Stories do Design System em `src/components/ds/**/*.stories.tsx`. Exemplos do template ficam em `.rnstorybook/stories/`.
+Stories do Design System em `src/components/ds/**/*.stories.tsx` (títulos `DS/Atoms|Molecules|Organisms/...`). Controles globais `themeMode` e `dataSource` no preview.
 
 ## Funcionalidades
 
@@ -121,16 +121,33 @@ Resultado: trocar GitHub ↔ GitLab não exige reiniciar o aplicativo nem altera
 
 ### Design System
 
-- Tokens tipados em `src/components/ds/tokens/`: `spacing`, `sizes`, `colors` (claro/escuro), `radius`
-- **styled-components** + `AppThemeProvider` / `useTheme` / `useAppTheme` (alternância claro/escuro)
-- Componentes base com props controladas (`variant`, `size`, `tone`): Text/Heading, Button, Input, Card, Badge, Avatar
-- Desenvolvimento no **Storybook** no dispositivo (`pnpm storybook`) — stories ao lado dos componentes
-- Tela Showcase no aplicativo com variações e chave claro/escuro
-- Telas evitam `style` solto; preferem props do Design System
+O Design System em `src/components/ds/` segue **Atomic Design**:
 
-Não reaproveitei o tema do template Expo (`ThemedText` com override de cor por instância) como Design System final — não atende tokens / `variant` / `size` do enunciado.
+| Nível | Pasta | O que entra |
+| --- | --- | --- |
+| Tokens | `tokens/` | `spacing` (+ `SpacerEdge`), `sizes`, `colors`, `radius`, `tone` / `toneColorMap`, tipografia / icon / loading por **variant**, mapa de `primary` por data-source |
+| Atoms | `atoms/` | Typography, Icon, Spacer, Loading — selecionam `variant` / `tone` / edge dos tokens; sem `style` público; Icon/Loading sem `size` na API |
+| Molecules | `molecules/` | Container, Header — compostos de tokens/atoms (+ organism de logo no Header) |
+| Organisms | `organisms/` | `DataSourceLogo` nesta fatia; **telas de produto** (busca, detalhes, issues) serão organisms sob o DS nas features seguintes |
 
-Storybook via troca do ponto de entrada (`STORYBOOK_ENABLED=true`): o Metro troca o entry do aplicativo pelo Storybook, sem embutir a interface do Storybook no pacote de produção.
+**Shape de cada componente** (`atoms` / `molecules` / `organisms`):
+
+| Arquivo | Papel |
+| --- | --- |
+| `index.ts` | export público (`Name` + `NameProps`) |
+| `<Name>.tsx` | composição + defaults de a11y + `...rest` (exceto Spacer: props fechadas) |
+| `<Name>.stories.tsx` | Storybook |
+| `styles.tsx` | **único** lugar que instancia `styled(...)` — sem unions de domínio |
+
+Estilos do DS usam sempre `styled-components` (template para CSS; `.attrs` só para props de host third-party como Ionicons/ActivityIndicator). Lookups via object maps nos tokens, não `switch`.
+
+**Por que logos de marca são organisms:** assets oficiais (GitHub Invertocat claro/escuro, GitLab SVG) e regras de marca não são ícones de UI genéricos. Imports de SVG de marca ficam **somente** em `DataSourceLogo` — molecules/telas consomem o organism, nunca o arquivo SVG direto.
+
+**Tema:** `AppThemeProvider` + `getTheme(mode, dataSource)` — light/dark para o restante da paleta; só `primary` muda entre GitHub e GitLab.
+
+**Storybook** no dispositivo (`pnpm storybook`): catálogo Atomic ao lado dos componentes; toolbar/globals para `themeMode` e `dataSource`. Não embute a UI do Storybook no pacote de produção (`STORYBOOK_ENABLED`).
+
+Não reaproveitei o tema do template Expo (`ThemedText` com override de cor por instância) como Design System final — não atende tokens / props controladas do enunciado.
 
 ### Cache
 

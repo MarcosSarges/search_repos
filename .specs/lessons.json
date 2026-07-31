@@ -3,6 +3,205 @@
   "promote_threshold": 2,
   "window_days": 45,
   "quarantine_threshold": 2,
-  "next_id": 1,
-  "lessons": []
+  "next_id": 12,
+  "lessons": [
+    {
+      "id": "L-001",
+      "key": "gate_fail::run the build gate lint command before marking a feature done prettier eslint errors in touched files fail the gate even when tests pass",
+      "text": "Run the Build gate lint command before marking a feature done; prettier/eslint errors in touched files fail the gate even when tests pass",
+      "signal": "gate_fail",
+      "scope": "lint",
+      "status": "candidate",
+      "features": [
+        "design-system"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "validation.md Gate Check — 5 prettier/prettier errors in Icon/Spacer/Container/Header (lint)"
+      ],
+      "created": "2026-07-31T13:50:22Z",
+      "last_seen": "2026-07-31T13:50:22Z"
+    },
+    {
+      "id": "L-002",
+      "key": "ac_gap::when a provider api changes theme values at runtime assert the resolved consumer value e g theme colors primary not only the setter state field",
+      "text": "When a provider API changes theme values at runtime, assert the resolved consumer value (e.g. theme.colors.primary), not only the setter state field",
+      "signal": "ac_gap",
+      "scope": "theme",
+      "status": "candidate",
+      "features": [
+        "design-system"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "DS-02 AC4 — AppThemeProvider.test.tsx lacks theme.colors.primary after setDataSource (theme)"
+      ],
+      "created": "2026-07-31T13:50:22Z",
+      "last_seen": "2026-07-31T13:50:22Z"
+    },
+    {
+      "id": "L-003",
+      "key": "ac_gap::when a component reads a theme token that depends on context assert it updates after the context value that drives that token changes",
+      "text": "When a component reads a theme token that depends on context, assert it updates after the context value that drives that token changes",
+      "signal": "ac_gap",
+      "scope": "ds-atoms",
+      "status": "candidate",
+      "features": [
+        "design-system"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "Edge case Typography tone=primary + dataSource flip — no file:line evidence (ds-atoms)"
+      ],
+      "created": "2026-07-31T13:50:22Z",
+      "last_seen": "2026-07-31T13:50:22Z"
+    },
+    {
+      "id": "L-004",
+      "key": "spec_precision_gap::spec outcomes that offer alternative values a or b without a decision rule must be tightened before execute so tests know which to assert",
+      "text": "Spec outcomes that offer alternative values (A or B) without a decision rule must be tightened before Execute so tests know which to assert",
+      "signal": "spec_precision_gap",
+      "scope": "spec",
+      "status": "candidate",
+      "features": [
+        "design-system"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "Atoms Loading AC — primary (or muted) without when-muted rule (spec)"
+      ],
+      "created": "2026-07-31T13:50:22Z",
+      "last_seen": "2026-07-31T13:50:22Z"
+    },
+    {
+      "id": "L-005",
+      "key": "spec_deviation::every ds component folder must ship index ts component tsx component stories tsx and styles tsx with styled components defined only in styles tsx",
+      "text": "Every DS component folder must ship index.ts, Component.tsx, Component.stories.tsx, and styles.tsx with styled-components defined only in styles.tsx",
+      "signal": "spec_deviation",
+      "scope": "src/components/ds",
+      "status": "candidate",
+      "features": [
+        "design-system"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "src/components/ds/atoms/Typography/Typography.tsx:15 (src/components/ds)"
+      ],
+      "created": "2026-07-31T14:04:20Z",
+      "last_seen": "2026-07-31T14:04:20Z"
+    },
+    {
+      "id": "L-006",
+      "key": "spec_deviation::ds visual styles must always use styled components never stylesheet create or free style props for ds chrome",
+      "text": "DS visual styles must always use styled-components; never StyleSheet.create or free style props for DS chrome",
+      "signal": "spec_deviation",
+      "scope": "src/components/ds",
+      "status": "candidate",
+      "features": [
+        "design-system"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "src/components/ds/atoms/Typography/Typography.tsx:15 (src/components/ds)"
+      ],
+      "created": "2026-07-31T14:04:20Z",
+      "last_seen": "2026-07-31T14:04:20Z"
+    },
+    {
+      "id": "L-007",
+      "key": "spec_deviation::resolve ds variant tone size lookups with object maps not switch case in styled layers and token helpers",
+      "text": "Resolve DS variant/tone/size lookups with object maps, not switch/case, in styled layers and token helpers",
+      "signal": "spec_deviation",
+      "scope": "src/components/ds",
+      "status": "candidate",
+      "features": [
+        "design-system"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "src/components/ds/atoms/Typography/Typography.tsx:22 (src/components/ds)"
+      ],
+      "created": "2026-07-31T14:04:20Z",
+      "last_seen": "2026-07-31T14:04:20Z"
+    },
+    {
+      "id": "L-008",
+      "key": "spec_deviation::typography variant tokens must include fontfamily fontweight and lineheight rn text only respects a family when fontfamily is declared",
+      "text": "Typography variant tokens must include fontFamily, fontWeight, and lineHeight; RN text only respects a family when fontFamily is declared",
+      "signal": "spec_deviation",
+      "scope": "src/components/ds/tokens",
+      "status": "candidate",
+      "features": [
+        "design-system"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "src/components/ds/atoms/Typography/Typography.tsx:34 (src/components/ds/tokens)"
+      ],
+      "created": "2026-07-31T14:04:21Z",
+      "last_seen": "2026-07-31T14:04:21Z"
+    },
+    {
+      "id": "L-009",
+      "key": "surviving_mutant::when asserting asset logo selection verify the mapped component identity or rendered svg source not only a testid derived from the lookup key",
+      "text": "When asserting asset/logo selection, verify the mapped component identity (or rendered SVG source), not only a testID derived from the lookup key",
+      "signal": "surviving_mutant",
+      "scope": "ds/organisms",
+      "status": "candidate",
+      "features": [
+        "ds-conventions"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "DataSourceLogo.test.tsx:logoComponentMap swap mutant (ds/organisms)"
+      ],
+      "created": "2026-07-31T14:24:58Z",
+      "last_seen": "2026-07-31T14:24:58Z"
+    },
+    {
+      "id": "L-010",
+      "key": "surviving_mutant::assert exact per variant token metric values e g body fontweight 400 not a union regex that accepts every legal enum member",
+      "text": "Assert exact per-variant token metric values (e.g. body fontWeight '400'), not a union regex that accepts every legal enum member",
+      "signal": "surviving_mutant",
+      "scope": "ds/tokens",
+      "status": "candidate",
+      "features": [
+        "ds-conventions"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "tokens/typography.ts body fontWeight 400→600; typography.test.ts:12 (ds/tokens)"
+      ],
+      "created": "2026-07-31T14:33:47Z",
+      "last_seen": "2026-07-31T14:33:47Z"
+    },
+    {
+      "id": "L-011",
+      "key": "spec_precision_gap::when the spec requires precise token values pin each variant field to its defined literal in unit tests",
+      "text": "When the spec requires precise token values, pin each variant field to its defined literal in unit tests",
+      "signal": "spec_precision_gap",
+      "scope": "ds/tokens",
+      "status": "candidate",
+      "features": [
+        "ds-conventions"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "DSC-03 AC6 precise token values; typography.test.ts:12 (ds/tokens)"
+      ],
+      "created": "2026-07-31T14:33:47Z",
+      "last_seen": "2026-07-31T14:33:47Z"
+    }
+  ]
 }

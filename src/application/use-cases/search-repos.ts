@@ -1,9 +1,4 @@
-import {
-  createAppError,
-  type PaginatedResult,
-  type Repo,
-  type RepoRepository,
-} from '@/domain';
+import { createAppError, type PaginatedResult, type Repo, type RepoRepository } from '@/domain';
 
 export type SearchReposInput = {
   query: string;
