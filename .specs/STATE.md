@@ -138,13 +138,21 @@
 - **Date**: 2026-07-31
 - **Status**: active
 
+### AD-018
+- **Decision**: Preferências de sessão (`mode`, `dataSource`) vivem em Zustand + `persist` (AsyncStorage); `AppThemeProvider` é bridge (hydrate gate + `StyledThemeProvider`), sem `useState` paralelo. Limpeza runtime via `reset()` (`set` initial + `persist.clearStorage()`); testes via `__mocks__/zustand.ts` (docs Jest).
+- **Reason**: Único ponto de decisão de fonte (AD-002), sobrevive a cold start, sem flash (gate), alinhado ao enunciado light/dark + seletor.
+- **Trade-off**: Dependência Zustand; hydrate async exige splash/gate.
+- **Scope**: `src/stores/**`, `AppThemeProvider`, Home chrome, nav theme sync
+- **Date**: 2026-07-31
+- **Status**: active
+
 ## Handoff
 
-- **Feature**: ds-controls
-- **Phase / Task**: Complete — Verifier PASS
-- **Completed**: T1–T6 (d8f2a06…3a7a3b7); validation PASS (125 tests; sensor 3/3 killed; 1 Typography precision gap on InputField label — non-blocking)
+- **Feature**: theme-persist-home
+- **Phase / Task**: Tasks — draft ready for approval
+- **Completed**: Specify, discuss, design (AD-018), tasks.md drafted (T1–T7)
 - **In-progress**: none
-- **Next step**: Optional commit of `validation.md` / STATE; next product feature or Badge/Avatar
+- **Next step**: User approves tasks → Execute (single batch, 7 tasks)
 - **Blockers**: none
-- **Uncommitted files**: `.specs/STATE.md`, `.specs/features/ds-controls/validation.md` (if present)
-- **Branch**: `feat/design-system`
+- **Uncommitted files**: `.specs/features/theme-persist-home/*`, `.specs/STATE.md`
+- **Branch**: current feature branch
