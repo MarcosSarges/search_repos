@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-native';
 import { Pressable } from 'react-native';
 
 import { Icon } from '@/components/ds/atoms';
+import { DataSourceLogo } from '@/components/ds/organisms';
 
 import { Header } from './Header';
 
@@ -20,9 +21,17 @@ export const Default: Story = {
   },
 };
 
+export const WithLeadingLogo: Story = {
+  args: {
+    title: 'Search Repos',
+    leading: <DataSourceLogo size="lg" />,
+  },
+};
+
 export const WithTrailing: Story = {
   args: {
     title: 'Search Repos',
+    leading: <DataSourceLogo size="lg" />,
     trailing: (
       <Pressable accessibilityRole="button" accessibilityLabel="Settings">
         <Icon name="settings-outline" variant="lg" />

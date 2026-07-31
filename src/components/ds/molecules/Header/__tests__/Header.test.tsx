@@ -13,16 +13,10 @@ describe('Header molecule (DS-08, DS-09)', () => {
     expect(screen.getByText('Repositories')).toBeTruthy();
   });
 
-  it('WHEN rendered THEN it shows DataSourceLogo for the active data source', async () => {
-    await render(<Header title="Home" />, { themeMode: 'light' });
+  it('WHEN leading is provided THEN it renders the leading slot', async () => {
+    await render(<Header title="Home" leading={<View testID="ds-header-leading" />} />);
 
-    expect(screen.getByTestId('ds-datasource-logo-github-black')).toBeTruthy();
-  });
-
-  it('WHEN mode is dark THEN DataSourceLogo switches to the white Invertocat', async () => {
-    await render(<Header title="Home" />, { themeMode: 'dark' });
-
-    expect(screen.getByTestId('ds-datasource-logo-github-white')).toBeTruthy();
+    expect(screen.getByTestId('ds-header-leading')).toBeTruthy();
   });
 
   it('WHEN trailing is provided THEN it renders the trailing action', async () => {
@@ -31,20 +25,34 @@ describe('Header molecule (DS-08, DS-09)', () => {
     expect(screen.getByTestId('ds-header-trailing')).toBeTruthy();
   });
 
-  it('WHEN trailing is omitted THEN title and logo still render', async () => {
+  it('WHEN leading and trailing are provided THEN both slots and title render', async () => {
+    await render(
+      <Header
+        title="Mid"
+        leading={<View testID="ds-header-leading" />}
+        trailing={<View testID="ds-header-trailing" />}
+      />,
+    );
+
+    expect(screen.getByTestId('ds-header')).toHaveTextContent('Mid');
+    expect(screen.getByTestId('ds-header-leading')).toBeTruthy();
+    expect(screen.getByTestId('ds-header-trailing')).toBeTruthy();
+  });
+
+  it('WHEN slots are omitted THEN only title chrome renders', async () => {
     await render(<Header title="Only chrome" />);
 
     expect(screen.getByText('Only chrome')).toBeTruthy();
-    expect(screen.getByTestId('ds-datasource-logo-github-black')).toBeTruthy();
+    expect(screen.queryByTestId('ds-header-leading')).toBeNull();
     expect(screen.queryByTestId('ds-header-trailing')).toBeNull();
   });
 
-  it('WHEN Header source is inspected THEN it does not import brand SVG assets', () => {
+  it('WHEN Header source is inspected THEN it does not import DataSourceLogo or brand assets', () => {
     const source = readFileSync(join(__dirname, '../Header.tsx'), 'utf8');
+    expect(source).not.toMatch(/DataSourceLogo/);
     expect(source).not.toMatch(/\.svg['"]/);
     expect(source).not.toMatch(/assets\/github/);
     expect(source).not.toMatch(/assets\/gitlab/);
-    expect(source).toMatch(/DataSourceLogo/);
   });
 
   it('WHEN public props are inspected THEN style is not part of the controlled API', () => {
