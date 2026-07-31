@@ -197,15 +197,16 @@ T6
 
 **Done when**:
 
-- [ ] Root applies surface/radius/border from card tokens (no Container import)
-- [ ] Compound members render in header→content→footer order; subset regions OK; empty shell OK
-- [ ] No public `style`; AD-012 shape; typed static members
-- [ ] Story with all three regions; exported from molecules barrel
-- [ ] Gate: `pnpm test`
+- [x] Root applies surface/radius/border from card tokens (no Container import)
+- [x] Compound members render in header→content→footer order; subset regions OK; empty shell OK
+- [x] No public `style`; AD-012 shape; typed static members
+- [x] Story with all three regions; exported from molecules barrel
+- [x] Gate: `pnpm test`
 
 **Tests**: unit  
 **Gate**: quick  
-**Commit**: `feat(ds): add Card molecule`
+**Commit**: `feat(ds): add Card molecule`  
+**Status**: Done
 
 ---
 
