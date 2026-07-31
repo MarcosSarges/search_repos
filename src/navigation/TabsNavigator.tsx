@@ -1,10 +1,9 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 
+import { useTheme } from '@/components/ds';
 import { HapticTab } from '@/components/haptic-tab';
 import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
 import type { TabsParamList } from '@/navigation/types';
 import { ExploreScreen } from '@/screens/ExploreScreen';
 import { HomeScreen } from '@/screens/HomeScreen';
@@ -12,12 +11,15 @@ import { HomeScreen } from '@/screens/HomeScreen';
 const Tabs = createBottomTabNavigator<TabsParamList>();
 
 export function TabsNavigator() {
-  const colorScheme = useColorScheme();
+  const theme = useTheme();
 
   return (
     <Tabs.Navigator
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarActiveTintColor: theme.colors.primary,
+        tabBarStyle: {
+          backgroundColor: theme.colors.surface,
+        },
         headerShown: false,
         tabBarButton: HapticTab,
       }}>
