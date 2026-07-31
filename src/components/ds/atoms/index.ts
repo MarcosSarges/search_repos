@@ -6,3 +6,6 @@ export type { IconProps } from './Icon';
 
 export { Spacer } from './Spacer';
 export type { SpacerProps } from './Spacer';
+
+export { Loading } from './Loading';
+export type { LoadingProps } from './Loading';
