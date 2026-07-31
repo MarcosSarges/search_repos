@@ -1,12 +1,14 @@
-import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react';
-import { useColorScheme } from 'react-native';
+import { useEffect, useLayoutEffect, useMemo, type ReactNode } from 'react';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components/native';
+import * as SplashScreen from 'expo-splash-screen';
 
 import type { DataSource } from '@/domain/entities/data-source';
+import { useHydration } from '@/stores/use-hydration';
+import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
 
 import { getTheme, type ThemeMode } from './theme';
 
-type ThemeContextValue = {
+export type AppThemeControls = {
   mode: ThemeMode;
   setMode: (mode: ThemeMode) => void;
   toggleMode: () => void;
@@ -14,55 +16,68 @@ type ThemeContextValue = {
   setDataSource: (dataSource: DataSource) => void;
 };
 
-const ThemeModeContext = createContext<ThemeContextValue | null>(null);
-
 type AppThemeProviderProps = {
   children?: ReactNode;
-  /** Força um modo inicial (útil no Storybook). Sem isso, segue o sistema. */
+  /** Seeds store mode (Storybook / tests). Prefer seeding the store before mount when possible. */
   initialMode?: ThemeMode;
-  /** Data source inicial; default `github`. */
+  /** Seeds store dataSource (Storybook / tests). */
   initialDataSource?: DataSource;
 };
+
+void SplashScreen.preventAutoHideAsync().catch(() => {
+  /* already prevented or native unavailable in tests */
+});
 
 export function AppThemeProvider({
   children,
   initialMode,
-  initialDataSource = 'github',
+  initialDataSource,
 }: AppThemeProviderProps) {
-  const systemScheme = useColorScheme();
-  const [mode, setMode] = useState<ThemeMode>(
-    initialMode ?? (systemScheme === 'dark' ? 'dark' : 'light'),
-  );
-  const [dataSource, setDataSource] = useState<DataSource>(initialDataSource ?? 'github');
+  const hydrated = useHydration();
+  const mode = useSessionPreferencesStore((state) => state.mode);
+  const dataSource = useSessionPreferencesStore((state) => state.dataSource);
 
-  const toggleMode = useCallback(() => {
-    setMode((current) => (current === 'light' ? 'dark' : 'light'));
-  }, []);
+  useLayoutEffect(() => {
+    const state = useSessionPreferencesStore.getState();
+    if (initialMode !== undefined && state.mode !== initialMode) {
+      state.setMode(initialMode);
+    }
+    if (initialDataSource !== undefined && state.dataSource !== initialDataSource) {
+      state.setDataSource(initialDataSource);
+    }
+  }, [initialMode, initialDataSource]);
+
+  useEffect(() => {
+    if (!hydrated) {
+      return;
+    }
+    void SplashScreen.hideAsync().catch(() => {
+      /* native splash unavailable in tests */
+    });
+  }, [hydrated]);
 
   const theme = useMemo(() => getTheme(mode, dataSource), [mode, dataSource]);
 
-  const value = useMemo(
-    () => ({
-      mode,
-      setMode,
-      toggleMode,
-      dataSource,
-      setDataSource,
-    }),
-    [mode, toggleMode, dataSource],
-  );
+  if (!hydrated) {
+    return null;
+  }
 
-  return (
-    <ThemeModeContext.Provider value={value}>
-      <StyledThemeProvider theme={theme}>{children}</StyledThemeProvider>
-    </ThemeModeContext.Provider>
-  );
+  return <StyledThemeProvider theme={theme}>{children}</StyledThemeProvider>;
 }
 
-export function useAppTheme() {
-  const ctx = useContext(ThemeModeContext);
-  if (!ctx) {
-    throw new Error('useAppTheme must be used within AppThemeProvider');
-  }
-  return ctx;
+/** Thin store wrapper — keeps the historical `useAppTheme` API for DS consumers. */
+export function useAppTheme(): AppThemeControls {
+  const mode = useSessionPreferencesStore((state) => state.mode);
+  const dataSource = useSessionPreferencesStore((state) => state.dataSource);
+  const setMode = useSessionPreferencesStore((state) => state.setMode);
+  const setDataSource = useSessionPreferencesStore((state) => state.setDataSource);
+  const toggleMode = useSessionPreferencesStore((state) => state.toggleMode);
+
+  return {
+    mode,
+    setMode,
+    toggleMode,
+    dataSource,
+    setDataSource,
+  };
 }

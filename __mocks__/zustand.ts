@@ -36,10 +36,10 @@ export const createStore = (<T>(stateCreator: ZustandExportedTypes.StateCreator<
 
 export const useStore = actualZustand.useStore;
 
-afterEach(() => {
-  act(() => {
-    storeResetFns.forEach((resetFn) => {
+afterEach(async () => {
+  await act(async () => {
+    for (const resetFn of storeResetFns) {
       resetFn();
-    });
+    }
   });
 });
