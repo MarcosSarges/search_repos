@@ -225,13 +225,14 @@ T6
 
 **Done when**:
 
-- [ ] README lists Button + Input under atoms; InputField + Card under molecules; Badge/Avatar still deferred/absent
-- [ ] `@/components/ds` can import Button, Input, InputField, Card
-- [ ] Gate: `pnpm test` && `pnpm lint`
+- [x] README lists Button + Input under atoms; InputField + Card under molecules; Badge/Avatar still deferred/absent
+- [x] `@/components/ds` can import Button, Input, InputField, Card
+- [x] Gate: `pnpm test` && `pnpm lint`
 
 **Tests**: none  
 **Gate**: full  
-**Commit**: `docs(ds): document Button Input InputField Card in Atomic table`
+**Commit**: `docs(ds): document Button Input InputField Card in Atomic table`  
+**Status**: Done
 
 ---
 

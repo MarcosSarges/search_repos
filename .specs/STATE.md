@@ -140,11 +140,11 @@
 
 ## Handoff
 
-- **Feature**: ds-atom-patterns (AD-017 unify)
-- **Phase / Task**: Complete — gate green
-- **Completed**: icon/loading tokens; SpacerEdge in tokens; Icon/Loading variant API; Spacer optional size; AD-017; README
+- **Feature**: ds-controls
+- **Phase / Task**: Execute Batch 2 complete (phases 3–4: T4→T5→T6)
+- **Completed**: T1–T6 (tokens, Button, Input, InputField, Card, README Atomic table); CTRL-01..05 Verified
 - **In-progress**: none
-- **Next step**: Commit changes if desired; next product feature
+- **Next step**: Verifier (author ≠ verifier) on ds-controls
 - **Blockers**: none
-- **Uncommitted files**: DS tokens/atoms/theme/README/STATE + prior .specs artifacts
+- **Uncommitted files**: none expected after Batch 2 commits
 - **Branch**: `feat/design-system`

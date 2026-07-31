@@ -163,13 +163,13 @@ A fatia `design-system` entregou foundation (tokens, Typography, Icon, Spacer, L
 | CTRL-02 | P1: Input atom | Tasks | Verified |
 | CTRL-03 | P1: InputField molecule | Tasks | Verified |
 | CTRL-04 | P1: Card molecule | Tasks | Verified |
-| CTRL-05 | P1: Atomic docs + barrels | Tasks | Pending |
+| CTRL-05 | P1: Atomic docs + barrels | Tasks | Verified |
 
 **ID format:** `CTRL-NN`
 
 **Status values:** Pending → In Design → In Tasks → Implementing → Verified
 
-**Coverage:** 5 total, 5 mapped to tasks (T1–T5 done; T6 pending)
+**Coverage:** 5 total, 5 mapped to tasks (T1–T6 done)
 
 ---
 

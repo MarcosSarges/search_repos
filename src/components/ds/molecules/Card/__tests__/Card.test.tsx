@@ -5,7 +5,13 @@ import { Text } from 'react-native';
 import { getTheme } from '@/components/ds/theme';
 import { cleanup, render, screen, within } from '@/test';
 
-import { Card, type CardContentProps, type CardFooterProps, type CardHeaderProps, type CardProps } from '../Card';
+import {
+  Card,
+  type CardContentProps,
+  type CardFooterProps,
+  type CardHeaderProps,
+  type CardProps,
+} from '../Card';
 
 describe('Card molecule (CTRL-04)', () => {
   afterEach(() => {

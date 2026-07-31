@@ -21,11 +21,7 @@ describe('InputField molecule (CTRL-03)', () => {
 
   it('WHEN helperText is set AND error is absent THEN it shows helperText below the Input', async () => {
     await render(
-      <InputField
-        helperText="We never share your email"
-        value=""
-        onChangeText={() => undefined}
-      />,
+      <InputField helperText="We never share your email" value="" onChangeText={() => undefined} />,
     );
 
     expect(screen.getByText('We never share your email')).toBeTruthy();
