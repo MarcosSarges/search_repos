@@ -1,23 +1,23 @@
 import { getTheme } from '../../theme/theme';
-import { SYSTEM_FONT_FAMILY, typography, type TypographyVariant } from '../typography';
-
-const VARIANTS: TypographyVariant[] = ['body', 'label', 'caption', 'heading'];
+import { SYSTEM_FONT_FAMILY, typography } from '../typography';
 
 describe('typography tokens (DSC-03)', () => {
-  it.each(VARIANTS)(
-    'WHEN variant is %s THEN token has fontFamily, fontWeight, and lineHeight',
-    (variant) => {
-      const token = typography[variant];
-      expect(token.fontFamily).toBe(SYSTEM_FONT_FAMILY);
-      expect(token.fontWeight).toMatch(/^400|600$/);
-      expect(typeof token.lineHeight).toBe('number');
-      expect(token.lineHeight).toBeGreaterThan(0);
+  it.each([
+    ['body', { fontFamily: SYSTEM_FONT_FAMILY, fontWeight: '400', lineHeight: 22 }],
+    ['label', { fontFamily: SYSTEM_FONT_FAMILY, fontWeight: '600', lineHeight: 22 }],
+    ['caption', { fontFamily: SYSTEM_FONT_FAMILY, fontWeight: '400', lineHeight: 18 }],
+    ['heading', { fontFamily: SYSTEM_FONT_FAMILY, fontWeight: '600', lineHeight: 34 }],
+  ] as const)(
+    'WHEN variant is %s THEN token has the exact fontFamily, fontWeight, and lineHeight',
+    (variant, expected) => {
+      expect(typography[variant]).toEqual(expected);
     },
   );
 
   it('WHEN getTheme runs THEN theme.typography exposes the typography token map', () => {
     const theme = getTheme('light', 'github');
     expect(theme.typography).toEqual(typography);
+    expect(theme.typography.body.fontWeight).toBe('400');
     expect(theme.typography.heading.fontWeight).toBe('600');
     expect(theme.typography.caption.lineHeight).toBe(18);
   });
