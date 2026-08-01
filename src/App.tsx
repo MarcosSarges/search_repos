@@ -1,5 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
+import { StatusBar } from 'expo-status-bar';
 import 'react-native-gesture-handler';
 import 'react-native-reanimated';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -27,6 +27,7 @@ let AppEntryPoint = App;
 
 // Render Storybook if storybookEnabled is true
 if (Constants.expoConfig?.extra?.storybookEnabled === 'true') {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   AppEntryPoint = require('../.rnstorybook').default;
 }
 

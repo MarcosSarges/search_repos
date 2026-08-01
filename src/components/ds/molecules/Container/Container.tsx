@@ -9,16 +9,26 @@ export type ContainerProps = {
   padding?: Spacing;
   tone?: SurfaceTone;
   flex?: boolean;
+  justify?: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly';
+  align?: 'start' | 'center' | 'end' | 'stretch' | 'baseline';
 };
 
 export function Container({
   children,
-  padding = 'md',
+  padding,
   tone = 'background',
   flex = false,
+  justify = 'start',
+  align = 'start',
 }: ContainerProps) {
   return (
-    <StyledContainer testID="ds-container" $padding={padding} $tone={tone} $flex={flex}>
+    <StyledContainer
+      testID="ds-container"
+      $padding={padding}
+      $tone={tone}
+      $flex={flex}
+      $justify={justify}
+      $align={align}>
       {children}
     </StyledContainer>
   );
