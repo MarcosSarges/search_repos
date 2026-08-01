@@ -1,8 +1,15 @@
 import { useEffect } from 'react';
-import { act, renderHook } from '@/test';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { Text, View } from 'react-native';
+import { waitFor } from '@testing-library/react-native';
+
+import { act, render, renderHook, screen } from '@/test';
+import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
+
 import { useAppTheme, useTheme } from '../';
 
-describe('AppThemeProvider dataSource (DS-02)', () => {
+describe('AppThemeProvider dataSource (DS-02 / TPH-05..06)', () => {
   it('WHEN provider mounts without initialDataSource THEN dataSource defaults to github', async () => {
     const { result } = await renderHook(() => useAppTheme());
     expect(result.current.dataSource).toBe('github');
@@ -101,5 +108,31 @@ describe('AppThemeProvider dataSource (DS-02)', () => {
     });
 
     expect(result.current.primary).toBe('#FCA326');
+  });
+
+  it('WHEN session store is the source of truth THEN provider has no parallel useState for prefs', () => {
+    const source = readFileSync(join(__dirname, '../AppThemeProvider.tsx'), 'utf8');
+    expect(source).not.toMatch(/useState<\s*ThemeMode/);
+    expect(source).not.toMatch(/useState<\s*DataSource/);
+    expect(source).toMatch(/useSessionPreferencesStore/);
+  });
+
+  it('WHEN provider source is inspected THEN it returns null until hydrated', () => {
+    const source = readFileSync(join(__dirname, '../AppThemeProvider.tsx'), 'utf8');
+    expect(source).toMatch(/useHydration/);
+    expect(source).toMatch(/if \(!hydrated\)/);
+    expect(source).toMatch(/return null/);
+  });
+
+  it('WHEN store has hydrated THEN provider paints children', async () => {
+    useSessionPreferencesStore.getState().setHasHydrated(true);
+
+    await render(
+      <View testID="product-child">
+        <Text>Hello</Text>
+      </View>,
+    );
+
+    expect(screen.getByTestId('product-child')).toBeTruthy();
   });
 });

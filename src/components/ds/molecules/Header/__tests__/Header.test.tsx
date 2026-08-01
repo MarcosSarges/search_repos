@@ -1,16 +1,29 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { View } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import { getTheme } from '@/components/ds/theme';
 import { render, screen } from '@/test';
 
 import { Header, type HeaderProps } from '../Header';
+
+const safeAreaMetrics = {
+  frame: { x: 0, y: 0, width: 390, height: 844 },
+  insets: { top: 47, left: 0, right: 0, bottom: 34 },
+};
 
 describe('Header molecule (DS-08, DS-09)', () => {
   it('WHEN rendered THEN it shows the title', async () => {
     await render(<Header title="Repositories" />);
 
     expect(screen.getByText('Repositories')).toBeTruthy();
+  });
+
+  it('WHEN rendered THEN it sets accessibilityRole header on the chrome', async () => {
+    await render(<Header title="Home" />);
+
+    expect(screen.getByTestId('ds-header').props.accessibilityRole).toBe('header');
   });
 
   it('WHEN leading is provided THEN it renders the leading slot', async () => {
@@ -47,6 +60,40 @@ describe('Header molecule (DS-08, DS-09)', () => {
     expect(screen.queryByTestId('ds-header-trailing')).toBeNull();
   });
 
+  it('WHEN safe is omitted THEN it does not apply safe-area padding-top', async () => {
+    await render(
+      <SafeAreaProvider initialMetrics={safeAreaMetrics}>
+        <Header title="No safe" />
+      </SafeAreaProvider>,
+    );
+
+    expect(screen.getByTestId('ds-header')).not.toHaveStyleRule('padding-top', 47);
+  });
+
+  it('WHEN safe is true THEN it applies safe-area top inset as padding-top', async () => {
+    await render(
+      <SafeAreaProvider initialMetrics={safeAreaMetrics}>
+        <Header title="Safe" safe />
+      </SafeAreaProvider>,
+    );
+
+    expect(screen.getByTestId('ds-header')).toHaveStyleRule('padding-top', 47);
+  });
+
+  it('WHEN rendered THEN chrome uses theme background and border colors', async () => {
+    await render(<Header title="Chrome" />, { themeMode: 'light' });
+    const theme = getTheme('light');
+
+    expect(screen.getByTestId('ds-header')).toHaveStyleRule(
+      'background-color',
+      theme.colors.background,
+    );
+    expect(screen.getByTestId('ds-header')).toHaveStyleRule(
+      'border-bottom-color',
+      theme.colors.border,
+    );
+  });
+
   it('WHEN Header source is inspected THEN it does not import DataSourceLogo or brand assets', () => {
     const source = readFileSync(join(__dirname, '../Header.tsx'), 'utf8');
     expect(source).not.toMatch(/DataSourceLogo/);
@@ -55,9 +102,12 @@ describe('Header molecule (DS-08, DS-09)', () => {
     expect(source).not.toMatch(/assets\/gitlab/);
   });
 
-  it('WHEN public props are inspected THEN style is not part of the controlled API', () => {
+  it('WHEN public props are inspected THEN style is not part of the controlled API and safe is', () => {
     type HasStyle = 'style' extends keyof HeaderProps ? true : false;
+    type HasSafe = 'safe' extends keyof HeaderProps ? true : false;
     const hasStyle: HasStyle = false;
+    const hasSafe: HasSafe = true;
     expect(hasStyle).toBe(false);
+    expect(hasSafe).toBe(true);
   });
 });

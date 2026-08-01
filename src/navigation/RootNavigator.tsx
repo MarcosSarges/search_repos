@@ -1,7 +1,7 @@
 import { DarkTheme, DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useAppTheme } from '@/components/ds';
 import { TabsNavigator } from '@/navigation/TabsNavigator';
 import type { RootStackParamList } from '@/navigation/types';
 import { ModalScreen } from '@/screens/ModalScreen';
@@ -9,10 +9,10 @@ import { ModalScreen } from '@/screens/ModalScreen';
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export function RootNavigator() {
-  const colorScheme = useColorScheme();
+  const { mode } = useAppTheme();
 
   return (
-    <NavigationContainer theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <NavigationContainer theme={mode === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack.Navigator>
         <Stack.Screen name="Tabs" component={TabsNavigator} options={{ headerShown: false }} />
         <Stack.Screen

@@ -3,7 +3,7 @@
   "promote_threshold": 2,
   "window_days": 45,
   "quarantine_threshold": 2,
-  "next_id": 13,
+  "next_id": 17,
   "lessons": [
     {
       "id": "L-001",
@@ -220,6 +220,78 @@
       ],
       "created": "2026-07-31T19:40:55Z",
       "last_seen": "2026-07-31T19:40:55Z"
+    },
+    {
+      "id": "L-013",
+      "key": "ac_gap::add store tests for corrupt json and storage read failures asserting system mode plus github fallback",
+      "text": "Add store tests for corrupt JSON and storage read failures asserting system mode plus github fallback.",
+      "signal": "ac_gap",
+      "scope": "stores/persist",
+      "status": "candidate",
+      "features": [
+        "theme-persist-home"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "TPH-04 | session-preferences-store.test.ts (no corrupt/read-fail test) (stores/persist)"
+      ],
+      "created": "2026-07-31T21:10:04Z",
+      "last_seen": "2026-07-31T21:10:04Z"
+    },
+    {
+      "id": "L-014",
+      "key": "ac_gap::after ui toggle actions assert the persist storage key contains the new mode or datasource value",
+      "text": "After UI toggle actions assert the persist storage key contains the new mode or dataSource value.",
+      "signal": "ac_gap",
+      "scope": "screens/persist",
+      "status": "candidate",
+      "features": [
+        "theme-persist-home"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "TPH-09 | HomeScreen.test.tsx:30-40 (mode toggle only in-memory) (screens/persist)"
+      ],
+      "created": "2026-07-31T21:10:04Z",
+      "last_seen": "2026-07-31T21:10:04Z"
+    },
+    {
+      "id": "L-015",
+      "key": "spec_precision_gap::hydration gates need a runtime test that children are absent before onfinishhydration not only static source regex",
+      "text": "Hydration gates need a runtime test that children are absent before onFinishHydration not only static source regex.",
+      "signal": "spec_precision_gap",
+      "scope": "providers/hydration",
+      "status": "candidate",
+      "features": [
+        "theme-persist-home"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "TPH-05 | AppThemeProvider.test.tsx:120-125 (source inspection only) (providers/hydration)"
+      ],
+      "created": "2026-07-31T21:10:05Z",
+      "last_seen": "2026-07-31T21:10:05Z"
+    },
+    {
+      "id": "L-016",
+      "key": "gate_fail::run pnpm lint before verifier gate or exclude auto generated storybook requires from eslint until formatted",
+      "text": "Run pnpm lint before Verifier gate or exclude auto-generated storybook requires from eslint until formatted.",
+      "signal": "gate_fail",
+      "scope": "tooling/lint",
+      "status": "candidate",
+      "features": [
+        "theme-persist-home"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "validation.md gate | .rnstorybook/storybook.requires.ts prettier 13 errors (tooling/lint)"
+      ],
+      "created": "2026-07-31T21:10:05Z",
+      "last_seen": "2026-07-31T21:10:05Z"
     }
   ]
 }
