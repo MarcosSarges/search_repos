@@ -338,14 +338,14 @@ T13 → T14
 
 **Done when**:
 
-- [ ] Uses `useInfiniteQuery` + `initialPageParam` / `getNextPageParam` from `hasNextPage`
-- [ ] queryKey includes active `dataSource` + query
-- [ ] Toggle dataSource uses new key; **no** `invalidateQueries`/`removeQueries` in hook/module
-- [ ] Empty query → `enabled: false` (default)
-- [ ] Use-case `AppError` surfaces on query error
-- [ ] No github/gitlab/fetch imports
-- [ ] Gate: `pnpm test -- src/presentation/hooks`
-- [ ] Test count: fetch page + enabled + key isolation cases
+- [x] Uses `useInfiniteQuery` + `initialPageParam` / `getNextPageParam` from `hasNextPage`
+- [x] queryKey includes active `dataSource` + query
+- [x] Toggle dataSource uses new key; **no** `invalidateQueries`/`removeQueries` in hook/module
+- [x] Empty query → `enabled: false` (default)
+- [x] Use-case `AppError` surfaces on query error
+- [x] No github/gitlab/fetch imports
+- [x] Gate: `pnpm test -- src/presentation/hooks`
+- [x] Test count: fetch page + enabled + key isolation cases
 
 **Tests**: unit  
 **Gate**: full  
