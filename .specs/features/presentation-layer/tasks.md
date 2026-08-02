@@ -282,13 +282,13 @@ T13 → T14
 
 **Done when**:
 
-- [ ] Reads `dataSource` + `tokens` from store; calls `createContainer`
-- [ ] New instance when dataSource or tokens change (assert with Fake/spy)
-- [ ] `useAppContainer` throws clear error outside provider
-- [ ] Optional `repository` prop forwarded for tests
-- [ ] Empty tokens → anonymous path (container still created)
-- [ ] Gate: `pnpm test -- src/presentation/providers`
-- [ ] Test count: recreate + throw + empty tokens covered
+- [x] Reads `dataSource` + `tokens` from store; calls `createContainer`
+- [x] New instance when dataSource or tokens change (assert with Fake/spy)
+- [x] `useAppContainer` throws clear error outside provider
+- [x] Optional `repository` prop forwarded for tests
+- [x] Empty tokens → anonymous path (container still created)
+- [x] Gate: `pnpm test -- src/presentation/providers`
+- [x] Test count: recreate + throw + empty tokens covered
 
 **Tests**: unit  
 **Gate**: full  
