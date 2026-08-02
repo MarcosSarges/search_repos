@@ -116,9 +116,9 @@ T8
 
 **Done when**:
 
-- [ ] Unit tests: `''` / whitespace → `{ code: 'invalid_input' }`; `'  a/b  '` → `'a/b'`
-- [ ] Gate: `pnpm test -- src/application/validation`
-- [ ] Test count: ≥ 2 tests for normalizeRepoId; no silent deletions
+- [x] Unit tests: `''` / whitespace → `{ code: 'invalid_input' }`; `'  a/b  '` → `'a/b'`
+- [x] Gate: `pnpm test -- src/application/validation`
+- [x] Test count: ≥ 2 tests for normalizeRepoId; no silent deletions
 
 **Tests**: unit  
 **Gate**: quick  
