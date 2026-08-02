@@ -188,11 +188,12 @@
 
 ## Handoff
 
-- **Feature**: infra-http-clients
-- **Phase / Task**: Execute Batch 1 (T1–T6) complete — awaiting Verifier
-- **Completed**: T1–T6 (Bearer-only, URL helpers, GH/GL ApiClients, DI hosts, isolation/AD-023)
+- **Feature**: infra-http-clients — **DONE**
+- **Phase / Task**: Complete — Verifier PASS (12/12); [validation.md](.specs/features/infra-http-clients/validation.md)
+- **Completed**: Spec → Design → T1–T6 (`bd2c200`…`e9d5321`) + docs `637a5b9`
 - **In-progress**: none
-- **Next step**: Feature-level Verifier (validation.md)
+- **Next step**: Push branch / open PR when ready
 - **Blockers**: none
+- **Uncommitted files**: `Teste_Tecnico_React_Native_v3.md` (unrelated)
 - **Branch**: `feat/infra-http-clients`
 
