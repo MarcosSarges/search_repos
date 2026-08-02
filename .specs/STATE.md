@@ -164,12 +164,12 @@
 
 ## Handoff
 
-- **Feature**: application-layer — Execute (sub-agents)
-- **Phase / Task**: Batch 2 done (Phases 3–5: T5–T8); next Verifier
-- **Completed**: T1–T4 (Batch 1); T5 Fake → `infrastructure/repositories`; T6 `resolveRepository`; T7 `createContainer`; T8 application/infrastructure barrels + isolation + public-api
-- **In-progress**: none (await Verifier)
-- **Next step**: Dispatch Verifier for feature-level validation (spec-anchored + discrimination sensor → `validation.md`)
+- **Feature**: application-layer — **DONE**
+- **Phase / Task**: Complete — Verifier PASS; report `41485fa`
+- **Completed**: Spec → Design A → T1–T8 (2 sub-agent batches) + Verifier PASS (16/16 ACs, 196 tests, 3/3 mutants killed)
+- **In-progress**: none
+- **Next step**: Open PR for `feat/application-layer`, or next feature (Presentation Provider / HTTP adapters)
 - **Blockers**: none
-- **Uncommitted files**: `Teste_Tecnico_React_Native_v3.md` (unrelated — leave alone)
+- **Uncommitted files**: `Teste_Tecnico_React_Native_v3.md` (unrelated)
 - **Branch**: `feat/application-layer`
 

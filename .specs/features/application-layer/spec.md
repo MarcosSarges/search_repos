@@ -130,22 +130,22 @@ O domínio já expõe porta, entidades, erros e helpers; o esqueleto de applicat
 
 | Requirement ID | Story | Phase | Status |
 | -------------- | ----- | ----- | ------ |
-| APP-01 | P1: UC — factory returns function | Tasks | Implementing |
-| APP-02 | P1: UC — normalizeSearchQuery | Tasks | Implementing |
-| APP-03 | P1: UC — defaults page/perPage | Tasks | Implementing |
-| APP-04 | P1: UC — assertPage/assertPerPage | Tasks | Implementing |
-| APP-05 | P1: UC — empty repoId → invalid_input | Tasks | Implementing |
-| APP-06 | P1: UC — list-issues defaults | Tasks | Implementing |
-| APP-07 | P1: UC — application isolation | Tasks | Implementing |
-| APP-08 | P1: DI — Fake under infrastructure | Tasks | Implementing |
-| APP-09 | P1: DI — resolveRepository branches | Tasks | Implementing |
-| APP-10 | P1: DI — createContainer callables | Tasks | Implementing |
-| APP-11 | P1: DI — immutable distinct containers | Tasks | Implementing |
-| APP-12 | P1: DI — no Zustand in di/ | Tasks | Implementing |
-| APP-13 | P1: DI — application barrel excludes DI/Fake | Tasks | Implementing |
-| APP-14 | P1: DI — infrastructure barrel public API | Tasks | Implementing |
-| APP-15 | P2: application barrel exports | Tasks | Implementing |
-| APP-16 | P2: tests import Fake from infrastructure | Tasks | Implementing |
+| APP-01 | P1: UC — factory returns function | Execute | Verified |
+| APP-02 | P1: UC — normalizeSearchQuery | Execute | Verified |
+| APP-03 | P1: UC — defaults page/perPage | Execute | Verified |
+| APP-04 | P1: UC — assertPage/assertPerPage | Execute | Verified |
+| APP-05 | P1: UC — empty repoId → invalid_input | Execute | Verified |
+| APP-06 | P1: UC — list-issues defaults | Execute | Verified |
+| APP-07 | P1: UC — application isolation | Execute | Verified |
+| APP-08 | P1: DI — Fake under infrastructure | Execute | Verified |
+| APP-09 | P1: DI — resolveRepository branches | Execute | Verified |
+| APP-10 | P1: DI — createContainer callables | Execute | Verified |
+| APP-11 | P1: DI — immutable distinct containers | Execute | Verified |
+| APP-12 | P1: DI — no Zustand in di/ | Execute | Verified |
+| APP-13 | P1: DI — application barrel excludes DI/Fake | Execute | Verified |
+| APP-14 | P1: DI — infrastructure barrel public API | Execute | Verified |
+| APP-15 | P2: application barrel exports | Execute | Verified |
+| APP-16 | P2: tests import Fake from infrastructure | Execute | Verified |
 
 **Coverage:** 16 total, 16 mapped to tasks (T1–T8), 0 unmapped
 
