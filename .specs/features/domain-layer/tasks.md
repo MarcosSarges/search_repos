@@ -9,7 +9,7 @@ Implement these tasks with the `tlc-spec-driven` skill: **activate it by name an
 ---
 
 **Design**: `.specs/features/domain-layer/design.md`  
-**Status**: In Progress — Execute (sub-agent batches)
+**Status**: Done — pending Verifier
 
 ---
 
@@ -220,10 +220,10 @@ T5 → T6
 
 **Done when**:
 
-- [ ] Barrel exports match design; importing `DataSource` from `@/domain` fails typecheck / public-api asserts absence
-- [ ] Isolation scan fails closed on forbidden framework imports under `src/domain` (excl. tests)
-- [ ] Gate: `pnpm test` && `pnpm lint`
-- [ ] Test count: isolation + public-api added; full suite green
+- [x] Barrel exports match design; importing `DataSource` from `@/domain` fails typecheck / public-api asserts absence
+- [x] Isolation scan fails closed on forbidden framework imports under `src/domain` (excl. tests)
+- [x] Gate: `pnpm test` && `pnpm lint`
+- [x] Test count: isolation + public-api added; full suite green
 
 **Tests**: unit  
 **Gate**: build  

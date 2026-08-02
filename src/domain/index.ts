@@ -8,3 +8,4 @@ export type {
   RepoRepository,
   SearchReposInput,
 } from './repositories/repo-repository';
+export { assertPage, assertPerPage, normalizeSearchQuery } from './validation';
