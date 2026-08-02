@@ -1,0 +1,34 @@
+{
+  "total_count": 2,
+  "incomplete_results": false,
+  "items": [
+    {
+      "full_name": "facebook/react",
+      "name": "react",
+      "description": "A declarative library",
+      "stargazers_count": 200000,
+      "forks_count": 40000,
+      "watchers_count": 200000,
+      "language": "JavaScript",
+      "owner": {
+        "login": "facebook",
+        "avatar_url": "https://avatars.githubusercontent.com/u/69631"
+      },
+      "html_url": "https://github.com/facebook/react"
+    },
+    {
+      "full_name": "vuejs/core",
+      "name": "core",
+      "description": null,
+      "stargazers_count": 40000,
+      "forks_count": 7000,
+      "watchers_count": 40000,
+      "language": null,
+      "owner": {
+        "login": "vuejs",
+        "avatar_url": null
+      },
+      "html_url": "https://github.com/vuejs/core"
+    }
+  ]
+}
