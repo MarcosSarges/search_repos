@@ -14,7 +14,7 @@ export function createGetRepoDetailsUseCase(repository: RepoRepository): GetRepo
       const repoId = input.repoId.trim();
 
       if (!repoId) {
-        throw createAppError('not_found', 'Repository id is required');
+        throw createAppError('not_found');
       }
 
       return repository.getById(repoId);
