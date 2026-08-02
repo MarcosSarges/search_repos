@@ -179,7 +179,7 @@ Domain, application e infrastructure (DI + HTTP) estão prontos, mas a árvore R
 | PRES-08 | P1: useRepoDetails + queryKey | Execute | ✅ Verified |
 | PRES-09 | P1: useRepoIssues = infinite + queryKey | Execute | ✅ Verified |
 | PRES-10 | P1: dataSource toggle = key isolation only (no invalidate/remove) | Execute | ✅ Verified |
-| PRES-11 | P1: hooks no direct github/gitlab/fetch | Execute | ✅ Verified |
+| PRES-11 | P1: hooks no direct github/gitlab/fetch | — | Superseded — presentation isolation scans removed (arch by convention; domain/app/infra keep isolation) |
 | PRES-12 | P1: AppError surfaces in Query error | Execute | ✅ Verified |
 | PRES-13 | P1: mapper covers all AppErrorCode (PT-BR) | Execute | ✅ Verified |
 | PRES-14 | P1: mapper non-AppError → unknown | Execute | ✅ Verified |

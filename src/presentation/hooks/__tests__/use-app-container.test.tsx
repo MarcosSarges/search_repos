@@ -2,17 +2,18 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { Text as RNText } from 'react-native';
 import * as React from 'react';
-import { render as rtlRender, renderHook as rtlRenderHook, waitFor } from '@testing-library/react-native';
+import {
+  render as rtlRender,
+  renderHook as rtlRenderHook,
+  waitFor,
+} from '@testing-library/react-native';
 
 import type { Repo } from '@/domain';
 import { createInMemoryRepoRepository } from '@/infrastructure';
 import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
 import { act, screen } from '@/test/render';
 
-import {
-  setAppContainerTestRepository,
-  useAppContainer,
-} from '../use-app-container';
+import { setAppContainerTestRepository, useAppContainer } from '../use-app-container';
 
 const sampleRepo: Repo = {
   id: 'facebook/react',
@@ -123,10 +124,9 @@ describe('useAppContainer (Zustand-derived DI, no Context)', () => {
     ).resolves.toMatchObject({ id: 'facebook/react' });
   });
 
-  it('hook source does not use React Context or import github/gitlab adapters', () => {
+  it('hook source does not use React Context', () => {
     const source = readFileSync(join(__dirname, '..', 'use-app-container.ts'), 'utf8');
     expect(source).not.toMatch(/createContext|useContext|Context\.Provider/);
-    expect(source).not.toMatch(/github\/create-github|gitlab\/create-gitlab/);
     expect(source).toMatch(/createContainer/);
     expect(source).toMatch(/useSessionPreferencesStore/);
   });

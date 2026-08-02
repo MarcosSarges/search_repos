@@ -1,6 +1,3 @@
-import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
-
 import { isAppError, type Repo, type RepoRepository } from '@/domain';
 import { createInMemoryRepoRepository } from '@/infrastructure';
 import { queryKeys } from '@/presentation/query-keys';
@@ -23,7 +20,7 @@ const sampleRepo: Repo = {
   htmlUrl: 'https://github.com/facebook/react',
 };
 
-describe('useRepoDetails (PRES-08, PRES-11, PRES-12, PRES-19)', () => {
+describe('useRepoDetails (PRES-08, PRES-12, PRES-19)', () => {
   it('fetches repo details via useQuery for a repoId', async () => {
     const repository = createInMemoryRepoRepository([sampleRepo]);
 
@@ -137,10 +134,5 @@ describe('useRepoDetails (PRES-08, PRES-11, PRES-12, PRES-19)', () => {
     );
     expect(invalidateSpy).not.toHaveBeenCalled();
     expect(removeSpy).not.toHaveBeenCalled();
-  });
-
-  it('module source has no github/gitlab/fetch imports', () => {
-    const source = readFileSync(join(__dirname, '../use-repo-details.ts'), 'utf8');
-    expect(source).not.toMatch(/github|gitlab|\bfetch\b/);
   });
 });

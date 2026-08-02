@@ -175,8 +175,8 @@ describe('useSearchRepos (PRES-07, PRES-10..12, PRES-19)', () => {
     expect(result.current.error).toMatchObject({ code: 'rate_limit' });
   });
 
-  it('module source has no github/gitlab/fetch imports and no invalidate/removeQueries', () => {
+  it('module source does not call invalidateQueries or removeQueries', () => {
     const source = readFileSync(join(__dirname, '../use-search-repos.ts'), 'utf8');
-    expect(source).not.toMatch(/github|gitlab|\bfetch\b|invalidateQueries|removeQueries/);
+    expect(source).not.toMatch(/invalidateQueries|removeQueries/);
   });
 });
