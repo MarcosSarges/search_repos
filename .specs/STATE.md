@@ -178,15 +178,37 @@
 - **Date**: 2026-08-02
 - **Status**: active
 
+### AD-023
+- **Decision**: Providers/hooks de dados de produto vivem em `src/presentation/`; TanStack Query na borda com `queryKey` sempre incluindo `dataSource`; toggle de fonte **não** usa `invalidateQueries`/`removeQueries` (isolamento + reuse de cache). Session store expõe `tokens: ProviderTokens` em memória para o DI.
+- **Reason**: Simetria Clean Arch; AD-005; UX A→B→A com cache quente; AD-021 wiring.
+- **Trade-off**: Pasta `presentation/` + stores/screens ainda fora dela até features seguintes.
+- **Scope**: `src/presentation/**`, session store tokens slot, App providers, product query hooks
+- **Date**: 2026-08-02
+- **Status**: superseded by AD-025 (Context `AppContainerProvider` removed; rest still active — see AD-025)
+
+### AD-024
+- **Decision**: Tokens de API (`ProviderTokens`) persistem **somente** via `expo-secure-store` (SDK 54); **nunca** AsyncStorage nem `partialize` do Zustand. Hydrate SecureStore → bag em memória no boot; gate de UI espera prefs + tokens; web/unavailable → memória only. Sem UI de token nesta fatia; `requireAuthentication` off.
+- **Reason**: Segredos no Keystore/Keychain ([SecureStore v54](https://docs.expo.dev/versions/v54.0.0/sdk/securestore/)); prefs light/dark+fonte continuam no AsyncStorage.
+- **Trade-off**: Adapter + gate mais complexo; web sem persistência de token; biometria adiada.
+- **Scope**: `src/infrastructure/secure-store/**` (ou path equivalente), session store, hydrate gate, testes com mock SecureStore
+- **Date**: 2026-08-02
+- **Status**: active
+
+### AD-025
+- **Decision**: Não há `AppContainerProvider`/Context para o DI. `useAppContainer()` deriva `createContainer({ dataSource, tokens })` direto do Zustand (`useMemo`). Árvore de produto: Theme gate → `AppQueryProvider` → Nav. Fake em testes via `setAppContainerTestRepository` (módulo), não via prop de Provider.
+- **Reason**: Zustand já é a fonte de `dataSource`/`tokens`; Context duplicava assinatura e forçava re-render em cascata (store → Provider → consumers).
+- **Trade-off**: Cada caller de `useAppContainer` memoiza o próprio container (aceitável); override de Fake é global de teste (limpar entre suites).
+- **Scope**: `src/presentation/hooks/use-app-container.ts`, `App.tsx`, `src/test/render.tsx`
+- **Date**: 2026-08-02
+- **Status**: active
+
 ## Handoff
 
-- **Feature**: infrastructure-layer — **DONE**
-- **Phase / Task**: Complete — Verifier PASS (35/35); fix iteration for INFRA-04/12
-- **Completed**: Specify → Design A → T1–T10 + validation PASS; commits a9d4a1f…f179c45 + f91b7f5
+- **Feature**: none (idle) — last closed: `presentation-layer` (bridge)
+- **Phase / Task**: n/a
+- **Completed**: presentation-layer T1–T14 + Verifier PASS; AD-025 (`useAppContainer`); `src/presentation/constants/`; PR #9
 - **In-progress**: none
-- **Next step**: Commit remaining `.specs/features/infrastructure-layer/*` + STATE if needed; open PR; then Presentation (`AppContainerProvider` / token UI) or credentials persist
+- **Next step**: Specify next product feature from `.specs/features/presentation-layer/NEXT.md` (search UI / details / issues)
 - **Blockers**: none
-- **Uncommitted files**: see git status (specs/validation/STATE/lessons; Teste_Tecnico unrelated)
-- **Branch**: `feat/infrastructure-layer`
-- **Note**: msw pinned to 2.12.10 (Jest/expo ESM)
-
+- **Uncommitted files**: local only if any (`HomeScreen` / `Teste_Tecnico_*` not part of closed feature)
+- **Branch**: `feat/presentation-layer` (PR https://github.com/MarcosSarges/search_repos/pull/9)

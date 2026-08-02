@@ -6,6 +6,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { AppThemeProvider } from '@/components/ds';
 import { RootNavigator } from '@/navigation/RootNavigator';
+import { AppQueryProvider } from '@/presentation/providers/AppQueryProvider';
 import Constants from 'expo-constants';
 
 void SplashScreen.preventAutoHideAsync().catch(() => {
@@ -16,8 +17,10 @@ function App() {
   return (
     <SafeAreaProvider>
       <AppThemeProvider>
-        <RootNavigator />
-        <StatusBar style="auto" />
+        <AppQueryProvider>
+          <RootNavigator />
+          <StatusBar style="auto" />
+        </AppQueryProvider>
       </AppThemeProvider>
     </SafeAreaProvider>
   );

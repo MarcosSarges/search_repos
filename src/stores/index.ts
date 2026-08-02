@@ -7,5 +7,6 @@ export {
 } from './session-preferences-store';
 export type {
   CreateSessionPreferencesStoreOptions,
+  ProviderTokensSecureStorePort,
   SessionPreferencesState,
 } from './session-preferences-store';

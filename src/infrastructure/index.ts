@@ -7,3 +7,9 @@ export type { CreateGithubRepoRepositoryOptions } from './github/create-github-r
 export { createGitlabRepoRepository } from './gitlab/create-gitlab-repo-repository';
 export type { CreateGitlabRepoRepositoryOptions } from './gitlab/create-gitlab-repo-repository';
 export { createInMemoryRepoRepository } from './repositories/in-memory-repo-repository';
+export {
+  clearProviderTokens,
+  loadProviderTokens,
+  PROVIDER_TOKEN_KEYS,
+  saveProviderToken,
+} from './secure-store/provider-tokens-secure-store';

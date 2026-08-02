@@ -1,5 +1,5 @@
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect, useLayoutEffect, useMemo, type ReactNode } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, type ReactNode } from 'react';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components/native';
 
 import type { DataSource } from '@/application';
@@ -32,6 +32,7 @@ export function AppThemeProvider({
   const hydrated = useHydration();
   const mode = useSessionPreferencesStore((state) => state.mode);
   const dataSource = useSessionPreferencesStore((state) => state.dataSource);
+  const tokensHydrateStarted = useRef(false);
 
   useLayoutEffect(() => {
     const state = useSessionPreferencesStore.getState();
@@ -42,6 +43,14 @@ export function AppThemeProvider({
       state.setDataSource(initialDataSource);
     }
   }, [initialMode, initialDataSource]);
+
+  useEffect(() => {
+    if (tokensHydrateStarted.current) {
+      return;
+    }
+    tokensHydrateStarted.current = true;
+    void useSessionPreferencesStore.getState().hydrateTokensFromSecureStore();
+  }, []);
 
   useEffect(() => {
     if (!hydrated) {

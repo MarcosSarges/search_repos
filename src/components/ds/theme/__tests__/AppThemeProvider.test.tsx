@@ -126,6 +126,7 @@ describe('AppThemeProvider dataSource (DS-02 / TPH-05..06)', () => {
 
   it('WHEN store has hydrated THEN provider paints children', async () => {
     useSessionPreferencesStore.getState().setHasHydrated(true);
+    useSessionPreferencesStore.getState().setHasTokensHydrated(true);
 
     await render(
       <View testID="product-child">

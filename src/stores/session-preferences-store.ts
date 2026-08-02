@@ -5,20 +5,40 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { isDataSource, type DataSource } from '@/application';
 import type { ThemeMode } from '@/components/ds/theme/theme';
+import type { ProviderTokens } from '@/infrastructure/di/create-container';
+import {
+  clearProviderTokens,
+  loadProviderTokens,
+  saveProviderToken,
+} from '@/infrastructure/secure-store/provider-tokens-secure-store';
 
 export const SESSION_PREFERENCES_STORAGE_KEY = 'searchrepos:session-preferences';
+
+export type ProviderTokensSecureStorePort = {
+  loadProviderTokens: () => Promise<ProviderTokens>;
+  saveProviderToken: (dataSource: DataSource, token: string | undefined) => Promise<void>;
+  clearProviderTokens: () => Promise<void>;
+};
 
 export type SessionPreferencesState = {
   mode: ThemeMode;
   dataSource: DataSource;
+  /** In-memory API tokens bag — never AsyncStorage-persisted. */
+  tokens: ProviderTokens;
   /** True after persist rehydrate finishes (success or storage error). Not persisted. */
   hasHydrated: boolean;
+  /** True after SecureStore token hydrate finishes (success or empty fallback). Not persisted. */
+  hasTokensHydrated: boolean;
   setMode: (mode: ThemeMode) => void;
   toggleMode: () => void;
   setDataSource: (dataSource: DataSource) => void;
   toggleDataSource: () => void;
+  setToken: (dataSource: DataSource, token: string | undefined) => void;
+  setTokens: (tokens: ProviderTokens) => void;
+  hydrateTokensFromSecureStore: () => Promise<void>;
   setHasHydrated: (hasHydrated: boolean) => void;
-  /** Restores defaults in memory and clears the persist storage key. */
+  setHasTokensHydrated: (hasTokensHydrated: boolean) => void;
+  /** Restores defaults in memory and clears the persist storage key + SecureStore tokens. */
   reset: () => void;
 };
 
@@ -44,20 +64,30 @@ export function sanitizePersistedPreferences(raw: unknown): PersistedSlice | nul
   return { mode: record.mode, dataSource: record.dataSource };
 }
 
+const defaultSecureStore: ProviderTokensSecureStorePort = {
+  loadProviderTokens,
+  saveProviderToken,
+  clearProviderTokens,
+};
+
 export type CreateSessionPreferencesStoreOptions = {
   storage?: StateStorage;
+  secureStore?: ProviderTokensSecureStorePort;
 };
 
 export function createSessionPreferencesStore(options: CreateSessionPreferencesStoreOptions = {}) {
   let clearPersisted: () => void = () => {};
   let markHydrated: () => void = () => {};
+  const secureStore = options.secureStore ?? defaultSecureStore;
 
   const store = create<SessionPreferencesState>()(
     persist(
       (set) => ({
         mode: systemThemeMode(),
         dataSource: 'github',
+        tokens: {},
         hasHydrated: false,
+        hasTokensHydrated: false,
         setMode: (mode) => set({ mode }),
         toggleMode: () => set((state) => ({ mode: state.mode === 'light' ? 'dark' : 'light' })),
         setDataSource: (dataSource) => set({ dataSource }),
@@ -65,10 +95,38 @@ export function createSessionPreferencesStore(options: CreateSessionPreferencesS
           set((state) => ({
             dataSource: state.dataSource === 'github' ? 'gitlab' : 'github',
           })),
+        setToken: (dataSource, token) => {
+          set((state) => {
+            const next: ProviderTokens = { ...state.tokens };
+            if (token === undefined || token === '') {
+              delete next[dataSource];
+            } else {
+              next[dataSource] = token;
+            }
+            return { tokens: next };
+          });
+          void secureStore.saveProviderToken(dataSource, token);
+        },
+        setTokens: (tokens) => {
+          const next: ProviderTokens = { ...tokens };
+          set({ tokens: next });
+          void secureStore.saveProviderToken('github', next.github);
+          void secureStore.saveProviderToken('gitlab', next.gitlab);
+        },
+        hydrateTokensFromSecureStore: async () => {
+          try {
+            const loaded = await secureStore.loadProviderTokens();
+            set({ tokens: { ...loaded }, hasTokensHydrated: true });
+          } catch {
+            set({ tokens: {}, hasTokensHydrated: true });
+          }
+        },
         setHasHydrated: (hasHydrated) => set({ hasHydrated }),
+        setHasTokensHydrated: (hasTokensHydrated) => set({ hasTokensHydrated }),
         reset: () => {
-          set({ mode: systemThemeMode(), dataSource: 'github' });
+          set({ mode: systemThemeMode(), dataSource: 'github', tokens: {} });
           clearPersisted();
+          void secureStore.clearProviderTokens();
         },
       }),
       {
