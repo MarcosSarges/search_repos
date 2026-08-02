@@ -395,11 +395,11 @@ T13 → T14
 
 **Done when**:
 
-- [ ] Infinite query + hasNextPage pageParam pattern
-- [ ] queryKey includes dataSource + repoId
-- [ ] No invalidate-on-toggle; isolation via key
-- [ ] Gate: `pnpm test -- src/presentation/hooks`
-- [ ] Test count: page + key isolation covered
+- [x] Infinite query + hasNextPage pageParam pattern
+- [x] queryKey includes dataSource + repoId
+- [x] No invalidate-on-toggle; isolation via key
+- [x] Gate: `pnpm test -- src/presentation/hooks`
+- [x] Test count: page + key isolation covered
 
 **Tests**: unit  
 **Gate**: full  
