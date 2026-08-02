@@ -90,10 +90,10 @@ T8
 
 **Done when**:
 
-- [ ] `DEFAULT_PAGE` and `DEFAULT_PER_PAGE` exported with values `1` and `20`
-- [ ] No domain default constants introduced
-- [ ] Gate: `pnpm test -- src/application` (suite still green; constants unused until T3/T4)
-- [ ] Test count: no silent deletions
+- [x] `DEFAULT_PAGE` and `DEFAULT_PER_PAGE` exported with values `1` and `20`
+- [x] No domain default constants introduced
+- [x] Gate: `pnpm test -- src/application` (suite still green; constants unused until T3/T4)
+- [x] Test count: no silent deletions
 
 **Tests**: none  
 **Gate**: quick  
