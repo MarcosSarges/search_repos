@@ -178,15 +178,31 @@
 - **Date**: 2026-08-02
 - **Status**: active
 
+### AD-023
+- **Decision**: Providers/hooks de dados de produto vivem em `src/presentation/`; TanStack Query na borda com `queryKey` sempre incluindo `dataSource`; toggle de fonte **não** usa `invalidateQueries`/`removeQueries` (isolamento + reuse de cache). Session store expõe `tokens: ProviderTokens` em memória para o DI.
+- **Reason**: Simetria Clean Arch; AD-005; UX A→B→A com cache quente; AD-021 wiring.
+- **Trade-off**: Pasta `presentation/` + stores/screens ainda fora dela até features seguintes.
+- **Scope**: `src/presentation/**`, session store tokens slot, App providers, product query hooks
+- **Date**: 2026-08-02
+- **Status**: active
+
+### AD-024
+- **Decision**: Tokens de API (`ProviderTokens`) persistem **somente** via `expo-secure-store` (SDK 54); **nunca** AsyncStorage nem `partialize` do Zustand. Hydrate SecureStore → bag em memória no boot; gate de UI espera prefs + tokens; web/unavailable → memória only. Sem UI de token nesta fatia; `requireAuthentication` off.
+- **Reason**: Segredos no Keystore/Keychain ([SecureStore v54](https://docs.expo.dev/versions/v54.0.0/sdk/securestore/)); prefs light/dark+fonte continuam no AsyncStorage.
+- **Trade-off**: Adapter + gate mais complexo; web sem persistência de token; biometria adiada.
+- **Scope**: `src/infrastructure/secure-store/**` (ou path equivalente), session store, hydrate gate, testes com mock SecureStore
+- **Date**: 2026-08-02
+- **Status**: active
+
 ## Handoff
 
-- **Feature**: infrastructure-layer — **DONE**
-- **Phase / Task**: Complete — Verifier PASS (35/35); fix iteration for INFRA-04/12
-- **Completed**: Specify → Design A → T1–T10 + validation PASS; commits a9d4a1f…f179c45 + f91b7f5
-- **In-progress**: none
-- **Next step**: Commit remaining `.specs/features/infrastructure-layer/*` + STATE if needed; open PR; then Presentation (`AppContainerProvider` / token UI) or credentials persist
+- **Feature**: presentation-layer (bridge)
+- **Phase / Task**: Execute — Batch A (Phase 1: T1–T4) in flight
+- **Completed**: Specify + Discuss + Design + Tasks approved
+- **In-progress**: Batch worker Phase 1
+- **Next step**: On Batch A summary → Batch B (Phase 2: T5–T9)
 - **Blockers**: none
-- **Uncommitted files**: see git status (specs/validation/STATE/lessons; Teste_Tecnico unrelated)
-- **Branch**: `feat/infrastructure-layer`
-- **Note**: msw pinned to 2.12.10 (Jest/expo ESM)
+- **Uncommitted files**: Teste_Tecnico_React_Native_v3.md (unrelated — leave unstaged)
+- **Branch**: feat/presentation-layer
+- **Note**: Batches: A=P1(T1–4), B=P2(T5–9), C=P3+P4(T10–14); Verifier after T14
 
