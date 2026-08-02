@@ -22,9 +22,7 @@ export type CreateGithubRepoRepositoryOptions = {
 };
 
 function authInit(token?: string) {
-  return token !== undefined
-    ? { token, tokenHeader: 'bearer' as const }
-    : ({} as { token?: string; tokenHeader?: 'bearer' });
+  return token !== undefined ? { token } : {};
 }
 
 /**

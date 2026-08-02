@@ -20,9 +20,7 @@ export type CreateGitlabRepoRepositoryOptions = {
 };
 
 function authInit(token?: string) {
-  return token !== undefined
-    ? { token, tokenHeader: 'private-token' as const }
-    : ({} as { token?: string; tokenHeader?: 'private-token' });
+  return token !== undefined ? { token } : {};
 }
 
 function headerIndicatesNext(headers: Headers): boolean | undefined {

@@ -29,40 +29,24 @@ describe('jsonFetch', () => {
     expect(sawPrivateToken).toBe(false);
   });
 
-  it('sends Authorization Bearer when tokenHeader is bearer', async () => {
+  it('sends Authorization Bearer when token is set and never PRIVATE-TOKEN (CLI-12)', async () => {
     let authorization: string | null = null;
+    let privateToken: string | null = null;
 
     server.use(
       http.get('https://api.example.test/secure', ({ request }) => {
         authorization = request.headers.get('Authorization');
+        privateToken = request.headers.get('PRIVATE-TOKEN');
         return HttpResponse.json({ ok: true });
       }),
     );
 
     await jsonFetch('https://api.example.test/secure', {
       token: 'gh-secret',
-      tokenHeader: 'bearer',
     });
 
     expect(authorization).toBe('Bearer gh-secret');
-  });
-
-  it('sends PRIVATE-TOKEN when tokenHeader is private-token', async () => {
-    let privateToken: string | null = null;
-
-    server.use(
-      http.get('https://api.example.test/gl', ({ request }) => {
-        privateToken = request.headers.get('PRIVATE-TOKEN');
-        return HttpResponse.json({ ok: true });
-      }),
-    );
-
-    await jsonFetch('https://api.example.test/gl', {
-      token: 'gl-secret',
-      tokenHeader: 'private-token',
-    });
-
-    expect(privateToken).toBe('gl-secret');
+    expect(privateToken).toBeNull();
   });
 
   it('rejects non-OK responses with mapped AppError including 429 structured cause', async () => {

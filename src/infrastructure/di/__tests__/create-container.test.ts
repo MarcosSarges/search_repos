@@ -80,7 +80,7 @@ describe('createContainer (INFRA-29, INFRA-30, INFRA-32)', () => {
     expect(privateToken).toBeNull();
   });
 
-  it('WHEN same tokens bag with dataSource gitlab THEN only gitlab token is forwarded as PRIVATE-TOKEN', async () => {
+  it('WHEN same tokens bag with dataSource gitlab THEN only gitlab token is forwarded as Bearer', async () => {
     let authorization: string | null = null;
     let privateToken: string | null = null;
 
@@ -99,8 +99,8 @@ describe('createContainer (INFRA-29, INFRA-30, INFRA-32)', () => {
 
     await container.searchRepos({ query: 'react' });
 
-    expect(privateToken).toBe('l');
-    expect(authorization).toBeNull();
+    expect(authorization).toBe('Bearer l');
+    expect(privateToken).toBeNull();
   });
 
   it('WHEN modules under src/infrastructure/di/ are scanned THEN they SHALL NOT import Zustand or session-preferences-store', () => {

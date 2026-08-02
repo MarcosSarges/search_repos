@@ -174,11 +174,13 @@ describe('createGitlabRepoRepository', () => {
     expect(result.hasNextPage).toBe(false);
   });
 
-  it('sends PRIVATE-TOKEN when configured and maps HTTP errors', async () => {
+  it('sends Authorization Bearer when configured and maps HTTP errors', async () => {
+    let authorization: string | null = null;
     let privateToken: string | null = null;
 
     server.use(
       http.get('https://gitlab.com/api/v4/projects', ({ request }) => {
+        authorization = request.headers.get('Authorization');
         privateToken = request.headers.get('PRIVATE-TOKEN');
         return new HttpResponse(null, {
           status: 429,
@@ -211,7 +213,8 @@ describe('createGitlabRepoRepository', () => {
         });
       }
     }
-    expect(privateToken).toBe('gl-token');
+    expect(authorization).toBe('Bearer gl-token');
+    expect(privateToken).toBeNull();
 
     try {
       await repo.getById('404');
