@@ -32,7 +32,11 @@ pnpm install
 
 Tokens GitHub/GitLab são **opcionais** e **não** usam `.env` como fonte de verdade (AD-021). O composition root (`createContainer`) recebe um mapa `tokens?: { github?: string; gitlab?: string }` e encaminha só o token da fonte ativa aos adapters HTTP.
 
-Sem token, as APIs públicas funcionam anonimamente (limites mais baixos — trate HTTP 429 na interface). UI e persistência de credenciais ficam para uma feature futura.
+Auth unificada: ambos os provedores enviam `Authorization: Bearer <token>` quando o token está presente (nunca `PRIVATE-TOKEN`).
+
+Hosts oficiais também são injetáveis via `hosts?: { github?: string; gitlab?: string }` (AD-023). Omitido → `https://api.github.com` / `https://gitlab.com/api/v4`. Para GitLab self-hosted, passe a origem (`https://gitlab.empresa.com`) ou a base já com `/api/v4` — o client normaliza sem duplicar o sufixo.
+
+Sem token, as APIs públicas funcionam anonimamente (limites mais baixos — trate HTTP 429 na interface). UI e persistência de credenciais/hosts ficam para uma feature futura.
 
 ### Scripts
 

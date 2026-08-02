@@ -75,4 +75,28 @@ describe('infrastructure adapter isolation (INFRA-34)', () => {
 
     expect(violations).toEqual([]);
   });
+
+  it('WHEN RepoRepository ACL sources are scanned THEN they SHALL NOT import or call jsonFetch/fetch (CLI-04, CLI-05)', () => {
+    const infraRoot = path.join(__dirname, '..');
+    const repoFiles = [
+      path.join(infraRoot, 'github', 'create-github-repo-repository.ts'),
+      path.join(infraRoot, 'gitlab', 'create-gitlab-repo-repository.ts'),
+    ];
+
+    const violations: string[] = [];
+
+    for (const filePath of repoFiles) {
+      const content = fs.readFileSync(filePath, 'utf8');
+      const relative = path.relative(infraRoot, filePath);
+
+      if (content.includes('jsonFetch')) {
+        violations.push(`${relative}: jsonFetch`);
+      }
+      if (/\bfetch\b/.test(content)) {
+        violations.push(`${relative}: fetch`);
+      }
+    }
+
+    expect(violations).toEqual([]);
+  });
 });

@@ -7,7 +7,7 @@ Implement these tasks with the `tlc-spec-driven` skill: **activate it by name an
 ---
 
 **Design**: `.specs/features/infra-http-clients/design.md`  
-**Status**: In Progress (Execute via sub-agent)
+**Status**: Done
 
 ---
 
@@ -85,16 +85,17 @@ T1 → T2 → T3 → T4 → T5 → T6
 **Commit**: `refactor(infrastructure): extract GitLab ApiClient with host normalize`  
 **Done**: `18879bd`
 
-### T5: DI `hosts` bag + resolve wiring
+### T5: DI `hosts` bag + resolve wiring ✅
 
 **What**: `ProviderHosts`; `createContainer`/`resolveRepository` pass `baseUrl`+`token`; create client then `{ client }` into repo. Tests: hosts selection by dataSource; omit → defaults; Bearer forward (not PRIVATE-TOKEN).  
 **Where**: `src/infrastructure/di/**`, barrel types if needed  
 **Depends on**: T4  
 **Requirement**: CLI-09, CLI-10, CLI-11  
 **Tests**: unit | **Gate**: full  
-**Commit**: `feat(infrastructure): inject optional hosts bag in DI`
+**Commit**: `feat(infrastructure): inject optional hosts bag in DI`  
+**Done**: `dabc53f`
 
-### T6: Isolation scan + barrel + AD-023/README touch
+### T6: Isolation scan + barrel + AD-023/README touch ✅
 
 **What**: Assert repo sources ban jsonFetch/fetch; export client factories if designed; append AD-023 to STATE; minimal README note on hosts/Bearer if needed. Build gate.  
 **Where**: `src/infrastructure/__tests__/*`, `.specs/STATE.md`, `README.md` (minimal)  

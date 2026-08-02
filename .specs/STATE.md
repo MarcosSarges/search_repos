@@ -178,15 +178,21 @@
 - **Date**: 2026-08-02
 - **Status**: active
 
+### AD-023
+- **Decision**: Cada provedor tem um **ApiClient** (host normalize + `Authorization: Bearer` + `jsonFetch`); `RepoRepository` fica só ACL (assert/map/paginação) e recebe `{ client }`. DI espelha `tokens` com `hosts?: { github?: string; gitlab?: string }`. GitLab normaliza `baseUrl` anexando `/api/v4` se ausente (aceita raiz ou API base; sem duplicar). URLs via `new URL(path, base)` apenas. MSW de hosts custom usa wildcards de path.
+- **Reason**: Separar transport de ACL; DX self-hosted; auth simétrica GH/GL; evitar glue de slash e unhandled MSW em host injetado.
+- **Trade-off**: Mais factories por provedor; Presentation ainda não expõe UI de host.
+- **Scope**: `src/infrastructure/{http,github,gitlab,di}/**`, README tokens/hosts
+- **Date**: 2026-08-02
+- **Status**: active
+
 ## Handoff
 
-- **Feature**: infrastructure-layer — **DONE**
-- **Phase / Task**: Complete — Verifier PASS (35/35); fix iteration for INFRA-04/12
-- **Completed**: Specify → Design A → T1–T10 + validation PASS; commits a9d4a1f…f179c45 + f91b7f5
+- **Feature**: infra-http-clients
+- **Phase / Task**: Execute Batch 1 (T1–T6) complete — awaiting Verifier
+- **Completed**: T1–T6 (Bearer-only, URL helpers, GH/GL ApiClients, DI hosts, isolation/AD-023)
 - **In-progress**: none
-- **Next step**: Commit remaining `.specs/features/infrastructure-layer/*` + STATE if needed; open PR; then Presentation (`AppContainerProvider` / token UI) or credentials persist
+- **Next step**: Feature-level Verifier (validation.md)
 - **Blockers**: none
-- **Uncommitted files**: see git status (specs/validation/STATE/lessons; Teste_Tecnico unrelated)
-- **Branch**: `feat/infrastructure-layer`
-- **Note**: msw pinned to 2.12.10 (Jest/expo ESM)
+- **Branch**: `feat/infra-http-clients`
 

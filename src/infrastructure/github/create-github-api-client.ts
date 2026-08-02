@@ -23,9 +23,7 @@ export type GithubApiClient = {
 /**
  * GitHub HTTP transport: host normalize, Bearer auth, jsonFetch.
  */
-export function createGithubApiClient(
-  options: CreateGithubApiClientOptions = {},
-): GithubApiClient {
+export function createGithubApiClient(options: CreateGithubApiClientOptions = {}): GithubApiClient {
   const baseUrl = normalizeGithubApiBase(options.baseUrl);
   const { token } = options;
   const auth = token !== undefined ? { token } : {};
