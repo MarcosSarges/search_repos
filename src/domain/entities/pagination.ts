@@ -3,5 +3,4 @@ export type PaginatedResult<T> = {
   page: number;
   perPage: number;
   hasNextPage: boolean;
-  totalCount: number | null;
 };

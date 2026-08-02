@@ -1,10 +1,11 @@
-import type {
-  Issue,
-  ListIssuesInput,
-  PaginatedResult,
-  Repo,
-  RepoRepository,
-  SearchReposInput,
+import {
+  createAppError,
+  type Issue,
+  type ListIssuesInput,
+  type PaginatedResult,
+  type Repo,
+  type RepoRepository,
+  type SearchReposInput,
 } from '@/domain';
 
 export function createInMemoryRepoRepository(
@@ -30,14 +31,13 @@ export function createInMemoryRepoRepository(
         page: input.page,
         perPage,
         hasNextPage: start + perPage < filtered.length,
-        totalCount: filtered.length,
       };
     },
 
     async getById(repoId: string): Promise<Repo> {
       const repo = repos.find((item) => item.id === repoId);
       if (!repo) {
-        throw new Error(`Repo not found: ${repoId}`);
+        throw createAppError('not_found');
       }
       return repo;
     },
@@ -53,7 +53,6 @@ export function createInMemoryRepoRepository(
         page: input.page,
         perPage,
         hasNextPage: start + perPage < all.length,
-        totalCount: all.length,
       };
     },
   };
