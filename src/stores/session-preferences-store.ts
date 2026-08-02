@@ -3,7 +3,7 @@ import { create } from 'zustand';
 import { createJSONStorage, persist, type StateStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import type { DataSource } from '@/domain/entities/data-source';
+import { isDataSource, type DataSource } from '@/application';
 import type { ThemeMode } from '@/components/ds/theme/theme';
 
 export const SESSION_PREFERENCES_STORAGE_KEY = 'searchrepos:session-preferences';
@@ -30,10 +30,6 @@ export function systemThemeMode(): ThemeMode {
 
 function isThemeMode(value: unknown): value is ThemeMode {
   return value === 'light' || value === 'dark';
-}
-
-function isDataSource(value: unknown): value is DataSource {
-  return value === 'github' || value === 'gitlab';
 }
 
 /** Returns null when persisted payload is missing or has invalid enums (→ system fallback). */

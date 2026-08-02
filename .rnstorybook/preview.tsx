@@ -2,7 +2,7 @@ import type { Preview } from '@storybook/react-native';
 import { View } from 'react-native';
 
 import { AppThemeProvider, spacing, type ThemeMode } from '../src/components/ds';
-import type { DataSource } from '../src/domain/entities/data-source';
+import type { DataSource } from '../src/application';
 
 const preview: Preview = {
   globalTypes: {

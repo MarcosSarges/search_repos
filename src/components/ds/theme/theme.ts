@@ -1,4 +1,4 @@
-import type { DataSource } from '@/domain/entities/data-source';
+import type { DataSource } from '@/application';
 
 import { primaryByDataSource } from '../tokens/brand-primary';
 import { button } from '../tokens/button';
