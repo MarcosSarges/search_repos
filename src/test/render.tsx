@@ -27,8 +27,9 @@ function seedSessionPreferences(themeMode?: ThemeMode, dataSource?: DataSource) 
   if (dataSource !== undefined) {
     state.setDataSource(dataSource);
   }
-  // Jest mock reset restores hasHydrated:false; re-arm gate for each render.
+  // Jest mock reset restores hydrate flags false; re-arm gate for each render.
   state.setHasHydrated(true);
+  state.setHasTokensHydrated(true);
 }
 
 export function AllTheProviders({ children }: { children: ReactNode }) {
@@ -47,6 +48,7 @@ type CustomRenderOptions = Omit<RenderOptions, 'wrapper'> & {
 async function waitForSessionHydration() {
   await waitFor(() => {
     expect(useSessionPreferencesStore.getState().hasHydrated).toBe(true);
+    expect(useSessionPreferencesStore.getState().hasTokensHydrated).toBe(true);
   });
 }
 

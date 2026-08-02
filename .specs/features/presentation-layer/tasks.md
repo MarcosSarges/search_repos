@@ -172,12 +172,12 @@ T13 → T14
 
 **Done when**:
 
-- [ ] Combined ready flag (or dual check) blocks children until both complete
-- [ ] Tokens hydrate is triggered as part of boot (not only on first setToken)
-- [ ] Unavailable SecureStore still reaches ready with empty tokens
-- [ ] Existing theme/Home gate tests updated and green
-- [ ] Gate: `pnpm test -- src/stores src/components/ds/theme`
-- [ ] Test count: gate cases covered; no silent deletions
+- [x] Combined ready flag (or dual check) blocks children until both complete
+- [x] Tokens hydrate is triggered as part of boot (not only on first setToken)
+- [x] Unavailable SecureStore still reaches ready with empty tokens
+- [x] Existing theme/Home gate tests updated and green
+- [x] Gate: `pnpm test -- src/stores src/components/ds/theme`
+- [x] Test count: gate cases covered; no silent deletions
 
 **Tests**: unit  
 **Gate**: quick  

@@ -14,11 +14,11 @@ function createFakeSecureStore(
   initial: { github?: string; gitlab?: string } = {},
 ): ProviderTokensSecureStorePort & {
   bag: { github?: string; gitlab?: string };
-  saveCalls: Array<{ dataSource: string; token: string | undefined }>;
+  saveCalls: { dataSource: string; token: string | undefined }[];
   clearCalls: number;
 } {
   const bag = { ...initial };
-  const saveCalls: Array<{ dataSource: string; token: string | undefined }> = [];
+  const saveCalls: { dataSource: string; token: string | undefined }[] = [];
   let clearCalls = 0;
 
   return {
