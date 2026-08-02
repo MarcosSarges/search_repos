@@ -11,9 +11,16 @@ import type { RepoRepository } from '@/domain';
 
 import { resolveRepository } from './resolve-repository';
 
+export type ProviderTokens = {
+  github?: string;
+  gitlab?: string;
+};
+
 export type CreateContainerDeps = {
   dataSource: DataSource;
   repository?: RepoRepository;
+  /** Optional credentials bag — DI selects token for active dataSource. */
+  tokens?: ProviderTokens;
 };
 
 export type AppContainer = {
@@ -23,7 +30,8 @@ export type AppContainer = {
 };
 
 export function createContainer(deps: CreateContainerDeps): AppContainer {
-  const repository = deps.repository ?? resolveRepository(deps.dataSource);
+  const token = deps.tokens?.[deps.dataSource];
+  const repository = deps.repository ?? resolveRepository(deps.dataSource, { token });
 
   return {
     searchRepos: createSearchRepos(repository),

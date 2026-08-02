@@ -6,6 +6,9 @@ const ALL_CODES: AppErrorCode[] = [
   'not_found',
   'empty_query',
   'invalid_input',
+  'unauthorized',
+  'forbidden',
+  'aborted',
   'unknown',
 ];
 
@@ -27,21 +30,38 @@ describe('createAppError', () => {
     expect(error.cause).toBe(cause);
   });
 
-  it('AppErrorCode set includes invalid_input and has exactly six codes', () => {
+  it('preserves cause for unauthorized, forbidden, and aborted', () => {
+    const cause = { status: 401 };
+    expect(createAppError('unauthorized', cause).cause).toBe(cause);
+    expect(createAppError('forbidden', cause).cause).toBe(cause);
+    expect(createAppError('aborted', cause).cause).toBe(cause);
+  });
+
+  it('AppErrorCode set includes unauthorized, forbidden, aborted and has exactly nine codes', () => {
     expect(ALL_CODES).toEqual([
       'rate_limit',
       'network',
       'not_found',
       'empty_query',
       'invalid_input',
+      'unauthorized',
+      'forbidden',
+      'aborted',
       'unknown',
     ]);
+    expect(ALL_CODES).toHaveLength(9);
   });
 });
 
 describe('isAppError', () => {
   it('returns true for values created by createAppError', () => {
     expect(isAppError(createAppError('not_found'))).toBe(true);
+  });
+
+  it('returns true for the new unauthorized, forbidden, and aborted codes', () => {
+    expect(isAppError(createAppError('unauthorized'))).toBe(true);
+    expect(isAppError(createAppError('forbidden'))).toBe(true);
+    expect(isAppError(createAppError('aborted'))).toBe(true);
   });
 
   it('returns false for unknown non-Error values', () => {

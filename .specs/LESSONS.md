@@ -140,6 +140,12 @@ Seen once or not yet corroborated. Tracked, not trusted.
 - evidence: DOM-03 (src/domain)
 - last seen: 2026-08-02T19:03:35Z
 
+### L-022 — When a spec mandates HTTP query params (sort/order), assert those params on the intercepted request — mapping assertions alone do not cover the request contract
+- signal: `ac_gap` · recurrence: 1 feature(s) · scope: `infrastructure/http-adapters` · harmful: 0
+- features: infrastructure-layer
+- evidence: INFRA-04 (infrastructure/http-adapters) (+1 more)
+- last seen: 2026-08-02T21:53:59Z
+
 ## Quarantined (failed when applied — ignore)
 
 A confirmed lesson that recurred alongside failure. Kept for the maintainer to review.

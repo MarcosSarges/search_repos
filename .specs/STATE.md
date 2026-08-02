@@ -64,7 +64,7 @@
 - **Trade-off**: Sem token, limite baixo (ex.: 60 req/h no GitHub).
 - **Scope**: Infra HTTP GitHub/GitLab, mensagens de erro na UI
 - **Date**: 2026-07-30
-- **Status**: active
+- **Status**: superseded by AD-021
 
 ### AD-009
 - **Decision**: Design System em `src/components/ds/` segue Atomic Design: `tokens` → `atoms` → `molecules` → `organisms`; telas de produto são organisms quando existirem.
@@ -162,14 +162,31 @@
 - **Date**: 2026-08-02
 - **Status**: active
 
+### AD-021
+- **Decision**: Tokens de API são opcionais e injetados no DI como mapa `tokens?: { github?: string; gitlab?: string }`; `resolveRepository`/`createContainer` selecionam o token do `dataSource` ativo e passam `token?` já resolvido ao adapter. Sem token = anônimo. Fonte de verdade **não** é `.env` — UI/persistência numa fatia futura. HTTP 429 → `rate_limit` com `cause` estruturado (reset/retry headers) quando disponível.
+- **Reason**: Review infrastructure-layer — Presentation injeta estado global sem microgerenciar qual string enviar; UX futura de rate limit precisa de metadados no `cause`.
+- **Trade-off**: UI/persistência de token ainda não existem; até lá só wiring aceita o mapa.
+- **Scope**: `src/infrastructure/di/**`, adapters HTTP, futura session/credentials; README
+- **Date**: 2026-08-02
+- **Status**: active
+
+### AD-022
+- **Decision**: `resolveRepository` entrega adapters HTTP nativos (`fetch`) por `DataSource`, cada um com mappers próprios; kit compartilhado `mapHttpFailure` + `hasNextPage` híbrido; Fake in-memory só para testes; gate de infra com MSW interceptando rede.
+- **Reason**: Enunciado §3.3/§5; fecha o adiamento HTTP do AD-020; context E (Anti-Corruption Layer ponta a ponta).
+- **Trade-off**: Setup Jest+MSW mais sensível (`customExportConditions` / globals); mais arquivos que monolito.
+- **Scope**: `src/infrastructure/http|github|gitlab/**`, `src/test/msw/**`, DI, Jest
+- **Date**: 2026-08-02
+- **Status**: active
+
 ## Handoff
 
-- **Feature**: application-layer — **DONE**
-- **Phase / Task**: Complete — Verifier PASS; PR [#6](https://github.com/MarcosSarges/search_repos/pull/6)
-- **Completed**: Spec → Design A → T1–T8 + validation PASS; README/AD-020; PR opened
+- **Feature**: infrastructure-layer — **DONE**
+- **Phase / Task**: Complete — Verifier PASS (35/35); fix iteration for INFRA-04/12
+- **Completed**: Specify → Design A → T1–T10 + validation PASS; commits a9d4a1f…f179c45 + f91b7f5
 - **In-progress**: none
-- **Next step**: Merge PR #6, then Presentation (`AppContainerProvider` / hooks) ou HTTP GitHub/GitLab adapters
+- **Next step**: Commit remaining `.specs/features/infrastructure-layer/*` + STATE if needed; open PR; then Presentation (`AppContainerProvider` / token UI) or credentials persist
 - **Blockers**: none
-- **Uncommitted files**: `Teste_Tecnico_React_Native_v3.md` (unrelated formatting)
-- **Branch**: `feat/application-layer`
+- **Uncommitted files**: see git status (specs/validation/STATE/lessons; Teste_Tecnico unrelated)
+- **Branch**: `feat/infrastructure-layer`
+- **Note**: msw pinned to 2.12.10 (Jest/expo ESM)
 

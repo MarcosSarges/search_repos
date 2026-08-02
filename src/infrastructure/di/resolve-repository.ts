@@ -1,13 +1,25 @@
 import type { DataSource } from '@/application';
 import type { RepoRepository } from '@/domain';
 
-import { createInMemoryRepoRepository } from '../repositories/in-memory-repo-repository';
+import { createGithubRepoRepository } from '../github/create-github-repo-repository';
+import { createGitlabRepoRepository } from '../gitlab/create-gitlab-repo-repository';
 
-const factories: Record<DataSource, () => RepoRepository> = {
-  github: () => createInMemoryRepoRepository(),
-  gitlab: () => createInMemoryRepoRepository(),
+export type ResolveRepositoryOptions = {
+  token?: string;
 };
 
-export function resolveRepository(dataSource: DataSource): RepoRepository {
-  return factories[dataSource]();
+const factories: Record<DataSource, (options?: ResolveRepositoryOptions) => RepoRepository> = {
+  github: (options) => createGithubRepoRepository({ token: options?.token }),
+  gitlab: (options) => createGitlabRepoRepository({ token: options?.token }),
+};
+
+/**
+ * Resolves the runtime `RepoRepository` for a `DataSource` (HTTP adapters).
+ * Fake is not in this map — import `createInMemoryRepoRepository` in tests only.
+ */
+export function resolveRepository(
+  dataSource: DataSource,
+  options?: ResolveRepositoryOptions,
+): RepoRepository {
+  return factories[dataSource](options);
 }

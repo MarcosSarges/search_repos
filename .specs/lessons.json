@@ -3,7 +3,7 @@
   "promote_threshold": 2,
   "window_days": 45,
   "quarantine_threshold": 2,
-  "next_id": 22,
+  "next_id": 23,
   "lessons": [
     {
       "id": "L-001",
@@ -382,6 +382,25 @@
       ],
       "created": "2026-08-02T19:03:35Z",
       "last_seen": "2026-08-02T19:03:35Z"
+    },
+    {
+      "id": "L-022",
+      "key": "ac_gap::when a spec mandates http query params sort order assert those params on the intercepted request mapping assertions alone do not cover the request contract",
+      "text": "When a spec mandates HTTP query params (sort/order), assert those params on the intercepted request — mapping assertions alone do not cover the request contract",
+      "signal": "ac_gap",
+      "scope": "infrastructure/http-adapters",
+      "status": "candidate",
+      "features": [
+        "infrastructure-layer"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "INFRA-04 (infrastructure/http-adapters)",
+        "INFRA-12 (infrastructure/http-adapters)"
+      ],
+      "created": "2026-08-02T21:53:59Z",
+      "last_seen": "2026-08-02T21:53:59Z"
     }
   ]
 }

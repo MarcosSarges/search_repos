@@ -1,0 +1,14 @@
+{
+  "full_name": "facebook/react",
+  "name": "react",
+  "description": null,
+  "stargazers_count": 200000,
+  "forks_count": 40000,
+  "watchers_count": 200000,
+  "language": "JavaScript",
+  "owner": {
+    "login": "facebook",
+    "avatar_url": "https://avatars.githubusercontent.com/u/69631"
+  },
+  "html_url": "https://github.com/facebook/react"
+}

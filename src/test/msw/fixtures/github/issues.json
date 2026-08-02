@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "number": 10,
+    "title": "First issue",
+    "user": {
+      "login": "alice",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1"
+    },
+    "labels": [
+      {
+        "id": 100,
+        "name": "bug",
+        "color": "ff0000"
+      }
+    ],
+    "created_at": "2024-01-01T00:00:00Z",
+    "html_url": "https://github.com/facebook/react/issues/10"
+  },
+  {
+    "id": 2,
+    "number": 11,
+    "title": "Second issue",
+    "user": {
+      "login": "bob",
+      "avatar_url": null
+    },
+    "labels": [
+      {
+        "id": 101,
+        "name": "docs",
+        "color": null
+      }
+    ],
+    "created_at": "2024-02-01T00:00:00Z",
+    "html_url": "https://github.com/facebook/react/issues/11"
+  }
+]
