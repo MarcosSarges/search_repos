@@ -204,11 +204,11 @@
 
 ## Handoff
 
-- **Feature**: presentation-layer (bridge) — **DONE** + AD-025 refactor (no AppContainer Context)
-- **Phase / Task**: Post-verify architecture fix — remove duplicate Context
-- **Completed**: Verifier PASS earlier; AD-025 applied (tests green presentation/Home)
+- **Feature**: none (idle) — last closed: `presentation-layer` (bridge)
+- **Phase / Task**: n/a
+- **Completed**: presentation-layer T1–T14 + Verifier PASS; AD-025 (`useAppContainer`); `src/presentation/constants/`; PR #9
 - **In-progress**: none
-- **Next step**: Commit AD-025; optional PR; product screens per NEXT.md
+- **Next step**: Specify next product feature from `.specs/features/presentation-layer/NEXT.md` (search UI / details / issues)
 - **Blockers**: none
-- **Uncommitted files**: presentation refactor + STATE; `Teste_Tecnico_React_Native_v3.md` unrelated
-- **Branch**: `feat/presentation-layer`
+- **Uncommitted files**: local only if any (`HomeScreen` / `Teste_Tecnico_*` not part of closed feature)
+- **Branch**: `feat/presentation-layer` (PR https://github.com/MarcosSarges/search_repos/pull/9)

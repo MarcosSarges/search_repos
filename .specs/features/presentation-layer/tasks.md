@@ -9,7 +9,7 @@ Implement these tasks with the `tlc-spec-driven` skill: **activate it by name an
 ---
 
 **Design**: `.specs/features/presentation-layer/design.md`  
-**Status**: Approved — Execute in progress (batch workers)
+**Status**: Done — Verifier PASS (2026-08-02); AD-025 + `constants/` post-pass
 
 ---
 

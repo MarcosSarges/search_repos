@@ -6,11 +6,11 @@ Domain, application e infrastructure (DI + HTTP) estão prontos, mas a árvore R
 
 ## Goals
 
-- [ ] `AppContainerProvider` em `src/presentation/providers/` recria o container a partir de `dataSource` + `tokens` do session store (sem o DI importar Zustand)
-- [ ] `QueryClientProvider` + hooks em `src/presentation/hooks/` (`useInfiniteQuery` search/issues; `useQuery` details)
-- [ ] `queryKey` inclui `dataSource`; toggle de fonte **não** chama invalidate/remove (cache isolado e reutilizável)
-- [ ] Mapper puro `AppError` → string PT-BR por code (sem `cause`)
-- [ ] Slot `tokens` no Zustand + persistência via `expo-secure-store` (sem UI); nunca AsyncStorage/`partialize`
+- [x] Container DI na árvore React a partir de `dataSource` + `tokens` do session store (sem o DI importar Zustand) — entregue via `useAppContainer()` (AD-025; sem Context/`AppContainerProvider`)
+- [x] `QueryClientProvider` + hooks em `src/presentation/hooks/` (`useInfiniteQuery` search/issues; `useQuery` details)
+- [x] `queryKey` inclui `dataSource`; toggle de fonte **não** chama invalidate/remove (cache isolado e reutilizável)
+- [x] Mapper puro `AppError` → string PT-BR por code (sem `cause`)
+- [x] Slot `tokens` no Zustand + persistência via `expo-secure-store` (sem UI); nunca AsyncStorage/`partialize`
 
 ## Out of Scope
 

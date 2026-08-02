@@ -173,3 +173,19 @@ None — all prior gaps closed by `c843ff5`; this pass is clean.
 **Issues found**: none
 
 **Next steps**: Feature ready; proceed to NEXT.md (product screens / credentials UI) when scheduled.
+
+---
+
+## Closeout (2026-08-02)
+
+**Status**: **DONE** — feature closed by user (`spec done`).
+
+Post-Verifier deltas (still on `feat/presentation-layer`, PR #9):
+
+| Change | Commit / note |
+| ------ | ------------- |
+| AD-025 — drop `AppContainerProvider`; `useAppContainer()` from Zustand | `1ec2b75` |
+| Drop presentation isolation source scans | `19077ff` |
+| `src/presentation/constants/` (`queryKeys` + Query defaults) | `493fffb` |
+
+Follow-ups remain in `.specs/features/presentation-layer/NEXT.md` (new specs).

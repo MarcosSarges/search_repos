@@ -2,7 +2,7 @@
 
 **Spec**: `.specs/features/presentation-layer/spec.md`  
 **Context**: `.specs/features/presentation-layer/context.md`  
-**Status**: Approved (Approach A + SecureStore)
+**Status**: Done — Implemented (Approach A + SecureStore; AD-025: no AppContainer Context)
 
 ---
 
