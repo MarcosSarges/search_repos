@@ -3,7 +3,7 @@
   "promote_threshold": 2,
   "window_days": 45,
   "quarantine_threshold": 2,
-  "next_id": 17,
+  "next_id": 22,
   "lessons": [
     {
       "id": "L-001",
@@ -292,6 +292,96 @@
       ],
       "created": "2026-07-31T21:10:05Z",
       "last_seen": "2026-07-31T21:10:05Z"
+    },
+    {
+      "id": "L-017",
+      "key": "ac_gap::lock provider agnostic entity shapes with source scan or fixture assertions against forbidden fields not types alone",
+      "text": "Lock provider-agnostic entity shapes with source-scan or fixture assertions against forbidden fields, not types alone",
+      "signal": "ac_gap",
+      "scope": "src/domain/entities",
+      "status": "candidate",
+      "features": [
+        "domain-layer"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "DOM-02 (src/domain/entities)"
+      ],
+      "created": "2026-08-02T19:03:35Z",
+      "last_seen": "2026-08-02T19:03:35Z"
+    },
+    {
+      "id": "L-018",
+      "key": "ac_gap::assert pagination result shape includes required fields and explicitly excludes totalcount when the spec forbids it",
+      "text": "Assert pagination result shape includes required fields and explicitly excludes totalCount when the spec forbids it",
+      "signal": "ac_gap",
+      "scope": "src/domain/entities",
+      "status": "candidate",
+      "features": [
+        "domain-layer"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "DOM-04 (src/domain/entities)"
+      ],
+      "created": "2026-08-02T19:03:35Z",
+      "last_seen": "2026-08-02T19:03:35Z"
+    },
+    {
+      "id": "L-019",
+      "key": "ac_gap::when the spec requires optional fields via undefined not null assert entity sources use and reject null unions",
+      "text": "When the spec requires optional fields via undefined not null, assert entity sources use ?: and reject | null unions",
+      "signal": "ac_gap",
+      "scope": "src/domain/entities",
+      "status": "candidate",
+      "features": [
+        "domain-layer"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "DOM-05 (src/domain/entities)"
+      ],
+      "created": "2026-08-02T19:03:35Z",
+      "last_seen": "2026-08-02T19:03:35Z"
+    },
+    {
+      "id": "L-020",
+      "key": "ac_gap::when a port documents apperror rejects add a fake backed test that asserts isapperror on the rejection path",
+      "text": "When a port documents AppError rejects, add a fake-backed test that asserts isAppError on the rejection path",
+      "signal": "ac_gap",
+      "scope": "src/domain/repositories",
+      "status": "candidate",
+      "features": [
+        "domain-layer"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "DOM-11 (src/domain/repositories)"
+      ],
+      "created": "2026-08-02T19:03:35Z",
+      "last_seen": "2026-08-02T19:03:35Z"
+    },
+    {
+      "id": "L-021",
+      "key": "spec_precision_gap::opaque identity contracts need an explicit string typed fixture or assertion not only a typescript field declaration",
+      "text": "Opaque identity contracts need an explicit string-typed fixture or assertion, not only a TypeScript field declaration",
+      "signal": "spec_precision_gap",
+      "scope": "src/domain",
+      "status": "candidate",
+      "features": [
+        "domain-layer"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "DOM-03 (src/domain)"
+      ],
+      "created": "2026-08-02T19:03:35Z",
+      "last_seen": "2026-08-02T19:03:35Z"
     }
   ]
 }

@@ -157,10 +157,10 @@
 ## Handoff
 
 - **Feature**: domain-layer
-- **Phase / Task**: Execute — Batch 1 (T1–T4) in flight via sub-agent
-- **Completed**: Spec/context/design A/tasks approved
-- **In-progress**: Batch worker phases 1–3
-- **Next step**: On batch summary → Batch 2 (T5–T6) → Verifier
+- **Phase / Task**: Complete — Verifier PASS
+- **Completed**: T1–T6 + gap fix `60e0bd2`; validation PASS (173 tests; sensor 3/3)
+- **In-progress**: none
+- **Next step**: Push / open PR for `feat/domain-layer` (ask user); then application use cases
 - **Blockers**: none
-- **Uncommitted files**: `.specs/features/domain-layer/**`, `.specs/STATE.md` (ignore `Teste_Tecnico_*.md` formatting)
+- **Uncommitted files**: `.specs/LESSONS.md`, `.specs/lessons.json` (verifier lessons); `Teste_Tecnico_*.md` noise
 - **Branch**: `feat/domain-layer`
