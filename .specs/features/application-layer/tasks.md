@@ -141,11 +141,11 @@ T8
 
 **Done when**:
 
-- [ ] Factory returns a function (not `{ execute }`)
-- [ ] Source uses `normalizeSearchQuery` / `assertPage` / `assertPerPage` (no inline empty-query duplicate)
-- [ ] Tests cover empty query, happy path, pagination, invalid page and/or perPage → `invalid_input`
-- [ ] Gate: `pnpm test -- src/application/use-cases`
-- [ ] Test count: search suite ≥ 4 assertions/cases; no silent deletions of unrelated tests
+- [x] Factory returns a function (not `{ execute }`)
+- [x] Source uses `normalizeSearchQuery` / `assertPage` / `assertPerPage` (no inline empty-query duplicate)
+- [x] Tests cover empty query, happy path, pagination, invalid page and/or perPage → `invalid_input`
+- [x] Gate: `pnpm test -- src/application/use-cases`
+- [x] Test count: search suite ≥ 4 assertions/cases; no silent deletions of unrelated tests
 
 **Tests**: unit  
 **Gate**: quick  
