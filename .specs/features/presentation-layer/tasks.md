@@ -449,11 +449,11 @@ T13 → T14
 
 **Done when**:
 
-- [ ] Barrel exports providers, hooks, queryKeys, mapper (as designed)
-- [ ] Isolation scan on `src/presentation/hooks` bans fetch + github/gitlab paths
-- [ ] di isolation still green
-- [ ] Gate: `pnpm test` && `pnpm lint`
-- [ ] Test count: isolation cases present; full suite green
+- [x] Barrel exports providers, hooks, queryKeys, mapper (as designed)
+- [x] Isolation scan on `src/presentation/hooks` bans fetch + github/gitlab paths
+- [x] di isolation still green
+- [x] Gate: `pnpm test` && `pnpm lint`
+- [x] Test count: isolation cases present; full suite green
 
 **Tests**: unit  
 **Gate**: build  
