@@ -14,7 +14,10 @@ describe('createGithubRepoRepository', () => {
 
   it('search maps items to Repo with id=full_name and no totalCount on result', async () => {
     server.use(
-      http.get('https://api.github.com/search/repositories', () => {
+      http.get('https://api.github.com/search/repositories', ({ request }) => {
+        const url = new URL(request.url);
+        expect(url.searchParams.get('sort')).toBe('stars');
+        expect(url.searchParams.get('order')).toBe('desc');
         return HttpResponse.json(searchFixture);
       }),
     );

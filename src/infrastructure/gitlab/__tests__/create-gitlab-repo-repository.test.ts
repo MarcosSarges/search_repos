@@ -14,7 +14,10 @@ describe('createGitlabRepoRepository', () => {
 
   it('search maps projects to Repo with numeric-string id and no totalCount', async () => {
     server.use(
-      http.get('https://gitlab.com/api/v4/projects', () => {
+      http.get('https://gitlab.com/api/v4/projects', ({ request }) => {
+        const url = new URL(request.url);
+        expect(url.searchParams.get('order_by')).toBe('star_count');
+        expect(url.searchParams.get('sort')).toBe('desc');
         return HttpResponse.json(searchFixture);
       }),
     );
