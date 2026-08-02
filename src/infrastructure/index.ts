@@ -1,5 +1,10 @@
 export { createContainer } from './di/create-container';
-export type { AppContainer, CreateContainerDeps, ProviderTokens } from './di/create-container';
+export type {
+  AppContainer,
+  CreateContainerDeps,
+  ProviderHosts,
+  ProviderTokens,
+} from './di/create-container';
 export { resolveRepository } from './di/resolve-repository';
 export type { ResolveRepositoryOptions } from './di/resolve-repository';
 export { createGithubRepoRepository } from './github/create-github-repo-repository';

@@ -75,14 +75,15 @@ T1 → T2 → T3 → T4 → T5 → T6
 **Commit**: `refactor(infrastructure): extract GitHub ApiClient from repository`  
 **Done**: `214e26671ed4fe809befbf39105da01e4034bbb7`
 
-### T4: GitLab ApiClient + ACL repository
+### T4: GitLab ApiClient + ACL repository ✅
 
 **What**: `createGitlabApiClient` with normalize; Bearer only; repo `{ client }` only; update MSW to wildcards + Bearer (drop PRIVATE-TOKEN). Custom host root → `/api/v4` covered.  
 **Where**: `src/infrastructure/gitlab/**`  
 **Depends on**: T3  
 **Requirement**: CLI-02, CLI-03, CLI-05, CLI-06, CLI-07, CLI-08, CLI-11  
 **Tests**: integration | **Gate**: full  
-**Commit**: `refactor(infrastructure): extract GitLab ApiClient with host normalize`
+**Commit**: `refactor(infrastructure): extract GitLab ApiClient with host normalize`  
+**Done**: `18879bd`
 
 ### T5: DI `hosts` bag + resolve wiring
 
