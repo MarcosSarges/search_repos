@@ -224,10 +224,10 @@ T8
 
 **Done when**:
 
-- [ ] Both `github` and `gitlab` resolve to a working `RepoRepository` (Fake)
-- [ ] Exhaustive `DataSource` coverage (no undefined fall-through)
-- [ ] Gate: `pnpm test -- src/infrastructure/di`
-- [ ] Test count: ≥ 2 cases (one per source); no silent deletions
+- [x] Both `github` and `gitlab` resolve to a working `RepoRepository` (Fake)
+- [x] Exhaustive `DataSource` coverage (no undefined fall-through)
+- [x] Gate: `pnpm test -- src/infrastructure/di`
+- [x] Test count: ≥ 2 cases (one per source); no silent deletions
 
 **Tests**: unit  
 **Gate**: full  

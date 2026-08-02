@@ -138,7 +138,7 @@ O domínio já expõe porta, entidades, erros e helpers; o esqueleto de applicat
 | APP-06 | P1: UC — list-issues defaults | Tasks | Pending |
 | APP-07 | P1: UC — application isolation | Tasks | Pending |
 | APP-08 | P1: DI — Fake under infrastructure | Tasks | Implementing |
-| APP-09 | P1: DI — resolveRepository branches | Tasks | Pending |
+| APP-09 | P1: DI — resolveRepository branches | Tasks | Implementing |
 | APP-10 | P1: DI — createContainer callables | Tasks | Pending |
 | APP-11 | P1: DI — immutable distinct containers | Tasks | Pending |
 | APP-12 | P1: DI — no Zustand in di/ | Tasks | Pending |
