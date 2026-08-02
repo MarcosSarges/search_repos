@@ -311,11 +311,11 @@ T13 → T14
 
 **Done when**:
 
-- [ ] `AllTheProviders` includes AppQueryProvider + AppContainerProvider
-- [ ] Optional `repository` for Fake injection
-- [ ] Existing Home/theme renders still pass with harness
-- [ ] Gate: `pnpm test -- src/screens/__tests__/HomeScreen.test.tsx src/components/ds/theme`
-- [ ] No silent deletions in those suites
+- [x] `AllTheProviders` includes AppQueryProvider + AppContainerProvider
+- [x] Optional `repository` for Fake injection
+- [x] Existing Home/theme renders still pass with harness
+- [x] Gate: `pnpm test -- src/screens/__tests__/HomeScreen.test.tsx src/components/ds/theme`
+- [x] No silent deletions in those suites
 
 **Tests**: none (harness — verified by consumer suites in Done when)  
 **Gate**: full  
