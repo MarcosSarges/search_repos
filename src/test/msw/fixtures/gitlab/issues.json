@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "iid": 10,
+    "title": "First issue",
+    "author": {
+      "username": "alice",
+      "avatar_url": "https://gitlab.com/uploads/-/system/user/avatar/1/avatar.png"
+    },
+    "labels": ["bug", "priority"],
+    "created_at": "2024-01-01T00:00:00Z",
+    "web_url": "https://gitlab.com/gitlab-org/gitlab/-/issues/10"
+  },
+  {
+    "id": 2,
+    "iid": 11,
+    "title": "Second issue",
+    "author": {
+      "username": "bob",
+      "avatar_url": null
+    },
+    "labels": ["docs"],
+    "created_at": "2024-02-01T00:00:00Z",
+    "web_url": "https://gitlab.com/gitlab-org/gitlab/-/issues/11"
+  }
+]

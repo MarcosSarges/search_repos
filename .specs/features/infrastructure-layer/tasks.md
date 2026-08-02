@@ -292,11 +292,11 @@ T10
 
 **Done when**:
 
-- [ ] search/getById/listIssues map to domain; id numeric string round-trips
-- [ ] Invalid id → `invalid_input` without HTTP
-- [ ] Pagination headers + empty page + fallback covered
-- [ ] Gate: `pnpm test -- src/infrastructure/gitlab`
-- [ ] Test count: ≥ 6 adapter cases; no silent deletions
+- [x] search/getById/listIssues map to domain; id numeric string round-trips
+- [x] Invalid id → `invalid_input` without HTTP
+- [x] Pagination headers + empty page + fallback covered
+- [x] Gate: `pnpm test -- src/infrastructure/gitlab`
+- [x] Test count: ≥ 6 adapter cases; no silent deletions
 
 **Tests**: integration  
 **Gate**: full  

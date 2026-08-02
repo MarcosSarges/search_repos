@@ -1,0 +1,30 @@
+[
+  {
+    "id": 278964,
+    "name": "GitLab",
+    "path_with_namespace": "gitlab-org/gitlab",
+    "description": "GitLab CE/EE",
+    "star_count": 200000,
+    "forks_count": 40000,
+    "namespace": {
+      "name": "gitlab-org",
+      "path": "gitlab-org",
+      "avatar_url": "https://gitlab.com/uploads/-/system/group/avatar/9970/logo.png"
+    },
+    "web_url": "https://gitlab.com/gitlab-org/gitlab"
+  },
+  {
+    "id": 13083,
+    "name": "vue",
+    "path_with_namespace": "vuejs/vue",
+    "description": null,
+    "star_count": 40000,
+    "forks_count": 7000,
+    "namespace": {
+      "name": "vuejs",
+      "path": "vuejs",
+      "avatar_url": null
+    },
+    "web_url": "https://gitlab.com/vuejs/vue"
+  }
+]
