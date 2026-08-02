@@ -1,7 +1,7 @@
-import { type AppError, type Repo } from '@/domain';
+import { type AppError, type Repo, type RepoRepository } from '@/domain';
 
-import { createInMemoryRepoRepository } from '../../fakes/in-memory-repo-repository';
-import { createSearchReposUseCase } from '../search-repos';
+import { createInMemoryRepoRepository } from '@/infrastructure';
+import { createSearchRepos } from '../search-repos';
 
 const sampleRepos: Repo[] = [
   {
@@ -30,19 +30,19 @@ const sampleRepos: Repo[] = [
   },
 ];
 
-describe('createSearchReposUseCase', () => {
-  it('rejects empty queries', async () => {
-    const useCase = createSearchReposUseCase(createInMemoryRepoRepository(sampleRepos));
+describe('createSearchRepos', () => {
+  it('rejects empty queries with empty_query', async () => {
+    const searchRepos = createSearchRepos(createInMemoryRepoRepository(sampleRepos));
 
-    await expect(useCase.execute({ query: '   ' })).rejects.toMatchObject({
+    await expect(searchRepos({ query: '   ' })).rejects.toMatchObject({
       code: 'empty_query',
     } satisfies Partial<AppError>);
   });
 
   it('returns matching repositories sorted by repository filter', async () => {
-    const useCase = createSearchReposUseCase(createInMemoryRepoRepository(sampleRepos));
+    const searchRepos = createSearchRepos(createInMemoryRepoRepository(sampleRepos));
 
-    const result = await useCase.execute({ query: 'facebook', page: 1, perPage: 20 });
+    const result = await searchRepos({ query: 'facebook', page: 1, perPage: 20 });
 
     expect(result.items).toHaveLength(1);
     expect(result.items[0]?.fullName).toBe('facebook/react');
@@ -50,14 +50,49 @@ describe('createSearchReposUseCase', () => {
   });
 
   it('paginates results', async () => {
-    const useCase = createSearchReposUseCase(createInMemoryRepoRepository(sampleRepos));
+    const searchRepos = createSearchRepos(createInMemoryRepoRepository(sampleRepos));
 
-    const page1 = await useCase.execute({ query: 'e', page: 1, perPage: 1 });
-    const page2 = await useCase.execute({ query: 'e', page: 2, perPage: 1 });
+    const page1 = await searchRepos({ query: 'e', page: 1, perPage: 1 });
+    const page2 = await searchRepos({ query: 'e', page: 2, perPage: 1 });
 
     expect(page1.items).toHaveLength(1);
     expect(page1.hasNextPage).toBe(true);
     expect(page2.items).toHaveLength(1);
     expect(page2.hasNextPage).toBe(false);
+  });
+
+  it('applies default page 1 and perPage 20 when omitted', async () => {
+    const search = jest.fn().mockResolvedValue({
+      items: [],
+      page: 1,
+      perPage: 20,
+      hasNextPage: false,
+    });
+    const repository: RepoRepository = {
+      search,
+      getById: jest.fn(),
+      listIssues: jest.fn(),
+    };
+    const searchRepos = createSearchRepos(repository);
+
+    await searchRepos({ query: 'react' });
+
+    expect(search).toHaveBeenCalledWith({ query: 'react', page: 1, perPage: 20 });
+  });
+
+  it('rejects invalid page with invalid_input', async () => {
+    const searchRepos = createSearchRepos(createInMemoryRepoRepository(sampleRepos));
+
+    await expect(searchRepos({ query: 'react', page: 0 })).rejects.toMatchObject({
+      code: 'invalid_input',
+    } satisfies Partial<AppError>);
+  });
+
+  it('rejects invalid perPage with invalid_input', async () => {
+    const searchRepos = createSearchRepos(createInMemoryRepoRepository(sampleRepos));
+
+    await expect(searchRepos({ query: 'react', perPage: 0 })).rejects.toMatchObject({
+      code: 'invalid_input',
+    } satisfies Partial<AppError>);
   });
 });

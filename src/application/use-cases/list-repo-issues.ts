@@ -1,4 +1,13 @@
-import { createAppError, type Issue, type PaginatedResult, type RepoRepository } from '@/domain';
+import {
+  assertPage,
+  assertPerPage,
+  type Issue,
+  type PaginatedResult,
+  type RepoRepository,
+} from '@/domain';
+
+import { DEFAULT_PAGE, DEFAULT_PER_PAGE } from '../constants/pagination';
+import { normalizeRepoId } from '../validation/repo-id';
 
 export type ListRepoIssuesInput = {
   repoId: string;
@@ -6,24 +15,16 @@ export type ListRepoIssuesInput = {
   perPage?: number;
 };
 
-export type ListRepoIssuesUseCase = {
-  execute: (input: ListRepoIssuesInput) => Promise<PaginatedResult<Issue>>;
-};
+export type ListRepoIssues = (input: ListRepoIssuesInput) => Promise<PaginatedResult<Issue>>;
 
-export function createListRepoIssuesUseCase(repository: RepoRepository): ListRepoIssuesUseCase {
-  return {
-    async execute(input) {
-      const repoId = input.repoId.trim();
+export function createListRepoIssues(repository: RepoRepository): ListRepoIssues {
+  return async (input) => {
+    const repoId = normalizeRepoId(input.repoId);
+    const page = input.page ?? DEFAULT_PAGE;
+    const perPage = input.perPage ?? DEFAULT_PER_PAGE;
+    assertPage(page);
+    assertPerPage(perPage);
 
-      if (!repoId) {
-        throw createAppError('not_found');
-      }
-
-      return repository.listIssues({
-        repoId,
-        page: input.page ?? 1,
-        perPage: input.perPage ?? 20,
-      });
-    },
+    return repository.listIssues({ repoId, page, perPage });
   };
 }

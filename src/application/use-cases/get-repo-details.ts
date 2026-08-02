@@ -1,23 +1,16 @@
-import { createAppError, type Repo, type RepoRepository } from '@/domain';
+import { type Repo, type RepoRepository } from '@/domain';
+
+import { normalizeRepoId } from '../validation/repo-id';
 
 export type GetRepoDetailsInput = {
   repoId: string;
 };
 
-export type GetRepoDetailsUseCase = {
-  execute: (input: GetRepoDetailsInput) => Promise<Repo>;
-};
+export type GetRepoDetails = (input: GetRepoDetailsInput) => Promise<Repo>;
 
-export function createGetRepoDetailsUseCase(repository: RepoRepository): GetRepoDetailsUseCase {
-  return {
-    async execute(input) {
-      const repoId = input.repoId.trim();
-
-      if (!repoId) {
-        throw createAppError('not_found');
-      }
-
-      return repository.getById(repoId);
-    },
+export function createGetRepoDetails(repository: RepoRepository): GetRepoDetails {
+  return async (input) => {
+    const repoId = normalizeRepoId(input.repoId);
+    return repository.getById(repoId);
   };
 }

@@ -154,13 +154,22 @@
 - **Date**: 2026-08-02
 - **Status**: active
 
+### AD-020
+- **Decision**: Composition root em `src/infrastructure/di` (`resolveRepository` + `createContainer`); use cases em application são factories funcionais `(repo) => (input) => Promise` (sem `.execute`); implementações da porta (incl. Fake in-memory) vivem em `src/infrastructure/`; DI recebe `dataSource` por parâmetro e não importa Zustand; barrel `@/application` não exporta DI/Fake.
+- **Reason**: Clean Arch + IoC (context application-layer); AD-002 (um branch de fonte); testabilidade em Node; adiar HTTP com Fake runtime.
+- **Trade-off**: Presentation ainda não consome o container (Provider/hooks = fatia seguinte); ambas fontes → Fake até feature HTTP.
+- **Scope**: `src/application/use-cases/**`, `src/infrastructure/di/**`, `src/infrastructure/repositories/**`, barrels
+- **Date**: 2026-08-02
+- **Status**: active
+
 ## Handoff
 
-- **Feature**: domain-layer — **DONE**
-- **Phase / Task**: Complete — Verifier PASS; PR [#5](https://github.com/MarcosSarges/search_repos/pull/5); README domain guards documented
-- **Completed**: Spec → Design A → T1–T6 + gap fix; validation PASS; README guarda de camada
+- **Feature**: application-layer — **DONE**
+- **Phase / Task**: Complete — Verifier PASS; PR [#6](https://github.com/MarcosSarges/search_repos/pull/6)
+- **Completed**: Spec → Design A → T1–T8 + validation PASS; README/AD-020; PR opened
 - **In-progress**: none
-- **Next step**: Application use cases (formalizar/alinhar `src/application` ao domínio) ou merge PR #5
+- **Next step**: Merge PR #6, then Presentation (`AppContainerProvider` / hooks) ou HTTP GitHub/GitLab adapters
 - **Blockers**: none
-- **Uncommitted files**: check working tree
-- **Branch**: `feat/domain-layer`
+- **Uncommitted files**: `Teste_Tecnico_React_Native_v3.md` (unrelated formatting)
+- **Branch**: `feat/application-layer`
+

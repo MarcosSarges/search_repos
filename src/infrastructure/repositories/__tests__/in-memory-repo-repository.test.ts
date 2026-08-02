@@ -3,9 +3,9 @@ import { isAppError } from '@/domain';
 import { createInMemoryRepoRepository } from '../in-memory-repo-repository';
 
 /**
- * DOM-11: RepoRepository port rejects (via fake) are representable as AppError.
+ * APP-08 / DOM-11: Fake under infrastructure; port rejects are AppError with not_found.
  */
-describe('createInMemoryRepoRepository (DOM-11)', () => {
+describe('createInMemoryRepoRepository (APP-08, DOM-11)', () => {
   it('WHEN getById is called for a missing id THEN it rejects with AppError not_found', async () => {
     const repository = createInMemoryRepoRepository([]);
 

@@ -1,4 +1,13 @@
-import { createAppError, type PaginatedResult, type Repo, type RepoRepository } from '@/domain';
+import {
+  assertPage,
+  assertPerPage,
+  normalizeSearchQuery,
+  type PaginatedResult,
+  type Repo,
+  type RepoRepository,
+} from '@/domain';
+
+import { DEFAULT_PAGE, DEFAULT_PER_PAGE } from '../constants/pagination';
 
 export type SearchReposInput = {
   query: string;
@@ -6,24 +15,16 @@ export type SearchReposInput = {
   perPage?: number;
 };
 
-export type SearchReposUseCase = {
-  execute: (input: SearchReposInput) => Promise<PaginatedResult<Repo>>;
-};
+export type SearchRepos = (input: SearchReposInput) => Promise<PaginatedResult<Repo>>;
 
-export function createSearchReposUseCase(repository: RepoRepository): SearchReposUseCase {
-  return {
-    async execute(input) {
-      const query = input.query.trim();
+export function createSearchRepos(repository: RepoRepository): SearchRepos {
+  return async (input) => {
+    const query = normalizeSearchQuery(input.query);
+    const page = input.page ?? DEFAULT_PAGE;
+    const perPage = input.perPage ?? DEFAULT_PER_PAGE;
+    assertPage(page);
+    assertPerPage(perPage);
 
-      if (!query) {
-        throw createAppError('empty_query');
-      }
-
-      return repository.search({
-        query,
-        page: input.page ?? 1,
-        perPage: input.perPage ?? 20,
-      });
-    },
+    return repository.search({ query, page, perPage });
   };
 }
