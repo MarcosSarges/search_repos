@@ -226,12 +226,12 @@ T13 → T14
 
 **Done when**:
 
-- [ ] All nine codes have non-empty PT-BR strings
-- [ ] Non-AppError → unknown copy
-- [ ] `rate_limit` with/without `cause` → identical string
-- [ ] Module has no React / RN / TanStack imports (assert in test or isolation)
-- [ ] Gate: `pnpm test -- src/presentation/errors`
-- [ ] Test count: table covers all codes + fallback + cause case
+- [x] All nine codes have non-empty PT-BR strings
+- [x] Non-AppError → unknown copy
+- [x] `rate_limit` with/without `cause` → identical string
+- [x] Module has no React / RN / TanStack imports (assert in test or isolation)
+- [x] Gate: `pnpm test -- src/presentation/errors`
+- [x] Test count: table covers all codes + fallback + cause case
 
 **Tests**: unit  
 **Gate**: quick  
