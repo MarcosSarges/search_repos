@@ -165,10 +165,10 @@
 ## Handoff
 
 - **Feature**: application-layer — Execute (sub-agents)
-- **Phase / Task**: Batch 1 done (T1–T4); next Batch 2 (Phases 3–5: T5–T8); then Verifier
-- **Completed**: T1 pagination constants; T2 normalizeRepoId; T3 createSearchRepos functional; T4 createGetRepoDetails + createListRepoIssues functional; Fake still in `application/fakes`
-- **In-progress**: none (await Batch 2)
-- **Next step**: Dispatch Batch 2 worker (T5 → T8)
+- **Phase / Task**: Batch 2 done (Phases 3–5: T5–T8); next Verifier
+- **Completed**: T1–T4 (Batch 1); T5 Fake → `infrastructure/repositories`; T6 `resolveRepository`; T7 `createContainer`; T8 application/infrastructure barrels + isolation + public-api
+- **In-progress**: none (await Verifier)
+- **Next step**: Dispatch Verifier for feature-level validation (spec-anchored + discrimination sensor → `validation.md`)
 - **Blockers**: none
 - **Uncommitted files**: `Teste_Tecnico_React_Native_v3.md` (unrelated — leave alone)
 - **Branch**: `feat/application-layer`

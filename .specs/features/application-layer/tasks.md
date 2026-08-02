@@ -9,7 +9,7 @@ Implement these tasks with the `tlc-spec-driven` skill: **activate it by name an
 ---
 
 **Design**: `.specs/features/application-layer/design.md`  
-**Status**: In Progress — Batch 1 done; Batch 2 (T5–T8)
+**Status**: In Progress — Batch 2 done (T5–T8); next Verifier
 
 ---
 
@@ -278,11 +278,11 @@ T8
 
 **Done when**:
 
-- [ ] `@/application` exports factories, I/O types, `DataSource`/`isDataSource`; does **not** export DI/Fake
-- [ ] `@/infrastructure` exports `createContainer`, container typings, Fake factory (+ `resolveRepository` per design)
-- [ ] Application isolation test passes
-- [ ] Gate: `pnpm test` && `pnpm lint`
-- [ ] Test count: isolation + both public-api suites present and green; no silent deletions
+- [x] `@/application` exports factories, I/O types, `DataSource`/`isDataSource`; does **not** export DI/Fake
+- [x] `@/infrastructure` exports `createContainer`, container typings, Fake factory (+ `resolveRepository` per design)
+- [x] Application isolation test passes
+- [x] Gate: `pnpm test` && `pnpm lint`
+- [x] Test count: isolation + both public-api suites present and green; no silent deletions
 
 **Tests**: unit  
 **Gate**: build  

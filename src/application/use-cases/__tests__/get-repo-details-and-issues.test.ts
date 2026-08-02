@@ -1,6 +1,6 @@
 import type { AppError, Issue, Repo, RepoRepository } from '@/domain';
 
-import { createInMemoryRepoRepository } from '@/infrastructure/repositories/in-memory-repo-repository';
+import { createInMemoryRepoRepository } from '@/infrastructure';
 import { createGetRepoDetails } from '../get-repo-details';
 import { createListRepoIssues } from '../list-repo-issues';
 
@@ -95,9 +95,7 @@ describe('createListRepoIssues', () => {
       createInMemoryRepoRepository([repo], { 'facebook/react': issues }),
     );
 
-    await expect(
-      listRepoIssues({ repoId: 'facebook/react', page: 0 }),
-    ).rejects.toMatchObject({
+    await expect(listRepoIssues({ repoId: 'facebook/react', page: 0 })).rejects.toMatchObject({
       code: 'invalid_input',
     } satisfies Partial<AppError>);
   });
