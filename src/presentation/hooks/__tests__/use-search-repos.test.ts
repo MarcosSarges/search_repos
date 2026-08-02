@@ -3,7 +3,7 @@ import { join } from 'node:path';
 
 import { createAppError, isAppError, type Repo, type RepoRepository } from '@/domain';
 import { createInMemoryRepoRepository } from '@/infrastructure';
-import { queryKeys } from '@/presentation/query-keys';
+import { queryKeys } from '@/presentation/constants/query-keys';
 import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
 import { act, renderHook, waitFor } from '@/test/render';
 import { createQueryClient } from '@/presentation/providers/create-query-client';

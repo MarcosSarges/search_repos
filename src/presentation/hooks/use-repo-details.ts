@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { useAppContainer } from './use-app-container';
-import { queryKeys } from '../query-keys';
+import { queryKeys } from '../constants/query-keys';
 
 type UseRepoDetailsOptions = {
   repoId: string;

@@ -1,4 +1,4 @@
-export { queryKeys } from './query-keys';
+export { queryKeys, QUERY_RETRY, QUERY_STALE_TIME_MS } from './constants';
 export { mapAppErrorToMessage } from './errors/map-app-error-to-message';
 export { AppQueryProvider } from './providers/AppQueryProvider';
 export { createQueryClient } from './providers/create-query-client';

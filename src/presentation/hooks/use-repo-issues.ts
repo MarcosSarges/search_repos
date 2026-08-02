@@ -3,7 +3,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { DEFAULT_PAGE } from '@/application/constants/pagination';
 
 import { useAppContainer } from './use-app-container';
-import { queryKeys } from '../query-keys';
+import { queryKeys } from '../constants/query-keys';
 
 type UseRepoIssuesOptions = {
   repoId: string;

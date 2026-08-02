@@ -110,7 +110,7 @@ flowchart TB
 ### `queryKeys` (factory tipada)
 
 - **Purpose**: Prefixos estáveis; sempre incluem `dataSource`.
-- **Location**: `src/presentation/query-keys.ts`
+- **Location**: `src/presentation/constants/query-keys.ts`
 - **Interfaces**:
   - `queryKeys.repos.search(dataSource, query)` → `readonly ['repos', DataSource, 'search', string]`
   - `queryKeys.repos.detail(dataSource, repoId)` → `readonly ['repos', DataSource, 'detail', string]`
