@@ -200,10 +200,10 @@ T13 → T14
 
 **Done when**:
 
-- [ ] Three key factories return readonly tuples with `dataSource` in the expected slot
-- [ ] Unit tests assert shapes for github vs gitlab differ
-- [ ] Gate: `pnpm test -- src/presentation/__tests__/query-keys.test.ts` (or presentation scoped)
-- [ ] Test count: ≥3 cases
+- [x] Three key factories return readonly tuples with `dataSource` in the expected slot
+- [x] Unit tests assert shapes for github vs gitlab differ
+- [x] Gate: `pnpm test -- src/presentation/__tests__/query-keys.test.ts` (or presentation scoped)
+- [x] Test count: ≥3 cases
 
 **Tests**: unit  
 **Gate**: quick  
