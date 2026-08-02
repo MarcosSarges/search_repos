@@ -184,7 +184,7 @@
 - **Trade-off**: Pasta `presentation/` + stores/screens ainda fora dela até features seguintes.
 - **Scope**: `src/presentation/**`, session store tokens slot, App providers, product query hooks
 - **Date**: 2026-08-02
-- **Status**: active
+- **Status**: superseded by AD-025 (Context `AppContainerProvider` removed; rest still active — see AD-025)
 
 ### AD-024
 - **Decision**: Tokens de API (`ProviderTokens`) persistem **somente** via `expo-secure-store` (SDK 54); **nunca** AsyncStorage nem `partialize` do Zustand. Hydrate SecureStore → bag em memória no boot; gate de UI espera prefs + tokens; web/unavailable → memória only. Sem UI de token nesta fatia; `requireAuthentication` off.
@@ -194,14 +194,21 @@
 - **Date**: 2026-08-02
 - **Status**: active
 
+### AD-025
+- **Decision**: Não há `AppContainerProvider`/Context para o DI. `useAppContainer()` deriva `createContainer({ dataSource, tokens })` direto do Zustand (`useMemo`). Árvore de produto: Theme gate → `AppQueryProvider` → Nav. Fake em testes via `setAppContainerTestRepository` (módulo), não via prop de Provider.
+- **Reason**: Zustand já é a fonte de `dataSource`/`tokens`; Context duplicava assinatura e forçava re-render em cascata (store → Provider → consumers).
+- **Trade-off**: Cada caller de `useAppContainer` memoiza o próprio container (aceitável); override de Fake é global de teste (limpar entre suites).
+- **Scope**: `src/presentation/hooks/use-app-container.ts`, `App.tsx`, `src/test/render.tsx`
+- **Date**: 2026-08-02
+- **Status**: active
+
 ## Handoff
 
-- **Feature**: presentation-layer (bridge) — **DONE**
-- **Phase / Task**: Complete — Verifier PASS (328/328); fix `c843ff5`
-- **Completed**: Specify → Design A → T1–T14 + validation PASS
+- **Feature**: presentation-layer (bridge) — **DONE** + AD-025 refactor (no AppContainer Context)
+- **Phase / Task**: Post-verify architecture fix — remove duplicate Context
+- **Completed**: Verifier PASS earlier; AD-025 applied (tests green presentation/Home)
 - **In-progress**: none
-- **Next step**: Open PR for `feat/presentation-layer`; product screens / token UI per `NEXT.md`
+- **Next step**: Commit AD-025; optional PR; product screens per NEXT.md
 - **Blockers**: none
-- **Uncommitted files**: `Teste_Tecnico_React_Native_v3.md` (unrelated)
+- **Uncommitted files**: presentation refactor + STATE; `Teste_Tecnico_React_Native_v3.md` unrelated
 - **Branch**: `feat/presentation-layer`
-- **Agents**: [Batch A](45408e63-5628-4a03-9f00-d3d03cbb347a), [Batch B](ed181779-a885-4fbf-b6ab-a7ab52682316), [Batch C](db339d9e-8560-46f8-ab47-d0bb00d1336d), [Verifier](12c31e51-5f92-41b2-89d8-81fc5159abe9)

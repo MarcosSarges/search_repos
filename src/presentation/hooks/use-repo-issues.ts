@@ -1,10 +1,9 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { DEFAULT_PAGE } from '@/application/constants/pagination';
-import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
 
+import { useAppContainer } from './use-app-container';
 import { queryKeys } from '../query-keys';
-import { useAppContainer } from '../providers/AppContainerProvider';
 
 type UseRepoIssuesOptions = {
   repoId: string;
@@ -12,8 +11,7 @@ type UseRepoIssuesOptions = {
 };
 
 export function useRepoIssues({ repoId, enabled }: UseRepoIssuesOptions) {
-  const container = useAppContainer();
-  const dataSource = useSessionPreferencesStore((state) => state.dataSource);
+  const { container, dataSource } = useAppContainer();
   const trimmed = repoId.trim();
   const isEnabled = enabled ?? trimmed.length > 0;
 

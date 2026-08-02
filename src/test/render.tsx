@@ -14,7 +14,7 @@ import type { QueryClient } from '@tanstack/react-query';
 import { AppThemeProvider, type ThemeMode } from '@/components/ds';
 import type { DataSource } from '@/application';
 import type { RepoRepository } from '@/domain';
-import { AppContainerProvider } from '@/presentation/providers/AppContainerProvider';
+import { setAppContainerTestRepository } from '@/presentation/hooks/use-app-container';
 import { AppQueryProvider } from '@/presentation/providers/AppQueryProvider';
 import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
 
@@ -43,12 +43,11 @@ type AllTheProvidersProps = {
 };
 
 export function AllTheProviders({ children, repository, queryClient }: AllTheProvidersProps) {
+  setAppContainerTestRepository(repository);
   return (
     <SafeAreaProvider initialMetrics={initialSafeAreaMetrics}>
       <AppThemeProvider>
-        <AppQueryProvider client={queryClient}>
-          <AppContainerProvider repository={repository}>{children}</AppContainerProvider>
-        </AppQueryProvider>
+        <AppQueryProvider client={queryClient}>{children}</AppQueryProvider>
       </AppThemeProvider>
     </SafeAreaProvider>
   );
@@ -79,6 +78,7 @@ export async function render(
   }: CustomRenderOptions = {},
 ): Promise<RenderResult> {
   seedSessionPreferences(themeMode, dataSource);
+  setAppContainerTestRepository(repository);
   await waitForSessionHydration();
 
   return rtlRender(ui, {
@@ -109,6 +109,7 @@ export async function renderHook<Result, Props>(
   }: CustomRenderHookOptions<Props> = {},
 ): Promise<RenderHookResult<Result, Props>> {
   seedSessionPreferences(themeMode, dataSource);
+  setAppContainerTestRepository(repository);
   await waitForSessionHydration();
 
   return rtlRenderHook(callback, {

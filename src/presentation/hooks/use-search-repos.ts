@@ -1,10 +1,9 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { DEFAULT_PAGE } from '@/application/constants/pagination';
-import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
 
+import { useAppContainer } from './use-app-container';
 import { queryKeys } from '../query-keys';
-import { useAppContainer } from '../providers/AppContainerProvider';
 
 type UseSearchReposOptions = {
   query: string;
@@ -12,8 +11,7 @@ type UseSearchReposOptions = {
 };
 
 export function useSearchRepos({ query, enabled }: UseSearchReposOptions) {
-  const container = useAppContainer();
-  const dataSource = useSessionPreferencesStore((state) => state.dataSource);
+  const { container, dataSource } = useAppContainer();
   const trimmed = query.trim();
   const isEnabled = enabled ?? trimmed.length > 0;
 

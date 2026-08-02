@@ -6,7 +6,6 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { AppThemeProvider } from '@/components/ds';
 import { RootNavigator } from '@/navigation/RootNavigator';
-import { AppContainerProvider } from '@/presentation/providers/AppContainerProvider';
 import { AppQueryProvider } from '@/presentation/providers/AppQueryProvider';
 import Constants from 'expo-constants';
 
@@ -19,10 +18,8 @@ function App() {
     <SafeAreaProvider>
       <AppThemeProvider>
         <AppQueryProvider>
-          <AppContainerProvider>
-            <RootNavigator />
-            <StatusBar style="auto" />
-          </AppContainerProvider>
+          <RootNavigator />
+          <StatusBar style="auto" />
         </AppQueryProvider>
       </AppThemeProvider>
     </SafeAreaProvider>

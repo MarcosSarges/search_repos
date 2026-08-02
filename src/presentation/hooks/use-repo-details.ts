@@ -1,9 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
-
+import { useAppContainer } from './use-app-container';
 import { queryKeys } from '../query-keys';
-import { useAppContainer } from '../providers/AppContainerProvider';
 
 type UseRepoDetailsOptions = {
   repoId: string;
@@ -11,8 +9,7 @@ type UseRepoDetailsOptions = {
 };
 
 export function useRepoDetails({ repoId, enabled }: UseRepoDetailsOptions) {
-  const container = useAppContainer();
-  const dataSource = useSessionPreferencesStore((state) => state.dataSource);
+  const { container, dataSource } = useAppContainer();
   const trimmed = repoId.trim();
   const isEnabled = enabled ?? trimmed.length > 0;
 
