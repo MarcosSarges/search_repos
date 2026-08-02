@@ -115,12 +115,12 @@ T13 → T14
 
 **Done when**:
 
-- [ ] `loadProviderTokens` / `saveProviderToken` / `clearProviderTokens` implemented
-- [ ] Unavailable platform → load `{}`, writes no-op (no throw)
-- [ ] Clear/delete removes github+gitlab keys; empty token deletes key
-- [ ] Unit tests with mocked `expo-secure-store` cover happy + unavailable + clear
-- [ ] Gate: `pnpm test -- src/infrastructure/secure-store`
-- [ ] Test count: ≥4 assertions/cases; no silent deletions
+- [x] `loadProviderTokens` / `saveProviderToken` / `clearProviderTokens` implemented
+- [x] Unavailable platform → load `{}`, writes no-op (no throw)
+- [x] Clear/delete removes github+gitlab keys; empty token deletes key
+- [x] Unit tests with mocked `expo-secure-store` cover happy + unavailable + clear
+- [x] Gate: `pnpm test -- src/infrastructure/secure-store`
+- [x] Test count: ≥4 assertions/cases; no silent deletions
 
 **Tests**: unit  
 **Gate**: quick  
