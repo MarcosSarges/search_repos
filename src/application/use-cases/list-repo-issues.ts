@@ -16,7 +16,7 @@ export function createListRepoIssuesUseCase(repository: RepoRepository): ListRep
       const repoId = input.repoId.trim();
 
       if (!repoId) {
-        throw createAppError('not_found', 'Repository id is required');
+        throw createAppError('not_found');
       }
 
       return repository.listIssues({

@@ -1,4 +1,4 @@
-import type { DataSource } from '@/domain/entities/data-source';
+import type { DataSource } from '@/application';
 
 type BrandThemeMode = 'light' | 'dark';
 

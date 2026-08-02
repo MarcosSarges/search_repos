@@ -110,6 +110,36 @@ Seen once or not yet corroborated. Tracked, not trusted.
 - evidence: validation.md gate | .rnstorybook/storybook.requires.ts prettier 13 errors (tooling/lint)
 - last seen: 2026-07-31T21:10:05Z
 
+### L-017 — Lock provider-agnostic entity shapes with source-scan or fixture assertions against forbidden fields, not types alone
+- signal: `ac_gap` · recurrence: 1 feature(s) · scope: `src/domain/entities` · harmful: 0
+- features: domain-layer
+- evidence: DOM-02 (src/domain/entities)
+- last seen: 2026-08-02T19:03:35Z
+
+### L-018 — Assert pagination result shape includes required fields and explicitly excludes totalCount when the spec forbids it
+- signal: `ac_gap` · recurrence: 1 feature(s) · scope: `src/domain/entities` · harmful: 0
+- features: domain-layer
+- evidence: DOM-04 (src/domain/entities)
+- last seen: 2026-08-02T19:03:35Z
+
+### L-019 — When the spec requires optional fields via undefined not null, assert entity sources use ?: and reject | null unions
+- signal: `ac_gap` · recurrence: 1 feature(s) · scope: `src/domain/entities` · harmful: 0
+- features: domain-layer
+- evidence: DOM-05 (src/domain/entities)
+- last seen: 2026-08-02T19:03:35Z
+
+### L-020 — When a port documents AppError rejects, add a fake-backed test that asserts isAppError on the rejection path
+- signal: `ac_gap` · recurrence: 1 feature(s) · scope: `src/domain/repositories` · harmful: 0
+- features: domain-layer
+- evidence: DOM-11 (src/domain/repositories)
+- last seen: 2026-08-02T19:03:35Z
+
+### L-021 — Opaque identity contracts need an explicit string-typed fixture or assertion, not only a TypeScript field declaration
+- signal: `spec_precision_gap` · recurrence: 1 feature(s) · scope: `src/domain` · harmful: 0
+- features: domain-layer
+- evidence: DOM-03 (src/domain)
+- last seen: 2026-08-02T19:03:35Z
+
 ## Quarantined (failed when applied — ignore)
 
 A confirmed lesson that recurred alongside failure. Kept for the maintainer to review.

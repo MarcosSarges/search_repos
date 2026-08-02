@@ -2,7 +2,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useLayoutEffect, useMemo, type ReactNode } from 'react';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components/native';
 
-import type { DataSource } from '@/domain/entities/data-source';
+import type { DataSource } from '@/application';
 import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
 import { useHydration } from '@/stores/use-hydration';
 

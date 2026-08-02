@@ -1,4 +1,4 @@
-import type { DataSource } from '@/domain/entities/data-source';
+import type { DataSource } from '@/application';
 import type { Size } from '@/components/ds/tokens';
 import { useAppTheme, useTheme } from '@/components/ds/theme';
 

@@ -14,9 +14,7 @@ const repo: Repo = {
   watchers: 1000,
   language: 'JavaScript',
   ownerName: 'facebook',
-  ownerAvatarUrl: null,
   htmlUrl: 'https://github.com/facebook/react',
-  source: 'github',
 };
 
 const issues: Issue[] = [
@@ -25,7 +23,6 @@ const issues: Issue[] = [
     number: 1,
     title: 'Bug report',
     authorName: 'alice',
-    authorAvatarUrl: null,
     labels: [{ id: 'bug', name: 'bug', color: 'ff0000' }],
     createdAt: '2024-01-01T00:00:00.000Z',
     htmlUrl: 'https://github.com/facebook/react/issues/1',

@@ -1,4 +1,3 @@
-export type { DataSource } from './entities/data-source';
 export type { Issue, IssueLabel } from './entities/issue';
 export type { PaginatedResult } from './entities/pagination';
 export type { Repo } from './entities/repo';
@@ -9,3 +8,4 @@ export type {
   RepoRepository,
   SearchReposInput,
 } from './repositories/repo-repository';
+export { assertPage, assertPerPage, normalizeSearchQuery } from './validation';

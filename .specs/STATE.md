@@ -146,13 +146,21 @@
 - **Date**: 2026-07-31
 - **Status**: active
 
+### AD-019
+- **Decision**: `DataSource` (`'github' | 'gitlab'`) vive fora de `src/domain/` (módulo em `src/application/`); domínio é Functional Core (types + pure helpers) e não nomeia provedores. `AppErrorCode` inclui `invalid_input` para violações de invariante (bounds); `unknown` só para não classificado.
+- **Reason**: Dependency Rule — domínio não acopla a implementações; taxonomia de erro DDD-friendly sem misturar invariantes com falhas opacas.
+- **Trade-off**: Consumers (stores/theme) importam `DataSource` de application; domínio “anêmico” de propósito (não entity methods OO).
+- **Scope**: `src/domain/**`, `src/application/**` (tipo DataSource), session/theme imports
+- **Date**: 2026-08-02
+- **Status**: active
+
 ## Handoff
 
-- **Feature**: theme-persist-home
-- **Phase / Task**: Complete — Verifier PASS
-- **Completed**: T1–T7 + gap fix; validation PASS (141 tests; sensor 3/3 killed; TPH-05 accepted precision gap)
+- **Feature**: domain-layer — **DONE**
+- **Phase / Task**: Complete — Verifier PASS; PR [#5](https://github.com/MarcosSarges/search_repos/pull/5); README domain guards documented
+- **Completed**: Spec → Design A → T1–T6 + gap fix; validation PASS; README guarda de camada
 - **In-progress**: none
-- **Next step**: Push / open PR for `feat/theme-persist-home`; then product search/infra
+- **Next step**: Application use cases (formalizar/alinhar `src/application` ao domínio) ou merge PR #5
 - **Blockers**: none
-- **Uncommitted files**: possibly `Teste_Tecnico_React_Native_v3.md` formatting noise
-- **Branch**: `feat/theme-persist-home`
+- **Uncommitted files**: check working tree
+- **Branch**: `feat/domain-layer`

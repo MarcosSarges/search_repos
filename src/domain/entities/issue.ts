@@ -1,7 +1,7 @@
 export type IssueLabel = {
   id: string;
   name: string;
-  color: string | null;
+  color?: string;
 };
 
 export type Issue = {
@@ -9,7 +9,7 @@ export type Issue = {
   number: number;
   title: string;
   authorName: string;
-  authorAvatarUrl: string | null;
+  authorAvatarUrl?: string;
   labels: IssueLabel[];
   createdAt: string;
   htmlUrl: string;

@@ -16,7 +16,7 @@ export function createSearchReposUseCase(repository: RepoRepository): SearchRepo
       const query = input.query.trim();
 
       if (!query) {
-        throw createAppError('empty_query', 'Search query must not be empty');
+        throw createAppError('empty_query');
       }
 
       return repository.search({

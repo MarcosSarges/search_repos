@@ -1,16 +1,13 @@
-import type { DataSource } from './data-source';
-
 export type Repo = {
   id: string;
   name: string;
   fullName: string;
-  description: string | null;
+  description?: string;
   stars: number;
   forks: number;
   watchers: number;
-  language: string | null;
+  language?: string;
   ownerName: string;
-  ownerAvatarUrl: string | null;
+  ownerAvatarUrl?: string;
   htmlUrl: string;
-  source: DataSource;
 };

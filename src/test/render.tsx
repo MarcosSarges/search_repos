@@ -11,7 +11,7 @@ import {
 } from '@testing-library/react-native';
 
 import { AppThemeProvider, type ThemeMode } from '@/components/ds';
-import type { DataSource } from '@/domain/entities/data-source';
+import type { DataSource } from '@/application';
 import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
 
 const initialSafeAreaMetrics = {

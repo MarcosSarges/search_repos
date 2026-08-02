@@ -100,6 +100,26 @@ Assim, a interface permanece idêntica ao trocar a fonte: mesma lista, mesmos es
 
 A estrutura de pastas pode evoluir; o que importa é a inversão de dependências: alto nível não importa baixo nível concreto.
 
+#### Domínio — contratos e testes como guarda de camada (obrigatório para humanos e IA)
+
+O domínio é **Functional Core**: types + funções puras em `src/domain/`. Ele **não** conhece provedores (`github` / `gitlab` — isso vive em `src/application/`), **não** importa UI/HTTP/storage/cache, e **não** carrega copy de erro de produto.
+
+Para que agentes e contribuidores **não quebrem a Dependency Rule** nem reintroduzam vazamentos, a suite Jest do domínio é **decisão de arquitetura**, não só cobertura:
+
+| Guarda | Onde | O que impede |
+| --- | --- | --- |
+| Isolamento de imports | `src/domain/__tests__/isolation.test.ts` | Importar React, React Native, Expo, Axios, AsyncStorage, TanStack Query, Zustand, styled-components (e afins) em arquivos de produção do domínio |
+| API pública | `src/domain/__tests__/public-api.test.ts` | Exportar `DataSource` / literais de provedor pelo barrel `@/domain`; garante o contrato público esperado |
+| Shapes de entidades | `src/domain/entities/__tests__/entity-shapes.test.ts` | Campo `source` em `Repo`/`Issue`; `totalCount` em `PaginatedResult`; opcionais como `\| null` em vez de `?:` |
+| Erros / validação | `src/domain/errors/__tests__`, `src/domain/validation/__tests__` | Taxonomia `AppError` e helpers (`normalizeSearchQuery`, asserts de página) fora do contrato |
+
+**Regra para IA / PRs que tocam `src/domain/`:**
+
+1. Antes de alterar o domínio, leia `.specs/features/domain-layer/` (spec + design) e esta seção.
+2. Não adicione imports de framework nem nomes de provedor no domínio.
+3. Rode `pnpm test -- src/domain` — se isolation / public-api / entity-shapes falharem, a mudança **viola a camada**; corrija o design, não enfraqueça o teste.
+4. Tipos de sessão/provedor (`DataSource`) importam de `@/application`, nunca de `@/domain`.
+
 ### Navegação — por que sair do Expo Router
 
 O projeto usa **React Navigation** (Stack + Tabs) a partir do `App.tsx`, sem roteamento baseado em arquivos. Motivos:
@@ -164,9 +184,10 @@ A biblioteca fica fora do domínio: casos de uso puros; cache e orquestração d
 | Camada | Ferramenta | Motivo |
 | --- | --- | --- |
 | Unitário / componente | Jest + React Native Testing Library | Casos de uso em Node puro; componentes do Design System |
+| Guarda de domínio | Jest (source-scan + unitário puro) | Trava isolation / API pública / shapes — ver **Domínio — contratos e testes como guarda de camada** |
 | Ponta a ponta | [Maestro](https://docs.maestro.dev/) | Fluxos em YAML; no Expo Go usa `openLink` + `appId: host.exp.Exponent` (indicado no ecossistema Expo) |
 
-Prioridade unitária: casos de uso de domínio / application. Escopo ponta a ponta previsto: troca de fonte, busca → detalhes → issues, vazio / erro quando reproduzível.
+Prioridade unitária: **guarda do domínio** (sempre verde ao tocar `src/domain/`) + casos de use application. Escopo ponta a ponta previsto: troca de fonte, busca → detalhes → issues, vazio / erro quando reproduzível.
 
 ### Compromissos (trade-offs)
 
@@ -175,6 +196,7 @@ Prioridade unitária: casos de uso de domínio / application. Escopo ponta a pon
 | Clean Architecture | Testável, troca de provedor isolada, interface estável | Mais arquivos e boilerplate no início |
 | React Navigation (sem Expo Router) | Familiaridade, menos acoplamento ao sistema de arquivos, controle tipado de stacks | Sem roteamento por arquivo / rotas tipadas do Expo Router |
 | Interfaces no domínio + implementações na infraestrutura | Diferenças de API encapsuladas em mappers | Precisa de injeção de dependências / fábrica cuidadosa |
+| Testes de isolation / shapes no domínio | IA e PRs não reintroduzem frameworks ou `source`/`DataSource` no núcleo | Source-scan é frágil a renomes extremos; ainda assim barra regressões óbvias de camada |
 | TanStack Query em presentation / infrastructure | Cache e experiência de uso boas | Não “vaza” para o domínio — consultas fora dos casos de uso puros |
 | Design System próprio + Storybook | Tipagem, consistência e catálogo no dispositivo | Custo de manter tokens e stories |
 | Maestro para ponta a ponta | Fluxos YAML simples, alinhado ao Expo | Precisa de emulador ou dispositivo; configuração separada do Jest |

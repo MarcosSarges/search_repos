@@ -14,9 +14,7 @@ const sampleRepos: Repo[] = [
     watchers: 1000,
     language: 'JavaScript',
     ownerName: 'facebook',
-    ownerAvatarUrl: null,
     htmlUrl: 'https://github.com/facebook/react',
-    source: 'github',
   },
   {
     id: 'vercel/next.js',
@@ -28,9 +26,7 @@ const sampleRepos: Repo[] = [
     watchers: 900,
     language: 'JavaScript',
     ownerName: 'vercel',
-    ownerAvatarUrl: null,
     htmlUrl: 'https://github.com/vercel/next.js',
-    source: 'github',
   },
 ];
 
@@ -51,7 +47,6 @@ describe('createSearchReposUseCase', () => {
     expect(result.items).toHaveLength(1);
     expect(result.items[0]?.fullName).toBe('facebook/react');
     expect(result.hasNextPage).toBe(false);
-    expect(result.totalCount).toBe(1);
   });
 
   it('paginates results', async () => {

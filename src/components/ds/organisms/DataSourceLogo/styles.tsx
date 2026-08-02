@@ -2,7 +2,7 @@ import type { ComponentType } from 'react';
 import type { SvgProps } from 'react-native-svg';
 import { styled } from 'styled-components/native';
 
-import type { DataSource } from '@/domain/entities/data-source';
+import type { DataSource } from '@/application';
 import type { Size } from '@/components/ds/tokens';
 import type { ThemeMode } from '@/components/ds/theme';
 
