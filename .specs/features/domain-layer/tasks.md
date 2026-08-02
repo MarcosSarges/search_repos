@@ -9,7 +9,7 @@ Implement these tasks with the `tlc-spec-driven` skill: **activate it by name an
 ---
 
 **Design**: `.specs/features/domain-layer/design.md`  
-**Status**: Done — pending Verifier
+**Status**: Done — Verifier PASS
 
 ---
 

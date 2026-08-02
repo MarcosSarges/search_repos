@@ -156,11 +156,11 @@
 
 ## Handoff
 
-- **Feature**: domain-layer
-- **Phase / Task**: Complete — Verifier PASS
-- **Completed**: T1–T6 + gap fix `60e0bd2`; validation PASS (173 tests; sensor 3/3)
+- **Feature**: domain-layer — **DONE**
+- **Phase / Task**: Complete — Verifier PASS; PR [#5](https://github.com/MarcosSarges/search_repos/pull/5); README domain guards documented
+- **Completed**: Spec → Design A → T1–T6 + gap fix; validation PASS; README guarda de camada
 - **In-progress**: none
-- **Next step**: Push / open PR for `feat/domain-layer` (ask user); then application use cases
+- **Next step**: Application use cases (formalizar/alinhar `src/application` ao domínio) ou merge PR #5
 - **Blockers**: none
-- **Uncommitted files**: `.specs/LESSONS.md`, `.specs/lessons.json` (verifier lessons); `Teste_Tecnico_*.md` noise
+- **Uncommitted files**: check working tree
 - **Branch**: `feat/domain-layer`

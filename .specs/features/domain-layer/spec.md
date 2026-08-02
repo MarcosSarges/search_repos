@@ -144,23 +144,23 @@ O app precisa de um núcleo de domínio independente de provedor e de frameworks
 
 | Requirement ID | Story | Phase | Status |
 | -------------- | ----- | ----- | ------ |
-| DOM-01 | P1: Entities — public exports (no DataSource) | Tasks | Pending |
-| DOM-02 | P1: Entities — no source on Repo/Issue | Tasks | Pending |
-| DOM-03 | P1: Entities — opaque string id / repoId | Tasks | Pending |
-| DOM-04 | P1: Entities — PaginatedResult without totalCount | Tasks | Pending |
-| DOM-05 | P1: Entities — optional fields via `?:` | Tasks | Pending |
-| DOM-06 | P1: Entities — perPage optional, no domain default | Tasks | Pending |
-| DOM-07 | P1: Entities — page 1-based | Tasks | Pending |
-| DOM-08 | P1: Errors — createAppError code+cause, no message | Tasks | Pending |
-| DOM-09 | P1: Errors — isAppError | Tasks | Pending |
-| DOM-10 | P1: Errors — AppErrorCode set (incl. invalid_input) | Tasks | Pending |
-| DOM-11 | P1: Errors — port rejects as AppError | Tasks | Pending |
-| DOM-12 | P1: Errors — domain isolation (no forbidden imports) | Tasks | Pending |
-| DOM-13 | P1: Helpers — empty_query on bad query | Tasks | Pending |
-| DOM-14 | P1: Helpers — trim query | Tasks | Pending |
-| DOM-15 | P1: Helpers — page/perPage → invalid_input | Tasks | Pending |
-| DOM-16 | P2: Barrel `@/domain` | Tasks | Pending |
-| DOM-17 | P1: DataSource relocated under application | Tasks | Pending |
+| DOM-01 | P1: Entities — public exports (no DataSource) | Execute | Verified |
+| DOM-02 | P1: Entities — no source on Repo/Issue | Execute | Verified |
+| DOM-03 | P1: Entities — opaque string id / repoId | Execute | Verified |
+| DOM-04 | P1: Entities — PaginatedResult without totalCount | Execute | Verified |
+| DOM-05 | P1: Entities — optional fields via `?:` | Execute | Verified |
+| DOM-06 | P1: Entities — perPage optional, no domain default | Execute | Verified |
+| DOM-07 | P1: Entities — page 1-based | Execute | Verified |
+| DOM-08 | P1: Errors — createAppError code+cause, no message | Execute | Verified |
+| DOM-09 | P1: Errors — isAppError | Execute | Verified |
+| DOM-10 | P1: Errors — AppErrorCode set (incl. invalid_input) | Execute | Verified |
+| DOM-11 | P1: Errors — port rejects as AppError | Execute | Verified |
+| DOM-12 | P1: Errors — domain isolation (no forbidden imports) | Execute | Verified |
+| DOM-13 | P1: Helpers — empty_query on bad query | Execute | Verified |
+| DOM-14 | P1: Helpers — trim query | Execute | Verified |
+| DOM-15 | P1: Helpers — page/perPage → invalid_input | Execute | Verified |
+| DOM-16 | P2: Barrel `@/domain` | Execute | Verified |
+| DOM-17 | P1: DataSource relocated under application | Execute | Verified |
 
 **Coverage:** 17 total, 17 mapped to tasks (T1–T6), 0 unmapped
 

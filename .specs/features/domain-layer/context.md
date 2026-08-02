@@ -2,7 +2,7 @@
 
 **Gathered:** 2026-08-02
 **Spec:** `.specs/features/domain-layer/spec.md`
-**Status:** Ready for design
+**Status:** Done — Verifier PASS; README guardrails documented
 
 ---
 
