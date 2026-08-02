@@ -168,12 +168,12 @@ T8
 
 **Done when**:
 
-- [ ] Both factories return functions (not `{ execute }`)
-- [ ] Empty/whitespace `repoId` → `invalid_input` (not `not_found`)
-- [ ] List-issues omits page/perPage → defaults 1/20 then port call
-- [ ] Tests cover happy paths + empty repoId (+ optional invalid page on list)
-- [ ] Gate: `pnpm test -- src/application/use-cases`
-- [ ] Test count: details+issues cases ≥ 4 total; no silent deletions
+- [x] Both factories return functions (not `{ execute }`)
+- [x] Empty/whitespace `repoId` → `invalid_input` (not `not_found`)
+- [x] List-issues omits page/perPage → defaults 1/20 then port call
+- [x] Tests cover happy paths + empty repoId (+ optional invalid page on list)
+- [x] Gate: `pnpm test -- src/application/use-cases`
+- [x] Test count: details+issues cases ≥ 4 total; no silent deletions
 
 **Tests**: unit  
 **Gate**: quick  
