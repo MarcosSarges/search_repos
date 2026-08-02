@@ -139,9 +139,9 @@ O domínio já expõe porta, entidades, erros e helpers; o esqueleto de applicat
 | APP-07 | P1: UC — application isolation | Tasks | Pending |
 | APP-08 | P1: DI — Fake under infrastructure | Tasks | Implementing |
 | APP-09 | P1: DI — resolveRepository branches | Tasks | Implementing |
-| APP-10 | P1: DI — createContainer callables | Tasks | Pending |
-| APP-11 | P1: DI — immutable distinct containers | Tasks | Pending |
-| APP-12 | P1: DI — no Zustand in di/ | Tasks | Pending |
+| APP-10 | P1: DI — createContainer callables | Tasks | Implementing |
+| APP-11 | P1: DI — immutable distinct containers | Tasks | Implementing |
+| APP-12 | P1: DI — no Zustand in di/ | Tasks | Implementing |
 | APP-13 | P1: DI — application barrel excludes DI/Fake | Tasks | Pending |
 | APP-14 | P1: DI — infrastructure barrel public API | Tasks | Pending |
 | APP-15 | P2: application barrel exports | Tasks | Pending |

@@ -250,12 +250,12 @@ T8
 
 **Done when**:
 
-- [ ] `createContainer({ dataSource })` returns callable functions (no `.execute` required)
-- [ ] Two calls with different `dataSource` → distinct container object instances
-- [ ] Optional `repository` override used when provided
-- [ ] `src/infrastructure/di/**` sources do not import Zustand / session-preferences-store (assert in test or scan)
-- [ ] Gate: `pnpm test -- src/infrastructure`
-- [ ] Test count: ≥ 3 container cases; no silent deletions
+- [x] `createContainer({ dataSource })` returns callable functions (no `.execute` required)
+- [x] Two calls with different `dataSource` → distinct container object instances
+- [x] Optional `repository` override used when provided
+- [x] `src/infrastructure/di/**` sources do not import Zustand / session-preferences-store (assert in test or scan)
+- [x] Gate: `pnpm test -- src/infrastructure`
+- [x] Test count: ≥ 3 container cases; no silent deletions
 
 **Tests**: unit  
 **Gate**: full  
