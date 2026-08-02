@@ -3,6 +3,7 @@ import type { RepoRepository } from '@/domain';
 
 import { createGithubApiClient } from '../github/create-github-api-client';
 import { createGithubRepoRepository } from '../github/create-github-repo-repository';
+import { createGitlabApiClient } from '../gitlab/create-gitlab-api-client';
 import { createGitlabRepoRepository } from '../gitlab/create-gitlab-repo-repository';
 
 export type ResolveRepositoryOptions = {
@@ -15,7 +16,10 @@ const factories: Record<DataSource, (options?: ResolveRepositoryOptions) => Repo
     createGithubRepoRepository({
       client: createGithubApiClient({ token: options?.token, baseUrl: options?.baseUrl }),
     }),
-  gitlab: (options) => createGitlabRepoRepository({ token: options?.token }),
+  gitlab: (options) =>
+    createGitlabRepoRepository({
+      client: createGitlabApiClient({ token: options?.token, baseUrl: options?.baseUrl }),
+    }),
 };
 
 /**

@@ -7,21 +7,14 @@ import type {
   SearchReposInput,
 } from '@/domain';
 
-import { jsonFetch } from '../http/json-fetch';
 import { resolveHasNextPage } from '../http/resolve-has-next-page';
 import { assertGitlabRepoId } from './assert-repo-id';
+import type { GitlabApiClient } from './create-gitlab-api-client';
 import { mapGitlabIssue, mapGitlabRepo } from './mappers';
-import type { GitlabIssueDto, GitlabProjectDto } from './types';
-
-const GITLAB_API_BASE = 'https://gitlab.com/api/v4';
 
 export type CreateGitlabRepoRepositoryOptions = {
-  token?: string;
+  client: GitlabApiClient;
 };
-
-function authInit(token?: string) {
-  return token !== undefined ? { token } : {};
-}
 
 function headerIndicatesNext(headers: Headers): boolean | undefined {
   const nextPage = headers.get('X-Next-Page');
@@ -35,25 +28,19 @@ function headerIndicatesNext(headers: Headers): boolean | undefined {
  * GitLab Anti-Corruption Layer implementing `RepoRepository`.
  */
 export function createGitlabRepoRepository(
-  options: CreateGitlabRepoRepositoryOptions = {},
+  options: CreateGitlabRepoRepositoryOptions,
 ): RepoRepository {
-  const { token } = options;
+  const { client } = options;
 
   return {
     async search(input: SearchReposInput): Promise<PaginatedResult<Repo>> {
       const perPage = input.perPage ?? 20;
       const page = input.page;
-      const url = new URL(`${GITLAB_API_BASE}/projects`);
-      url.searchParams.set('search', input.query);
-      url.searchParams.set('order_by', 'star_count');
-      url.searchParams.set('sort', 'desc');
-      url.searchParams.set('page', String(page));
-      url.searchParams.set('per_page', String(perPage));
-
-      const { data, headers } = await jsonFetch<GitlabProjectDto[]>(
-        url.toString(),
-        authInit(token),
-      );
+      const { data, headers } = await client.searchProjects({
+        query: input.query,
+        page,
+        perPage,
+      });
       const items = data.map(mapGitlabRepo);
 
       return {
@@ -70,10 +57,7 @@ export function createGitlabRepoRepository(
 
     async getById(repoId: string): Promise<Repo> {
       assertGitlabRepoId(repoId);
-      const { data } = await jsonFetch<GitlabProjectDto>(
-        `${GITLAB_API_BASE}/projects/${repoId}`,
-        authInit(token),
-      );
+      const { data } = await client.getProject(repoId);
       return mapGitlabRepo(data);
     },
 
@@ -81,12 +65,7 @@ export function createGitlabRepoRepository(
       assertGitlabRepoId(input.repoId);
       const perPage = input.perPage ?? 20;
       const page = input.page;
-      const url = new URL(`${GITLAB_API_BASE}/projects/${input.repoId}/issues`);
-      url.searchParams.set('state', 'opened');
-      url.searchParams.set('page', String(page));
-      url.searchParams.set('per_page', String(perPage));
-
-      const { data, headers } = await jsonFetch<GitlabIssueDto[]>(url.toString(), authInit(token));
+      const { data, headers } = await client.listOpenedIssues(input.repoId, { page, perPage });
       const items = data.map(mapGitlabIssue);
 
       return {

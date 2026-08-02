@@ -7,14 +7,21 @@ import searchFixture from '@/test/msw/fixtures/gitlab/search-projects.json';
 import projectDetailFixture from '@/test/msw/fixtures/gitlab/project-detail.json';
 import issuesFixture from '@/test/msw/fixtures/gitlab/issues.json';
 
+import { createGitlabApiClient } from '../create-gitlab-api-client';
 import { createGitlabRepoRepository } from '../create-gitlab-repo-repository';
+
+function createRepo(options?: { token?: string; baseUrl?: string }) {
+  return createGitlabRepoRepository({
+    client: createGitlabApiClient(options),
+  });
+}
 
 describe('createGitlabRepoRepository', () => {
   useMswServer(server);
 
   it('search maps projects to Repo with numeric-string id and no totalCount', async () => {
     server.use(
-      http.get('https://gitlab.com/api/v4/projects', ({ request }) => {
+      http.get('*/api/v4/projects', ({ request }) => {
         const url = new URL(request.url);
         expect(url.searchParams.get('order_by')).toBe('star_count');
         expect(url.searchParams.get('sort')).toBe('desc');
@@ -22,7 +29,7 @@ describe('createGitlabRepoRepository', () => {
       }),
     );
 
-    const repo = createGitlabRepoRepository();
+    const repo = createRepo();
     const result = await repo.search({ query: 'gitlab', page: 1, perPage: 20 });
 
     expect(result.items).toHaveLength(2);
@@ -40,14 +47,14 @@ describe('createGitlabRepoRepository', () => {
 
   it('search uses X-Next-Page header for hasNextPage when present', async () => {
     server.use(
-      http.get('https://gitlab.com/api/v4/projects', () => {
+      http.get('*/api/v4/projects', () => {
         return HttpResponse.json(searchFixture, {
           headers: { 'X-Next-Page': '2' },
         });
       }),
     );
 
-    const repo = createGitlabRepoRepository();
+    const repo = createRepo();
     const result = await repo.search({ query: 'gitlab', page: 1, perPage: 20 });
     expect(result.hasNextPage).toBe(true);
   });
@@ -65,12 +72,12 @@ describe('createGitlabRepoRepository', () => {
     }));
 
     server.use(
-      http.get('https://gitlab.com/api/v4/projects', () => {
+      http.get('*/api/v4/projects', () => {
         return HttpResponse.json(fullPage);
       }),
     );
 
-    const repo = createGitlabRepoRepository();
+    const repo = createRepo();
     const result = await repo.search({ query: 'x', page: 1, perPage: 2 });
     expect(result.hasNextPage).toBe(true);
   });
@@ -84,7 +91,7 @@ describe('createGitlabRepoRepository', () => {
       }),
     );
 
-    const repo = createGitlabRepoRepository();
+    const repo = createRepo();
 
     try {
       await repo.getById('vuejs/vue');
@@ -111,12 +118,12 @@ describe('createGitlabRepoRepository', () => {
 
   it('getById maps project detail with undefined for null description', async () => {
     server.use(
-      http.get('https://gitlab.com/api/v4/projects/278964', () => {
+      http.get('*/api/v4/projects/278964', () => {
         return HttpResponse.json(projectDetailFixture);
       }),
     );
 
-    const repo = createGitlabRepoRepository();
+    const repo = createRepo();
     const detail = await repo.getById('278964');
 
     expect(detail.id).toBe('278964');
@@ -129,7 +136,7 @@ describe('createGitlabRepoRepository', () => {
 
   it('listIssues maps opened issues and uses X-Next-Page for hasNextPage', async () => {
     server.use(
-      http.get('https://gitlab.com/api/v4/projects/278964/issues', ({ request }) => {
+      http.get('*/api/v4/projects/278964/issues', ({ request }) => {
         const url = new URL(request.url);
         expect(url.searchParams.get('state')).toBe('opened');
         return HttpResponse.json(issuesFixture, {
@@ -138,7 +145,7 @@ describe('createGitlabRepoRepository', () => {
       }),
     );
 
-    const repo = createGitlabRepoRepository();
+    const repo = createRepo();
     const result = await repo.listIssues({
       repoId: '278964',
       page: 1,
@@ -158,12 +165,12 @@ describe('createGitlabRepoRepository', () => {
 
   it('listIssues empty page yields hasNextPage false', async () => {
     server.use(
-      http.get('https://gitlab.com/api/v4/projects/278964/issues', () => {
+      http.get('*/api/v4/projects/278964/issues', () => {
         return HttpResponse.json([]);
       }),
     );
 
-    const repo = createGitlabRepoRepository();
+    const repo = createRepo();
     const result = await repo.listIssues({
       repoId: '278964',
       page: 1,
@@ -179,7 +186,7 @@ describe('createGitlabRepoRepository', () => {
     let privateToken: string | null = null;
 
     server.use(
-      http.get('https://gitlab.com/api/v4/projects', ({ request }) => {
+      http.get('*/api/v4/projects', ({ request }) => {
         authorization = request.headers.get('Authorization');
         privateToken = request.headers.get('PRIVATE-TOKEN');
         return new HttpResponse(null, {
@@ -187,18 +194,18 @@ describe('createGitlabRepoRepository', () => {
           headers: { 'Retry-After': '60' },
         });
       }),
-      http.get('https://gitlab.com/api/v4/projects/404', () => {
+      http.get('*/api/v4/projects/404', () => {
         return new HttpResponse(null, { status: 404 });
       }),
-      http.get('https://gitlab.com/api/v4/projects/401', () => {
+      http.get('*/api/v4/projects/401', () => {
         return new HttpResponse(null, { status: 401 });
       }),
-      http.get('https://gitlab.com/api/v4/projects/403', () => {
+      http.get('*/api/v4/projects/403', () => {
         return new HttpResponse(null, { status: 403 });
       }),
     );
 
-    const repo = createGitlabRepoRepository({ token: 'gl-token' });
+    const repo = createRepo({ token: 'gl-token' });
 
     try {
       await repo.search({ query: 'x', page: 1 });
@@ -245,5 +252,19 @@ describe('createGitlabRepoRepository', () => {
         expect(error.code).toBe('forbidden');
       }
     }
+  });
+
+  it('WHEN custom root host is set THEN ACL search maps via /api/v4 normalize + wildcards', async () => {
+    server.use(
+      http.get('*/api/v4/projects', () => {
+        return HttpResponse.json(searchFixture);
+      }),
+    );
+
+    const repo = createRepo({ baseUrl: 'https://gitlab.empresa.com/' });
+    const result = await repo.search({ query: 'gitlab', page: 1, perPage: 20 });
+
+    expect(result.items[0]?.id).toBe('278964');
+    expect(result).not.toHaveProperty('totalCount');
   });
 });

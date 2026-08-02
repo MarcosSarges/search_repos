@@ -65,14 +65,15 @@ T1 → T2 → T3 → T4 → T5 → T6
 **Commit**: `feat(infrastructure): add API base URL normalize and join helpers`  
 **Done**: `090f75f`
 
-### T3: GitHub ApiClient + ACL repository
+### T3: GitHub ApiClient + ACL repository ✅
 
 **What**: `createGithubApiClient`; refactor `createGithubRepoRepository({ client })` — no jsonFetch/fetch in repo; DI-ready. MSW wildcards for GH paths; Bearer + optional custom host test.  
 **Where**: `src/infrastructure/github/**`  
 **Depends on**: T2  
 **Requirement**: CLI-01, CLI-04, CLI-06, CLI-07, CLI-08  
 **Tests**: integration | **Gate**: full  
-**Commit**: `refactor(infrastructure): extract GitHub ApiClient from repository`
+**Commit**: `refactor(infrastructure): extract GitHub ApiClient from repository`  
+**Done**: `214e26671ed4fe809befbf39105da01e4034bbb7`
 
 ### T4: GitLab ApiClient + ACL repository
 
