@@ -163,31 +163,31 @@ Domain, application e infrastructure (DI + HTTP) estão prontos, mas a árvore R
 
 | Requirement ID | Story | Phase | Status |
 | -------------- | ----- | ----- | ------ |
-| PRES-01 | P1: Provider calls createContainer from dataSource | Tasks | Pending |
-| PRES-02 | P1: dataSource change → new container instance | Tasks | Pending |
-| PRES-03 | P1: useAppContainer outside provider throws | Tasks | Pending |
-| PRES-04 | P1: di/ still no Zustand/React | Tasks | Pending |
-| PRES-05 | P1: empty tokens → anonymous adapters | Tasks | Pending |
-| PRES-05b | P1: store exposes tokens slot | Tasks | Pending |
-| PRES-05c | P1: tokens excluded from AsyncStorage partialize | Tasks | Pending |
-| PRES-05d | P1: setToken persists via expo-secure-store | Tasks | Pending |
-| PRES-05e | P1: cold start restores tokens from SecureStore before UI | Tasks | Pending |
-| PRES-05f | P1: SecureStore unavailable → empty tokens, still ready | Tasks | Pending |
-| PRES-05g | P1: reset clears SecureStore token entries | Tasks | Pending |
-| PRES-06 | P1: QueryClientProvider wraps product tree | Tasks | Pending |
-| PRES-07 | P1: useSearchRepos = infinite + queryKey dataSource | Tasks | Pending |
-| PRES-08 | P1: useRepoDetails + queryKey | Tasks | Pending |
-| PRES-09 | P1: useRepoIssues = infinite + queryKey | Tasks | Pending |
-| PRES-10 | P1: dataSource toggle = key isolation only (no invalidate/remove) | Tasks | Pending |
-| PRES-11 | P1: hooks no direct github/gitlab/fetch | Tasks | Pending |
-| PRES-12 | P1: AppError surfaces in Query error | Tasks | Pending |
-| PRES-13 | P1: mapper covers all AppErrorCode (PT-BR) | Tasks | Pending |
-| PRES-14 | P1: mapper non-AppError → unknown | Tasks | Pending |
-| PRES-15 | P1: mapper pure (no React/RN/Query) | Tasks | Pending |
-| PRES-16 | P1: rate_limit ignores cause formatting | Tasks | Pending |
-| PRES-17 | P2: providers in App entry under presentation/ | Tasks | Pending |
-| PRES-18 | P2: Home chrome still works | Tasks | Pending |
-| PRES-19 | P1: product hooks live under src/presentation/hooks/ | Tasks | Pending |
+| PRES-01 | P1: Provider calls createContainer from dataSource | Execute | ✅ Verified |
+| PRES-02 | P1: dataSource change → new container instance | Execute | ✅ Verified |
+| PRES-03 | P1: useAppContainer outside provider throws | Execute | ✅ Verified |
+| PRES-04 | P1: di/ still no Zustand/React | Execute | ✅ Verified |
+| PRES-05 | P1: empty tokens → anonymous adapters | Execute | ✅ Verified |
+| PRES-05b | P1: store exposes tokens slot | Execute | ✅ Verified |
+| PRES-05c | P1: tokens excluded from AsyncStorage partialize | Execute | ✅ Verified |
+| PRES-05d | P1: setToken persists via expo-secure-store | Execute | ✅ Verified |
+| PRES-05e | P1: cold start restores tokens from SecureStore before UI | Execute | ✅ Verified |
+| PRES-05f | P1: SecureStore unavailable → empty tokens, still ready | Execute | ✅ Verified |
+| PRES-05g | P1: reset clears SecureStore token entries | Execute | ✅ Verified |
+| PRES-06 | P1: QueryClientProvider wraps product tree | Execute | ✅ Verified |
+| PRES-07 | P1: useSearchRepos = infinite + queryKey dataSource | Execute | ✅ Verified |
+| PRES-08 | P1: useRepoDetails + queryKey | Execute | ✅ Verified |
+| PRES-09 | P1: useRepoIssues = infinite + queryKey | Execute | ✅ Verified |
+| PRES-10 | P1: dataSource toggle = key isolation only (no invalidate/remove) | Execute | ✅ Verified |
+| PRES-11 | P1: hooks no direct github/gitlab/fetch | Execute | ✅ Verified |
+| PRES-12 | P1: AppError surfaces in Query error | Execute | ✅ Verified |
+| PRES-13 | P1: mapper covers all AppErrorCode (PT-BR) | Execute | ✅ Verified |
+| PRES-14 | P1: mapper non-AppError → unknown | Execute | ✅ Verified |
+| PRES-15 | P1: mapper pure (no React/RN/Query) | Execute | ✅ Verified |
+| PRES-16 | P1: rate_limit ignores cause formatting | Execute | ✅ Verified |
+| PRES-17 | P2: providers in App entry under presentation/ | Execute | ✅ Verified |
+| PRES-18 | P2: Home chrome still works | Execute | ✅ Verified |
+| PRES-19 | P1: product hooks live under src/presentation/hooks/ | Execute | ✅ Verified |
 
 **Coverage:** 25 total, 25 mapped to tasks (T1–T14), 0 unmapped
 

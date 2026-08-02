@@ -196,13 +196,12 @@
 
 ## Handoff
 
-- **Feature**: presentation-layer (bridge)
-- **Phase / Task**: Execute — Batch A (Phase 1: T1–T4) in flight
-- **Completed**: Specify + Discuss + Design + Tasks approved
-- **In-progress**: Batch worker Phase 1
-- **Next step**: On Batch A summary → Batch B (Phase 2: T5–T9)
+- **Feature**: presentation-layer (bridge) — **DONE**
+- **Phase / Task**: Complete — Verifier PASS (328/328); fix `c843ff5`
+- **Completed**: Specify → Design A → T1–T14 + validation PASS
+- **In-progress**: none
+- **Next step**: Open PR for `feat/presentation-layer`; product screens / token UI per `NEXT.md`
 - **Blockers**: none
-- **Uncommitted files**: Teste_Tecnico_React_Native_v3.md (unrelated — leave unstaged)
-- **Branch**: feat/presentation-layer
-- **Note**: Batches: A=P1(T1–4), B=P2(T5–9), C=P3+P4(T10–14); Verifier after T14
-
+- **Uncommitted files**: `Teste_Tecnico_React_Native_v3.md` (unrelated)
+- **Branch**: `feat/presentation-layer`
+- **Agents**: [Batch A](45408e63-5628-4a03-9f00-d3d03cbb347a), [Batch B](ed181779-a885-4fbf-b6ab-a7ab52682316), [Batch C](db339d9e-8560-46f8-ab47-d0bb00d1336d), [Verifier](12c31e51-5f92-41b2-89d8-81fc5159abe9)
