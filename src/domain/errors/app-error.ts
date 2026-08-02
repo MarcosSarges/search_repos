@@ -1,5 +1,13 @@
 export type AppErrorCode =
-  'rate_limit' | 'network' | 'not_found' | 'empty_query' | 'invalid_input' | 'unknown';
+  | 'rate_limit'
+  | 'network'
+  | 'not_found'
+  | 'empty_query'
+  | 'invalid_input'
+  | 'unauthorized'
+  | 'forbidden'
+  | 'aborted'
+  | 'unknown';
 
 export type AppError = Error & {
   code: AppErrorCode;
