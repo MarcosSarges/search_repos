@@ -319,14 +319,14 @@ T10
 
 **Done when**:
 
-- [ ] `resolveRepository('github'|'gitlab')` returns HTTP adapters (Fail Fast id or MSW)
-- [ ] Fake not instantiated by resolve path
-- [ ] `createContainer({ dataSource: 'github', tokens: { github: 'g', gitlab: 'l' } })` forwards **only** `g` to GitHub adapter (assert via MSW Authorization header)
-- [ ] Switching `dataSource` to `gitlab` with same `tokens` bag forwards `l` — Presentation does not pick the string
-- [ ] `repository` override still works; di sources still ban Zustand
-- [ ] Use-case tests still import Fake from infrastructure and pass
-- [ ] Gate: `pnpm test -- src/infrastructure/di` && `pnpm test -- src/application`
-- [ ] Test count: DI suite updated ≥ 4 cases; no silent deletions
+- [x] `resolveRepository('github'|'gitlab')` returns HTTP adapters (Fail Fast id or MSW)
+- [x] Fake not instantiated by resolve path
+- [x] `createContainer({ dataSource: 'github', tokens: { github: 'g', gitlab: 'l' } })` forwards **only** `g` to GitHub adapter (assert via MSW Authorization header)
+- [x] Switching `dataSource` to `gitlab` with same `tokens` bag forwards `l` — Presentation does not pick the string
+- [x] `repository` override still works; di sources still ban Zustand
+- [x] Use-case tests still import Fake from infrastructure and pass
+- [x] Gate: `pnpm test -- src/infrastructure/di` && `pnpm test -- src/application`
+- [x] Test count: DI suite updated ≥ 4 cases; no silent deletions
 
 **Tests**: unit  
 **Gate**: full  

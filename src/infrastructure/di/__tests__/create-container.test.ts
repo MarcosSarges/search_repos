@@ -1,7 +1,11 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
+import { http, HttpResponse } from 'msw';
+
 import type { Repo } from '@/domain';
+import { server } from '@/test/msw/server';
+import { useMswServer } from '@/test/msw/use-msw-server';
 
 import { createInMemoryRepoRepository } from '../../repositories/in-memory-repo-repository';
 import { createContainer } from '../create-container';
@@ -20,10 +24,12 @@ const sampleRepo: Repo = {
 };
 
 /**
- * APP-10..12: immutable composition root wires callable use cases; no Zustand in di/.
+ * INFRA-29..32: tokens bag selection; repository override; no Zustand in di/.
  */
-describe('createContainer (APP-10, APP-11, APP-12)', () => {
-  it('WHEN createContainer({ dataSource }) THEN it exposes callable searchRepos/getRepoDetails/listRepoIssues', async () => {
+describe('createContainer (INFRA-29, INFRA-30, INFRA-32)', () => {
+  useMswServer(server);
+
+  it('WHEN createContainer({ dataSource }) THEN it exposes callable searchRepos/getRepoDetails/listRepoIssues', () => {
     const container = createContainer({ dataSource: 'github' });
 
     expect(typeof container.searchRepos).toBe('function');
@@ -31,12 +37,6 @@ describe('createContainer (APP-10, APP-11, APP-12)', () => {
     expect(typeof container.listRepoIssues).toBe('function');
     expect(container).not.toHaveProperty('searchRepos.execute');
     expect(Object.prototype.hasOwnProperty.call(container.searchRepos, 'execute')).toBe(false);
-
-    await expect(container.searchRepos({ query: 'missing-no-match-xyz' })).resolves.toMatchObject({
-      page: 1,
-      perPage: 20,
-      items: [],
-    });
   });
 
   it('WHEN createContainer is called twice with different dataSource THEN containers are distinct instances', () => {
@@ -55,6 +55,52 @@ describe('createContainer (APP-10, APP-11, APP-12)', () => {
       id: 'facebook/react',
       fullName: 'facebook/react',
     });
+  });
+
+  it('WHEN tokens bag is given with dataSource github THEN only github token is forwarded as Bearer', async () => {
+    let authorization: string | null = null;
+    let privateToken: string | null = null;
+
+    server.use(
+      http.get('https://api.github.com/search/repositories', ({ request }) => {
+        authorization = request.headers.get('Authorization');
+        privateToken = request.headers.get('PRIVATE-TOKEN');
+        return HttpResponse.json({ total_count: 0, items: [] });
+      }),
+    );
+
+    const container = createContainer({
+      dataSource: 'github',
+      tokens: { github: 'g', gitlab: 'l' },
+    });
+
+    await container.searchRepos({ query: 'react' });
+
+    expect(authorization).toBe('Bearer g');
+    expect(privateToken).toBeNull();
+  });
+
+  it('WHEN same tokens bag with dataSource gitlab THEN only gitlab token is forwarded as PRIVATE-TOKEN', async () => {
+    let authorization: string | null = null;
+    let privateToken: string | null = null;
+
+    server.use(
+      http.get('https://gitlab.com/api/v4/projects', ({ request }) => {
+        authorization = request.headers.get('Authorization');
+        privateToken = request.headers.get('PRIVATE-TOKEN');
+        return HttpResponse.json([]);
+      }),
+    );
+
+    const container = createContainer({
+      dataSource: 'gitlab',
+      tokens: { github: 'g', gitlab: 'l' },
+    });
+
+    await container.searchRepos({ query: 'react' });
+
+    expect(privateToken).toBe('l');
+    expect(authorization).toBeNull();
   });
 
   it('WHEN modules under src/infrastructure/di/ are scanned THEN they SHALL NOT import Zustand or session-preferences-store', () => {
