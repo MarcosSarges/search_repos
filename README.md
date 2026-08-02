@@ -28,15 +28,11 @@ App React Native (Expo + TypeScript) para buscar repositórios em **GitHub** e *
 pnpm install
 ```
 
-### Variáveis de ambiente (opcional)
+### Tokens de API (opcionais)
 
-Crie um arquivo `.env` na raiz (não commitar tokens):
+Tokens GitHub/GitLab são **opcionais** e **não** usam `.env` como fonte de verdade (AD-021). O composition root (`createContainer`) recebe um mapa `tokens?: { github?: string; gitlab?: string }` e encaminha só o token da fonte ativa aos adapters HTTP.
 
-```bash
-GITHUB_TOKEN=ghp_xxx   # opcional — aumenta o limite de requisições da API do GitHub
-```
-
-Sem token, as APIs públicas funcionam com limites mais baixos (trate o código HTTP 429 na interface).
+Sem token, as APIs públicas funcionam anonimamente (limites mais baixos — trate HTTP 429 na interface). UI e persistência de credenciais ficam para uma feature futura.
 
 ### Scripts
 
@@ -277,7 +273,7 @@ Instruções típicas: análise do enunciado, especificação de regras e crité
 ## O que eu faria diferente com mais tempo
 
 - Persistência da fonte ativa e do tema (AsyncStorage)
-- Autenticação opcional GitLab via `.env` com a mesma experiência de desenvolvimento do GitHub
+- UI para o usuário informar tokens GitHub/GitLab + persistência local (mapa já suportado no DI)
 - Cobertura de testes mais ampla (mappers, hooks de interface, fluxos de erro)
 - Suite Maestro mais completa (smoke + regressão crítica) e integração contínua com Maestro Cloud / GitHub Actions
 - Acessibilidade (rótulos, contraste, tamanhos de toque)

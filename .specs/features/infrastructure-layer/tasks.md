@@ -9,7 +9,7 @@ Implement these tasks with the `tlc-spec-driven` skill: **activate it by name an
 ---
 
 **Design**: `.specs/features/infrastructure-layer/design.md`  
-**Status**: Approved — In Progress (Execute with batch sub-agents)
+**Status**: Done
 
 ---
 
@@ -349,11 +349,11 @@ T10
 
 **Done when**:
 
-- [ ] Barrel exports DI + Fake + GitHub/GitLab factory creators
-- [ ] Isolation: http/github/gitlab production sources ban React, Zustand, TanStack Query, styled-components
-- [ ] README no longer presents `.env` as the token source of truth (align AD-021)
-- [ ] Gate: `pnpm test` && `pnpm lint`
-- [ ] Test count: isolation + public-api green; no silent deletions
+- [x] Barrel exports DI + Fake + GitHub/GitLab factory creators
+- [x] Isolation: http/github/gitlab production sources ban React, Zustand, TanStack Query, styled-components
+- [x] README no longer presents `.env` as the token source of truth (align AD-021)
+- [x] Gate: `pnpm test` && `pnpm lint`
+- [x] Test count: isolation + public-api green; no silent deletions
 
 **Tests**: unit  
 **Gate**: build  

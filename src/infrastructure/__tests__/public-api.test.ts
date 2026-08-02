@@ -4,13 +4,15 @@ import * as path from 'path';
 import * as infrastructure from '@/infrastructure';
 
 /**
- * APP-14: infrastructure barrel exposes createContainer, typings, Fake, resolveRepository.
+ * INFRA-33: infrastructure barrel exposes DI, Fake, and HTTP factory creators.
  */
-describe('infrastructure public API (APP-14)', () => {
-  it('WHEN importing from @/infrastructure THEN createContainer, Fake, and resolveRepository are reachable', () => {
+describe('infrastructure public API (INFRA-33)', () => {
+  it('WHEN importing from @/infrastructure THEN createContainer, Fake, resolveRepository, and HTTP factories are reachable', () => {
     expect(typeof infrastructure.createContainer).toBe('function');
     expect(typeof infrastructure.createInMemoryRepoRepository).toBe('function');
     expect(typeof infrastructure.resolveRepository).toBe('function');
+    expect(typeof infrastructure.createGithubRepoRepository).toBe('function');
+    expect(typeof infrastructure.createGitlabRepoRepository).toBe('function');
 
     const container = infrastructure.createContainer({ dataSource: 'github' });
     expect(typeof container.searchRepos).toBe('function');
@@ -18,7 +20,7 @@ describe('infrastructure public API (APP-14)', () => {
     expect(typeof container.listRepoIssues).toBe('function');
   });
 
-  it('WHEN the infrastructure barrel source is inspected THEN it re-exports DI and Fake public API', () => {
+  it('WHEN the infrastructure barrel source is inspected THEN it re-exports DI, Fake, and HTTP factories', () => {
     const barrelSource = fs.readFileSync(path.join(__dirname, '../index.ts'), 'utf8');
 
     expect(barrelSource).toMatch(/\bcreateContainer\b/);
@@ -26,5 +28,7 @@ describe('infrastructure public API (APP-14)', () => {
     expect(barrelSource).toMatch(/\bAppContainer\b/);
     expect(barrelSource).toMatch(/\bcreateInMemoryRepoRepository\b/);
     expect(barrelSource).toMatch(/\bresolveRepository\b/);
+    expect(barrelSource).toMatch(/\bcreateGithubRepoRepository\b/);
+    expect(barrelSource).toMatch(/\bcreateGitlabRepoRepository\b/);
   });
 });
