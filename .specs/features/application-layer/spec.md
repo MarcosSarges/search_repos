@@ -137,7 +137,7 @@ O domínio já expõe porta, entidades, erros e helpers; o esqueleto de applicat
 | APP-05 | P1: UC — empty repoId → invalid_input | Tasks | Pending |
 | APP-06 | P1: UC — list-issues defaults | Tasks | Pending |
 | APP-07 | P1: UC — application isolation | Tasks | Pending |
-| APP-08 | P1: DI — Fake under infrastructure | Tasks | Pending |
+| APP-08 | P1: DI — Fake under infrastructure | Tasks | Implementing |
 | APP-09 | P1: DI — resolveRepository branches | Tasks | Pending |
 | APP-10 | P1: DI — createContainer callables | Tasks | Pending |
 | APP-11 | P1: DI — immutable distinct containers | Tasks | Pending |
@@ -145,7 +145,7 @@ O domínio já expõe porta, entidades, erros e helpers; o esqueleto de applicat
 | APP-13 | P1: DI — application barrel excludes DI/Fake | Tasks | Pending |
 | APP-14 | P1: DI — infrastructure barrel public API | Tasks | Pending |
 | APP-15 | P2: application barrel exports | Tasks | Pending |
-| APP-16 | P2: tests import Fake from infrastructure | Tasks | Pending |
+| APP-16 | P2: tests import Fake from infrastructure | Tasks | Implementing |
 
 **Coverage:** 16 total, 16 mapped to tasks (T1–T8), 0 unmapped
 

@@ -9,7 +9,7 @@ Implement these tasks with the `tlc-spec-driven` skill: **activate it by name an
 ---
 
 **Design**: `.specs/features/application-layer/design.md`  
-**Status**: In Progress — Execute via sub-agents (Batch 1: T1–T4)
+**Status**: In Progress — Batch 1 done; Batch 2 (T5–T8)
 
 ---
 
@@ -196,12 +196,12 @@ T8
 
 **Done when**:
 
-- [ ] No `src/application/fakes/` directory
-- [ ] Fake lives under `src/infrastructure/repositories/`
-- [ ] Use-case tests import Fake from infrastructure
-- [ ] Existing fake `not_found` / port tests still pass
-- [ ] Gate: `pnpm test`
-- [ ] Test count: fake + use-case suites green; no silent deletions
+- [x] No `src/application/fakes/` directory
+- [x] Fake lives under `src/infrastructure/repositories/`
+- [x] Use-case tests import Fake from infrastructure
+- [x] Existing fake `not_found` / port tests still pass
+- [x] Gate: `pnpm test`
+- [x] Test count: fake + use-case suites green; no silent deletions
 
 **Tests**: unit  
 **Gate**: full  

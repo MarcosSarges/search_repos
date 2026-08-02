@@ -1,6 +1,6 @@
 import { type AppError, type Repo, type RepoRepository } from '@/domain';
 
-import { createInMemoryRepoRepository } from '../../fakes/in-memory-repo-repository';
+import { createInMemoryRepoRepository } from '@/infrastructure/repositories/in-memory-repo-repository';
 import { createSearchRepos } from '../search-repos';
 
 const sampleRepos: Repo[] = [

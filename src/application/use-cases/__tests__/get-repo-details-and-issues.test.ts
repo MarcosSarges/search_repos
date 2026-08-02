@@ -1,6 +1,6 @@
 import type { AppError, Issue, Repo, RepoRepository } from '@/domain';
 
-import { createInMemoryRepoRepository } from '../../fakes/in-memory-repo-repository';
+import { createInMemoryRepoRepository } from '@/infrastructure/repositories/in-memory-repo-repository';
 import { createGetRepoDetails } from '../get-repo-details';
 import { createListRepoIssues } from '../list-repo-issues';
 
