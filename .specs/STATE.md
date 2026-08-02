@@ -146,13 +146,21 @@
 - **Date**: 2026-07-31
 - **Status**: active
 
+### AD-019
+- **Decision**: `DataSource` (`'github' | 'gitlab'`) vive fora de `src/domain/` (módulo em `src/application/`); domínio é Functional Core (types + pure helpers) e não nomeia provedores. `AppErrorCode` inclui `invalid_input` para violações de invariante (bounds); `unknown` só para não classificado.
+- **Reason**: Dependency Rule — domínio não acopla a implementações; taxonomia de erro DDD-friendly sem misturar invariantes com falhas opacas.
+- **Trade-off**: Consumers (stores/theme) importam `DataSource` de application; domínio “anêmico” de propósito (não entity methods OO).
+- **Scope**: `src/domain/**`, `src/application/**` (tipo DataSource), session/theme imports
+- **Date**: 2026-08-02
+- **Status**: active
+
 ## Handoff
 
-- **Feature**: theme-persist-home
-- **Phase / Task**: Complete — Verifier PASS
-- **Completed**: T1–T7 + gap fix; validation PASS (141 tests; sensor 3/3 killed; TPH-05 accepted precision gap)
-- **In-progress**: none
-- **Next step**: Push / open PR for `feat/theme-persist-home`; then product search/infra
+- **Feature**: domain-layer
+- **Phase / Task**: Execute — Batch 1 (T1–T4) in flight via sub-agent
+- **Completed**: Spec/context/design A/tasks approved
+- **In-progress**: Batch worker phases 1–3
+- **Next step**: On batch summary → Batch 2 (T5–T6) → Verifier
 - **Blockers**: none
-- **Uncommitted files**: possibly `Teste_Tecnico_React_Native_v3.md` formatting noise
-- **Branch**: `feat/theme-persist-home`
+- **Uncommitted files**: `.specs/features/domain-layer/**`, `.specs/STATE.md` (ignore `Teste_Tecnico_*.md` formatting)
+- **Branch**: `feat/domain-layer`
