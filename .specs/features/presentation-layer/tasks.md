@@ -254,12 +254,12 @@ T13 → T14
 
 **Done when**:
 
-- [ ] Defaults match design (`staleTime` 60s, `retry: false`)
-- [ ] Provider accepts optional `client` for tests
-- [ ] No dataSource invalidate/remove listeners
-- [ ] Unit test asserts default options on created client
-- [ ] Gate: `pnpm test -- src/presentation/providers`
-- [ ] Test count: ≥1 default-options test
+- [x] Defaults match design (`staleTime` 60s, `retry: false`)
+- [x] Provider accepts optional `client` for tests
+- [x] No dataSource invalidate/remove listeners
+- [x] Unit test asserts default options on created client
+- [x] Gate: `pnpm test -- src/presentation/providers`
+- [x] Test count: ≥1 default-options test
 
 **Tests**: unit  
 **Gate**: quick  
