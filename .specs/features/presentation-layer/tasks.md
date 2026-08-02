@@ -368,11 +368,11 @@ T13 → T14
 
 **Done when**:
 
-- [ ] `useQuery` + key with dataSource + repoId
-- [ ] Default `enabled` requires non-empty repoId
-- [ ] AppError surfaces; no direct HTTP imports
-- [ ] Gate: `pnpm test -- src/presentation/hooks`
-- [ ] Test count: success + disabled + error path
+- [x] `useQuery` + key with dataSource + repoId
+- [x] Default `enabled` requires non-empty repoId
+- [x] AppError surfaces; no direct HTTP imports
+- [x] Gate: `pnpm test -- src/presentation/hooks`
+- [x] Test count: success + disabled + error path
 
 **Tests**: unit  
 **Gate**: full  
