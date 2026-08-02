@@ -182,18 +182,27 @@
 - **Decision**: Cada provedor tem um **ApiClient** (host normalize + `Authorization: Bearer` + `jsonFetch`); `RepoRepository` fica só ACL (assert/map/paginação) e recebe `{ client }`. DI espelha `tokens` com `hosts?: { github?: string; gitlab?: string }`. GitLab normaliza `baseUrl` anexando `/api/v4` se ausente (aceita raiz ou API base; sem duplicar). URLs via `new URL(path, base)` apenas. MSW de hosts custom usa wildcards de path.
 - **Reason**: Separar transport de ACL; DX self-hosted; auth simétrica GH/GL; evitar glue de slash e unhandled MSW em host injetado.
 - **Trade-off**: Mais factories por provedor; Presentation ainda não expõe UI de host.
-- **Scope**: `src/infrastructure/{http,github,gitlab,di}/**`, README tokens/hosts
+- **Scope**: `src/infrastructure/{http,providers,di}/**`, README tokens/hosts
+- **Date**: 2026-08-02
+- **Status**: active
+
+### AD-024
+- **Decision**: Implementações GitHub/GitLab (ApiClient + ACL repository + mappers) vivem em `src/infrastructure/providers/{github|gitlab}/`, não na raiz de `infrastructure/`. `http/`, `di/` e `repositories/` continuam concerns transversais.
+- **Reason**: `github`/`gitlab` na raiz parecem pastas estruturais da arquitetura; são adapters de provedor — alinhado a `DataSource` / multi-provider (AD-002).
+- **Trade-off**: Um nível a mais de path; imports relativos `../../http`.
+- **Scope**: `src/infrastructure/providers/**`, barrels, isolation tests, README
 - **Date**: 2026-08-02
 - **Status**: active
 
 ## Handoff
 
-- **Feature**: infra-http-clients — **DONE**
-- **Phase / Task**: Complete — Verifier PASS (12/12); [validation.md](.specs/features/infra-http-clients/validation.md)
-- **Completed**: Spec → Design → T1–T6 (`bd2c200`…`e9d5321`) + docs `637a5b9`
-- **In-progress**: none
-- **Next step**: Push branch / open PR when ready
+- **Feature**: infra-http-clients — **DONE** (+ providers/ folder move)
+- **Phase / Task**: Relocate github/gitlab → `infrastructure/providers/`
+- **Completed**: Spec → Design → T1–T6 + validation; PR #8; folder rename AD-024
+- **In-progress**: providers move (uncommitted)
+- **Next step**: Commit move; push to #8
 - **Blockers**: none
-- **Uncommitted files**: `Teste_Tecnico_React_Native_v3.md` (unrelated)
+- **Uncommitted files**: providers move; Teste_Tecnico unrelated
 - **Branch**: `feat/infra-http-clients`
+- **PR**: [#8](https://github.com/MarcosSarges/search_repos/pull/8) (base: #7)
 

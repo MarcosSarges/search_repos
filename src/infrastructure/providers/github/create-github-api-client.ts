@@ -1,5 +1,5 @@
-import { jsonFetch, type JsonFetchResult } from '../http/json-fetch';
-import { joinApiUrl, normalizeGithubApiBase } from '../http/resolve-api-base-url';
+import { jsonFetch, type JsonFetchResult } from '../../http/json-fetch';
+import { joinApiUrl, normalizeGithubApiBase } from '../../http/resolve-api-base-url';
 import type { GithubIssueDto, GithubRepoDto, GithubSearchReposResponse } from './types';
 
 export type CreateGithubApiClientOptions = {

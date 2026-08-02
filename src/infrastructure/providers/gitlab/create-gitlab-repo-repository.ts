@@ -7,7 +7,7 @@ import type {
   SearchReposInput,
 } from '@/domain';
 
-import { resolveHasNextPage } from '../http/resolve-has-next-page';
+import { resolveHasNextPage } from '../../http/resolve-has-next-page';
 import { assertGitlabRepoId } from './assert-repo-id';
 import type { GitlabApiClient } from './create-gitlab-api-client';
 import { mapGitlabIssue, mapGitlabRepo } from './mappers';

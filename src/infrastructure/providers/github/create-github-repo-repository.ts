@@ -7,8 +7,8 @@ import type {
   Issue,
 } from '@/domain';
 
-import { hasRelNext } from '../http/parse-link-next';
-import { resolveHasNextPage } from '../http/resolve-has-next-page';
+import { hasRelNext } from '../../http/parse-link-next';
+import { resolveHasNextPage } from '../../http/resolve-has-next-page';
 import { assertGithubRepoId } from './assert-repo-id';
 import type { GithubApiClient } from './create-github-api-client';
 import { mapGithubIssue, mapGithubRepo } from './mappers';

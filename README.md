@@ -95,7 +95,7 @@ Assim, a interface permanece idêntica ao trocar a fonte: mesma lista, mesmos es
 | --- | --- |
 | `domain/` | Entidades e interfaces de repositório — zero dependência externa |
 | `application/` | Casos de uso (busca, detalhes, issues) |
-| `infrastructure/` | Implementações GitHub/GitLab, HTTP, mappers, injeção de dependências, tema |
+| `infrastructure/` | `providers/` (GitHub/GitLab), HTTP compartilhado, Fake, DI |
 | `presentation/` | Telas, hooks de interface, Design System |
 
 A estrutura de pastas pode evoluir; o que importa é a inversão de dependências: alto nível não importa baixo nível concreto.
@@ -133,7 +133,7 @@ Compromisso consciente: perdemos o roteamento baseado em arquivos e as rotas tip
 ### Troca de fonte (GitHub / GitLab) sem impactar a interface
 
 1. **Contrato único** no domínio (ex.: `RepoRepository` com `search`, `getById`, `listIssues`).
-2. **Duas implementações** na infraestrutura (`GitHubRepositoryImpl`, `GitLabRepositoryImpl`), cada uma com HTTP e mappers próprios.
+2. **Duas implementações** em `infrastructure/providers/` (GitHub e GitLab), cada uma com ApiClient + mappers próprios.
 3. **Uma decisão em um único lugar** (fábrica / store / injeção de dependências) escolhe a implementação ativa.
 4. Telas e hooks dependem do **contrato**, não de `if (provider === 'github')` espalhados.
 

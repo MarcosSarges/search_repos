@@ -1,5 +1,5 @@
-import { jsonFetch, type JsonFetchResult } from '../http/json-fetch';
-import { joinApiUrl, normalizeGitlabApiBase } from '../http/resolve-api-base-url';
+import { jsonFetch, type JsonFetchResult } from '../../http/json-fetch';
+import { joinApiUrl, normalizeGitlabApiBase } from '../../http/resolve-api-base-url';
 import type { GitlabIssueDto, GitlabProjectDto } from './types';
 
 export type CreateGitlabApiClientOptions = {

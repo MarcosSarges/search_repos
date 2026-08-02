@@ -3,7 +3,7 @@ import * as path from 'path';
 
 /**
  * INFRA-34: HTTP adapters and shared http kit must not import UI/state frameworks.
- * Scans production sources under http/, github/, gitlab/ (excludes __tests__).
+ * Scans production sources under http/ and providers/ (excludes __tests__).
  */
 const FORBIDDEN_IMPORT_SUBSTRINGS = [
   'react',
@@ -15,7 +15,7 @@ const FORBIDDEN_IMPORT_SUBSTRINGS = [
 
 const IMPORT_SPECIFIER_RE = /(?:from\s+['"]([^'"]+)['"]|^\s*import\s+['"]([^'"]+)['"])/gm;
 
-const SCAN_ROOTS = ['http', 'github', 'gitlab'] as const;
+const SCAN_ROOTS = ['http', 'providers'] as const;
 
 function listSourceFiles(dir: string): string[] {
   const entries = fs.readdirSync(dir, { withFileTypes: true });
@@ -43,7 +43,7 @@ function listSourceFiles(dir: string): string[] {
 }
 
 describe('infrastructure adapter isolation (INFRA-34)', () => {
-  it('WHEN http/github/gitlab sources are scanned THEN they SHALL NOT import React, Zustand, TanStack Query, or styled-components', () => {
+  it('WHEN http/providers sources are scanned THEN they SHALL NOT import React, Zustand, TanStack Query, or styled-components', () => {
     const infraRoot = path.join(__dirname, '..');
     const sourceFiles = SCAN_ROOTS.flatMap((subdir) =>
       listSourceFiles(path.join(infraRoot, subdir)),
@@ -79,8 +79,8 @@ describe('infrastructure adapter isolation (INFRA-34)', () => {
   it('WHEN RepoRepository ACL sources are scanned THEN they SHALL NOT import or call jsonFetch/fetch (CLI-04, CLI-05)', () => {
     const infraRoot = path.join(__dirname, '..');
     const repoFiles = [
-      path.join(infraRoot, 'github', 'create-github-repo-repository.ts'),
-      path.join(infraRoot, 'gitlab', 'create-gitlab-repo-repository.ts'),
+      path.join(infraRoot, 'providers', 'github', 'create-github-repo-repository.ts'),
+      path.join(infraRoot, 'providers', 'gitlab', 'create-gitlab-repo-repository.ts'),
     ];
 
     const violations: string[] = [];
