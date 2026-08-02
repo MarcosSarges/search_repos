@@ -60,3 +60,23 @@ describe('HomeScreen (TPH-07..10)', () => {
     expect(headerSource).not.toMatch(/DataSourceLogo/);
   });
 });
+
+describe('App product wiring (PRES-17)', () => {
+  it('WHEN App product entry is inspected THEN Query and Container wrap RootNavigator; Storybook branch unchanged', () => {
+    const appSource = readFileSync(join(__dirname, '../../App.tsx'), 'utf8');
+
+    expect(appSource).toMatch(/AppQueryProvider/);
+    expect(appSource).toMatch(/AppContainerProvider/);
+    expect(appSource).toMatch(/RootNavigator/);
+
+    const queryIdx = appSource.indexOf('<AppQueryProvider>');
+    const containerIdx = appSource.indexOf('<AppContainerProvider>');
+    const navIdx = appSource.indexOf('<RootNavigator');
+    expect(queryIdx).toBeGreaterThan(-1);
+    expect(containerIdx).toBeGreaterThan(queryIdx);
+    expect(navIdx).toBeGreaterThan(containerIdx);
+
+    expect(appSource).toMatch(/storybookEnabled/);
+    expect(appSource).toMatch(/\.rnstorybook/);
+  });
+});

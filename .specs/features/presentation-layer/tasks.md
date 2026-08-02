@@ -422,11 +422,11 @@ T13 → T14
 
 **Done when**:
 
-- [ ] Product tree order: SafeArea → Theme → Query → Container → Nav
-- [ ] Storybook entry does not require product providers
-- [ ] Home tests green (title + dataSource/theme toggles)
-- [ ] Gate: `pnpm test -- src/screens`
-- [ ] No silent deletions
+- [x] Product tree order: SafeArea → Theme → Query → Container → Nav
+- [x] Storybook entry does not require product providers
+- [x] Home tests green (title + dataSource/theme toggles)
+- [x] Gate: `pnpm test -- src/screens`
+- [x] No silent deletions
 
 **Tests**: unit  
 **Gate**: full  
