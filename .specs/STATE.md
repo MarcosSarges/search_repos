@@ -165,11 +165,11 @@
 ## Handoff
 
 - **Feature**: application-layer — **DONE**
-- **Phase / Task**: Complete — Verifier PASS; report `41485fa`
-- **Completed**: Spec → Design A → T1–T8 (2 sub-agent batches) + Verifier PASS (16/16 ACs, 196 tests, 3/3 mutants killed)
+- **Phase / Task**: Complete — Verifier PASS; PR [#6](https://github.com/MarcosSarges/search_repos/pull/6)
+- **Completed**: Spec → Design A → T1–T8 + validation PASS; README/AD-020; PR opened
 - **In-progress**: none
-- **Next step**: Open PR for `feat/application-layer`, or next feature (Presentation Provider / HTTP adapters)
+- **Next step**: Merge PR #6, then Presentation (`AppContainerProvider` / hooks) ou HTTP GitHub/GitLab adapters
 - **Blockers**: none
-- **Uncommitted files**: `Teste_Tecnico_React_Native_v3.md` (unrelated)
+- **Uncommitted files**: `Teste_Tecnico_React_Native_v3.md` (unrelated formatting)
 - **Branch**: `feat/application-layer`
 
