@@ -55,14 +55,15 @@ T1 → T2 → T3 → T4 → T5 → T6
 **Commit**: `refactor(infrastructure): make jsonFetch Bearer-only`  
 **Done**: `bd2c200`
 
-### T2: API base normalize + `URL` join helper
+### T2: API base normalize + `URL` join helper ✅
 
 **What**: Helper(s) for GitLab `/api/v4` normalize (root or full API base, no duplicate) and safe `new URL(path, base)` join. Unit tests for root, trailing slash, already `/api/v4`, join without glue bugs.  
 **Where**: `src/infrastructure/http/resolve-api-base-url.ts` (or equiv) + tests  
 **Depends on**: T1  
 **Requirement**: CLI-03, CLI-06  
 **Tests**: unit | **Gate**: quick  
-**Commit**: `feat(infrastructure): add API base URL normalize and join helpers`
+**Commit**: `feat(infrastructure): add API base URL normalize and join helpers`  
+**Done**: `090f75f`
 
 ### T3: GitHub ApiClient + ACL repository
 

@@ -7,44 +7,35 @@ import type {
   Issue,
 } from '@/domain';
 
-import { jsonFetch } from '../http/json-fetch';
 import { hasRelNext } from '../http/parse-link-next';
 import { resolveHasNextPage } from '../http/resolve-has-next-page';
 import { assertGithubRepoId } from './assert-repo-id';
+import type { GithubApiClient } from './create-github-api-client';
 import { mapGithubIssue, mapGithubRepo } from './mappers';
-import type { GithubIssueDto, GithubRepoDto, GithubSearchReposResponse } from './types';
 
-const GITHUB_API_BASE = 'https://api.github.com';
 const SEARCH_RESULT_WINDOW_CAP = 1000;
 
 export type CreateGithubRepoRepositoryOptions = {
-  token?: string;
+  client: GithubApiClient;
 };
-
-function authInit(token?: string) {
-  return token !== undefined ? { token } : {};
-}
 
 /**
  * GitHub Anti-Corruption Layer implementing `RepoRepository`.
  */
 export function createGithubRepoRepository(
-  options: CreateGithubRepoRepositoryOptions = {},
+  options: CreateGithubRepoRepositoryOptions,
 ): RepoRepository {
-  const { token } = options;
+  const { client } = options;
 
   return {
     async search(input: SearchReposInput): Promise<PaginatedResult<Repo>> {
       const perPage = input.perPage ?? 20;
       const page = input.page;
-      const url = new URL(`${GITHUB_API_BASE}/search/repositories`);
-      url.searchParams.set('q', input.query);
-      url.searchParams.set('sort', 'stars');
-      url.searchParams.set('order', 'desc');
-      url.searchParams.set('page', String(page));
-      url.searchParams.set('per_page', String(perPage));
-
-      const { data } = await jsonFetch<GithubSearchReposResponse>(url.toString(), authInit(token));
+      const { data } = await client.searchRepositories({
+        query: input.query,
+        page,
+        perPage,
+      });
       const items = data.items.map(mapGithubRepo);
       const resolvedHasNext = page * perPage < Math.min(data.total_count, SEARCH_RESULT_WINDOW_CAP);
 
@@ -62,10 +53,7 @@ export function createGithubRepoRepository(
 
     async getById(repoId: string): Promise<Repo> {
       assertGithubRepoId(repoId);
-      const { data } = await jsonFetch<GithubRepoDto>(
-        `${GITHUB_API_BASE}/repos/${repoId}`,
-        authInit(token),
-      );
+      const { data } = await client.getRepository(repoId);
       return mapGithubRepo(data);
     },
 
@@ -73,12 +61,7 @@ export function createGithubRepoRepository(
       assertGithubRepoId(input.repoId);
       const perPage = input.perPage ?? 20;
       const page = input.page;
-      const url = new URL(`${GITHUB_API_BASE}/repos/${input.repoId}/issues`);
-      url.searchParams.set('state', 'open');
-      url.searchParams.set('page', String(page));
-      url.searchParams.set('per_page', String(perPage));
-
-      const { data, headers } = await jsonFetch<GithubIssueDto[]>(url.toString(), authInit(token));
+      const { data, headers } = await client.listOpenIssues(input.repoId, { page, perPage });
       const items = data.map(mapGithubIssue);
       const headerIndicatesNext = hasRelNext(headers.get('Link'));
 

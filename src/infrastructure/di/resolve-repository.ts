@@ -1,15 +1,20 @@
 import type { DataSource } from '@/application';
 import type { RepoRepository } from '@/domain';
 
+import { createGithubApiClient } from '../github/create-github-api-client';
 import { createGithubRepoRepository } from '../github/create-github-repo-repository';
 import { createGitlabRepoRepository } from '../gitlab/create-gitlab-repo-repository';
 
 export type ResolveRepositoryOptions = {
   token?: string;
+  baseUrl?: string;
 };
 
 const factories: Record<DataSource, (options?: ResolveRepositoryOptions) => RepoRepository> = {
-  github: (options) => createGithubRepoRepository({ token: options?.token }),
+  github: (options) =>
+    createGithubRepoRepository({
+      client: createGithubApiClient({ token: options?.token, baseUrl: options?.baseUrl }),
+    }),
   gitlab: (options) => createGitlabRepoRepository({ token: options?.token }),
 };
 

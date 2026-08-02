@@ -3,18 +3,25 @@ import { http, HttpResponse } from 'msw';
 import { isAppError } from '@/domain';
 import { server } from '@/test/msw/server';
 import { useMswServer } from '@/test/msw/use-msw-server';
-
-import { createGithubRepoRepository } from '../create-github-repo-repository';
 import searchFixture from '@/test/msw/fixtures/github/search-repos.json';
 import repoDetailFixture from '@/test/msw/fixtures/github/repo-detail.json';
 import issuesFixture from '@/test/msw/fixtures/github/issues.json';
+
+import { createGithubApiClient } from '../create-github-api-client';
+import { createGithubRepoRepository } from '../create-github-repo-repository';
+
+function createRepo(options?: { token?: string; baseUrl?: string }) {
+  return createGithubRepoRepository({
+    client: createGithubApiClient(options),
+  });
+}
 
 describe('createGithubRepoRepository', () => {
   useMswServer(server);
 
   it('search maps items to Repo with id=full_name and no totalCount on result', async () => {
     server.use(
-      http.get('https://api.github.com/search/repositories', ({ request }) => {
+      http.get('*/search/repositories', ({ request }) => {
         const url = new URL(request.url);
         expect(url.searchParams.get('sort')).toBe('stars');
         expect(url.searchParams.get('order')).toBe('desc');
@@ -22,7 +29,7 @@ describe('createGithubRepoRepository', () => {
       }),
     );
 
-    const repo = createGithubRepoRepository();
+    const repo = createRepo();
     const result = await repo.search({ query: 'react', page: 1, perPage: 20 });
 
     expect(result.items).toHaveLength(2);
@@ -39,7 +46,7 @@ describe('createGithubRepoRepository', () => {
 
   it('search hasNextPage is false when page*perPage >= 1000 even if total_count is 5000', async () => {
     server.use(
-      http.get('https://api.github.com/search/repositories', () => {
+      http.get('*/search/repositories', () => {
         return HttpResponse.json({
           total_count: 5000,
           items: Array.from({ length: 20 }, (_, i) => ({
@@ -57,7 +64,7 @@ describe('createGithubRepoRepository', () => {
       }),
     );
 
-    const repo = createGithubRepoRepository();
+    const repo = createRepo();
     // page 50 * perPage 20 = 1000 → not < min(5000, 1000) → false
     const result = await repo.search({ query: 'react', page: 50, perPage: 20 });
     expect(result.hasNextPage).toBe(false);
@@ -65,7 +72,7 @@ describe('createGithubRepoRepository', () => {
 
   it('search hasNextPage is true when within the 1000-result window', async () => {
     server.use(
-      http.get('https://api.github.com/search/repositories', () => {
+      http.get('*/search/repositories', () => {
         return HttpResponse.json({
           total_count: 500,
           items: Array.from({ length: 20 }, (_, i) => ({
@@ -83,7 +90,7 @@ describe('createGithubRepoRepository', () => {
       }),
     );
 
-    const repo = createGithubRepoRepository();
+    const repo = createRepo();
     const result = await repo.search({ query: 'react', page: 1, perPage: 20 });
     expect(result.hasNextPage).toBe(true);
   });
@@ -97,7 +104,7 @@ describe('createGithubRepoRepository', () => {
       }),
     );
 
-    const repo = createGithubRepoRepository();
+    const repo = createRepo();
 
     try {
       await repo.getById('123');
@@ -124,12 +131,12 @@ describe('createGithubRepoRepository', () => {
 
   it('getById maps repository detail with undefined for null description', async () => {
     server.use(
-      http.get('https://api.github.com/repos/facebook/react', () => {
+      http.get('*/repos/facebook/react', () => {
         return HttpResponse.json(repoDetailFixture);
       }),
     );
 
-    const repo = createGithubRepoRepository();
+    const repo = createRepo();
     const detail = await repo.getById('facebook/react');
 
     expect(detail.id).toBe('facebook/react');
@@ -140,7 +147,7 @@ describe('createGithubRepoRepository', () => {
 
   it('listIssues maps open issues and uses Link rel=next for hasNextPage', async () => {
     server.use(
-      http.get('https://api.github.com/repos/facebook/react/issues', ({ request }) => {
+      http.get('*/repos/facebook/react/issues', ({ request }) => {
         const url = new URL(request.url);
         expect(url.searchParams.get('state')).toBe('open');
         return HttpResponse.json(issuesFixture, {
@@ -151,7 +158,7 @@ describe('createGithubRepoRepository', () => {
       }),
     );
 
-    const repo = createGithubRepoRepository();
+    const repo = createRepo();
     const result = await repo.listIssues({
       repoId: 'facebook/react',
       page: 1,
@@ -167,12 +174,12 @@ describe('createGithubRepoRepository', () => {
 
   it('listIssues empty page yields hasNextPage false', async () => {
     server.use(
-      http.get('https://api.github.com/repos/facebook/react/issues', () => {
+      http.get('*/repos/facebook/react/issues', () => {
         return HttpResponse.json([]);
       }),
     );
 
-    const repo = createGithubRepoRepository();
+    const repo = createRepo();
     const result = await repo.listIssues({
       repoId: 'facebook/react',
       page: 1,
@@ -187,25 +194,25 @@ describe('createGithubRepoRepository', () => {
     let authorization: string | null = null;
 
     server.use(
-      http.get('https://api.github.com/search/repositories', ({ request }) => {
+      http.get('*/search/repositories', ({ request }) => {
         authorization = request.headers.get('Authorization');
         return new HttpResponse(null, {
           status: 429,
           headers: { 'X-RateLimit-Reset': '1700000000' },
         });
       }),
-      http.get('https://api.github.com/repos/owner/missing', () => {
+      http.get('*/repos/owner/missing', () => {
         return new HttpResponse(null, { status: 404 });
       }),
-      http.get('https://api.github.com/repos/owner/secret', () => {
+      http.get('*/repos/owner/secret', () => {
         return new HttpResponse(null, { status: 401 });
       }),
-      http.get('https://api.github.com/repos/owner/locked', () => {
+      http.get('*/repos/owner/locked', () => {
         return new HttpResponse(null, { status: 403 });
       }),
     );
 
-    const repo = createGithubRepoRepository({ token: 'gh-token' });
+    const repo = createRepo({ token: 'gh-token' });
 
     try {
       await repo.search({ query: 'x', page: 1 });
@@ -251,5 +258,19 @@ describe('createGithubRepoRepository', () => {
         expect(error.code).toBe('forbidden');
       }
     }
+  });
+
+  it('WHEN custom baseUrl is set THEN ACL search still maps via wildcard MSW (CLI-07, CLI-08)', async () => {
+    server.use(
+      http.get('*/search/repositories', () => {
+        return HttpResponse.json(searchFixture);
+      }),
+    );
+
+    const repo = createRepo({ baseUrl: 'https://gh.empresa.test' });
+    const result = await repo.search({ query: 'react', page: 1, perPage: 20 });
+
+    expect(result.items[0]?.id).toBe('facebook/react');
+    expect(result).not.toHaveProperty('totalCount');
   });
 });
