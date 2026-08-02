@@ -4,7 +4,6 @@ import { mapFetchException, mapHttpResponseError } from './map-http-failure';
 
 export type JsonFetchInit = RequestInit & {
   token?: string;
-  tokenHeader?: 'bearer' | 'private-token';
 };
 
 export type JsonFetchResult<T> = {
@@ -13,20 +12,18 @@ export type JsonFetchResult<T> = {
 };
 
 /**
- * Thin native-fetch helper: optional auth headers, JSON parse, AppError mapping.
- * Not an injectable HTTP port — adapters call this for DRY only.
+ * Thin native-fetch helper: optional Bearer auth, JSON parse, AppError mapping.
+ * Not an injectable HTTP port — ApiClients call this for DRY only.
  */
 export async function jsonFetch<T>(
   url: string,
   init: JsonFetchInit = {},
 ): Promise<JsonFetchResult<T>> {
-  const { token, tokenHeader, headers: initHeaders, ...rest } = init;
+  const { token, headers: initHeaders, ...rest } = init;
   const headers = new Headers(initHeaders);
 
-  if (token !== undefined && tokenHeader === 'bearer') {
+  if (token !== undefined) {
     headers.set('Authorization', `Bearer ${token}`);
-  } else if (token !== undefined && tokenHeader === 'private-token') {
-    headers.set('PRIVATE-TOKEN', token);
   }
 
   let response: Response;

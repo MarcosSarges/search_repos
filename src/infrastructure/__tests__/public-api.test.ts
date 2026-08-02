@@ -11,6 +11,8 @@ describe('infrastructure public API (INFRA-33)', () => {
     expect(typeof infrastructure.createContainer).toBe('function');
     expect(typeof infrastructure.createInMemoryRepoRepository).toBe('function');
     expect(typeof infrastructure.resolveRepository).toBe('function');
+    expect(typeof infrastructure.createGithubApiClient).toBe('function');
+    expect(typeof infrastructure.createGitlabApiClient).toBe('function');
     expect(typeof infrastructure.createGithubRepoRepository).toBe('function');
     expect(typeof infrastructure.createGitlabRepoRepository).toBe('function');
 
@@ -25,9 +27,12 @@ describe('infrastructure public API (INFRA-33)', () => {
 
     expect(barrelSource).toMatch(/\bcreateContainer\b/);
     expect(barrelSource).toMatch(/\bCreateContainerDeps\b/);
+    expect(barrelSource).toMatch(/\bProviderHosts\b/);
     expect(barrelSource).toMatch(/\bAppContainer\b/);
     expect(barrelSource).toMatch(/\bcreateInMemoryRepoRepository\b/);
     expect(barrelSource).toMatch(/\bresolveRepository\b/);
+    expect(barrelSource).toMatch(/\bcreateGithubApiClient\b/);
+    expect(barrelSource).toMatch(/\bcreateGitlabApiClient\b/);
     expect(barrelSource).toMatch(/\bcreateGithubRepoRepository\b/);
     expect(barrelSource).toMatch(/\bcreateGitlabRepoRepository\b/);
   });

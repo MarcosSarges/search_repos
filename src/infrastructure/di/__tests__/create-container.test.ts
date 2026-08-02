@@ -80,7 +80,7 @@ describe('createContainer (INFRA-29, INFRA-30, INFRA-32)', () => {
     expect(privateToken).toBeNull();
   });
 
-  it('WHEN same tokens bag with dataSource gitlab THEN only gitlab token is forwarded as PRIVATE-TOKEN', async () => {
+  it('WHEN same tokens bag with dataSource gitlab THEN only gitlab token is forwarded as Bearer', async () => {
     let authorization: string | null = null;
     let privateToken: string | null = null;
 
@@ -99,8 +99,99 @@ describe('createContainer (INFRA-29, INFRA-30, INFRA-32)', () => {
 
     await container.searchRepos({ query: 'react' });
 
-    expect(privateToken).toBe('l');
-    expect(authorization).toBeNull();
+    expect(authorization).toBe('Bearer l');
+    expect(privateToken).toBeNull();
+  });
+
+  it('WHEN hosts bag is given with dataSource github THEN only github host is used (CLI-09)', async () => {
+    let requestUrl = '';
+
+    server.use(
+      http.get('*/search/repositories', ({ request }) => {
+        requestUrl = request.url;
+        return HttpResponse.json({ total_count: 0, items: [] });
+      }),
+    );
+
+    const container = createContainer({
+      dataSource: 'github',
+      hosts: { github: 'https://gh.empresa.test', gitlab: 'https://gitlab.empresa.com' },
+    });
+
+    await container.searchRepos({ query: 'react' });
+
+    expect(new URL(requestUrl).origin).toBe('https://gh.empresa.test');
+  });
+
+  it('WHEN hosts.gitlab is set but dataSource is github THEN gitlab host is not used', async () => {
+    let requestUrl = '';
+
+    server.use(
+      http.get('*/search/repositories', ({ request }) => {
+        requestUrl = request.url;
+        return HttpResponse.json({ total_count: 0, items: [] });
+      }),
+    );
+
+    const container = createContainer({
+      dataSource: 'github',
+      hosts: { gitlab: 'https://gitlab.empresa.com' },
+    });
+
+    await container.searchRepos({ query: 'react' });
+
+    expect(new URL(requestUrl).origin).toBe('https://api.github.com');
+  });
+
+  it('WHEN hosts bag selects gitlab root THEN requests go to normalized /api/v4 (CLI-09, CLI-03)', async () => {
+    let requestUrl = '';
+    let authorization: string | null = null;
+    let privateToken: string | null = null;
+
+    server.use(
+      http.get('*/api/v4/projects', ({ request }) => {
+        requestUrl = request.url;
+        authorization = request.headers.get('Authorization');
+        privateToken = request.headers.get('PRIVATE-TOKEN');
+        return HttpResponse.json([]);
+      }),
+    );
+
+    const container = createContainer({
+      dataSource: 'gitlab',
+      hosts: { gitlab: 'https://gitlab.empresa.com' },
+      tokens: { gitlab: 'gl-host-token' },
+    });
+
+    await container.searchRepos({ query: 'react' });
+
+    expect(new URL(requestUrl).origin).toBe('https://gitlab.empresa.com');
+    expect(new URL(requestUrl).pathname).toBe('/api/v4/projects');
+    expect(authorization).toBe('Bearer gl-host-token');
+    expect(privateToken).toBeNull();
+  });
+
+  it('WHEN hosts and tokens are omitted THEN official defaults apply (CLI-10)', async () => {
+    let githubUrl = '';
+    let gitlabUrl = '';
+
+    server.use(
+      http.get('*/search/repositories', ({ request }) => {
+        githubUrl = request.url;
+        return HttpResponse.json({ total_count: 0, items: [] });
+      }),
+      http.get('*/api/v4/projects', ({ request }) => {
+        gitlabUrl = request.url;
+        return HttpResponse.json([]);
+      }),
+    );
+
+    await createContainer({ dataSource: 'github' }).searchRepos({ query: 'x' });
+    await createContainer({ dataSource: 'gitlab' }).searchRepos({ query: 'x' });
+
+    expect(new URL(githubUrl).origin).toBe('https://api.github.com');
+    expect(new URL(gitlabUrl).origin).toBe('https://gitlab.com');
+    expect(new URL(gitlabUrl).pathname).toBe('/api/v4/projects');
   });
 
   it('WHEN modules under src/infrastructure/di/ are scanned THEN they SHALL NOT import Zustand or session-preferences-store', () => {

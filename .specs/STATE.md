@@ -178,15 +178,31 @@
 - **Date**: 2026-08-02
 - **Status**: active
 
+### AD-023
+- **Decision**: Cada provedor tem um **ApiClient** (host normalize + `Authorization: Bearer` + `jsonFetch`); `RepoRepository` fica só ACL (assert/map/paginação) e recebe `{ client }`. DI espelha `tokens` com `hosts?: { github?: string; gitlab?: string }`. GitLab normaliza `baseUrl` anexando `/api/v4` se ausente (aceita raiz ou API base; sem duplicar). URLs via `new URL(path, base)` apenas. MSW de hosts custom usa wildcards de path.
+- **Reason**: Separar transport de ACL; DX self-hosted; auth simétrica GH/GL; evitar glue de slash e unhandled MSW em host injetado.
+- **Trade-off**: Mais factories por provedor; Presentation ainda não expõe UI de host.
+- **Scope**: `src/infrastructure/{http,providers,di}/**`, README tokens/hosts
+- **Date**: 2026-08-02
+- **Status**: active
+
+### AD-024
+- **Decision**: Implementações GitHub/GitLab (ApiClient + ACL repository + mappers) vivem em `src/infrastructure/providers/{github|gitlab}/`, não na raiz de `infrastructure/`. `http/`, `di/` e `repositories/` continuam concerns transversais.
+- **Reason**: `github`/`gitlab` na raiz parecem pastas estruturais da arquitetura; são adapters de provedor — alinhado a `DataSource` / multi-provider (AD-002).
+- **Trade-off**: Um nível a mais de path; imports relativos `../../http`.
+- **Scope**: `src/infrastructure/providers/**`, barrels, isolation tests, README
+- **Date**: 2026-08-02
+- **Status**: active
+
 ## Handoff
 
-- **Feature**: infrastructure-layer — **DONE**
-- **Phase / Task**: Complete — Verifier PASS (35/35); fix iteration for INFRA-04/12
-- **Completed**: Specify → Design A → T1–T10 + validation PASS; commits a9d4a1f…f179c45 + f91b7f5
-- **In-progress**: none
-- **Next step**: Commit remaining `.specs/features/infrastructure-layer/*` + STATE if needed; open PR; then Presentation (`AppContainerProvider` / token UI) or credentials persist
+- **Feature**: infra-http-clients — **DONE** (+ providers/ folder move)
+- **Phase / Task**: Relocate github/gitlab → `infrastructure/providers/`
+- **Completed**: Spec → Design → T1–T6 + validation; PR #8; folder rename AD-024
+- **In-progress**: providers move (uncommitted)
+- **Next step**: Commit move; push to #8
 - **Blockers**: none
-- **Uncommitted files**: see git status (specs/validation/STATE/lessons; Teste_Tecnico unrelated)
-- **Branch**: `feat/infrastructure-layer`
-- **Note**: msw pinned to 2.12.10 (Jest/expo ESM)
+- **Uncommitted files**: providers move; Teste_Tecnico unrelated
+- **Branch**: `feat/infra-http-clients`
+- **PR**: [#8](https://github.com/MarcosSarges/search_repos/pull/8) (base: #7)
 

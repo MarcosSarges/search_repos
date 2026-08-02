@@ -1,16 +1,25 @@
 import type { DataSource } from '@/application';
 import type { RepoRepository } from '@/domain';
 
-import { createGithubRepoRepository } from '../github/create-github-repo-repository';
-import { createGitlabRepoRepository } from '../gitlab/create-gitlab-repo-repository';
+import { createGithubApiClient } from '../providers/github/create-github-api-client';
+import { createGithubRepoRepository } from '../providers/github/create-github-repo-repository';
+import { createGitlabApiClient } from '../providers/gitlab/create-gitlab-api-client';
+import { createGitlabRepoRepository } from '../providers/gitlab/create-gitlab-repo-repository';
 
 export type ResolveRepositoryOptions = {
   token?: string;
+  baseUrl?: string;
 };
 
 const factories: Record<DataSource, (options?: ResolveRepositoryOptions) => RepoRepository> = {
-  github: (options) => createGithubRepoRepository({ token: options?.token }),
-  gitlab: (options) => createGitlabRepoRepository({ token: options?.token }),
+  github: (options) =>
+    createGithubRepoRepository({
+      client: createGithubApiClient({ token: options?.token, baseUrl: options?.baseUrl }),
+    }),
+  gitlab: (options) =>
+    createGitlabRepoRepository({
+      client: createGitlabApiClient({ token: options?.token, baseUrl: options?.baseUrl }),
+    }),
 };
 
 /**

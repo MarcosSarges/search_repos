@@ -80,7 +80,7 @@ describe('resolveRepository (INFRA-27, INFRA-28, INFRA-31)', () => {
   it('WHEN token option is passed for github THEN Authorization Bearer is sent', async () => {
     let authorization: string | null = null;
     server.use(
-      http.get('https://api.github.com/search/repositories', ({ request }) => {
+      http.get('*/search/repositories', ({ request }) => {
         authorization = request.headers.get('Authorization');
         return HttpResponse.json({ total_count: 0, items: [] });
       }),
@@ -90,5 +90,24 @@ describe('resolveRepository (INFRA-27, INFRA-28, INFRA-31)', () => {
     await repository.search({ query: 'x', page: 1 });
 
     expect(authorization).toBe('Bearer gh-only');
+  });
+
+  it('WHEN baseUrl option is passed for gitlab THEN normalized host is used (CLI-09)', async () => {
+    let requestUrl = '';
+    server.use(
+      http.get('*/api/v4/projects', ({ request }) => {
+        requestUrl = request.url;
+        return HttpResponse.json([]);
+      }),
+    );
+
+    const repository = resolveRepository('gitlab', {
+      baseUrl: 'https://gitlab.empresa.com',
+      token: 't',
+    });
+    await repository.search({ query: 'x', page: 1 });
+
+    expect(new URL(requestUrl).origin).toBe('https://gitlab.empresa.com');
+    expect(new URL(requestUrl).pathname).toBe('/api/v4/projects');
   });
 });
