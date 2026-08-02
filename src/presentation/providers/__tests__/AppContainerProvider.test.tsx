@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { Text as RNText } from 'react-native';
 import {
   render as rtlRender,
@@ -35,13 +37,9 @@ function seedReadySession() {
   });
 }
 
-function withContainer(
-  repository?: ReturnType<typeof createInMemoryRepoRepository>,
-) {
+function withContainer(repository?: ReturnType<typeof createInMemoryRepoRepository>) {
   return function Wrapper({ children }: { children: React.ReactNode }) {
-    return (
-      <AppContainerProvider repository={repository}>{children}</AppContainerProvider>
-    );
+    return <AppContainerProvider repository={repository}>{children}</AppContainerProvider>;
   };
 }
 
@@ -98,9 +96,7 @@ describe('AppContainerProvider (PRES-01..03, PRES-05)', () => {
 
   it('useAppContainer throws a clear error outside the provider', async () => {
     const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
-    await expect(rtlRenderHook(() => useAppContainer())).rejects.toThrow(
-      /AppContainerProvider/,
-    );
+    await expect(rtlRenderHook(() => useAppContainer())).rejects.toThrow(/AppContainerProvider/);
     spy.mockRestore();
   });
 
@@ -130,6 +126,13 @@ describe('AppContainerProvider (PRES-01..03, PRES-05)', () => {
     await expect(
       result.current.getRepoDetails({ repoId: 'facebook/react' }),
     ).resolves.toMatchObject({ id: 'facebook/react' });
+  });
+
+  it('provider source does not import github/gitlab adapters or fetch', () => {
+    const source = readFileSync(join(__dirname, '..', 'AppContainerProvider.tsx'), 'utf8');
+    expect(source).not.toMatch(/github\/create-github|gitlab\/create-gitlab/);
+    expect(source).not.toMatch(/\bfetch\b/);
+    expect(source).toMatch(/createContainer/);
   });
 });
 

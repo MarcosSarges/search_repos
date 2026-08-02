@@ -1,15 +1,7 @@
-import {
-  createContext,
-  useContext,
-  useMemo,
-  type ReactNode,
-} from 'react';
+import { createContext, useContext, useMemo, type ReactNode } from 'react';
 
 import type { RepoRepository } from '@/domain';
-import {
-  createContainer,
-  type AppContainer,
-} from '@/infrastructure/di/create-container';
+import { createContainer, type AppContainer } from '@/infrastructure/di/create-container';
 import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
 
 const AppContainerContext = createContext<AppContainer | null>(null);
@@ -19,10 +11,7 @@ type AppContainerProviderProps = {
   repository?: RepoRepository;
 };
 
-export function AppContainerProvider({
-  children,
-  repository,
-}: AppContainerProviderProps) {
+export function AppContainerProvider({ children, repository }: AppContainerProviderProps) {
   const dataSource = useSessionPreferencesStore((state) => state.dataSource);
   const tokens = useSessionPreferencesStore((state) => state.tokens);
 
@@ -31,9 +20,7 @@ export function AppContainerProvider({
     [dataSource, tokens, repository],
   );
 
-  return (
-    <AppContainerContext.Provider value={container}>{children}</AppContainerContext.Provider>
-  );
+  return <AppContainerContext.Provider value={container}>{children}</AppContainerContext.Provider>;
 }
 
 export function useAppContainer(): AppContainer {

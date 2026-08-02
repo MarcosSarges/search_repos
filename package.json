@@ -9,7 +9,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "lint": "expo lint",
-    "test": "jest",
+    "test": "jest --watchman=false",
     "test:e2e": "maestro --device emulator-5554 test .maestro/",
     "storybook": "cross-env STORYBOOK_ENABLED=true expo start",
     "storybook:ios": "cross-env STORYBOOK_ENABLED=true expo start --ios",

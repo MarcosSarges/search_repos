@@ -10,7 +10,5 @@ type AppQueryProviderProps = {
 
 export function AppQueryProvider({ children, client }: AppQueryProviderProps) {
   const [defaultClient] = useState(createQueryClient);
-  return (
-    <QueryClientProvider client={client ?? defaultClient}>{children}</QueryClientProvider>
-  );
+  return <QueryClientProvider client={client ?? defaultClient}>{children}</QueryClientProvider>;
 }

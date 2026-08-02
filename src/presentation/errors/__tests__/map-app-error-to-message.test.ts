@@ -37,20 +37,22 @@ describe('mapAppErrorToMessage (PRES-13..16)', () => {
 
   it('returns the same rate_limit string with or without cause', () => {
     const withoutCause = mapAppErrorToMessage(createAppError('rate_limit'));
-    const withCause = mapAppErrorToMessage(
-      createAppError('rate_limit', { retryAfterSeconds: 60 }),
-    );
+    const withCause = mapAppErrorToMessage(createAppError('rate_limit', { retryAfterSeconds: 60 }));
     expect(withCause).toBe(withoutCause);
     expect(withCause.length).toBeGreaterThan(0);
   });
 
   it('module source has no React, React Native, or TanStack Query imports', () => {
-    const source = readFileSync(
-      join(__dirname, '..', 'map-app-error-to-message.ts'),
-      'utf8',
-    );
+    const source = readFileSync(join(__dirname, '..', 'map-app-error-to-message.ts'), 'utf8');
     expect(source).not.toMatch(/from ['"]react['"]/);
     expect(source).not.toMatch(/from ['"]react-native['"]/);
     expect(source).not.toMatch(/@tanstack\/react-query/);
+  });
+
+  it('falls back to unknown copy for unexpected AppError code strings', () => {
+    const unknownMessage = mapAppErrorToMessage(createAppError('unknown'));
+    const err = createAppError('network');
+    (err as { code: string }).code = 'not_a_real_code';
+    expect(mapAppErrorToMessage(err)).toBe(unknownMessage);
   });
 });

@@ -42,11 +42,7 @@ type AllTheProvidersProps = {
   queryClient?: QueryClient;
 };
 
-export function AllTheProviders({
-  children,
-  repository,
-  queryClient,
-}: AllTheProvidersProps) {
+export function AllTheProviders({ children, repository, queryClient }: AllTheProvidersProps) {
   return (
     <SafeAreaProvider initialMetrics={initialSafeAreaMetrics}>
       <AppThemeProvider>
