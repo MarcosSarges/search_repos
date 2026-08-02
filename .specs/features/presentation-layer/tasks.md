@@ -143,13 +143,13 @@ T13 → T14
 
 **Done when**:
 
-- [ ] `tokens` default `{}`; `setToken` / `setTokens` update memory + call adapter
-- [ ] `partialize` still only `mode` + `dataSource` (assert in test)
-- [ ] Hydrate loads SS into memory without re-writing; unavailable → empty + ready
-- [ ] `reset()` clears in-memory tokens and SecureStore entries
-- [ ] Setters always assign a **new** `tokens` object reference
-- [ ] Gate: `pnpm test -- src/stores`
-- [ ] Test count: existing store tests green + new token cases; no silent deletions
+- [x] `tokens` default `{}`; `setToken` / `setTokens` update memory + call adapter
+- [x] `partialize` still only `mode` + `dataSource` (assert in test)
+- [x] Hydrate loads SS into memory without re-writing; unavailable → empty + ready
+- [x] `reset()` clears in-memory tokens and SecureStore entries
+- [x] Setters always assign a **new** `tokens` object reference
+- [x] Gate: `pnpm test -- src/stores`
+- [x] Test count: existing store tests green + new token cases; no silent deletions
 
 **Tests**: unit  
 **Gate**: quick  
