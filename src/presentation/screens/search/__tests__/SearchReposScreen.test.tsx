@@ -327,7 +327,8 @@ describe('SearchReposScreen (SRCH-01..11, CFG-04, NAV-05)', () => {
     const source = readFileSync(join(__dirname, '../SearchReposScreen.tsx'), 'utf8');
     expect(source).toMatch(/<Container[^>]*testID="search-repos-list-region"/);
     expect(source).not.toMatch(/<View[^>]*testID="search-repos-list-region"/);
-    expect(source).toMatch(/\bRefreshControl\b/);
+    expect(source).toMatch(/\bonRefresh\b/);
+    expect(source).not.toMatch(/\bRefreshControl\b/);
   });
 
   it('WHEN SearchRepos list is inspected THEN it uses DS FlatList without RN FlatList (RITEM-12)', () => {

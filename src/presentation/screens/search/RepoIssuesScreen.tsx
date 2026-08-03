@@ -1,6 +1,5 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useCallback, useMemo, type ReactNode } from 'react';
-import { RefreshControl } from 'react-native';
 
 import type { Issue } from '@/domain';
 import { StackBackHeader } from '@/presentation/components';
@@ -25,6 +24,7 @@ export function RepoIssuesScreen({ route }: Props) {
     isError,
     isLoading,
     isFetchingNextPage,
+    isFetchNextPageError,
     isRefetching,
     hasNextPage,
     fetchNextPage,
@@ -82,12 +82,10 @@ export function RepoIssuesScreen({ route }: Props) {
         renderItem={({ item }) => <IssueListItem issue={item} />}
         onEndReached={handleEndReached}
         extraData={items.length}
-        refreshControl={
-          <RefreshControl
-            refreshing={isRefetching && !isFetchingNextPage}
-            onRefresh={handleRefresh}
-          />
-        }
+        loadingMore={isFetchingNextPage}
+        footerError={isFetchNextPageError ? mapAppErrorToMessage(error) : undefined}
+        refreshing={isRefetching && !isFetchingNextPage}
+        onRefresh={handleRefresh}
       />
     );
   }

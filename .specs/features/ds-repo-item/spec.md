@@ -128,10 +128,13 @@ A lista de repositórios ainda usa um `RepoListItem` de apresentação com Card 
 5. WHEN `ItemSeparatorComponent` is provided THEN it SHALL override the default Spacer
 6. WHEN FlatList mounts without overriding performance props THEN it SHALL apply defaults: `initialNumToRender={20}`, `onEndReachedThreshold={0.5}`, `windowSize={10}`, `maxToRenderPerBatch={10}`, `updateCellsBatchingPeriod={50}`
 7. WHEN a consumer passes any of those performance props THEN the consumer value SHALL win
-8. WHEN other RN `FlatList` props are passed (`data`, `renderItem`, `keyExtractor`, `onEndReached`, `refreshControl`, `ListHeaderComponent`, `style`, merged `contentContainerStyle`, etc.) THEN they SHALL be forwarded; consumer `contentContainerStyle` SHALL merge **after** the molecule padding (consumer can extend, not silently drop padding unless they override padding keys)
-9. WHEN FlatList is shipped THEN it SHALL live under `packages/ds/molecules/FlatList/` (AD-012) and SHALL be exported from `@ds/molecules` / package barrel
-10. WHEN FlatList is opened in Storybook THEN stories SHALL cover default padding+separator and at least one override (`separator={false}` or custom separator / custom `px`)
-11. WHEN FlatList is shipped THEN colocated Jest + RNTL tests SHALL assert ACs 1–8 from these criteria
+8. WHEN other RN `FlatList` props are passed (`data`, `renderItem`, `keyExtractor`, `onEndReached`, `ListHeaderComponent`, `style`, merged `contentContainerStyle`, etc.) THEN they SHALL be forwarded; consumer `contentContainerStyle` SHALL merge **after** the molecule padding (consumer can extend, not silently drop padding unless they override padding keys)
+9. WHEN `loadingMore` is true THEN FlatList SHALL show a standard Loading in `ListFooterComponent` (`testID="ds-flat-list-footer-loading"`); WHEN `footerError` is a non-empty string AND not loadingMore THEN it SHALL show muted Typography with that message (`testID="ds-flat-list-footer-error"`)
+10. WHEN `onRefresh` is provided THEN FlatList SHALL build `RefreshControl` internally using `refreshing` (default false) and theme primary tint; WHEN consumer passes `refreshControl` THEN that SHALL win
+11. WHEN consumer passes `ListFooterComponent` THEN it SHALL override the built-in loadingMore/footerError footer
+12. WHEN FlatList is shipped THEN it SHALL live under `packages/ds/molecules/FlatList/` (AD-012) and SHALL be exported from `@ds/molecules` / package barrel
+13. WHEN FlatList is opened in Storybook THEN stories SHALL cover default padding+separator and at least one override (`separator={false}` or custom separator / custom `px`)
+14. WHEN FlatList is shipped THEN colocated Jest + RNTL tests SHALL assert ACs 1–11 from these criteria
 
 **Independent Test**: Storybook + unit tests with fixture data; no navigation.
 

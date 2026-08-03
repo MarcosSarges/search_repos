@@ -1,7 +1,6 @@
 import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 import { useCallback } from 'react';
-import { RefreshControl } from 'react-native';
 
 import type { Repo } from '@/domain';
 import { SessionSourceHeader } from '@/presentation/components';
@@ -74,23 +73,12 @@ export function ExploreScreen() {
             void fetchNextPage();
           }
         }}
-        ListFooterComponent={
-          isFetchingNextPage ? (
-            <Loading testID="explore-footer-loading" />
-          ) : isFetchNextPageError ? (
-            <Typography variant="body" color="muted" testID="explore-next-page-error">
-              {mapAppErrorToMessage(error)}
-            </Typography>
-          ) : null
-        }
-        refreshControl={
-          <RefreshControl
-            refreshing={isRefetching && !isFetchingNextPage}
-            onRefresh={() => {
-              void refetch();
-            }}
-          />
-        }
+        loadingMore={isFetchingNextPage}
+        footerError={isFetchNextPageError ? mapAppErrorToMessage(error) : undefined}
+        refreshing={isRefetching && !isFetchingNextPage}
+        onRefresh={() => {
+          void refetch();
+        }}
       />
     );
   }

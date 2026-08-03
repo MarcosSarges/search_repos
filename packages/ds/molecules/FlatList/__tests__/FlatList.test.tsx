@@ -154,6 +154,60 @@ describe('FlatList molecule (RITEM-11)', () => {
     const dir = join(__dirname, '..');
     expect(existsSync(join(dir, 'index.ts'))).toBe(true);
     expect(existsSync(join(dir, 'FlatList.tsx'))).toBe(true);
+    expect(existsSync(join(dir, 'styles.tsx'))).toBe(true);
     expect(existsSync(join(dir, 'FlatList.stories.tsx'))).toBe(true);
+  });
+
+  it('WHEN loadingMore is true THEN footer shows standard Loading', async () => {
+    await render(
+      <FlatList
+        data={DATA}
+        keyExtractor={(item) => item.id}
+        renderItem={renderRow}
+        loadingMore
+      />,
+    );
+
+    const list = screen.getByTestId('ds-flat-list');
+    const Footer = list.props.ListFooterComponent;
+    await render(<Footer />);
+    expect(screen.getByTestId('ds-flat-list-footer-loading')).toBeTruthy();
+  });
+
+  it('WHEN footerError is set THEN footer shows standard muted message', async () => {
+    await render(
+      <FlatList
+        data={DATA}
+        keyExtractor={(item) => item.id}
+        renderItem={renderRow}
+        footerError="Falha ao carregar mais"
+      />,
+    );
+
+    const list = screen.getByTestId('ds-flat-list');
+    const Footer = list.props.ListFooterComponent;
+    await render(<Footer />);
+    expect(screen.getByTestId('ds-flat-list-footer-error')).toHaveTextContent(
+      'Falha ao carregar mais',
+    );
+  });
+
+  it('WHEN onRefresh is provided THEN RefreshControl is built internally', async () => {
+    const onRefresh = jest.fn();
+    await render(
+      <FlatList
+        data={DATA}
+        keyExtractor={(item) => item.id}
+        renderItem={renderRow}
+        refreshing
+        onRefresh={onRefresh}
+      />,
+    );
+
+    const list = screen.getByTestId('ds-flat-list');
+    expect(list.props.refreshControl).toBeTruthy();
+    expect(list.props.refreshControl.props.refreshing).toBe(true);
+    list.props.refreshControl.props.onRefresh();
+    expect(onRefresh).toHaveBeenCalledTimes(1);
   });
 });

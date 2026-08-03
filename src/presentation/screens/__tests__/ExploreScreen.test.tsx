@@ -187,7 +187,7 @@ describe('ExploreScreen (EXP-02,04,05,07,16, RITEM-13)', () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByTestId('explore-footer-loading')).toBeTruthy();
+      expect(screen.getByTestId('ds-flat-list-footer-loading')).toBeTruthy();
     });
 
     expect(screen.getByText('React')).toBeTruthy();
@@ -235,7 +235,7 @@ describe('ExploreScreen (EXP-02,04,05,07,16, RITEM-13)', () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByTestId('explore-next-page-error')).toBeTruthy();
+      expect(screen.getByTestId('ds-flat-list-footer-error')).toBeTruthy();
     });
 
     expect(screen.getByText('React')).toBeTruthy();

@@ -1,6 +1,5 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useCallback, useMemo, useState, type ReactNode } from 'react';
-import { RefreshControl } from 'react-native';
 
 import type { Repo } from '@/domain';
 import { SessionSourceHeader } from '@/presentation/components';
@@ -26,6 +25,7 @@ export function SearchReposScreen({ navigation }: Props) {
     isError,
     isLoading,
     isFetchingNextPage,
+    isFetchNextPageError,
     isRefetching,
     hasNextPage,
     fetchNextPage,
@@ -96,12 +96,10 @@ export function SearchReposScreen({ navigation }: Props) {
         renderItem={({ item }) => <RepoListItem repo={item} onPress={handlePress} />}
         onEndReached={handleEndReached}
         extraData={items.length}
-        refreshControl={
-          <RefreshControl
-            refreshing={isRefetching && !isFetchingNextPage}
-            onRefresh={handleRefresh}
-          />
-        }
+        loadingMore={isFetchingNextPage}
+        footerError={isFetchNextPageError ? mapAppErrorToMessage(error) : undefined}
+        refreshing={isRefetching && !isFetchingNextPage}
+        onRefresh={handleRefresh}
       />
     );
   }
