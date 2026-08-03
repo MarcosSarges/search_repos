@@ -1,6 +1,6 @@
 import type { StyleProp, ViewStyle } from 'react-native';
 
-import { Icon } from '@ds/atoms';
+import { Icon, Spacer } from '@ds/atoms';
 import { Header } from '@ds/molecules';
 
 import { BackButton, BackHeaderRoot } from './styles';
@@ -37,6 +37,7 @@ export function BackHeader({
             onPress={onBack}
             testID="ds-back-header-back">
             <Icon name="arrow-back" size="lg" />
+            <Spacer right size="lg" />
           </BackButton>
         }
       />

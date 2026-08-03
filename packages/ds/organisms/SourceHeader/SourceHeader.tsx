@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react';
 import type { StyleProp, ViewStyle } from 'react-native';
 
-import type { Brand } from '@ds/theme';
 import { Header } from '@ds/molecules';
+import type { Brand } from '@ds/theme';
 
 import { DataSourceLogo } from '../DataSourceLogo';
 import { BrandToggle, SourceHeaderRoot } from './styles';
