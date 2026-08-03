@@ -226,12 +226,20 @@
 - **Date**: 2026-08-03
 - **Status**: active
 
+### AD-029
+- **Decision**: DS organisms that need session state (e.g. source toggle header) are **controlled and store-free** in `packages/ds` (props like `brand` + `onToggleBrand`). Real Zustand wiring lives in `src/presentation/components/` adapters (e.g. `SessionSourceHeader`) that map `DataSource` ↔ DS `Brand` and call store actions. Product screens import the presentation adapter, not the store, for that chrome.
+- **Reason**: Preserve DS isolation (no `@/stores` / app layers in `packages/ds`) while keeping product headers reusable and testable.
+- **Trade-off**: Thin adapter layer per wired organism; Brand and DataSource stay parallel unions.
+- **Scope**: `packages/ds/organisms/**`, `src/presentation/components/**`, product screens using session chrome
+- **Date**: 2026-08-03
+- **Status**: active
+
 ## Handoff
 
-- **Feature**: none — ds-as-lib + ds-mui-props **Done** (Verifier PASS)
-- **Phase / Task**: —
-- **Completed**: Both features on `feat/ds-as-lib`; PR https://github.com/MarcosSarges/search_repos/pull/11
+- **Feature**: repo-details-issues (`.specs/features/repo-details-issues/`)
+- **Phase / Task**: Tasks — draft ready for approval (T1–T14)
+- **Completed**: Specify + Discuss + Design (Approved) + AD-029; date util moved to DS per user
 - **In-progress**: none
-- **Next step**: review/merge PR #11; clean unrelated dirty tree (legacy logos/hooks) if desired
+- **Next step**: User approves tasks → Execute (offer batch sub-agents: T1–T7, T8–T14)
 - **Blockers**: none
 - **Branch**: `feat/ds-as-lib`
