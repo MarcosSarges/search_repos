@@ -175,9 +175,9 @@ T10 → T11
 
 **Done when**:
 
-- [ ] Trailing node appears when provided; back still works
-- [ ] Isolation test still forbids Zustand/`@/` app imports
-- [ ] Gate: `pnpm test -- packages/ds/organisms/BackHeader`
+- [x] Trailing node appears when provided; back still works
+- [x] Isolation test still forbids Zustand/`@/` app imports
+- [x] Gate: `pnpm test -- packages/ds/organisms/BackHeader`
 
 **Tests**: unit  
 **Gate**: quick  
