@@ -13,21 +13,21 @@ import {
   type CardProps,
 } from '../Card';
 
-describe('Card molecule (CTRL-04)', () => {
+describe('Card molecule (PROP-06,20)', () => {
   afterEach(() => {
     cleanup();
   });
 
-  it('WHEN rendered THEN surface radius and border come from card tokens (not Container)', async () => {
+  it('WHEN bg is omitted THEN background uses card.defaultBg surface fill', async () => {
     await render(<Card testID="card" />, { themeMode: 'light' });
 
     const theme = getTheme('light');
     const root = screen.getByTestId('card');
     const expectedRadius = theme.radius[theme.card.radius];
 
-    expect(root).toHaveStyleRule('background-color', theme.colors[theme.card.defaultBg]);
+    expect(theme.card.defaultBg).toBe('surface');
+    expect(root).toHaveStyleRule('background-color', theme.colors.surface);
     expect(root).toHaveStyleRule('border-color', theme.colors[theme.card.borderColorToken]);
-    // css-to-react-native expands border-radius into corner radii
     expect(root).toHaveStyleRule('border-top-left-radius', expectedRadius);
     expect(root).toHaveStyleRule('border-top-right-radius', expectedRadius);
     expect(root).toHaveStyleRule('border-bottom-right-radius', expectedRadius);
@@ -37,6 +37,26 @@ describe('Card molecule (CTRL-04)', () => {
     expect(cardSource).not.toMatch(/Container/);
     const stylesSource = readFileSync(join(__dirname, '../styles.tsx'), 'utf8');
     expect(stylesSource).not.toMatch(/Container/);
+  });
+
+  it('WHEN bg is background THEN background overrides the card default fill', async () => {
+    await render(<Card testID="card" bg="background" />, { themeMode: 'light' });
+
+    const theme = getTheme('light');
+    expect(screen.getByTestId('card')).toHaveStyleRule(
+      'background-color',
+      theme.colors.background,
+    );
+  });
+
+  it('WHEN style is passed THEN it is accepted on the public props type and forwarded', async () => {
+    type RootHasStyle = 'style' extends keyof CardProps ? true : false;
+    const rootHasStyle: RootHasStyle = true;
+    expect(rootHasStyle).toBe(true);
+
+    await render(<Card testID="card" style={{ opacity: 0.55 }} />, { themeMode: 'light' });
+
+    expect(screen.getByTestId('card')).toHaveStyle({ opacity: 0.55 });
   });
 
   it('WHEN Header Content and Footer are used THEN they render in header→content→footer order', async () => {
@@ -85,26 +105,24 @@ describe('Card molecule (CTRL-04)', () => {
     expect(root).toHaveStyleRule('background-color', theme.colors[theme.card.defaultBg]);
   });
 
-  it('WHEN public props are inspected THEN style is not part of the controlled API', () => {
-    type RootHasStyle = 'style' extends keyof CardProps ? true : false;
-    type HeaderHasStyle = 'style' extends keyof CardHeaderProps ? true : false;
-    type ContentHasStyle = 'style' extends keyof CardContentProps ? true : false;
-    type FooterHasStyle = 'style' extends keyof CardFooterProps ? true : false;
-
-    const rootHasStyle: RootHasStyle = false;
-    const headerHasStyle: HeaderHasStyle = false;
-    const contentHasStyle: ContentHasStyle = false;
-    const footerHasStyle: FooterHasStyle = false;
-
-    expect(rootHasStyle).toBe(false);
-    expect(headerHasStyle).toBe(false);
-    expect(contentHasStyle).toBe(false);
-    expect(footerHasStyle).toBe(false);
-  });
-
   it('WHEN Card compound members are inspected THEN Header Content Footer are static members', () => {
     expect(Card.Header).toBeDefined();
     expect(Card.Content).toBeDefined();
     expect(Card.Footer).toBeDefined();
+  });
+
+  it('WHEN region props are inspected THEN style is not required on Header Content Footer', () => {
+    type HeaderHasStyle = 'style' extends keyof CardHeaderProps ? true : false;
+    type ContentHasStyle = 'style' extends keyof CardContentProps ? true : false;
+    type FooterHasStyle = 'style' extends keyof CardFooterProps ? true : false;
+
+    // Root style is required by PROP-20; regions stay minimal unless needed
+    const headerHasStyle: HeaderHasStyle = false;
+    const contentHasStyle: ContentHasStyle = false;
+    const footerHasStyle: FooterHasStyle = false;
+
+    expect(headerHasStyle).toBe(false);
+    expect(contentHasStyle).toBe(false);
+    expect(footerHasStyle).toBe(false);
   });
 });

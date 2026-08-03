@@ -1,9 +1,15 @@
 import type { ReactNode } from 'react';
+import type { StyleProp, ViewStyle } from 'react-native';
+import { useTheme } from 'styled-components/native';
+
+import type { SurfaceBg } from '@ds/tokens';
 
 import { CardRegion, StyledCard } from './styles';
 
 export type CardProps = {
   children?: ReactNode;
+  bg?: SurfaceBg;
+  style?: StyleProp<ViewStyle>;
   testID?: string;
 };
 
@@ -19,8 +25,15 @@ export type CardFooterProps = {
   children?: ReactNode;
 };
 
-function CardRoot({ children, testID = 'ds-card' }: CardProps) {
-  return <StyledCard testID={testID}>{children}</StyledCard>;
+function CardRoot({ children, bg, style, testID = 'ds-card' }: CardProps) {
+  const theme = useTheme();
+  const fill = bg ?? theme.card.defaultBg;
+
+  return (
+    <StyledCard testID={testID} style={style} $bg={fill}>
+      {children}
+    </StyledCard>
+  );
 }
 
 function CardHeader({ children }: CardHeaderProps) {

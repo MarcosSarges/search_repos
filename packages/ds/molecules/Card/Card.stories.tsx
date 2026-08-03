@@ -49,3 +49,13 @@ export const ContentOnly: Story = {
     </Card>
   ),
 };
+
+export const BackgroundFill: Story = {
+  render: () => (
+    <Card bg="background">
+      <Card.Content>
+        <Typography variant="body">Explicit background fill override</Typography>
+      </Card.Content>
+    </Card>
+  ),
+};
