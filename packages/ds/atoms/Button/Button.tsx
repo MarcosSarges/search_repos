@@ -1,14 +1,14 @@
 import type { ReactNode } from 'react';
 import { type PressableProps } from 'react-native';
 
-import type { ButtonSize, ButtonVariant } from '@ds/tokens';
+import type { ButtonSize } from '@ds/tokens';
 import { button } from '@ds/tokens';
 
 import { Loading } from '../Loading';
-import { ButtonLabel, ContentRow, StyledButton } from './styles';
+import { ButtonLabel, ContentRow, StyledButton, type LegacyButtonVariant } from './styles';
 
 export type ButtonProps = Omit<PressableProps, 'style' | 'children' | 'disabled'> & {
-  variant?: ButtonVariant;
+  variant?: LegacyButtonVariant;
   size?: ButtonSize;
   loading?: boolean;
   disabled?: boolean;
@@ -31,7 +31,7 @@ export function Button({
   ...rest
 }: ButtonProps) {
   const isDisabled = disabled || loading;
-  const loadingVariant = button[size].loadingVariant;
+  const loadingSize = button[size].loadingSize;
 
   return (
     <StyledButton
@@ -45,7 +45,7 @@ export function Button({
       testID={testID}
       {...rest}>
       {loading ? (
-        <Loading variant={loadingVariant} />
+        <Loading variant={loadingSize} />
       ) : (
         <ContentRow>
           {leading}

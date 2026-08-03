@@ -1,8 +1,11 @@
 import { Pressable, Text } from 'react-native';
 import { css, styled } from 'styled-components/native';
 
-import type { ButtonSize, ButtonVariant } from '@ds/tokens';
+import type { ButtonSize } from '@ds/tokens';
 import type { AppTheme } from '@ds/theme';
+
+/** Local until Button adopts MUI-like variants (T7). */
+export type LegacyButtonVariant = 'primary' | 'outline' | 'ghost';
 
 type ButtonChrome = {
   backgroundColor: string;
@@ -30,10 +33,13 @@ const buttonVariantChrome = {
     borderWidth: 0,
     labelColor: colors.primary,
   }),
-} as const satisfies Record<ButtonVariant, (colors: AppTheme['colors']) => ButtonChrome>;
+} as const satisfies Record<
+  LegacyButtonVariant,
+  (colors: AppTheme['colors']) => ButtonChrome
+>;
 
 export const StyledButton = styled(Pressable)<{
-  $variant: ButtonVariant;
+  $variant: LegacyButtonVariant;
   $size: ButtonSize;
   $disabled: boolean;
 }>`
@@ -74,7 +80,7 @@ export const ContentRow = styled.View`
   gap: ${({ theme }) => theme.spacing.xs}px;
 `;
 
-export const ButtonLabel = styled(Text)<{ $variant: ButtonVariant }>`
+export const ButtonLabel = styled(Text)<{ $variant: LegacyButtonVariant }>`
   font-family: ${({ theme }) => theme.typography.label.fontFamily};
   font-size: ${({ theme }) => theme.typography.label.fontSize}px;
   font-weight: ${({ theme }) => theme.typography.label.fontWeight};

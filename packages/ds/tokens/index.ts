@@ -19,8 +19,14 @@ export type { IconToken, IconVariant } from './icon';
 export { loading } from './loading';
 export type { LoadingIndicatorSize, LoadingToken, LoadingVariant } from './loading';
 
-export { button, buttonVariants } from './button';
-export type { ButtonSize, ButtonSizeToken, ButtonVariant } from './button';
+export { button, buttonVariants, buttonColors, buttonWidths } from './button';
+export type {
+  ButtonSize,
+  ButtonSizeToken,
+  ButtonVariant,
+  ButtonColor,
+  ButtonWidth,
+} from './button';
 
 export { input, inputStateMap } from './input';
 export type { InputState } from './input';
