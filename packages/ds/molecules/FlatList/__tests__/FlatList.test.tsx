@@ -8,7 +8,10 @@ import { spacing } from '@ds/tokens';
 
 import { FlatList } from '../FlatList';
 
-const DATA = [{ id: '1', label: 'A' }, { id: '2', label: 'B' }];
+const DATA = [
+  { id: '1', label: 'A' },
+  { id: '2', label: 'B' },
+];
 
 function renderRow({ item }: { item: (typeof DATA)[number] }) {
   return <Text>{item.label}</Text>;
@@ -44,9 +47,7 @@ describe('FlatList molecule (RITEM-11)', () => {
   });
 
   it('WHEN spacing props are omitted THEN content defaults to px="md"', async () => {
-    await render(
-      <FlatList data={DATA} keyExtractor={(item) => item.id} renderItem={renderRow} />,
-    );
+    await render(<FlatList data={DATA} keyExtractor={(item) => item.id} renderItem={renderRow} />);
 
     const list = screen.getByTestId('ds-flat-list');
     const content = StyleSheet.flatten(list.props.contentContainerStyle) ?? {};
@@ -56,9 +57,7 @@ describe('FlatList molecule (RITEM-11)', () => {
   });
 
   it('WHEN ItemSeparatorComponent is omitted and separator is not false THEN default is Spacer top lg', async () => {
-    await render(
-      <FlatList data={DATA} keyExtractor={(item) => item.id} renderItem={renderRow} />,
-    );
+    await render(<FlatList data={DATA} keyExtractor={(item) => item.id} renderItem={renderRow} />);
 
     const list = screen.getByTestId('ds-flat-list');
     const Separator = list.props.ItemSeparatorComponent;
@@ -102,9 +101,7 @@ describe('FlatList molecule (RITEM-11)', () => {
   });
 
   it('WHEN performance props are omitted THEN molecule defaults apply', async () => {
-    await render(
-      <FlatList data={DATA} keyExtractor={(item) => item.id} renderItem={renderRow} />,
-    );
+    await render(<FlatList data={DATA} keyExtractor={(item) => item.id} renderItem={renderRow} />);
 
     const list = screen.getByTestId('ds-flat-list');
     expect(list.props.initialNumToRender).toBe(20);

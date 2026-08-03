@@ -42,9 +42,7 @@ export const NoSeparatorCustomPx: Story = {
   args: {
     data: DATA,
     keyExtractor: (item: (typeof DATA)[number]) => item.id,
-    renderItem: ({ item }: { item: (typeof DATA)[number] }) => (
-      <Text>{item.title}</Text>
-    ),
+    renderItem: ({ item }: { item: (typeof DATA)[number] }) => <Text>{item.title}</Text>,
     separator: false,
     px: 'lg',
   },
