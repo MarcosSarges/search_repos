@@ -226,12 +226,21 @@
 - **Date**: 2026-08-03
 - **Status**: active
 
+### AD-029
+- **Decision**: `RepoRepository.listTrending` é a única porta para discovery trending; parâmetros de janela/API vivem na ACL (`infrastructure/trending` + adapters). Presentation só chama o use case via container.
+- **Reason**: Mesma regra AD-002 para search; evita query mágica `stars:>1` na UI.
+- **Trade-off**: Proxy “trending” ≠ algoritmo oficial GitHub Trending; GitLab usa `last_activity_after` (não created-at).
+- **Scope**: Explore + futuros “featured” surfaces
+- **Date**: 2026-08-03
+- **Status**: active
+
 ## Handoff
 
-- **Feature**: none — ds-as-lib + ds-mui-props **Done** (Verifier PASS)
-- **Phase / Task**: —
-- **Completed**: Both features on `feat/ds-as-lib`; PR https://github.com/MarcosSarges/search_repos/pull/11
-- **In-progress**: none
-- **Next step**: review/merge PR #11; clean unrelated dirty tree (legacy logos/hooks) if desired
+- **Feature**: `explore-trending`
+- **Phase / Task**: porting onto main (cherry-pick T1–T7; presentation adapting)
+- **Completed**: domain → DI cherry-picked onto `feat/explore-trending` from `origin/main`
+- **In-progress**: presentation hook + ExploreScreen (main paths `@ds` / `presentation/screens`)
+- **Next step**: finish port → push → PR
 - **Blockers**: none
-- **Branch**: `feat/ds-as-lib`
+- **Branch**: `feat/explore-trending`
+

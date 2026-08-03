@@ -236,10 +236,10 @@ T8 → T9 → T10
 
 **Done when**:
 
-- [ ] Container exposes callable `listTrendingRepos` (no `.execute`)
-- [ ] Works with Fake `repository` override
-- [ ] AD-026 recorded in STATE Decisions
-- [ ] Gate: `pnpm test -- src/infrastructure/di src/infrastructure/__tests__/public-api.test.ts`
+- [x] Container exposes callable `listTrendingRepos` (no `.execute`)
+- [x] Works with Fake `repository` override
+- [x] AD-026 recorded in STATE Decisions
+- [x] Gate: `pnpm test -- src/infrastructure/di src/infrastructure/__tests__/public-api.test.ts`
 
 **Tests**: unit  
 **Gate**: quick  
