@@ -18,7 +18,7 @@ export function ConfigScreen() {
       <Typography variant="heading" testID="config-data-source-section">
         Fonte de dados
       </Typography>
-      <Typography variant="body" tone="muted">
+      <Typography variant="body" color="muted">
         Escolha GitHub ou GitLab.
       </Typography>
       <Button
@@ -33,7 +33,7 @@ export function ConfigScreen() {
       <Typography variant="heading" testID="config-theme-section">
         Tema
       </Typography>
-      <Typography variant="body" tone="muted">
+      <Typography variant="body" color="muted">
         Alternar entre claro e escuro.
       </Typography>
       <Button
@@ -48,7 +48,7 @@ export function ConfigScreen() {
       <Typography variant="heading" testID="config-token-section">
         Token de API
       </Typography>
-      <Typography variant="body" tone="muted" testID="config-token-placeholder">
+      <Typography variant="body" color="muted" testID="config-token-placeholder">
         Em breve — configure seu token com segurança.
       </Typography>
     </Container>

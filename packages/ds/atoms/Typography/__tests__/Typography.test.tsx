@@ -7,7 +7,7 @@ import { act, fireEvent, render, screen } from '@/test';
 
 import { Typography, type TypographyProps } from '../Typography';
 
-describe('Typography atom (DSC-03)', () => {
+describe('Typography atom (PROP-01, PROP-02, PROP-20)', () => {
   it('WHEN rendered with body variant THEN it applies token fontSize and lineHeight', async () => {
     await render(<Typography variant="body">Hello body</Typography>);
 
@@ -17,9 +17,9 @@ describe('Typography atom (DSC-03)', () => {
     expect(node).toHaveStyleRule('line-height', typography.body.lineHeight);
   });
 
-  it('WHEN tone is muted THEN color uses theme muted token', async () => {
+  it('WHEN color is muted THEN color uses theme muted token', async () => {
     await render(
-      <Typography tone="muted" testID="typo">
+      <Typography color="muted" testID="typo">
         Muted
       </Typography>,
       { themeMode: 'light' },
@@ -29,9 +29,9 @@ describe('Typography atom (DSC-03)', () => {
     expect(screen.getByTestId('typo')).toHaveStyleRule('color', theme.colors.muted);
   });
 
-  it('WHEN tone is primary THEN color follows theme primary for github light', async () => {
+  it('WHEN color is primary THEN color follows theme primary for github light', async () => {
     await render(
-      <Typography tone="primary" testID="typo">
+      <Typography color="primary" testID="typo">
         Primary
       </Typography>,
       { themeMode: 'light' },
@@ -40,12 +40,46 @@ describe('Typography atom (DSC-03)', () => {
     expect(screen.getByTestId('typo')).toHaveStyleRule('color', '#0FBF3E');
   });
 
-  it('WHEN tone is primary and dataSource flips THEN text color updates to the new primary', async () => {
+  it('WHEN color is danger THEN color uses theme danger token', async () => {
+    await render(
+      <Typography color="danger" testID="typo">
+        Danger
+      </Typography>,
+      { themeMode: 'light' },
+    );
+
+    const theme = getTheme('light');
+    expect(screen.getByTestId('typo')).toHaveStyleRule('color', theme.colors.danger);
+  });
+
+  it('WHEN color is omitted THEN foreground uses theme.colors.text', async () => {
+    await render(
+      <Typography testID="typo">Default text</Typography>,
+      { themeMode: 'light' },
+    );
+
+    const theme = getTheme('light');
+    expect(screen.getByTestId('typo')).toHaveStyleRule('color', theme.colors.text);
+  });
+
+  it('WHEN color is text THEN foreground uses theme.colors.text', async () => {
+    await render(
+      <Typography color="text" testID="typo">
+        Explicit text
+      </Typography>,
+      { themeMode: 'light' },
+    );
+
+    const theme = getTheme('light');
+    expect(screen.getByTestId('typo')).toHaveStyleRule('color', theme.colors.text);
+  });
+
+  it('WHEN color is primary and dataSource flips THEN text color updates to the new primary', async () => {
     function Harness() {
       const { setDataSource } = useAppTheme();
       return (
         <>
-          <Typography tone="primary" testID="typo">
+          <Typography color="primary" testID="typo">
             Primary
           </Typography>
           <Pressable
@@ -97,12 +131,29 @@ describe('Typography atom (DSC-03)', () => {
     expect(node).toHaveStyleRule('line-height', typography.body.lineHeight);
   });
 
-  it('WHEN public props are inspected THEN style and size are not part of the controlled API', () => {
+  it('WHEN style is passed THEN it is accepted on the public props type and forwarded', async () => {
     type HasStyle = 'style' extends keyof TypographyProps ? true : false;
+    const hasStyle: HasStyle = true;
+    expect(hasStyle).toBe(true);
+
+    await render(
+      <Typography testID="typo" style={{ opacity: 0.5 }}>
+        Styled
+      </Typography>,
+    );
+
+    expect(screen.getByTestId('typo')).toHaveStyle({ opacity: 0.5 });
+  });
+
+  it('WHEN public props are inspected THEN size is not part of the API', () => {
     type HasSize = 'size' extends keyof TypographyProps ? true : false;
-    const hasStyle: HasStyle = false;
     const hasSize: HasSize = false;
-    expect(hasStyle).toBe(false);
     expect(hasSize).toBe(false);
+  });
+
+  it('WHEN public props are inspected THEN tone is not part of the API', () => {
+    type HasTone = 'tone' extends keyof TypographyProps ? true : false;
+    const hasTone: HasTone = false;
+    expect(hasTone).toBe(false);
   });
 });

@@ -57,7 +57,7 @@ export function SearchReposScreen({ navigation }: Props) {
   let listBody: ReactNode;
   if (isIdle) {
     listBody = (
-      <Typography variant="body" tone="muted" testID="search-repos-idle">
+      <Typography variant="body" color="muted" testID="search-repos-idle">
         Digite para buscar repositórios.
       </Typography>
     );
@@ -66,7 +66,7 @@ export function SearchReposScreen({ navigation }: Props) {
   } else if (isError) {
     listBody = (
       <>
-        <Typography variant="body" tone="danger" testID="search-repos-error">
+        <Typography variant="body" color="danger" testID="search-repos-error">
           {mapAppErrorToMessage(error)}
         </Typography>
         <Button
@@ -80,7 +80,7 @@ export function SearchReposScreen({ navigation }: Props) {
     );
   } else if (items.length === 0) {
     listBody = (
-      <Typography variant="body" tone="muted" testID="search-repos-empty">
+      <Typography variant="body" color="muted" testID="search-repos-empty">
         Nenhum repositório encontrado.
       </Typography>
     );

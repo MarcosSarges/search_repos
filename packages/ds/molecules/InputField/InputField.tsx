@@ -23,7 +23,7 @@ export function InputField({
 }: InputFieldProps) {
   const hasError = Boolean(error);
   const message = hasError ? error : helperText;
-  const messageTone = hasError ? 'danger' : 'muted';
+  const messageColor = hasError ? 'danger' : 'muted';
 
   return (
     <FieldRoot testID="ds-input-field-root">
@@ -36,7 +36,7 @@ export function InputField({
         {...rest}
       />
       {message ? (
-        <Typography variant="caption" tone={messageTone}>
+        <Typography variant="caption" color={messageColor}>
           {message}
         </Typography>
       ) : null}

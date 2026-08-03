@@ -25,7 +25,7 @@ export const Body: Story = {
   args: {
     children: 'Body text — Design System',
     variant: 'body',
-    tone: 'default',
+    color: 'text',
   },
 };
 
@@ -33,7 +33,7 @@ export const Heading: Story = {
   args: {
     children: 'Heading',
     variant: 'heading',
-    tone: 'default',
+    color: 'text',
   },
 };
 
@@ -41,7 +41,7 @@ export const Label: Story = {
   args: {
     children: 'Label text',
     variant: 'label',
-    tone: 'default',
+    color: 'text',
   },
 };
 
@@ -49,22 +49,22 @@ export const Muted: Story = {
   args: {
     children: 'Muted supporting text',
     variant: 'caption',
-    tone: 'muted',
+    color: 'muted',
   },
 };
 
 export const Primary: Story = {
   args: {
-    children: 'Primary tone',
+    children: 'Primary color',
     variant: 'body',
-    tone: 'primary',
+    color: 'primary',
   },
 };
 
 export const Danger: Story = {
   args: {
-    children: 'Error / danger tone',
+    children: 'Danger / error color',
     variant: 'body',
-    tone: 'danger',
+    color: 'danger',
   },
 };

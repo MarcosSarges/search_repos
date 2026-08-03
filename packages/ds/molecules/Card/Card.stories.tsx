@@ -29,7 +29,7 @@ export const AllRegions: Story = {
         <Typography variant="heading">Repository</Typography>
       </Card.Header>
       <Card.Content>
-        <Typography variant="body" tone="muted">
+        <Typography variant="body" color="muted">
           A typed surface with header, content, and footer regions.
         </Typography>
       </Card.Content>
