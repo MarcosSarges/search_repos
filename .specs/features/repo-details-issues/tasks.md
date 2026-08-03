@@ -428,9 +428,9 @@ T11 → T12 → T13 → T14
 
 **Done when**:
 
-- [ ] No double native+DS header
-- [ ] Gate: `pnpm test -- packages/ds src/presentation` && `pnpm lint`
-- [ ] Stub tests updated or replaced
+- [x] No double native+DS header
+- [x] Gate: `pnpm test -- packages/ds src/presentation` && `pnpm lint`
+- [x] Stub tests updated or replaced
 
 **Tests**: unit
 **Gate**: full

@@ -1,3 +1,6 @@
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+
 import { NavigationContainer } from '@react-navigation/native';
 
 import { createInMemoryRepoRepository } from '@/infrastructure';
@@ -28,7 +31,7 @@ async function typeAndWaitForDebounce(text: string) {
   });
 }
 
-describe('Search stack nav smoke (NAV-05..08)', () => {
+describe('Search stack nav smoke (NAV-05..08, RDI-08)', () => {
   it('WHEN Search → Details → Issues THEN repoId is preserved through the stack', async () => {
     const repository = createInMemoryRepoRepository([sampleRepo]);
 
@@ -61,5 +64,13 @@ describe('Search stack nav smoke (NAV-05..08)', () => {
       expect(screen.getByText('Issues')).toBeTruthy();
       expect(screen.getByTestId('repo-issues-repo-link')).toHaveTextContent('facebook/react');
     });
+  });
+
+  it('WHEN SearchStackNavigator source is inspected THEN Details and Issues hide the native header', () => {
+    const source = readFileSync(join(__dirname, '../SearchStackNavigator.tsx'), 'utf8');
+    expect(source).toMatch(/name="RepoDetails"[\s\S]*?headerShown:\s*false/);
+    expect(source).toMatch(/name="RepoIssues"[\s\S]*?headerShown:\s*false/);
+    expect(source).not.toMatch(/title:\s*'Detalhes'/);
+    expect(source).not.toMatch(/title:\s*'Issues'/);
   });
 });
