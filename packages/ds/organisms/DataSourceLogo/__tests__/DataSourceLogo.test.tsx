@@ -55,12 +55,14 @@ describe('DataSourceLogo organism (DSC-04 / DS-10)', () => {
   it('WHEN logoComponentMap source is inspected THEN each asset key maps to the matching SVG import', () => {
     const source = readFileSync(join(__dirname, '../styles.tsx'), 'utf8');
     expect(source).toContain(
-      "import GitHubInvertocatBlack from '@/assets/github/GitHub_Invertocat_Black.svg'",
+      "import GitHubInvertocatBlack from '../../assets/github/GitHub_Invertocat_Black.svg'",
     );
     expect(source).toContain(
-      "import GitHubInvertocatWhite from '@/assets/github/GitHub_Invertocat_White_Clearspace.svg'",
+      "import GitHubInvertocatWhite from '../../assets/github/GitHub_Invertocat_White_Clearspace.svg'",
     );
-    expect(source).toContain("import GitLabLogo from '@/assets/gitlab/gitlab-logo-500-rgb.svg'");
+    expect(source).toContain(
+      "import GitLabLogo from '../../assets/gitlab/gitlab-logo-500-rgb.svg'",
+    );
     expect(source).toContain("'github-black': GitHubInvertocatBlack");
     expect(source).toContain("'github-white': GitHubInvertocatWhite");
     expect(source).toContain('gitlab: GitLabLogo');

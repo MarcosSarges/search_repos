@@ -6,9 +6,9 @@ import type { DataSource } from '@/application';
 import type { Size } from '@/components/ds/tokens';
 import type { ThemeMode } from '@/components/ds/theme';
 
-import GitHubInvertocatBlack from '@/assets/github/GitHub_Invertocat_Black.svg';
-import GitHubInvertocatWhite from '@/assets/github/GitHub_Invertocat_White_Clearspace.svg';
-import GitLabLogo from '@/assets/gitlab/gitlab-logo-500-rgb.svg';
+import GitHubInvertocatBlack from '../../assets/github/GitHub_Invertocat_Black.svg';
+import GitHubInvertocatWhite from '../../assets/github/GitHub_Invertocat_White_Clearspace.svg';
+import GitLabLogo from '../../assets/gitlab/gitlab-logo-500-rgb.svg';
 
 export type LogoAsset = 'github-black' | 'github-white' | 'gitlab';
 
