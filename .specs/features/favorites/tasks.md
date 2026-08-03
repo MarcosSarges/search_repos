@@ -149,10 +149,10 @@ T10 → T11
 
 **Done when**:
 
-- [ ] Persist key `searchrepos:favorites`; partialize `items` only
-- [ ] Toggle add/remove + idempotent upsert; listBySource sorted; corrupt → `[]` no crash
-- [ ] Cold-start remount restores snapshots (memory storage)
-- [ ] Gate: `pnpm test -- src/presentation/stores`
+- [x] Persist key `searchrepos:favorites`; partialize `items` only
+- [x] Toggle add/remove + idempotent upsert; listBySource sorted; corrupt → `[]` no crash
+- [x] Cold-start remount restores snapshots (memory storage)
+- [x] Gate: `pnpm test -- src/presentation/stores`
 
 **Tests**: unit  
 **Gate**: quick  
