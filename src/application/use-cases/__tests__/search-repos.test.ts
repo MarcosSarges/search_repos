@@ -72,6 +72,7 @@ describe('createSearchRepos', () => {
       search,
       getById: jest.fn(),
       listIssues: jest.fn(),
+      listTrending: jest.fn(),
     };
     const searchRepos = createSearchRepos(repository);
 

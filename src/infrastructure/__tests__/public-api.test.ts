@@ -18,6 +18,7 @@ describe('infrastructure public API (INFRA-33)', () => {
     expect(typeof container.searchRepos).toBe('function');
     expect(typeof container.getRepoDetails).toBe('function');
     expect(typeof container.listRepoIssues).toBe('function');
+    expect(typeof container.listTrendingRepos).toBe('function');
   });
 
   it('WHEN the infrastructure barrel source is inspected THEN it re-exports DI, Fake, and HTTP factories', () => {

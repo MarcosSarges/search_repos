@@ -252,4 +252,74 @@ describe('createGithubRepoRepository', () => {
       }
     }
   });
+
+  describe('listTrending (EXP-13)', () => {
+    it('calls search/repositories with created:> date, sort=stars, order=desc', async () => {
+      let capturedUrl: URL | null = null;
+
+      server.use(
+        http.get('https://api.github.com/search/repositories', ({ request }) => {
+          capturedUrl = new URL(request.url);
+          return HttpResponse.json(searchFixture);
+        }),
+      );
+
+      const repo = createGithubRepoRepository();
+      const result = await repo.listTrending({ page: 1, perPage: 20 });
+
+      expect(capturedUrl).not.toBeNull();
+      const q = capturedUrl!.searchParams.get('q') ?? '';
+      expect(q).toMatch(/^created:>\d{4}-\d{2}-\d{2}$/);
+      expect(capturedUrl!.searchParams.get('sort')).toBe('stars');
+      expect(capturedUrl!.searchParams.get('order')).toBe('desc');
+      expect(capturedUrl!.searchParams.get('page')).toBe('1');
+      expect(capturedUrl!.searchParams.get('per_page')).toBe('20');
+
+      expect(result.items).toHaveLength(2);
+      expect(result.items[0]?.id).toBe('facebook/react');
+      expect(result.items[0]?.fullName).toBe('facebook/react');
+      expect(result).not.toHaveProperty('totalCount');
+    });
+
+    it('hasNextPage follows search window cap rules', async () => {
+      server.use(
+        http.get('https://api.github.com/search/repositories', () => {
+          return HttpResponse.json({
+            total_count: 500,
+            items: Array.from({ length: 20 }, (_, i) => ({
+              full_name: `org/repo-${i}`,
+              name: `repo-${i}`,
+              description: 'x',
+              stargazers_count: 1,
+              forks_count: 0,
+              watchers_count: 1,
+              language: 'TS',
+              owner: { login: 'org', avatar_url: 'https://a' },
+              html_url: `https://github.com/org/repo-${i}`,
+            })),
+          });
+        }),
+      );
+
+      const repo = createGithubRepoRepository();
+      const result = await repo.listTrending({ page: 1, perPage: 20 });
+      expect(result.hasNextPage).toBe(true);
+    });
+
+    it('sends Bearer token when configured for listTrending', async () => {
+      let authorization: string | null = null;
+
+      server.use(
+        http.get('https://api.github.com/search/repositories', ({ request }) => {
+          authorization = request.headers.get('Authorization');
+          return HttpResponse.json({ total_count: 0, items: [] });
+        }),
+      );
+
+      const repo = createGithubRepoRepository({ token: 'gh-trending' });
+      await repo.listTrending({ page: 1 });
+
+      expect(authorization).toBe('Bearer gh-trending');
+    });
+  });
 });

@@ -54,4 +54,10 @@ describe('queryKeys (PRES-07, PRES-08, PRES-09, PRES-10)', () => {
       queryKeys.repos.issues('gitlab', 'facebook/react'),
     );
   });
+
+  it('repos.trending returns readonly tuple with dataSource (EXP-03)', () => {
+    expect(queryKeys.repos.trending('github')).toEqual(['repos', 'github', 'trending']);
+    expect(queryKeys.repos.trending('gitlab')).toEqual(['repos', 'gitlab', 'trending']);
+    expect(queryKeys.repos.trending('github')).not.toEqual(queryKeys.repos.trending('gitlab'));
+  });
 });

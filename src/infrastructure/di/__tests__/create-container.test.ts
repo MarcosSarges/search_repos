@@ -29,14 +29,18 @@ const sampleRepo: Repo = {
 describe('createContainer (INFRA-29, INFRA-30, INFRA-32)', () => {
   useMswServer(server);
 
-  it('WHEN createContainer({ dataSource }) THEN it exposes callable searchRepos/getRepoDetails/listRepoIssues', () => {
+  it('WHEN createContainer({ dataSource }) THEN it exposes callable searchRepos/getRepoDetails/listRepoIssues/listTrendingRepos', () => {
     const container = createContainer({ dataSource: 'github' });
 
     expect(typeof container.searchRepos).toBe('function');
     expect(typeof container.getRepoDetails).toBe('function');
     expect(typeof container.listRepoIssues).toBe('function');
+    expect(typeof container.listTrendingRepos).toBe('function');
     expect(container).not.toHaveProperty('searchRepos.execute');
     expect(Object.prototype.hasOwnProperty.call(container.searchRepos, 'execute')).toBe(false);
+    expect(Object.prototype.hasOwnProperty.call(container.listTrendingRepos, 'execute')).toBe(
+      false,
+    );
   });
 
   it('WHEN createContainer is called twice with different dataSource THEN containers are distinct instances', () => {
@@ -55,6 +59,10 @@ describe('createContainer (INFRA-29, INFRA-30, INFRA-32)', () => {
       id: 'facebook/react',
       fullName: 'facebook/react',
     });
+
+    const trending = await container.listTrendingRepos({ page: 1, perPage: 10 });
+    expect(trending.items).toHaveLength(1);
+    expect(trending.items[0]?.id).toBe('facebook/react');
   });
 
   it('WHEN tokens bag is given with dataSource github THEN only github token is forwarded as Bearer', async () => {

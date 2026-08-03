@@ -177,6 +177,9 @@ describe('useRepoIssues (PRES-09, PRES-10..12, PRES-19)', () => {
       listIssues: async () => {
         throw createAppError('forbidden');
       },
+      listTrending: async () => {
+        throw createAppError('not_found');
+      },
     };
 
     const { result } = await renderHook(() => useRepoIssues({ repoId: 'facebook/react' }), {

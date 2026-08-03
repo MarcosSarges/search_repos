@@ -8,5 +8,6 @@ export const queryKeys = {
       ['repos', dataSource, 'detail', repoId] as const,
     issues: (dataSource: DataSource, repoId: string) =>
       ['repos', dataSource, 'issues', repoId] as const,
+    trending: (dataSource: DataSource) => ['repos', dataSource, 'trending'] as const,
   },
 };
