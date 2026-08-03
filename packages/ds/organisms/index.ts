@@ -6,3 +6,6 @@ export type { HyperlinkProps } from './Hyperlink';
 
 export { SourceHeader } from './SourceHeader';
 export type { SourceHeaderProps } from './SourceHeader';
+
+export { BackHeader } from './BackHeader';
+export type { BackHeaderProps } from './BackHeader';

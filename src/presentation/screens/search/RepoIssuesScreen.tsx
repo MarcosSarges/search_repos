@@ -1,22 +1,22 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useCallback, useMemo, type ReactNode } from 'react';
-import { FlatList, Pressable, RefreshControl } from 'react-native';
+import { FlatList, RefreshControl } from 'react-native';
 
-import { Button, Icon, Loading, Typography } from '@ds/atoms';
-import { Container } from '@ds/molecules';
-import { Hyperlink } from '@ds/organisms';
 import type { Issue } from '@/domain';
-import { SessionSourceHeader } from '@/presentation/components';
+import { StackBackHeader } from '@/presentation/components';
 import { mapAppErrorToMessage } from '@/presentation/errors/map-app-error-to-message';
 import { useRepoDetails } from '@/presentation/hooks/use-repo-details';
 import { useRepoIssues } from '@/presentation/hooks/use-repo-issues';
 import type { SearchStackParamList } from '@/presentation/navigation/types';
+import { Button, Loading, Spacer, Typography } from '@ds/atoms';
+import { Container } from '@ds/molecules';
+import { Hyperlink } from '@ds/organisms';
 
 import { IssueListItem } from './IssueListItem';
 
 type Props = NativeStackScreenProps<SearchStackParamList, 'RepoIssues'>;
 
-export function RepoIssuesScreen({ route, navigation }: Props) {
+export function RepoIssuesScreen({ route }: Props) {
   const { repoId } = route.params;
   const details = useRepoDetails({ repoId });
   const {
@@ -32,10 +32,6 @@ export function RepoIssuesScreen({ route, navigation }: Props) {
   } = useRepoIssues({ repoId });
 
   const items = useMemo(() => data?.pages.flatMap((page) => page.items) ?? [], [data]);
-
-  const handleBack = useCallback(() => {
-    navigation.goBack();
-  }, [navigation]);
 
   const handleEndReached = useCallback(() => {
     if (hasNextPage && !isFetchingNextPage) {
@@ -85,6 +81,7 @@ export function RepoIssuesScreen({ route, navigation }: Props) {
         onEndReached={handleEndReached}
         onEndReachedThreshold={0.5}
         initialNumToRender={20}
+        ItemSeparatorComponent={() => <Spacer top size="lg" />}
         extraData={items.length}
         refreshControl={
           <RefreshControl
@@ -100,19 +97,7 @@ export function RepoIssuesScreen({ route, navigation }: Props) {
 
   return (
     <Container bg="background" flex={1} gap="sm">
-      <SessionSourceHeader
-        safe
-        title="Issues"
-        leading={
-          <Pressable
-            accessibilityRole="button"
-            accessibilityLabel="Voltar"
-            onPress={handleBack}
-            testID="repo-issues-back">
-            <Icon name="arrow-back" size="lg" />
-          </Pressable>
-        }
-      />
+      <StackBackHeader safe title="Issues" />
       <Container px="md" gap="sm" flex={1}>
         {repo ? (
           <Hyperlink href={repo.htmlUrl} testID="repo-issues-repo-link">

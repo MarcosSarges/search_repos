@@ -157,7 +157,7 @@ O Design System vive em **`packages/ds`**, importado via alias **`@ds`** / **`@d
 | Tokens | `tokens/` | `spacing` (+ `SpacerEdge`), `sizes`, `colors`, `radius`, `ContentColor` / `SurfaceBg`, tipografia / `IconSize` / `LoadingSize` / `AvatarSize` / badge metrics / button (`variant`×`color`×`width`) / input / card (`defaultBg`), mapa de `primary` por **`Brand`** (`github` \| `gitlab`) |
 | Atoms | `atoms/` | Typography (`variant` + `color`), Icon (`size` + `color`), Spacer, Loading (`size`), Button (`variant`×`color`×`size`×`width`), Input, Avatar (`uri?` + `name` + `size`), Badge (`swatch?`) — `style` público em todos |
 | Molecules | `molecules/` | Container (`bg` opcional), KeyboardAvoid, Header, InputField (helper `muted` / error `danger`), Card (`bg`) |
-| Organisms | `organisms/` | `DataSourceLogo` (prop `brand` + `size`); `Hyperlink` (`href` + `Linking.openURL`); `SourceHeader` (title + `brand` + `onToggleBrand`, store-free); assets de marca em `packages/ds/assets/` |
+| Organisms | `organisms/` | `DataSourceLogo`; `Hyperlink`; `SourceHeader` (toggle fonte, store-free); `BackHeader` (voltar com `arrow-back`, `onBack` controlado); assets em `packages/ds/assets/` |
 | Utils | `utils/` | `formatRelativeDate` (puro, sem `Intl` — Hermes; default `pt-BR`; inválido → `—`) |
 | Theme (lib) | `theme/` | `getTheme(mode, brand)`, `DsThemeProvider({ theme })`, `useTheme` — **sem** Zustand |
 

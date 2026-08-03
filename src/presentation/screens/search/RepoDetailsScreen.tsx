@@ -1,11 +1,11 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useCallback } from 'react';
-import { Pressable, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 
-import { Avatar, Button, Icon, Loading, Typography } from '@ds/atoms';
+import { Avatar, Button, Loading, Typography } from '@ds/atoms';
 import { Container } from '@ds/molecules';
 import { Hyperlink } from '@ds/organisms';
-import { SessionSourceHeader } from '@/presentation/components';
+import { StackBackHeader } from '@/presentation/components';
 import { mapAppErrorToMessage } from '@/presentation/errors/map-app-error-to-message';
 import { useRepoDetails } from '@/presentation/hooks/use-repo-details';
 import type { SearchStackParamList } from '@/presentation/navigation/types';
@@ -15,10 +15,6 @@ type Props = NativeStackScreenProps<SearchStackParamList, 'RepoDetails'>;
 export function RepoDetailsScreen({ route, navigation }: Props) {
   const { repoId } = route.params;
   const { data, error, isError, isLoading, refetch } = useRepoDetails({ repoId });
-
-  const handleBack = useCallback(() => {
-    navigation.goBack();
-  }, [navigation]);
 
   const handleRetry = useCallback(() => {
     void refetch();
@@ -93,19 +89,7 @@ export function RepoDetailsScreen({ route, navigation }: Props) {
 
   return (
     <Container bg="background" flex={1} gap="sm">
-      <SessionSourceHeader
-        safe
-        title="Detalhes"
-        leading={
-          <Pressable
-            accessibilityRole="button"
-            accessibilityLabel="Voltar"
-            onPress={handleBack}
-            testID="repo-details-back">
-            <Icon name="arrow-back" size="lg" />
-          </Pressable>
-        }
-      />
+      <StackBackHeader safe title="Detalhes" />
       {body}
     </Container>
   );

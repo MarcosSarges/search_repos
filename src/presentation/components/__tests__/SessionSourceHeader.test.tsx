@@ -1,5 +1,3 @@
-import { View } from 'react-native';
-
 import { act, fireEvent, render, screen } from '@/test';
 import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
 
@@ -34,16 +32,5 @@ describe('SessionSourceHeader (RDI-03)', () => {
       fireEvent.press(screen.getByRole('button', { name: 'Alternar fonte de dados' }));
     });
     expect(useSessionPreferencesStore.getState().dataSource).toBe('github');
-  });
-
-  it('WHEN leading is provided THEN it is forwarded to SourceHeader', async () => {
-    await render(
-      <SessionSourceHeader
-        title="Detalhes"
-        leading={<View testID="session-source-header-leading" />}
-      />,
-    );
-
-    expect(screen.getByTestId('session-source-header-leading')).toBeTruthy();
   });
 });

@@ -233,7 +233,7 @@ describe('RepoIssuesScreen (RDI-06, RDI-07)', () => {
     });
   });
 
-  it('WHEN Issues renders THEN SessionSourceHeader and Voltar are present', async () => {
+  it('WHEN Issues renders THEN StackBackHeader with Voltar is present (no source toggle)', async () => {
     await renderIssues(
       'facebook/react',
       createInMemoryRepoRepository([sampleRepo], { 'facebook/react': sampleIssues }),
@@ -243,15 +243,17 @@ describe('RepoIssuesScreen (RDI-06, RDI-07)', () => {
       expect(screen.getByText('Issues')).toBeTruthy();
     });
 
-    expect(screen.getByTestId('ds-source-header')).toBeTruthy();
+    expect(screen.getByTestId('ds-back-header')).toBeTruthy();
     expect(screen.getByLabelText('Voltar')).toBeTruthy();
+    expect(screen.queryByTestId('ds-source-header-toggle')).toBeNull();
   });
 
   it('WHEN RepoIssuesScreen source is inspected THEN it uses hooks only', () => {
     const source = readFileSync(join(__dirname, '../RepoIssuesScreen.tsx'), 'utf8');
     expect(source).toMatch(/useRepoIssues/);
     expect(source).toMatch(/useRepoDetails/);
-    expect(source).toMatch(/SessionSourceHeader/);
+    expect(source).toMatch(/StackBackHeader/);
+    expect(source).not.toMatch(/SessionSourceHeader/);
     expect(source).toMatch(/IssueListItem/);
     expect(source).not.toMatch(/@\/infrastructure\/(github|gitlab)/);
     expect(source).not.toMatch(/\bfetch\s*\(/);

@@ -1,4 +1,3 @@
-import type { ReactNode } from 'react';
 import type { StyleProp, ViewStyle } from 'react-native';
 
 import { SourceHeader } from '@ds/organisms';
@@ -7,7 +6,6 @@ import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
 
 export type SessionSourceHeaderProps = {
   title: string;
-  leading?: ReactNode;
   safe?: boolean;
   style?: StyleProp<ViewStyle>;
   testID?: string;
@@ -15,15 +13,9 @@ export type SessionSourceHeaderProps = {
 
 /**
  * Presentation adapter: session store dataSource ↔ DS SourceHeader (AD-029).
- * Screens use this for source chrome — not raw molecule Header + store.
+ * Search (and other root chrome) use this for source toggle — not Details/Issues.
  */
-export function SessionSourceHeader({
-  title,
-  leading,
-  safe,
-  style,
-  testID,
-}: SessionSourceHeaderProps) {
+export function SessionSourceHeader({ title, safe, style, testID }: SessionSourceHeaderProps) {
   const dataSource = useSessionPreferencesStore((state) => state.dataSource);
   const toggleDataSource = useSessionPreferencesStore((state) => state.toggleDataSource);
 
@@ -32,7 +24,6 @@ export function SessionSourceHeader({
       title={title}
       brand={mapDataSourceToBrand(dataSource)}
       onToggleBrand={toggleDataSource}
-      leading={leading}
       safe={safe}
       style={style}
       testID={testID}
