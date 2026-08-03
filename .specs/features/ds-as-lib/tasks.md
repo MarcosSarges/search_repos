@@ -302,14 +302,14 @@ T11 → T12
 
 **Done when**:
 
-- [ ] API matches design; no public `style`; spacing values are `Spacing` only
-- [ ] `safe: true` / edge array / omit behaviors covered by tests (with `SafeAreaProvider` metrics)
-- [ ] `keyboardDismiss` true/false covered (Keyboard.dismiss invoked on press when true)
-- [ ] Flexbox props apply without boolean flex flag
-- [ ] Stories updated for new props
-- [ ] All call sites migrated off `padding` / `flex={true}`
-- [ ] Gate: `pnpm test -- packages/ds/molecules/Container`
-- [ ] Test count: AC-mapped cases for DSLIB-07..10 present
+- [x] API matches design; no public `style`; spacing values are `Spacing` only
+- [x] `safe: true` / edge array / omit behaviors covered by tests (with `SafeAreaProvider` metrics)
+- [x] `keyboardDismiss` true/false covered (Keyboard.dismiss invoked on press when true)
+- [x] Flexbox props apply without boolean flex flag
+- [x] Stories updated for new props
+- [x] All call sites migrated off `padding` / `flex={true}`
+- [x] Gate: `pnpm test -- packages/ds/molecules/Container`
+- [x] Test count: AC-mapped cases for DSLIB-07..10 present
 
 **Tests**: unit  
 **Gate**: quick  

@@ -15,7 +15,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    padding: 'md',
+    p: 'md',
     tone: 'background',
     children: <Typography>Container with md padding</Typography>,
   },
@@ -23,7 +23,7 @@ export const Default: Story = {
 
 export const Surface: Story = {
   args: {
-    padding: 'lg',
+    p: 'lg',
     tone: 'surface',
     children: <Typography>Surface tone container</Typography>,
   },
@@ -31,8 +31,41 @@ export const Surface: Story = {
 
 export const Compact: Story = {
   args: {
-    padding: 'xs',
+    p: 'xs',
     tone: 'background',
     children: <Typography variant="caption">Compact padding</Typography>,
+  },
+};
+
+export const FlexRow: Story = {
+  args: {
+    p: 'md',
+    flex: 1,
+    direction: 'row',
+    justify: 'between',
+    align: 'center',
+    children: (
+      <>
+        <Typography>Left</Typography>
+        <Typography>Right</Typography>
+      </>
+    ),
+  },
+};
+
+export const SafeAll: Story = {
+  args: {
+    p: 'md',
+    safe: true,
+    children: <Typography>Safe insets additive to padding</Typography>,
+  },
+};
+
+export const KeyboardDismiss: Story = {
+  args: {
+    p: 'md',
+    flex: 1,
+    keyboardDismiss: true,
+    children: <Typography>Tap outside inputs to dismiss keyboard</Typography>,
   },
 };

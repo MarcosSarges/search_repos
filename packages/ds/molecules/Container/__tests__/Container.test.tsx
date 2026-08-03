@@ -1,15 +1,21 @@
-import { View } from 'react-native';
+import { Keyboard, View } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import { render, screen } from '@/test';
+import { fireEvent, render, screen } from '@/test';
 import { getTheme } from '@ds/theme';
 import { spacing } from '@ds/tokens';
 
 import { Container, type ContainerProps } from '../Container';
 
-describe('Container molecule (DS-07, DS-09)', () => {
-  it('WHEN padding is md THEN it applies theme.spacing.md as padding', async () => {
+const safeAreaMetrics = {
+  frame: { x: 0, y: 0, width: 390, height: 844 },
+  insets: { top: 47, left: 11, right: 13, bottom: 34 },
+};
+
+describe('Container molecule (DSLIB-07..10)', () => {
+  it('WHEN p is md THEN it applies theme.spacing.md on all padding edges', async () => {
     await render(
-      <Container padding="md">
+      <Container p="md">
         <View />
       </Container>,
     );
@@ -21,32 +27,33 @@ describe('Container molecule (DS-07, DS-09)', () => {
     expect(node).toHaveStyleRule('padding-right', spacing.md);
   });
 
-  it('WHEN padding is xl THEN it applies theme.spacing.xl as padding', async () => {
+  it('WHEN p and pt THEN pt overrides top only', async () => {
     await render(
-      <Container padding="xl">
+      <Container p="md" pt="xl">
         <View />
       </Container>,
     );
 
     const node = screen.getByTestId('ds-container');
     expect(node).toHaveStyleRule('padding-top', spacing.xl);
-    expect(node).toHaveStyleRule('padding-bottom', spacing.xl);
-    expect(node).toHaveStyleRule('padding-left', spacing.xl);
-    expect(node).toHaveStyleRule('padding-right', spacing.xl);
+    expect(node).toHaveStyleRule('padding-bottom', spacing.md);
+    expect(node).toHaveStyleRule('padding-left', spacing.md);
+    expect(node).toHaveStyleRule('padding-right', spacing.md);
   });
 
-  it('WHEN padding is xs THEN it applies theme.spacing.xs as padding', async () => {
+  it('WHEN flexbox props are set THEN they apply without a boolean flex flag', async () => {
     await render(
-      <Container padding="xs">
+      <Container flex={1} direction="row" justify="between" align="center" wrap="wrap">
         <View />
       </Container>,
     );
 
     const node = screen.getByTestId('ds-container');
-    expect(node).toHaveStyleRule('padding-top', spacing.xs);
-    expect(node).toHaveStyleRule('padding-bottom', spacing.xs);
-    expect(node).toHaveStyleRule('padding-left', spacing.xs);
-    expect(node).toHaveStyleRule('padding-right', spacing.xs);
+    expect(node).toHaveStyle({ flexGrow: 1, flexShrink: 1, flexBasis: 0 });
+    expect(node).toHaveStyleRule('flex-direction', 'row');
+    expect(node).toHaveStyleRule('justify-content', 'space-between');
+    expect(node).toHaveStyleRule('align-items', 'center');
+    expect(node).toHaveStyleRule('flex-wrap', 'wrap');
   });
 
   it('WHEN tone is surface THEN background uses theme.colors.surface', async () => {
@@ -77,6 +84,82 @@ describe('Container molecule (DS-07, DS-09)', () => {
       'background-color',
       theme.colors.background,
     );
+  });
+
+  it('WHEN safe is omitted THEN it does not add safe-area padding', async () => {
+    await render(
+      <SafeAreaProvider initialMetrics={safeAreaMetrics}>
+        <Container p="md">
+          <View />
+        </Container>
+      </SafeAreaProvider>,
+    );
+
+    const node = screen.getByTestId('ds-container');
+    expect(node).toHaveStyleRule('padding-top', spacing.md);
+    expect(node).toHaveStyleRule('padding-bottom', spacing.md);
+  });
+
+  it('WHEN safe is true THEN insets are additive to token padding on all edges', async () => {
+    await render(
+      <SafeAreaProvider initialMetrics={safeAreaMetrics}>
+        <Container p="md" safe>
+          <View />
+        </Container>
+      </SafeAreaProvider>,
+    );
+
+    const node = screen.getByTestId('ds-container');
+    expect(node).toHaveStyleRule('padding-top', spacing.md + 47);
+    expect(node).toHaveStyleRule('padding-bottom', spacing.md + 34);
+    expect(node).toHaveStyleRule('padding-left', spacing.md + 11);
+    expect(node).toHaveStyleRule('padding-right', spacing.md + 13);
+  });
+
+  it('WHEN safe is an edge array THEN only listed edges get insets', async () => {
+    await render(
+      <SafeAreaProvider initialMetrics={safeAreaMetrics}>
+        <Container p="sm" safe={['bottom']}>
+          <View />
+        </Container>
+      </SafeAreaProvider>,
+    );
+
+    const node = screen.getByTestId('ds-container');
+    expect(node).toHaveStyleRule('padding-top', spacing.sm);
+    expect(node).toHaveStyleRule('padding-bottom', spacing.sm + 34);
+    expect(node).toHaveStyleRule('padding-left', spacing.sm);
+    expect(node).toHaveStyleRule('padding-right', spacing.sm);
+  });
+
+  it('WHEN keyboardDismiss is true THEN pressing dismisses the keyboard', async () => {
+    const dismissSpy = jest.spyOn(Keyboard, 'dismiss').mockImplementation(() => {});
+
+    await render(
+      <Container keyboardDismiss>
+        <View testID="inside" />
+      </Container>,
+    );
+
+    fireEvent.press(screen.getByTestId('inside'));
+    expect(dismissSpy).toHaveBeenCalled();
+
+    dismissSpy.mockRestore();
+  });
+
+  it('WHEN keyboardDismiss is omitted THEN press does not dismiss the keyboard', async () => {
+    const dismissSpy = jest.spyOn(Keyboard, 'dismiss').mockImplementation(() => {});
+
+    await render(
+      <Container>
+        <View testID="inside" />
+      </Container>,
+    );
+
+    fireEvent.press(screen.getByTestId('inside'));
+    expect(dismissSpy).not.toHaveBeenCalled();
+
+    dismissSpy.mockRestore();
   });
 
   it('WHEN public props are inspected THEN style is not part of the controlled API', () => {
