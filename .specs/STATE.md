@@ -212,13 +212,13 @@
 
 ## Handoff
 
-- **Feature**: search-and-navigation — Tasks draft awaiting approval
-- **Phase / Task**: Tasks (T1–T10) — confirm before Execute
-- **Completed**: Spec + Design Approach A + AD-026
-- **In-progress**: `.specs/features/search-and-navigation/tasks.md`
-- **Next step**: User approves tasks → Execute (Batch A T1–T7, Batch B T8–T10, Verifier)
-- **Blockers**: none
-- **Uncommitted files**: search-and-navigation specs + STATE
-- **Branch**: Execute on `feat/search-and-navigation`
+- **Feature**: search-and-navigation — **DONE** (Verifier PASS)
+- **Phase / Task**: Execute complete (T1–T10)
+- **Completed**: Batches A+B; validation.md PASS 23/23 ACs; sensor 3/3
+- **In-progress**: none
+- **Next step**: Optional PR for `feat/search-and-navigation`; next product specs from NEXT.md (Details/Issues UI, Favoritos, Explore trending, token form)
+- **Blockers**: none (Jest open-handle warning — gates used `--forceExit`)
+- **Uncommitted files**: check after closeout commit
+- **Branch**: `feat/search-and-navigation`
 
 
