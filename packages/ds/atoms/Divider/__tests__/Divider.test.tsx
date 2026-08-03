@@ -34,7 +34,7 @@ describe('Divider atom (RITEM-01, RITEM-02)', () => {
   it('WHEN public props are inspected THEN orientation is typed as horizontal | vertical', () => {
     type Orientation = NonNullable<DividerProps['orientation']>;
     type IsUnion = Orientation extends 'horizontal' | 'vertical'
-      ? ('horizontal' | 'vertical') extends Orientation
+      ? 'horizontal' | 'vertical' extends Orientation
         ? true
         : false
       : false;

@@ -338,4 +338,13 @@ describe('SearchReposScreen (SRCH-01..11, CFG-04, NAV-05)', () => {
     expect(source).not.toMatch(/initialNumToRender/);
     expect(source).not.toMatch(/onEndReachedThreshold/);
   });
+
+  it('WHEN SearchRepos list region wraps the list THEN it does not double-apply horizontal px (RITEM-12)', () => {
+    const source = readFileSync(join(__dirname, '../SearchReposScreen.tsx'), 'utf8');
+    expect(source).toMatch(/testID="search-repos-list-region"/);
+    expect(source).toMatch(/px=\{showingList \? undefined : ['"]md['"]\}/);
+    expect(source).not.toMatch(
+      /testID="search-repos-list-region"[\s\S]*?px=['"]md['"][\s\S]*?\{listBody\}/,
+    );
+  });
 });

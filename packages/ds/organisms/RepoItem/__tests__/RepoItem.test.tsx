@@ -2,6 +2,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 import { render, screen } from '@/test';
+import { getTheme } from '@ds/theme';
 
 import { RepoItem, type RepoItemProps } from '../RepoItem';
 
@@ -24,9 +25,11 @@ describe('RepoItem organism (RITEM-03–08)', () => {
   });
 
   it('WHEN description is a non-empty string THEN it shows muted description below the title', async () => {
-    await render(<RepoItem {...baseProps} />);
+    await render(<RepoItem {...baseProps} />, { themeMode: 'light' });
 
-    expect(screen.getByText('A framework for building native apps')).toBeTruthy();
+    const description = screen.getByText('A framework for building native apps');
+    expect(description).toBeTruthy();
+    expect(description).toHaveStyleRule('color', getTheme('light').colors.muted);
   });
 
   it('WHEN description is absent THEN the description block does not render', async () => {
