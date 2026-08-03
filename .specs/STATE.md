@@ -252,11 +252,11 @@
 
 ## Handoff
 
-- **Feature**: favorites — Execute Batch A
-- **Phase / Task**: Batch A (Phases 1–3 / T1–T5) in progress via sub-agent
-- **Completed**: Specify, Discuss, Design, Tasks (MVP T1–T9; P2 deferred)
-- **In-progress**: Batch worker T1–T5
-- **Next step**: On Batch A summary → dispatch Batch B (T6–T9) → Verifier
+- **Feature**: favorites — Execute Batch B
+- **Phase / Task**: Batch B (Phase 4 / T6–T9) in progress via sub-agent
+- **Completed**: Batch A T1–T5 (`fc81cec`…`9ca9111`)
+- **In-progress**: Batch worker T6–T9
+- **Next step**: On Batch B summary → Verifier (MVP complete; P2 deferred)
 - **Blockers**: none
 - **Branch**: `feat/favorites`
 - **Worktree**: `/Users/marcos/searchrepos-favorites`
