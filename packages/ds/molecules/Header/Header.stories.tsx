@@ -34,7 +34,7 @@ export const WithTrailing: Story = {
     leading: <DataSourceLogo size="lg" />,
     trailing: (
       <Pressable accessibilityRole="button" accessibilityLabel="Settings">
-        <Icon name="settings-outline" variant="lg" />
+        <Icon name="settings-outline" size="lg" />
       </Pressable>
     ),
   },

@@ -64,8 +64,8 @@ export const WithSlots: Story = {
         value={value}
         onChangeText={setValue}
         placeholder="With slots"
-        leading={<Icon name="search" variant="sm" tone="muted" />}
-        trailing={<Icon name="close-circle" variant="sm" tone="muted" />}
+        leading={<Icon name="search" size="sm" color="muted" />}
+        trailing={<Icon name="close-circle" size="sm" color="muted" />}
       />
     );
   },

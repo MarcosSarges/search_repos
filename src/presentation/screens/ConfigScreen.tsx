@@ -42,7 +42,7 @@ export function ConfigScreen() {
         accessibilityLabel={themeA11yLabel}
         onPress={() => toggleMode()}
         testID="config-theme-toggle">
-        <Icon name={themeIconName} variant="lg" />
+        <Icon name={themeIconName} size="lg" />
       </Button>
 
       <Typography variant="heading" testID="config-token-section">

@@ -71,7 +71,7 @@ export const Disabled: Story = {
 export const WithSlots: Story = {
   args: {
     children: 'Continue',
-    leading: <Icon name="arrow-forward" variant="sm" tone="default" />,
-    trailing: <Icon name="chevron-forward" variant="sm" tone="default" />,
+    leading: <Icon name="arrow-forward" size="sm" color="text" />,
+    trailing: <Icon name="chevron-forward" size="sm" color="text" />,
   },
 };

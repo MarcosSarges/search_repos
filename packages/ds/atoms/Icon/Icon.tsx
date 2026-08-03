@@ -1,27 +1,27 @@
 import type { ComponentProps } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-import type { IconSize } from '@ds/tokens';
+import type { ContentColor, IconSize } from '@ds/tokens';
 
-import { StyledIcon, type LegacyTone } from './styles';
+import { StyledIcon } from './styles';
 
-export type IconProps = Omit<ComponentProps<typeof Ionicons>, 'style' | 'size' | 'color'> & {
-  variant?: IconSize;
-  tone?: LegacyTone;
+export type IconProps = Omit<ComponentProps<typeof Ionicons>, 'size' | 'color'> & {
+  size?: IconSize;
+  color?: ContentColor;
 };
 
 export function Icon({
   name,
-  variant = 'md',
-  tone = 'default',
+  size = 'md',
+  color = 'text',
   accessibilityRole = 'image',
   ...rest
 }: IconProps) {
   return (
     <StyledIcon
       name={name}
-      $variant={variant}
-      $tone={tone}
+      $size={size}
+      $color={color}
       accessibilityRole={accessibilityRole}
       {...rest}
     />

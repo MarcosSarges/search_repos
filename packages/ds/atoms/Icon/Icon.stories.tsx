@@ -24,31 +24,31 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     name: 'search',
-    variant: 'md',
-    tone: 'default',
+    size: 'md',
+    color: 'text',
   },
 };
 
 export const Primary: Story = {
   args: {
     name: 'star',
-    variant: 'lg',
-    tone: 'primary',
+    size: 'lg',
+    color: 'primary',
   },
 };
 
 export const Muted: Story = {
   args: {
     name: 'information-circle',
-    variant: 'sm',
-    tone: 'muted',
+    size: 'sm',
+    color: 'muted',
   },
 };
 
 export const Danger: Story = {
   args: {
     name: 'alert-circle',
-    variant: 'md',
-    tone: 'danger',
+    size: 'md',
+    color: 'danger',
   },
 };
