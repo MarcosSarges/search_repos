@@ -227,8 +227,8 @@ T10 → T11
 
 **Done when**:
 
-- [ ] Unit tests cover with/without description/language/avatar
-- [ ] Gate: `pnpm test -- src/presentation/mappers`
+- [x] Unit tests cover with/without description/language/avatar
+- [x] Gate: `pnpm test -- src/presentation/mappers`
 
 **Tests**: unit  
 **Gate**: quick  
