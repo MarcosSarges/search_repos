@@ -18,18 +18,17 @@ describe('formatRelativeDate (RDI-06)', () => {
 
   it('WHEN date is one day before now THEN returns PT-BR relative day', () => {
     const result = formatRelativeDate('2024-06-14T12:00:00.000Z', { now });
-    expect(result).toMatch(/ontem|1 dia atrás|há 1 dia/i);
+    expect(result).toBe('ontem');
   });
 
   it('WHEN date is seconds before now THEN returns PT-BR relative seconds or now', () => {
     const result = formatRelativeDate('2024-06-15T11:59:30.000Z', { now });
-    expect(result.length).toBeGreaterThan(0);
-    expect(result).not.toBe('—');
+    expect(result).toBe('há 30 segundos');
   });
 
   it('WHEN date is years before now THEN returns PT-BR relative years', () => {
     const result = formatRelativeDate('2022-06-15T12:00:00.000Z', { now });
-    expect(result).toMatch(/ano/i);
+    expect(result).toBe('há 2 anos');
   });
 
   it('WHEN locale is overridden THEN formats with that locale', () => {
@@ -37,7 +36,12 @@ describe('formatRelativeDate (RDI-06)', () => {
       now,
       locale: 'en',
     });
-    expect(result).toMatch(/yesterday|day ago/i);
+    expect(result).toBe('yesterday');
+  });
+
+  it('WHEN util source is inspected THEN it does not construct Intl.RelativeTimeFormat', () => {
+    const source = readFileSync(join(__dirname, '../format-relative-date.ts'), 'utf8');
+    expect(source).not.toMatch(/new\s+Intl\.RelativeTimeFormat/);
   });
 
   it('WHEN utils barrel is inspected THEN formatRelativeDate is exported', () => {

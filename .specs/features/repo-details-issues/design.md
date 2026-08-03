@@ -166,7 +166,7 @@ flowchart TB
 - **Purpose**: Data relativa tipada no Design System (reuso em qualquer tela/story).
 - **Location**: `packages/ds/utils/format-relative-date.ts` (export via `@ds` / `packages/ds` barrel — pasta `utils/`, não atom)
 - **Interface**: `formatRelativeDate(iso: string, options?: { now?: Date; locale?: string }): string` — default `locale: 'pt-BR'`
-- **Impl**: `Intl.RelativeTimeFormat(locale, { numeric: 'auto' })` — escolher maior unidade (ano→segundo); invalid → `'—'`
+- **Impl**: formatação **pura** (sem `Intl.RelativeTimeFormat` — unsupported no Hermes/RN); locales `pt-BR` (default) e `en`; invalid → `'—'`
 - **No new deps** (sem dayjs); isolation: sem `@/` app imports
 - **Consumers**: `IssueListItem` (presentation) importa de `@ds`
 
@@ -254,7 +254,7 @@ type SourceHeaderProps = { title: string; brand: Brand; onToggleBrand: () => voi
 | Decision | Choice | Rationale |
 | -------- | ------ | --------- |
 | Linking package | `expo-linking` | Já no package.json; docs Expo 54 |
-| Relative dates | `packages/ds/utils/formatRelativeDate` via `Intl.RelativeTimeFormat` (default `pt-BR`) | User: helpers de data no DS; sem dayjs |
+| Relative dates | Pure formatter in `packages/ds/utils` (no `Intl.RelativeTimeFormat`; Hermes gap) | User: helpers no DS; RN não tem Intl RTF |
 | Issues repo URL | `useRepoDetails` paralelo | Params opacos; cache reuse |
 | Avatar image | `expo-image` | Dep existente; melhor que RN Image no Expo |
 | SourceHeader leading | `leading?: ReactNode` forwarded to Header | Back sem reinventar Header |
