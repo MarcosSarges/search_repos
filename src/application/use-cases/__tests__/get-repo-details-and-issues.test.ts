@@ -25,6 +25,9 @@ const issues: Issue[] = [
     authorName: 'alice',
     labels: [{ id: 'bug', name: 'bug', color: 'ff0000' }],
     createdAt: '2024-01-01T00:00:00.000Z',
+    updatedAt: '2024-01-01T12:00:00.000Z',
+    state: 'open',
+    comments: 1,
     htmlUrl: 'https://github.com/facebook/react/issues/1',
   },
 ];

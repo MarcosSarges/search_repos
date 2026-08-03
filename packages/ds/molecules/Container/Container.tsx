@@ -1,5 +1,11 @@
 import type { ReactNode } from 'react';
-import { Keyboard, Pressable, type StyleProp, type ViewStyle } from 'react-native';
+import {
+  Keyboard,
+  Pressable,
+  type StyleProp,
+  type ViewProps,
+  type ViewStyle,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from 'styled-components/native';
 
@@ -37,7 +43,7 @@ function resolveSafeEdgeSet(
   return new Set(safe);
 }
 
-export type ContainerProps = {
+type ContainerOwnProps = {
   children?: ReactNode;
   bg?: SurfaceBg;
   style?: StyleProp<ViewStyle>;
@@ -66,6 +72,9 @@ export type ContainerProps = {
   keyboardDismiss?: boolean;
 };
 
+export type ContainerProps = ContainerOwnProps &
+  Omit<ViewProps, keyof ContainerOwnProps | 'children'>;
+
 export function Container({
   children,
   bg,
@@ -93,6 +102,7 @@ export function Container({
   wrap,
   safe,
   keyboardDismiss = false,
+  ...rest
 }: ContainerProps) {
   const theme = useTheme();
   const insets = useSafeAreaInsets();
@@ -132,6 +142,7 @@ export function Container({
 
   return (
     <StyledContainer
+      {...rest}
       testID={testID}
       style={style}
       $bg={bg}

@@ -160,12 +160,7 @@ describe('FlatList molecule (RITEM-11)', () => {
 
   it('WHEN loadingMore is true THEN footer shows standard Loading', async () => {
     await render(
-      <FlatList
-        data={DATA}
-        keyExtractor={(item) => item.id}
-        renderItem={renderRow}
-        loadingMore
-      />,
+      <FlatList data={DATA} keyExtractor={(item) => item.id} renderItem={renderRow} loadingMore />,
     );
 
     const list = screen.getByTestId('ds-flat-list');

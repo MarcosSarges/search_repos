@@ -19,3 +19,6 @@ export type { KeyboardAvoidBehavior, KeyboardAvoidProps } from './KeyboardAvoid'
 
 export { FlatList } from './FlatList';
 export type { FlatListProps } from './FlatList';
+
+export { SettingsRow } from './SettingsRow';
+export type { SettingsRowProps } from './SettingsRow';

@@ -69,6 +69,9 @@ describe('mapGitlabIssue', () => {
     author: { username: 'alice', avatar_url: 'https://avatar.example/a' },
     labels: ['bug', 'priority'],
     created_at: '2024-01-01T00:00:00Z',
+    updated_at: '2024-01-02T12:00:00Z',
+    state: 'opened',
+    user_notes_count: 5,
     web_url: 'https://gitlab.com/gitlab-org/gitlab/-/issues/7',
   };
 
@@ -86,6 +89,21 @@ describe('mapGitlabIssue', () => {
     ]);
     expect(issue.createdAt).toBe('2024-01-01T00:00:00Z');
     expect(issue.htmlUrl).toBe('https://gitlab.com/gitlab-org/gitlab/-/issues/7');
+  });
+
+  it('WHEN a GitLab issue DTO is mapped THEN opened→open, user_notes_count→comments, updated_at→updatedAt (DIC-04, DIC-05)', () => {
+    const issue = mapGitlabIssue(base);
+
+    expect(issue.state).toBe('open');
+    expect(issue.comments).toBe(5);
+    expect(issue.updatedAt).toBe('2024-01-02T12:00:00Z');
+  });
+
+  it('WHEN GitLab state is closed THEN domain state is closed', () => {
+    const issue = mapGitlabIssue({ ...base, state: 'closed', user_notes_count: 0 });
+
+    expect(issue.state).toBe('closed');
+    expect(issue.comments).toBe(0);
   });
 
   it('maps null/omit on optional issue fields to undefined', () => {

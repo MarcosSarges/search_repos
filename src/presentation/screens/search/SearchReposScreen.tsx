@@ -109,6 +109,8 @@ export function SearchReposScreen({ navigation }: Props) {
       <SessionSourceHeader safe title="Search" />
       <Container px="md" gap="sm">
         <InputField
+          keyboardType="web-search"
+          returnKeyType="search"
           label="Buscar"
           placeholder="Buscar repositórios"
           value={query}

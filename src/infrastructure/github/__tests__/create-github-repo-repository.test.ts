@@ -160,9 +160,57 @@ describe('createGithubRepoRepository', () => {
 
     expect(result.items).toHaveLength(2);
     expect(result.items[0]?.labels[0]).toEqual({ id: '100', name: 'bug', color: 'ff0000' });
+    expect(result.items[0]?.state).toBe('open');
+    expect(result.items[0]?.comments).toBe(2);
+    expect(result.items[0]?.updatedAt).toBe('2024-01-02T00:00:00Z');
     expect(result.items[1]?.authorAvatarUrl).toBeUndefined();
     expect(result.items[1]?.labels[0]?.color).toBeUndefined();
     expect(result.hasNextPage).toBe(true);
+  });
+
+  it('WHEN listIssues payload includes pull_request THEN those items are excluded (DIC-06)', async () => {
+    server.use(
+      http.get('https://api.github.com/repos/facebook/react/issues', () => {
+        return HttpResponse.json([
+          {
+            id: 1,
+            number: 10,
+            title: 'Real issue',
+            user: { login: 'alice', avatar_url: null },
+            labels: [],
+            created_at: '2024-01-01T00:00:00Z',
+            updated_at: '2024-01-02T00:00:00Z',
+            state: 'open',
+            comments: 0,
+            html_url: 'https://github.com/facebook/react/issues/10',
+          },
+          {
+            id: 99,
+            number: 99,
+            title: 'Actually a PR',
+            user: { login: 'bot', avatar_url: null },
+            labels: [],
+            created_at: '2024-01-01T00:00:00Z',
+            updated_at: '2024-01-02T00:00:00Z',
+            state: 'open',
+            comments: 1,
+            html_url: 'https://github.com/facebook/react/pull/99',
+            pull_request: { url: 'https://api.github.com/repos/facebook/react/pulls/99' },
+          },
+        ]);
+      }),
+    );
+
+    const repo = createGithubRepoRepository();
+    const result = await repo.listIssues({
+      repoId: 'facebook/react',
+      page: 1,
+      perPage: 20,
+    });
+
+    expect(result.items).toHaveLength(1);
+    expect(result.items[0]?.id).toBe('1');
+    expect(result.items[0]?.title).toBe('Real issue');
   });
 
   it('listIssues empty page yields hasNextPage false', async () => {

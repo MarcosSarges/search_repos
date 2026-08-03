@@ -83,7 +83,7 @@ export function createGithubRepoRepository(
       url.searchParams.set('per_page', String(perPage));
 
       const { data, headers } = await jsonFetch<GithubIssueDto[]>(url.toString(), authInit(token));
-      const items = data.map(mapGithubIssue);
+      const items = data.filter((dto) => dto.pull_request == null).map(mapGithubIssue);
       const headerIndicatesNext = hasRelNext(headers.get('Link'));
 
       return {

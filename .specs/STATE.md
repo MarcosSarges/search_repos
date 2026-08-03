@@ -244,10 +244,11 @@
 
 ## Handoff
 
-- **Feature**: ds-repo-item — Explore adoption (RITEM-13) Done locally
-- **Phase / Task**: —
-- **Completed**: T1–T6 + Verifier PASS; Explore → RepoItem + DS FlatList
+- **Feature**: details-issues-config-ui
+- **Phase / Task**: Verifier complete — PASS ✅ (3 minor spec-precision gaps)
+- **Completed**: Specify + Design + Tasks; Execute T1–T6; Verifier — `.specs/features/details-issues-config-ui/validation.md`
 - **In-progress**: none
-- **Next step**: push commit to PR #14
+- **Next step**: Optional precision-gap fixes (avatar `size="lg"` assert; Config icon/theme-subtitle asserts; SettingsRow AD-012 file test) or merge/PR
+- **Verifier**: PASS — 10/10 ACs primary evidence; gate 619 passed / lint 0 errors; sensor 3/3 killed; gaps are precision-only (not uncovered ACs)
 - **Blockers**: none
-- **Branch**: `feat/ds-repo-item`
+- **Branch**: `feat/details-issues-config-ui`
