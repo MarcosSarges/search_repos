@@ -1,7 +1,7 @@
 import type { ComponentProps } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-import type { IconVariant, Tone } from '@/components/ds/tokens';
+import type { IconVariant, Tone } from '@ds/tokens';
 
 import { StyledIcon } from './styles';
 

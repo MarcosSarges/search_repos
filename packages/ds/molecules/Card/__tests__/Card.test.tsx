@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { Text } from 'react-native';
 
-import { getTheme } from '@/components/ds/theme';
+import { getTheme } from '@ds/theme';
 import { cleanup, render, screen, within } from '@/test';
 
 import {

@@ -1,6 +1,6 @@
 import { css, styled } from 'styled-components/native';
 
-import type { Spacing, SurfaceTone } from '@/components/ds/tokens';
+import type { Spacing, SurfaceTone } from '@ds/tokens';
 
 export const StyledContainer = styled.View<{
   $padding?: Spacing;

@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-native';
 import { View } from 'react-native';
 
-import { Button, Typography } from '@/components/ds/atoms';
-import { spacing } from '@/components/ds/tokens';
+import { Button, Typography } from '@ds/atoms';
+import { spacing } from '@ds/tokens';
 
 import { Card } from './Card';
 

@@ -14,8 +14,6 @@ const config: Config = {
     '\\.svg$': '<rootDir>/src/test/__mocks__/svgMock.js',
     '^@ds$': '<rootDir>/packages/ds/index.ts',
     '^@ds/(.*)$': '<rootDir>/packages/ds/$1',
-    '^@/components/ds$': '<rootDir>/packages/ds/index.ts',
-    '^@/components/ds/(.*)$': '<rootDir>/packages/ds/$1',
     '^@/(.*)$': '<rootDir>/src/$1',
   },
   // Extend jest-expo allowlist so pnpm-nested MSW deps (until-async) are transformed.

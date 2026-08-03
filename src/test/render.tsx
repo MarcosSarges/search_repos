@@ -11,7 +11,7 @@ import {
 } from '@testing-library/react-native';
 import type { QueryClient } from '@tanstack/react-query';
 
-import { AppThemeProvider, type ThemeMode } from '@/components/ds';
+import { AppThemeProvider, type ThemeMode } from '@ds';
 import type { DataSource } from '@/application';
 import type { RepoRepository } from '@/domain';
 import { setAppContainerTestRepository } from '@/presentation/hooks/use-app-container';

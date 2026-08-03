@@ -1,6 +1,6 @@
 import { type ActivityIndicatorProps } from 'react-native';
 
-import type { LoadingVariant } from '@/components/ds/tokens';
+import type { LoadingVariant } from '@ds/tokens';
 
 import { StyledLoading } from './styles';
 

@@ -1,5 +1,5 @@
-import { Typography } from '@/components/ds/atoms';
-import { Container, Header } from '@/components/ds/molecules';
+import { Typography } from '@ds/atoms';
+import { Container, Header } from '@ds/molecules';
 
 export function FavoritosScreen() {
   return (

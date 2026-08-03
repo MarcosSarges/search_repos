@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { type TextInputProps } from 'react-native';
 
-import type { InputState } from '@/components/ds/tokens';
+import type { InputState } from '@ds/tokens';
 
 import { FieldInput, InputChrome, Slot } from './styles';
 

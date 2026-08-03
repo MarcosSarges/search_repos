@@ -1,8 +1,8 @@
 import { View } from 'react-native';
 
 import { render, screen } from '@/test';
-import { getTheme } from '@/components/ds/theme';
-import { spacing } from '@/components/ds/tokens';
+import { getTheme } from '@ds/theme';
+import { spacing } from '@ds/tokens';
 
 import { Container, type ContainerProps } from '../Container';
 

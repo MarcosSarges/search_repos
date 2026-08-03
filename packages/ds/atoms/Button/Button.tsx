@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react';
 import { type PressableProps } from 'react-native';
 
-import type { ButtonSize, ButtonVariant } from '@/components/ds/tokens';
-import { button } from '@/components/ds/tokens';
+import type { ButtonSize, ButtonVariant } from '@ds/tokens';
+import { button } from '@ds/tokens';
 
 import { Loading } from '../Loading';
 import { ButtonLabel, ContentRow, StyledButton } from './styles';

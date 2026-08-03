@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import type { Spacing, SurfaceTone } from '@/components/ds/tokens';
+import type { Spacing, SurfaceTone } from '@ds/tokens';
 
 import { StyledContainer } from './styles';
 

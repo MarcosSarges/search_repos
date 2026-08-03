@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 
-import { Icon, useTheme } from '@/components/ds';
+import { Icon, useTheme } from '@ds';
 import { SearchStackNavigator } from '@/presentation/navigation/SearchStackNavigator';
 import type { TabsParamList } from '@/presentation/navigation/types';
 import { ConfigScreen } from '@/presentation/screens/ConfigScreen';

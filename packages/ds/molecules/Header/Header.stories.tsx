@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-native';
 import { Pressable } from 'react-native';
 
-import { Icon } from '@/components/ds/atoms';
-import { DataSourceLogo } from '@/components/ds/organisms';
+import { Icon } from '@ds/atoms';
+import { DataSourceLogo } from '@ds/organisms';
 
 import { Header } from './Header';
 

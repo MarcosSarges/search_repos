@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-native';
 import { View } from 'react-native';
 
-import { Typography } from '@/components/ds/atoms/Typography';
-import { spacing } from '@/components/ds/tokens';
+import { Typography } from '@ds/atoms/Typography';
+import { spacing } from '@ds/tokens';
 
 import { Spacer } from './Spacer';
 

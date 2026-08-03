@@ -3,7 +3,7 @@ import { join } from 'node:path';
 import { View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import { getTheme } from '@/components/ds/theme';
+import { getTheme } from '@ds/theme';
 import { render, screen } from '@/test';
 
 import { Header, type HeaderProps } from '../Header';

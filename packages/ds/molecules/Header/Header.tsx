@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import { Typography } from '@/components/ds/atoms';
+import { Typography } from '@ds/atoms';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { HeaderTitleSlot, StyledHeader } from './styles';

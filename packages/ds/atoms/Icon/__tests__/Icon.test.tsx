@@ -1,6 +1,6 @@
 import { render, screen } from '@/test';
-import { getTheme } from '@/components/ds/theme';
-import { icon } from '@/components/ds/tokens';
+import { getTheme } from '@ds/theme';
+import { icon } from '@ds/tokens';
 
 import { Icon, type IconProps } from '../Icon';
 

@@ -4,7 +4,7 @@ import 'react-native-gesture-handler';
 import 'react-native-reanimated';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import { AppThemeProvider } from '@/components/ds';
+import { AppThemeProvider } from '@ds';
 import { RootNavigator } from '@/presentation/navigation/RootNavigator';
 import { AppQueryProvider } from '@/presentation/providers/AppQueryProvider';
 import Constants from 'expo-constants';

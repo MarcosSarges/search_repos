@@ -3,8 +3,8 @@ import type { SvgProps } from 'react-native-svg';
 import { styled } from 'styled-components/native';
 
 import type { DataSource } from '@/application';
-import type { Size } from '@/components/ds/tokens';
-import type { ThemeMode } from '@/components/ds/theme';
+import type { Size } from '@ds/tokens';
+import type { ThemeMode } from '@ds/theme';
 
 import GitHubInvertocatBlack from '../../assets/github/GitHub_Invertocat_Black.svg';
 import GitHubInvertocatWhite from '../../assets/github/GitHub_Invertocat_White_Clearspace.svg';

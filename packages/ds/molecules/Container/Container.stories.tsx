@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-native';
 
-import { Typography } from '@/components/ds/atoms';
+import { Typography } from '@ds/atoms';
 
 import { Container } from './Container';
 

@@ -1,4 +1,4 @@
-import type { SpacerEdge, Spacing } from '@/components/ds/tokens';
+import type { SpacerEdge, Spacing } from '@ds/tokens';
 
 import { StyledSpacer } from './styles';
 

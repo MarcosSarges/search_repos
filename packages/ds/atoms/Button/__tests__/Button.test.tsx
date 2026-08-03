@@ -1,7 +1,7 @@
 import { Text, View } from 'react-native';
 
-import { getTheme } from '@/components/ds/theme';
-import { button } from '@/components/ds/tokens';
+import { getTheme } from '@ds/theme';
+import { button } from '@ds/tokens';
 import { cleanup, fireEvent, render, screen } from '@/test';
 
 import { Button, type ButtonProps } from '../Button';

@@ -1,7 +1,7 @@
 import { Pressable } from 'react-native';
 
-import { getTheme, useAppTheme } from '@/components/ds/theme';
-import { typography } from '@/components/ds/tokens';
+import { getTheme, useAppTheme } from '@ds/theme';
+import { typography } from '@ds/tokens';
 import { act, fireEvent, render, screen } from '@/test';
 
 import { Typography, type TypographyProps } from '../Typography';

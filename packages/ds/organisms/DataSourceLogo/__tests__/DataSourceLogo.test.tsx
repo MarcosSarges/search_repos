@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 import { render, screen } from '@/test';
-import { sizes } from '@/components/ds/tokens';
+import { sizes } from '@ds/tokens';
 
 import { resolveLogoAsset } from '../styles';
 import { DataSourceLogo, type DataSourceLogoProps } from '../DataSourceLogo';

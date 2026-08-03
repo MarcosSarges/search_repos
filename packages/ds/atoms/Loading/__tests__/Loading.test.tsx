@@ -1,5 +1,5 @@
 import { render, screen } from '@/test';
-import { getTheme } from '@/components/ds/theme';
+import { getTheme } from '@ds/theme';
 
 import { Loading, type LoadingProps } from '../Loading';
 

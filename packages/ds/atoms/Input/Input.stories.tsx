@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-native';
 import { useState } from 'react';
 import { View } from 'react-native';
 
-import { spacing } from '@/components/ds/tokens';
+import { spacing } from '@ds/tokens';
 
 import { Icon } from '../Icon';
 import { Input } from './Input';

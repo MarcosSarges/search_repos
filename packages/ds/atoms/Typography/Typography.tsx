@@ -1,6 +1,6 @@
 import { type TextProps as RNTextProps } from 'react-native';
 
-import type { Tone, TypographyVariant } from '@/components/ds/tokens';
+import type { Tone, TypographyVariant } from '@ds/tokens';
 
 import { StyledTypography } from './styles';
 

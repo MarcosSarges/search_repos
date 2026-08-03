@@ -1,5 +1,5 @@
 import { render, screen } from '@/test';
-import { spacing } from '@/components/ds/tokens';
+import { spacing } from '@ds/tokens';
 
 import { Spacer, type SpacerProps } from '../Spacer';
 

@@ -1,7 +1,7 @@
 import { ActivityIndicator } from 'react-native';
 import { styled } from 'styled-components/native';
 
-import type { LoadingVariant } from '@/components/ds/tokens';
+import type { LoadingVariant } from '@ds/tokens';
 
 export const StyledLoading = styled(ActivityIndicator).attrs<{
   $variant: LoadingVariant;

@@ -1,7 +1,7 @@
 import { TextInput } from 'react-native';
 import { css, styled } from 'styled-components/native';
 
-import type { InputState } from '@/components/ds/tokens';
+import type { InputState } from '@ds/tokens';
 
 export const InputChrome = styled.View<{ $state: InputState }>`
   flex-direction: row;

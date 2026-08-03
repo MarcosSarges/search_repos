@@ -1,7 +1,7 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import { Typography } from '@/components/ds/atoms';
-import { Container } from '@/components/ds/molecules';
+import { Typography } from '@ds/atoms';
+import { Container } from '@ds/molecules';
 import type { SearchStackParamList } from '@/presentation/navigation/types';
 
 type Props = NativeStackScreenProps<SearchStackParamList, 'RepoIssues'>;

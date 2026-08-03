@@ -4,7 +4,7 @@ import { createJSONStorage, persist, type StateStorage } from 'zustand/middlewar
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { isDataSource, type DataSource } from '@/application';
-import type { ThemeMode } from '@/components/ds/theme/theme';
+import type { ThemeMode } from '@ds/theme/theme';
 import type { ProviderTokens } from '@/infrastructure/di/create-container';
 import {
   clearProviderTokens,

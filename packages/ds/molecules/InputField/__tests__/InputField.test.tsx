@@ -1,6 +1,6 @@
 import { Text } from 'react-native';
 
-import { getTheme } from '@/components/ds/theme';
+import { getTheme } from '@ds/theme';
 import { cleanup, fireEvent, render, screen } from '@/test';
 
 import { InputField, type InputFieldProps } from '../InputField';

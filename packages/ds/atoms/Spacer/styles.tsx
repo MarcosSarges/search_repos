@@ -1,8 +1,8 @@
 import { View } from 'react-native';
 import { css, styled } from 'styled-components/native';
 
-import type { SpacerEdge, Spacing } from '@/components/ds/tokens';
-import { spacerEdgeAxis } from '@/components/ds/tokens';
+import type { SpacerEdge, Spacing } from '@ds/tokens';
+import { spacerEdgeAxis } from '@ds/tokens';
 
 const edgeDimensionCss = {
   height: (value: number) => css`

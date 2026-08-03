@@ -1,7 +1,7 @@
 import { Pressable } from 'react-native';
 
-import { Typography } from '@/components/ds/atoms';
-import { Card } from '@/components/ds/molecules';
+import { Typography } from '@ds/atoms';
+import { Card } from '@ds/molecules';
 import type { Repo } from '@/domain';
 
 export type RepoListItemProps = {

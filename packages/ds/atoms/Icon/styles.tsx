@@ -1,8 +1,8 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { styled } from 'styled-components/native';
 
-import type { IconVariant, Tone } from '@/components/ds/tokens';
-import { toneColorMap } from '@/components/ds/tokens';
+import type { IconVariant, Tone } from '@ds/tokens';
+import { toneColorMap } from '@ds/tokens';
 
 export const StyledIcon = styled(Ionicons).attrs<{
   $variant: IconVariant;

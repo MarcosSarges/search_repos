@@ -1,8 +1,8 @@
 import { Text as RNText } from 'react-native';
 import { styled } from 'styled-components/native';
 
-import type { Tone, TypographyVariant } from '@/components/ds/tokens';
-import { toneColorMap } from '@/components/ds/tokens';
+import type { Tone, TypographyVariant } from '@ds/tokens';
+import { toneColorMap } from '@ds/tokens';
 
 export const StyledTypography = styled(RNText)<{
   $variant: TypographyVariant;

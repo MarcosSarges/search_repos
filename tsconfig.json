@@ -7,8 +7,6 @@
     "paths": {
       "@ds": ["./packages/ds/index.ts"],
       "@ds/*": ["./packages/ds/*"],
-      "@/components/ds": ["./packages/ds/index.ts"],
-      "@/components/ds/*": ["./packages/ds/*"],
       "@/*": ["./src/*"]
     },
     "types": ["jest"]

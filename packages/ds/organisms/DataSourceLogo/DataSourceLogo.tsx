@@ -1,6 +1,6 @@
 import type { DataSource } from '@/application';
-import type { Size } from '@/components/ds/tokens';
-import { useAppTheme, useTheme } from '@/components/ds/theme';
+import type { Size } from '@ds/tokens';
+import { useAppTheme, useTheme } from '@ds/theme';
 
 import { logoComponentMap, resolveLogoAsset, StyledLogo } from './styles';
 

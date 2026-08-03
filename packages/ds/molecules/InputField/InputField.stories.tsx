@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react-native';
 import { useState } from 'react';
 import { View } from 'react-native';
 
-import { Icon } from '@/components/ds/atoms';
-import { spacing } from '@/components/ds/tokens';
+import { Icon } from '@ds/atoms';
+import { spacing } from '@ds/tokens';
 
 import { InputField } from './InputField';
 

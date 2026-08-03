@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import { Input, type InputProps, Typography } from '@/components/ds/atoms';
+import { Input, type InputProps, Typography } from '@ds/atoms';
 
 import { FieldRoot } from './styles';
 

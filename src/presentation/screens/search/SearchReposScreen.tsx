@@ -2,8 +2,8 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useCallback, useMemo, useState, type ReactNode } from 'react';
 import { FlatList, RefreshControl, View } from 'react-native';
 
-import { Button, Loading, Typography } from '@/components/ds/atoms';
-import { Container, Header, InputField } from '@/components/ds/molecules';
+import { Button, Loading, Typography } from '@ds/atoms';
+import { Container, Header, InputField } from '@ds/molecules';
 import type { Repo } from '@/domain';
 import { mapAppErrorToMessage } from '@/presentation/errors/map-app-error-to-message';
 import { useDebouncedValue } from '@/presentation/hooks/use-debounced-value';

@@ -1,7 +1,7 @@
-import { Button, Icon, Typography } from '@/components/ds/atoms';
-import { Container, Header } from '@/components/ds/molecules';
-import { DataSourceLogo } from '@/components/ds/organisms';
-import { useAppTheme } from '@/components/ds/theme';
+import { Button, Icon, Typography } from '@ds/atoms';
+import { Container, Header } from '@ds/molecules';
+import { DataSourceLogo } from '@ds/organisms';
+import { useAppTheme } from '@ds/theme';
 import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
 
 export function ConfigScreen() {

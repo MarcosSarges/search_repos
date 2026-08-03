@@ -1,7 +1,7 @@
 import { Text } from 'react-native';
 
-import { getTheme } from '@/components/ds/theme';
-import { input } from '@/components/ds/tokens';
+import { getTheme } from '@ds/theme';
+import { input } from '@ds/tokens';
 import { cleanup, fireEvent, render, screen } from '@/test';
 
 import { Input, type InputProps } from '../Input';

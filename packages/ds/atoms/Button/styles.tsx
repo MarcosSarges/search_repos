@@ -1,8 +1,8 @@
 import { Pressable, Text } from 'react-native';
 import { css, styled } from 'styled-components/native';
 
-import type { ButtonSize, ButtonVariant } from '@/components/ds/tokens';
-import type { AppTheme } from '@/components/ds/theme';
+import type { ButtonSize, ButtonVariant } from '@ds/tokens';
+import type { AppTheme } from '@ds/theme';
 
 type ButtonChrome = {
   backgroundColor: string;
