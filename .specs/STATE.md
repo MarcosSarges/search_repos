@@ -202,13 +202,23 @@
 - **Date**: 2026-08-02
 - **Status**: active
 
+### AD-026
+- **Decision**: Product bottom tabs are **Search | Favoritos | Explore | Config**. Tab **Search** hosts the nested stack lista → detalhe → issues. Session chrome (**data source** + **theme**) lives on **Config** (not on Search). Favoritos persistence (AsyncStorage) and Explore trending are separate features; tabs may ship as mocks first.
+- **Reason**: Product IA locked in search-and-navigation specify/discuss; keeps Search focused and reserves tabs for upcoming functions.
+- **Trade-off**: Four tabs early; Config grows over time (token UI later).
+- **Scope**: `src/navigation/**`, `src/screens/**`, session controls UX
+- **Date**: 2026-08-02
+- **Status**: active
+
 ## Handoff
 
-- **Feature**: none (idle) — last closed: `presentation-layer` (bridge)
-- **Phase / Task**: n/a
-- **Completed**: presentation-layer T1–T14 + Verifier PASS; AD-025 (`useAppContainer`); `src/presentation/constants/`; PR #9
-- **In-progress**: none
-- **Next step**: Specify next product feature from `.specs/features/presentation-layer/NEXT.md` (search UI / details / issues)
+- **Feature**: search-and-navigation — Tasks draft awaiting approval
+- **Phase / Task**: Tasks (T1–T10) — confirm before Execute
+- **Completed**: Spec + Design Approach A + AD-026
+- **In-progress**: `.specs/features/search-and-navigation/tasks.md`
+- **Next step**: User approves tasks → Execute (Batch A T1–T7, Batch B T8–T10, Verifier)
 - **Blockers**: none
-- **Uncommitted files**: local only if any (`HomeScreen` / `Teste_Tecnico_*` not part of closed feature)
-- **Branch**: `feat/presentation-layer` (PR https://github.com/MarcosSarges/search_repos/pull/9)
+- **Uncommitted files**: search-and-navigation specs + STATE
+- **Branch**: Execute on `feat/search-and-navigation`
+
+
