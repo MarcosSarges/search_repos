@@ -96,9 +96,15 @@ describe('Input atom (CTRL-02)', () => {
     expect(screen.queryByTestId('trailing')).toBeNull();
   });
 
-  it('WHEN public props are inspected THEN style is not part of the controlled API', () => {
+  it('WHEN style is passed THEN it is accepted on the public props type and forwarded', async () => {
     type HasStyle = 'style' extends keyof InputProps ? true : false;
-    const hasStyle: HasStyle = false;
-    expect(hasStyle).toBe(false);
+    const hasStyle: HasStyle = true;
+    expect(hasStyle).toBe(true);
+
+    await render(
+      <Input testID="field" style={{ opacity: 0.6 }} value="" onChangeText={() => undefined} />,
+    );
+
+    expect(screen.getByTestId('field')).toHaveStyle({ opacity: 0.6 });
   });
 });

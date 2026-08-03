@@ -19,15 +19,21 @@ describe('InputField molecule (CTRL-03)', () => {
     expect(screen.getByTestId('field')).toBeTruthy();
   });
 
-  it('WHEN helperText is set AND error is absent THEN it shows helperText below the Input', async () => {
+  it('WHEN helperText is set AND error is absent THEN it shows helperText with muted color', async () => {
     await render(
       <InputField helperText="We never share your email" value="" onChangeText={() => undefined} />,
+      { themeMode: 'light' },
     );
 
+    const theme = getTheme('light');
     expect(screen.getByText('We never share your email')).toBeTruthy();
+    expect(screen.getByTestId('ds-input-field-message')).toHaveStyleRule(
+      'color',
+      theme.colors.muted,
+    );
   });
 
-  it('WHEN error is a non-empty string THEN it shows error (not helperText) and passes error state to Input', async () => {
+  it('WHEN error is a non-empty string THEN it shows error with danger color (not helperText)', async () => {
     await render(
       <InputField
         error="Required"
@@ -44,6 +50,10 @@ describe('InputField molecule (CTRL-03)', () => {
 
     const theme = getTheme('light');
     expect(screen.getByTestId('field')).toHaveStyleRule('border-color', theme.colors.danger);
+    expect(screen.getByTestId('ds-input-field-message')).toHaveStyleRule(
+      'color',
+      theme.colors.danger,
+    );
   });
 
   it('WHEN error is empty string THEN it is treated as no error and helperText may show', async () => {
@@ -90,10 +100,16 @@ describe('InputField molecule (CTRL-03)', () => {
     expect(onChangeText).toHaveBeenCalledWith('hello!');
   });
 
-  it('WHEN public props are inspected THEN style is not part of the controlled API', () => {
+  it('WHEN style is passed THEN it is accepted on the public props type and forwarded', async () => {
     type HasStyle = 'style' extends keyof InputFieldProps ? true : false;
-    const hasStyle: HasStyle = false;
-    expect(hasStyle).toBe(false);
+    const hasStyle: HasStyle = true;
+    expect(hasStyle).toBe(true);
+
+    await render(
+      <InputField style={{ opacity: 0.45 }} value="" onChangeText={() => undefined} />,
+    );
+
+    expect(screen.getByTestId('ds-input-field-root')).toHaveStyle({ opacity: 0.45 });
   });
 
   it('WHEN public props are inspected THEN state is not part of the controlled API', () => {

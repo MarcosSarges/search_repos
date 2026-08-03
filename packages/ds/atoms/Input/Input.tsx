@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { type TextInputProps } from 'react-native';
+import { type StyleProp, type TextInputProps, type ViewStyle } from 'react-native';
 
 import type { InputState } from '@ds/tokens';
 
@@ -9,6 +9,7 @@ export type InputProps = Omit<TextInputProps, 'style'> & {
   leading?: ReactNode;
   trailing?: ReactNode;
   state?: InputState;
+  style?: StyleProp<ViewStyle>;
 };
 
 export function Input({
@@ -19,12 +20,13 @@ export function Input({
   onChangeText,
   accessibilityState,
   testID = 'ds-input',
+  style,
   ...rest
 }: InputProps) {
   const isDisabled = editable === false;
 
   return (
-    <InputChrome $state={state} testID={testID}>
+    <InputChrome $state={state} testID={testID} style={style}>
       {leading ? <Slot>{leading}</Slot> : null}
       <FieldInput
         editable={editable}

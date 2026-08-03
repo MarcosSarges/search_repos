@@ -1,15 +1,17 @@
 import type { ReactNode } from 'react';
+import type { StyleProp, ViewStyle } from 'react-native';
 
 import { Input, type InputProps, Typography } from '@ds/atoms';
 
 import { FieldRoot } from './styles';
 
-export type InputFieldProps = Omit<InputProps, 'style' | 'state'> & {
+export type InputFieldProps = Omit<InputProps, 'state'> & {
   label?: string;
   helperText?: string;
   error?: string;
   leading?: ReactNode;
   trailing?: ReactNode;
+  style?: StyleProp<ViewStyle>;
 };
 
 export function InputField({
@@ -19,6 +21,7 @@ export function InputField({
   leading,
   trailing,
   testID = 'ds-input',
+  style,
   ...rest
 }: InputFieldProps) {
   const hasError = Boolean(error);
@@ -26,7 +29,7 @@ export function InputField({
   const messageColor = hasError ? 'danger' : 'muted';
 
   return (
-    <FieldRoot testID="ds-input-field-root">
+    <FieldRoot testID="ds-input-field-root" style={style}>
       {label ? <Typography variant="label">{label}</Typography> : null}
       <Input
         leading={leading}
@@ -36,7 +39,7 @@ export function InputField({
         {...rest}
       />
       {message ? (
-        <Typography variant="caption" color={messageColor}>
+        <Typography variant="caption" color={messageColor} testID="ds-input-field-message">
           {message}
         </Typography>
       ) : null}
