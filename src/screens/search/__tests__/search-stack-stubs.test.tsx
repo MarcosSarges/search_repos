@@ -6,17 +6,8 @@ import { act, fireEvent, render, screen } from '@/test';
 
 import { RepoDetailsScreen } from '../RepoDetailsScreen';
 import { RepoIssuesScreen } from '../RepoIssuesScreen';
-import { SearchReposScreen } from '../SearchReposScreen';
 
 const Stack = createNativeStackNavigator<SearchStackParamList>();
-
-describe('SearchReposScreen placeholder (NAV-04)', () => {
-  it('WHEN SearchRepos placeholder renders THEN title and testID are present', async () => {
-    await render(<SearchReposScreen />);
-    expect(screen.getByText('Search')).toBeTruthy();
-    expect(screen.getByTestId('search-repos-placeholder')).toBeTruthy();
-  });
-});
 
 describe('RepoDetailsScreen / RepoIssuesScreen stubs (NAV-06..08)', () => {
   it('WHEN RepoDetails opens with repoId THEN it shows that id and Issues CTA navigates with same repoId', async () => {
@@ -50,11 +41,7 @@ describe('RepoDetailsScreen / RepoIssuesScreen stubs (NAV-06..08)', () => {
     await render(
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen
-            name="RepoIssues"
-            component={RepoIssuesScreen}
-            initialParams={{ repoId }}
-          />
+          <Stack.Screen name="RepoIssues" component={RepoIssuesScreen} initialParams={{ repoId }} />
         </Stack.Navigator>
       </NavigationContainer>,
     );

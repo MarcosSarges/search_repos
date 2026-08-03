@@ -237,10 +237,10 @@ T8 → T9 → T10
 
 **Done when**:
 
-- [ ] All SRCH ACs covered by tests (fake timers for debounce)
-- [ ] No dataSource/theme primary toggles on Search
-- [ ] HomeScreen removed; references updated
-- [ ] Gate: `pnpm test -- src/screens src/presentation --watchman=false`
+- [x] All SRCH ACs covered by tests (fake timers for debounce)
+- [x] No dataSource/theme primary toggles on Search
+- [x] HomeScreen removed; references updated
+- [x] Gate: `pnpm test -- src/screens src/presentation --watchman=false`
 
 **Tests**: unit (RNTL)  
 **Gate**: full  

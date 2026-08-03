@@ -25,7 +25,8 @@ describe('TabsNavigator product shell (NAV-01, NAV-03)', () => {
     expect(screen.getAllByText('Explore').length).toBeGreaterThanOrEqual(1);
     expect(screen.getAllByText('Config').length).toBeGreaterThanOrEqual(1);
 
-    expect(screen.getByTestId('search-repos-placeholder')).toBeTruthy();
+    expect(screen.getByTestId('search-repos-idle')).toBeTruthy();
+    expect(screen.getByTestId('ds-input-field')).toBeTruthy();
 
     await act(async () => {
       pressTabLabel('Favoritos');
