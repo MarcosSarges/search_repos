@@ -134,9 +134,9 @@ T8 → T9 → T10
 
 **Done when**:
 
-- [ ] Both mocks render without fetching APIs / writing favorites
-- [ ] Tests assert title/testID
-- [ ] Gate: `pnpm test -- src/screens/__tests__/FavoritosScreen.test.tsx src/screens/__tests__/ExploreScreen.test.tsx --watchman=false` (paths as created)
+- [x] Both mocks render without fetching APIs / writing favorites
+- [x] Tests assert title/testID
+- [x] Gate: `pnpm test -- src/screens/__tests__/FavoritosScreen.test.tsx src/screens/__tests__/ExploreScreen.test.tsx --watchman=false` (paths as created)
 
 **Tests**: unit (RNTL)  
 **Gate**: quick  
