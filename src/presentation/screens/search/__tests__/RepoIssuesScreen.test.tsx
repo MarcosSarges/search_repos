@@ -39,6 +39,9 @@ const sampleIssues: Issue[] = [
     authorName: 'alice',
     labels: [{ id: 'bug', name: 'bug', color: 'ff0000' }],
     createdAt: '2026-08-03T10:00:00.000Z',
+    updatedAt: '2026-08-03T11:00:00.000Z',
+    state: 'open',
+    comments: 2,
     htmlUrl: 'https://github.com/facebook/react/issues/1',
   },
   {
@@ -48,6 +51,9 @@ const sampleIssues: Issue[] = [
     authorName: 'bob',
     labels: [],
     createdAt: '2026-08-02T10:00:00.000Z',
+    updatedAt: '2026-08-02T11:00:00.000Z',
+    state: 'closed',
+    comments: 0,
     htmlUrl: 'https://github.com/facebook/react/issues/2',
   },
 ];

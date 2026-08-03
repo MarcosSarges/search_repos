@@ -56,6 +56,9 @@ describe('mapGithubIssue', () => {
     user: { login: 'alice', avatar_url: 'https://avatar.example/a' },
     labels: [{ id: 1, name: 'bug', color: 'ff0000' }],
     created_at: '2024-01-01T00:00:00Z',
+    updated_at: '2024-01-02T12:00:00Z',
+    state: 'open',
+    comments: 3,
     html_url: 'https://github.com/facebook/react/issues/7',
   };
 
@@ -70,6 +73,21 @@ describe('mapGithubIssue', () => {
     expect(issue.labels).toEqual([{ id: '1', name: 'bug', color: 'ff0000' }]);
     expect(issue.createdAt).toBe('2024-01-01T00:00:00Z');
     expect(issue.htmlUrl).toBe('https://github.com/facebook/react/issues/7');
+  });
+
+  it('WHEN a GitHub issue DTO is mapped THEN state, comments, and updatedAt map from DTO fields (DIC-04, DIC-05)', () => {
+    const issue = mapGithubIssue(base);
+
+    expect(issue.state).toBe('open');
+    expect(issue.comments).toBe(3);
+    expect(issue.updatedAt).toBe('2024-01-02T12:00:00Z');
+  });
+
+  it('WHEN GitHub state is closed THEN domain state is closed', () => {
+    const issue = mapGithubIssue({ ...base, state: 'closed', comments: 0 });
+
+    expect(issue.state).toBe('closed');
+    expect(issue.comments).toBe(0);
   });
 
   it('maps null/omit on optional issue fields to undefined', () => {

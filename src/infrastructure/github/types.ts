@@ -33,7 +33,12 @@ export type GithubIssueDto = {
   } | null;
   labels?: GithubLabelDto[];
   created_at: string;
+  updated_at: string;
+  state: 'open' | 'closed';
+  comments: number;
   html_url: string;
+  /** Present when the list item is a pull request mixed into /issues. */
+  pull_request?: unknown;
 };
 
 export type GithubSearchReposResponse = {

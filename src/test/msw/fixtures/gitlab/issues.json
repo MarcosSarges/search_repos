@@ -9,6 +9,9 @@
     },
     "labels": ["bug", "priority"],
     "created_at": "2024-01-01T00:00:00Z",
+    "updated_at": "2024-01-02T00:00:00Z",
+    "state": "opened",
+    "user_notes_count": 4,
     "web_url": "https://gitlab.com/gitlab-org/gitlab/-/issues/10"
   },
   {
@@ -21,6 +24,9 @@
     },
     "labels": ["docs"],
     "created_at": "2024-02-01T00:00:00Z",
+    "updated_at": "2024-02-02T00:00:00Z",
+    "state": "opened",
+    "user_notes_count": 0,
     "web_url": "https://gitlab.com/gitlab-org/gitlab/-/issues/11"
   }
 ]

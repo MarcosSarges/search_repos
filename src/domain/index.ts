@@ -1,4 +1,4 @@
-export type { Issue, IssueLabel } from './entities/issue';
+export type { Issue, IssueLabel, IssueState } from './entities/issue';
 export type { PaginatedResult } from './entities/pagination';
 export type { Repo } from './entities/repo';
 export { createAppError, isAppError } from './errors/app-error';

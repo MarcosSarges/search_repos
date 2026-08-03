@@ -148,6 +148,9 @@ describe('createGitlabRepoRepository', () => {
     expect(result.items).toHaveLength(2);
     expect(result.items[0]?.id).toBe('1');
     expect(result.items[0]?.number).toBe(10);
+    expect(result.items[0]?.state).toBe('open');
+    expect(result.items[0]?.comments).toBe(4);
+    expect(result.items[0]?.updatedAt).toBe('2024-01-02T00:00:00Z');
     expect(result.items[0]?.labels).toEqual([
       { id: 'bug', name: 'bug', color: undefined },
       { id: 'priority', name: 'priority', color: undefined },

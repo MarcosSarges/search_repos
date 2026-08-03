@@ -23,6 +23,9 @@ const fullIssue: Issue = {
     { id: 'prio', name: 'priority' },
   ],
   createdAt: '2026-08-03T11:00:00.000Z',
+  updatedAt: '2026-08-03T11:30:00.000Z',
+  state: 'open',
+  comments: 3,
   htmlUrl: 'https://github.com/facebook/react/issues/42',
 };
 
@@ -33,6 +36,9 @@ const noLabelsIssue: Issue = {
   authorName: 'writer',
   labels: [],
   createdAt: '2026-08-02T12:00:00.000Z',
+  updatedAt: '2026-08-02T12:00:00.000Z',
+  state: 'closed',
+  comments: 0,
   htmlUrl: 'https://github.com/owner/repo/issues/7',
 };
 
