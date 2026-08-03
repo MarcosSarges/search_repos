@@ -190,11 +190,11 @@ T4 → T5 → T6
 
 **Done when**:
 
-- [ ] Three iconed metrics with a11y labels
-- [ ] Description omitted when empty/whitespace
-- [ ] Existing error/retry/loading preserved
-- [ ] Source inspection: no RepoDetails organism path
-- [ ] Gate: `pnpm test -- src/presentation/screens/search/__tests__/RepoDetailsScreen.test.tsx` passes
+- [x] Three iconed metrics with a11y labels
+- [x] Description omitted when empty/whitespace
+- [x] Existing error/retry/loading preserved
+- [x] Source inspection: no RepoDetails organism path
+- [x] Gate: `pnpm test -- src/presentation/screens/search/__tests__/RepoDetailsScreen.test.tsx` passes
 
 **Tests**: unit
 **Gate**: quick
@@ -309,9 +309,9 @@ Execution is strictly sequential. **6 tasks → one inline batch** (no sub-agent
 
 | Requirement ID | Task(s) | Status |
 | -------------- | ------- | ------ |
-| DIC-01 | T5 | Pending |
-| DIC-02 | T5 | Pending |
-| DIC-03 | T5 | Pending |
+| DIC-01 | T5 | Done |
+| DIC-02 | T5 | Done |
+| DIC-03 | T5 | Done |
 | DIC-04 | T1 | Done (`1c7c7ee`) |
 | DIC-05 | T1 | Done (`1c7c7ee`) |
 | DIC-06 | T1 | Done (`1c7c7ee`) |

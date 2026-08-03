@@ -1,8 +1,8 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useCallback } from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
-import { Avatar, Button, Loading, Typography } from '@ds/atoms';
+import { Avatar, Button, Icon, Loading, Typography } from '@ds/atoms';
 import { Container } from '@ds/molecules';
 import { Hyperlink } from '@ds/organisms';
 import { StackBackHeader } from '@/presentation/components';
@@ -43,6 +43,8 @@ export function RepoDetailsScreen({ route, navigation }: Props) {
       </Container>
     );
   } else if (data) {
+    const trimmedDescription = data.description?.trim();
+
     body = (
       <ScrollView testID="repo-details-content">
         <Container gap="md" px="md" pb="lg">
@@ -55,10 +57,33 @@ export function RepoDetailsScreen({ route, navigation }: Props) {
             {data.fullName}
           </Typography>
 
-          <Container direction="row" gap="md" wrap="wrap" testID="repo-details-metrics">
-            <Typography variant="caption">{String(data.stars)}</Typography>
-            <Typography variant="caption">{String(data.forks)}</Typography>
-            <Typography variant="caption">{String(data.watchers)}</Typography>
+          <Container
+            direction="row"
+            gap="md"
+            wrap="wrap"
+            align="center"
+            testID="repo-details-metrics">
+            <View
+              accessibilityRole="text"
+              accessibilityLabel={`${data.stars} stars`}
+              style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+              <Icon name="star" size="sm" color="muted" />
+              <Typography variant="caption">{String(data.stars)}</Typography>
+            </View>
+            <View
+              accessibilityRole="text"
+              accessibilityLabel={`${data.forks} forks`}
+              style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+              <Icon name="git-network" size="sm" color="muted" />
+              <Typography variant="caption">{String(data.forks)}</Typography>
+            </View>
+            <View
+              accessibilityRole="text"
+              accessibilityLabel={`${data.watchers} watchers`}
+              style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+              <Icon name="eye-outline" size="sm" color="muted" />
+              <Typography variant="caption">{String(data.watchers)}</Typography>
+            </View>
           </Container>
 
           {data.language ? (
@@ -67,9 +92,9 @@ export function RepoDetailsScreen({ route, navigation }: Props) {
             </Typography>
           ) : null}
 
-          {data.description ? (
+          {trimmedDescription ? (
             <Typography variant="body" color="muted" testID="repo-details-description">
-              {data.description}
+              {trimmedDescription}
             </Typography>
           ) : null}
 
