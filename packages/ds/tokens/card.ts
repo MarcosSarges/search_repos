@@ -8,5 +8,5 @@ import type { SurfaceBg } from './surface';
 export const card = {
   radius: 'md' as Radius,
   borderColorToken: 'border' as ColorToken,
-  surfaceTone: 'surface' as SurfaceBg,
+  defaultBg: 'surface' as SurfaceBg,
 } as const;

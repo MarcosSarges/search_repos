@@ -25,7 +25,7 @@ describe('Card molecule (CTRL-04)', () => {
     const root = screen.getByTestId('card');
     const expectedRadius = theme.radius[theme.card.radius];
 
-    expect(root).toHaveStyleRule('background-color', theme.colors[theme.card.surfaceTone]);
+    expect(root).toHaveStyleRule('background-color', theme.colors[theme.card.defaultBg]);
     expect(root).toHaveStyleRule('border-color', theme.colors[theme.card.borderColorToken]);
     // css-to-react-native expands border-radius into corner radii
     expect(root).toHaveStyleRule('border-top-left-radius', expectedRadius);
@@ -82,7 +82,7 @@ describe('Card molecule (CTRL-04)', () => {
     const theme = getTheme('light');
     const root = screen.getByTestId('empty-card');
     expect(root).toBeTruthy();
-    expect(root).toHaveStyleRule('background-color', theme.colors[theme.card.surfaceTone]);
+    expect(root).toHaveStyleRule('background-color', theme.colors[theme.card.defaultBg]);
   });
 
   it('WHEN public props are inspected THEN style is not part of the controlled API', () => {

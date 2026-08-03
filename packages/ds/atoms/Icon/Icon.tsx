@@ -1,12 +1,12 @@
 import type { ComponentProps } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-import type { IconVariant } from '@ds/tokens';
+import type { IconSize } from '@ds/tokens';
 
 import { StyledIcon, type LegacyTone } from './styles';
 
 export type IconProps = Omit<ComponentProps<typeof Ionicons>, 'style' | 'size' | 'color'> & {
-  variant?: IconVariant;
+  variant?: IconSize;
   tone?: LegacyTone;
 };
 

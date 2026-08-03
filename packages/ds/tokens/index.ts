@@ -14,10 +14,10 @@ export { spacing, spacerEdgeAxis } from './spacing';
 export type { SpacerEdge, Spacing } from './spacing';
 
 export { icon } from './icon';
-export type { IconToken, IconVariant } from './icon';
+export type { IconToken, IconSize } from './icon';
 
 export { loading } from './loading';
-export type { LoadingIndicatorSize, LoadingToken, LoadingVariant } from './loading';
+export type { LoadingIndicatorSize, LoadingToken, LoadingSize } from './loading';
 
 export { button, buttonVariants, buttonColors, buttonWidths } from './button';
 export type {

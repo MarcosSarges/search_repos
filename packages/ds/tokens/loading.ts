@@ -5,11 +5,11 @@ export type LoadingToken = {
 };
 
 /**
- * Loading variants — tokens map to ActivityIndicator sizes; Loading atom only selects `variant`.
+ * Loading sizes — tokens map to ActivityIndicator sizes; Loading atom selects `size`.
  */
 export const loading = {
   sm: { indicatorSize: 'small' },
   lg: { indicatorSize: 'large' },
 } as const satisfies Record<string, LoadingToken>;
 
-export type LoadingVariant = keyof typeof loading;
+export type LoadingSize = keyof typeof loading;

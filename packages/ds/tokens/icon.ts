@@ -5,7 +5,7 @@ export type IconToken = {
 };
 
 /**
- * Icon scale variants — tokens own the pixel size; Icon atom only selects `variant`.
+ * Icon scale — tokens own the pixel size; Icon atom selects `size`.
  */
 export const icon = {
   xs: { size: sizes.xs },
@@ -15,4 +15,4 @@ export const icon = {
   xl: { size: sizes.xl },
 } as const satisfies Record<string, IconToken>;
 
-export type IconVariant = keyof typeof icon;
+export type IconSize = keyof typeof icon;

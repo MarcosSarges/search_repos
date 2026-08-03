@@ -1,11 +1,11 @@
 import { type ActivityIndicatorProps } from 'react-native';
 
-import type { LoadingVariant } from '@ds/tokens';
+import type { LoadingSize } from '@ds/tokens';
 
 import { StyledLoading } from './styles';
 
 export type LoadingProps = Omit<ActivityIndicatorProps, 'style' | 'size' | 'color'> & {
-  variant?: LoadingVariant;
+  variant?: LoadingSize;
 };
 
 export function Loading({

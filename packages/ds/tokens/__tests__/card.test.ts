@@ -1,10 +1,20 @@
 import { card } from '../card';
+import * as tokens from '../index';
 
-describe('card tokens (CTRL-04 foundation)', () => {
-  it('WHEN card chrome tokens are inspected THEN radius borderColorToken and surfaceTone exist', () => {
+describe('card tokens (PROP-06, PROP-19)', () => {
+  it('WHEN card chrome tokens are inspected THEN radius borderColorToken and defaultBg exist', () => {
     expect(card.radius).toBe('md');
     expect(card.borderColorToken).toBe('border');
-    expect(card.surfaceTone).toBe('surface');
+    expect(card.defaultBg).toBe('surface');
+  });
+
+  it('WHEN card fields are inspected THEN surfaceTone is absent (renamed to defaultBg)', () => {
+    expect(card).not.toHaveProperty('surfaceTone');
+    expect(card).toHaveProperty('defaultBg');
+  });
+
+  it('WHEN tokens barrel is inspected THEN card.defaultBg is surface', () => {
+    expect(tokens.card.defaultBg).toBe('surface');
   });
 
   it('WHEN token chrome maps are inspected THEN they do not hardcode brand hex colors', () => {

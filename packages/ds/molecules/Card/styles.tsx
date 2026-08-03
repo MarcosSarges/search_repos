@@ -5,7 +5,7 @@ export const StyledCard = styled(View)`
   ${({ theme }) => {
     const chrome = theme.card;
     return css`
-      background-color: ${theme.colors[chrome.surfaceTone]};
+      background-color: ${theme.colors[chrome.defaultBg]};
       border-radius: ${theme.radius[chrome.radius]}px;
       border-width: 1px;
       border-color: ${theme.colors[chrome.borderColorToken]};
