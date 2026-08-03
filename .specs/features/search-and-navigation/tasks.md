@@ -94,9 +94,9 @@ T8 → T9 → T10
 
 **Done when**:
 
-- [ ] `useDebouncedValue(value, delayMs?)` returns debounced value
-- [ ] Tests with fake timers: updates after delay; rapid changes keep latest only
-- [ ] Gate: `pnpm test -- src/presentation/hooks/__tests__/use-debounced-value.test.ts --watchman=false`
+- [x] `useDebouncedValue(value, delayMs?)` returns debounced value
+- [x] Tests with fake timers: updates after delay; rapid changes keep latest only
+- [x] Gate: `pnpm test -- src/presentation/hooks/__tests__/use-debounced-value.test.ts --watchman=false`
 
 **Tests**: unit  
 **Gate**: quick  
