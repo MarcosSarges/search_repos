@@ -1,15 +1,17 @@
 import type { ReactNode } from 'react';
 import { type PressableProps } from 'react-native';
 
-import type { ButtonSize } from '@ds/tokens';
+import type { ButtonColor, ButtonSize, ButtonVariant, ButtonWidth } from '@ds/tokens';
 import { button } from '@ds/tokens';
 
 import { Loading } from '../Loading';
-import { ButtonLabel, ContentRow, StyledButton, type LegacyButtonVariant } from './styles';
+import { ButtonLabel, ContentRow, StyledButton } from './styles';
 
-export type ButtonProps = Omit<PressableProps, 'style' | 'children' | 'disabled'> & {
-  variant?: LegacyButtonVariant;
+export type ButtonProps = Omit<PressableProps, 'children' | 'disabled'> & {
+  variant?: ButtonVariant;
+  color?: ButtonColor;
   size?: ButtonSize;
+  width?: ButtonWidth;
   loading?: boolean;
   disabled?: boolean;
   leading?: ReactNode;
@@ -18,8 +20,10 @@ export type ButtonProps = Omit<PressableProps, 'style' | 'children' | 'disabled'
 };
 
 export function Button({
-  variant = 'primary',
+  variant = 'contained',
+  color = 'primary',
   size = 'md',
+  width = 'full',
   loading = false,
   disabled = false,
   leading,
@@ -36,7 +40,9 @@ export function Button({
   return (
     <StyledButton
       $variant={variant}
+      $color={color}
       $size={size}
+      $width={width}
       $disabled={isDisabled}
       disabled={isDisabled}
       onPress={isDisabled ? undefined : onPress}
@@ -50,7 +56,9 @@ export function Button({
         <ContentRow>
           {leading}
           {typeof children === 'string' || typeof children === 'number' ? (
-            <ButtonLabel $variant={variant}>{children}</ButtonLabel>
+            <ButtonLabel $variant={variant} $color={color}>
+              {children}
+            </ButtonLabel>
           ) : (
             children
           )}

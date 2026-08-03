@@ -22,25 +22,52 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const ContainedPrimary: Story = {
   args: {
-    children: 'Primary',
-    variant: 'primary',
+    children: 'Contained primary',
+    variant: 'contained',
+    color: 'primary',
     size: 'md',
   },
 };
 
-export const Outline: Story = {
+export const OutlinedPrimary: Story = {
   args: {
-    children: 'Outline',
-    variant: 'outline',
+    children: 'Outlined primary',
+    variant: 'outlined',
+    color: 'primary',
   },
 };
 
-export const Ghost: Story = {
+export const TextPrimary: Story = {
   args: {
-    children: 'Ghost',
-    variant: 'ghost',
+    children: 'Text primary',
+    variant: 'text',
+    color: 'primary',
+  },
+};
+
+export const ContainedDanger: Story = {
+  args: {
+    children: 'Contained danger',
+    variant: 'contained',
+    color: 'danger',
+  },
+};
+
+export const OutlinedSuccess: Story = {
+  args: {
+    children: 'Outlined success',
+    variant: 'outlined',
+    color: 'success',
+  },
+};
+
+export const TextWarning: Story = {
+  args: {
+    children: 'Text warning',
+    variant: 'text',
+    color: 'warning',
   },
 };
 
@@ -52,6 +79,13 @@ export const Sizes: Story = {
       <Button size="lg">Large</Button>
     </View>
   ),
+};
+
+export const WidthHug: Story = {
+  args: {
+    children: 'Hug content',
+    width: 'hug',
+  },
 };
 
 export const Loading: Story = {

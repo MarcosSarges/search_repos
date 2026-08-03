@@ -22,7 +22,7 @@ export function ConfigScreen() {
         Escolha GitHub ou GitLab.
       </Typography>
       <Button
-        variant="ghost"
+        variant="text"
         accessibilityRole="button"
         accessibilityLabel="Switch data source"
         onPress={() => toggleDataSource()}
@@ -37,7 +37,7 @@ export function ConfigScreen() {
         Alternar entre claro e escuro.
       </Typography>
       <Button
-        variant="ghost"
+        variant="text"
         accessibilityRole="button"
         accessibilityLabel={themeA11yLabel}
         onPress={() => toggleMode()}

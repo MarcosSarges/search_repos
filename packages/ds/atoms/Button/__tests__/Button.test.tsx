@@ -1,19 +1,19 @@
 import { Text, View } from 'react-native';
 
 import { getTheme } from '@ds/theme';
-import { button } from '@ds/tokens';
+import { button, loading } from '@ds/tokens';
 import { cleanup, fireEvent, render, screen } from '@/test';
 
 import { Button, type ButtonProps } from '../Button';
 
-describe('Button atom (CTRL-01)', () => {
+describe('Button atom (PROP-09..16, PROP-20)', () => {
   afterEach(() => {
     cleanup();
   });
 
-  it('WHEN variant is primary THEN filled chrome uses theme.colors.primary', async () => {
+  it('WHEN variant is contained THEN filled chrome uses theme.colors for the color prop', async () => {
     await render(
-      <Button variant="primary" testID="btn">
+      <Button variant="contained" color="primary" testID="btn">
         Save
       </Button>,
       { themeMode: 'light' },
@@ -23,9 +23,9 @@ describe('Button atom (CTRL-01)', () => {
     expect(screen.getByTestId('btn')).toHaveStyleRule('background-color', theme.colors.primary);
   });
 
-  it('WHEN variant is outline THEN chrome uses primary border without primary fill', async () => {
+  it('WHEN variant is outlined THEN chrome uses color border without fill', async () => {
     await render(
-      <Button variant="outline" testID="btn">
+      <Button variant="outlined" color="primary" testID="btn">
         Outline
       </Button>,
       { themeMode: 'light' },
@@ -37,9 +37,9 @@ describe('Button atom (CTRL-01)', () => {
     expect(node).toHaveStyleRule('background-color', 'transparent');
   });
 
-  it('WHEN variant is ghost THEN chrome is transparent with no border fill', async () => {
+  it('WHEN variant is text THEN chrome is transparent with no border', async () => {
     await render(
-      <Button variant="ghost" testID="btn">
+      <Button variant="text" color="primary" testID="btn">
         Ghost
       </Button>,
       { themeMode: 'light' },
@@ -48,6 +48,25 @@ describe('Button atom (CTRL-01)', () => {
     const node = screen.getByTestId('btn');
     expect(node).toHaveStyleRule('background-color', 'transparent');
     expect(node).toHaveStyleRule('border-color', 'transparent');
+  });
+
+  it('WHEN color is danger with contained THEN fill uses theme.colors.danger', async () => {
+    await render(
+      <Button variant="contained" color="danger" testID="btn">
+        Delete
+      </Button>,
+      { themeMode: 'light' },
+    );
+
+    const theme = getTheme('light');
+    expect(screen.getByTestId('btn')).toHaveStyleRule('background-color', theme.colors.danger);
+  });
+
+  it('WHEN variant and color are omitted THEN defaults are contained + primary', async () => {
+    await render(<Button testID="btn">Default</Button>, { themeMode: 'light' });
+
+    const theme = getTheme('light', 'github');
+    expect(screen.getByTestId('btn')).toHaveStyleRule('background-color', theme.colors.primary);
   });
 
   it('WHEN size is sm THEN padding and minHeight come from button size tokens', async () => {
@@ -96,6 +115,52 @@ describe('Button atom (CTRL-01)', () => {
     expect(node).toHaveStyleRule('padding-bottom', token.paddingVertical);
     expect(node).toHaveStyleRule('padding-left', token.paddingHorizontal);
     expect(node).toHaveStyleRule('padding-right', token.paddingHorizontal);
+  });
+
+  it('WHEN width is full or omitted THEN pressable stretches full width', async () => {
+    await render(
+      <Button width="full" testID="btn-full">
+        Full
+      </Button>,
+    );
+
+    const node = screen.getByTestId('btn-full');
+    expect(node).toHaveStyleRule('align-self', 'stretch');
+    expect(node).toHaveStyleRule('width', '100%');
+  });
+
+  it('WHEN width is hug THEN pressable sizes to content', async () => {
+    await render(
+      <Button width="hug" testID="btn-hug">
+        Hug
+      </Button>,
+    );
+
+    expect(screen.getByTestId('btn-hug')).toHaveStyleRule('align-self', 'flex-start');
+  });
+
+  it('WHEN loading is true THEN Loading uses size from button token loadingSize', async () => {
+    await render(
+      <Button loading size="lg">
+        Saving
+      </Button>,
+    );
+
+    expect(screen.getByTestId('ds-loading').props.size).toBe(
+      loading[button.lg.loadingSize].indicatorSize,
+    );
+  });
+
+  it('WHEN public API is inspected THEN legacy variants primary outline ghost are absent', () => {
+    type HasLegacyPrimary = 'primary' extends NonNullable<ButtonProps['variant']> ? true : false;
+    type HasLegacyOutline = 'outline' extends NonNullable<ButtonProps['variant']> ? true : false;
+    type HasLegacyGhost = 'ghost' extends NonNullable<ButtonProps['variant']> ? true : false;
+    const hasLegacyPrimary: HasLegacyPrimary = false;
+    const hasLegacyOutline: HasLegacyOutline = false;
+    const hasLegacyGhost: HasLegacyGhost = false;
+    expect(hasLegacyPrimary).toBe(false);
+    expect(hasLegacyOutline).toBe(false);
+    expect(hasLegacyGhost).toBe(false);
   });
 
   it('WHEN disabled is true THEN onPress is not invoked and accessibilityState is disabled', async () => {
@@ -166,9 +231,16 @@ describe('Button atom (CTRL-01)', () => {
     expect(screen.queryByText('Label')).toBeNull();
   });
 
-  it('WHEN public props are inspected THEN style is not part of the controlled API', () => {
+  it('WHEN style is passed THEN it is accepted on the public props type and forwarded', async () => {
     type HasStyle = 'style' extends keyof ButtonProps ? true : false;
-    const hasStyle: HasStyle = false;
-    expect(hasStyle).toBe(false);
+    const hasStyle: HasStyle = true;
+    expect(hasStyle).toBe(true);
+
+    await render(
+      <Button testID="btn" style={{ opacity: 0.7 }}>
+        Styled
+      </Button>,
+    );
+    expect(screen.getByTestId('btn')).toHaveStyle({ opacity: 0.7 });
   });
 });
