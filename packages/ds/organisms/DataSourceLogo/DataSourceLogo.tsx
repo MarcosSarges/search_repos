@@ -1,3 +1,5 @@
+import type { StyleProp, ViewStyle } from 'react-native';
+
 import type { Brand } from '@ds/theme';
 import type { Size } from '@ds/tokens';
 import { useTheme } from '@ds/theme';
@@ -8,9 +10,10 @@ export type DataSourceLogoProps = {
   /** Overrides theme.brand when provided. */
   brand?: Brand;
   size?: Size;
+  style?: StyleProp<ViewStyle>;
 };
 
-export function DataSourceLogo({ brand: brandProp, size = 'md' }: DataSourceLogoProps) {
+export function DataSourceLogo({ brand: brandProp, size = 'md', style }: DataSourceLogoProps) {
   const theme = useTheme();
   const brand = brandProp ?? theme.brand;
   const asset = resolveLogoAsset(brand, theme.mode);
@@ -19,7 +22,7 @@ export function DataSourceLogo({ brand: brandProp, size = 'md' }: DataSourceLogo
   const testID = `ds-datasource-logo-${asset}` as const;
 
   return (
-    <StyledLogo $size={size}>
+    <StyledLogo $size={size} style={style}>
       <Logo
         width={dimension}
         height={dimension}

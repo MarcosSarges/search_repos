@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import type { StyleProp, ViewStyle } from 'react-native';
 
 import { Typography } from '@ds/atoms';
 
@@ -10,12 +11,17 @@ export type HeaderProps = {
   leading?: ReactNode;
   trailing?: ReactNode;
   safe?: boolean;
+  style?: StyleProp<ViewStyle>;
 };
 
-export function Header({ title, leading, trailing, safe }: HeaderProps) {
+export function Header({ title, leading, trailing, safe, style }: HeaderProps) {
   const insets = useSafeAreaInsets();
   return (
-    <StyledHeader testID="ds-header" accessibilityRole="header" safeTop={safe ? insets.top : null}>
+    <StyledHeader
+      testID="ds-header"
+      accessibilityRole="header"
+      style={style}
+      safeTop={safe ? insets.top : null}>
       {leading}
       <HeaderTitleSlot>
         <Typography variant="heading">{title}</Typography>

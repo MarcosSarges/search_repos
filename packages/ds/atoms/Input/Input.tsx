@@ -1,11 +1,19 @@
 import type { ReactNode } from 'react';
-import { type StyleProp, type TextInputProps, type ViewStyle } from 'react-native';
+import {
+  type StyleProp,
+  type TextInputProps,
+  type ViewStyle,
+} from 'react-native';
 
 import type { InputState } from '@ds/tokens';
 
 import { FieldInput, InputChrome, Slot } from './styles';
 
-export type InputProps = Omit<TextInputProps, 'style'> & {
+type TextInputFieldProps = {
+  [K in keyof TextInputProps as K extends 'style' ? never : K]: TextInputProps[K];
+};
+
+export type InputProps = TextInputFieldProps & {
   leading?: ReactNode;
   trailing?: ReactNode;
   state?: InputState;

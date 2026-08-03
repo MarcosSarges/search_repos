@@ -34,6 +34,15 @@ describe('Spacer atom (DS-05, DS-09)', () => {
     expect(screen.getByTestId('ds-spacer')).toHaveStyleRule('height', spacing.md);
   });
 
+  it('WHEN style is passed THEN it is accepted on the public props type and forwarded', async () => {
+    type HasStyle = 'style' extends keyof SpacerProps ? true : false;
+    const hasStyle: HasStyle = true;
+    expect(hasStyle).toBe(true);
+
+    await render(<Spacer top style={{ opacity: 0.3 }} />);
+    expect(screen.getByTestId('ds-spacer')).toHaveStyle({ opacity: 0.3 });
+  });
+
   it('WHEN no edge is provided at runtime THEN it throws a guard error', async () => {
     const Invalid = () => {
       const props = { size: 'md' } as SpacerProps;

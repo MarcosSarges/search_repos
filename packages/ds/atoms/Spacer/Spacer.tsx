@@ -1,9 +1,12 @@
+import type { StyleProp, ViewStyle } from 'react-native';
+
 import type { SpacerEdge, Spacing } from '@ds/tokens';
 
 import { StyledSpacer } from './styles';
 
 type SpacerBase = {
   size?: Spacing;
+  style?: StyleProp<ViewStyle>;
 };
 
 export type SpacerProps = SpacerBase &
@@ -39,5 +42,5 @@ export function Spacer(props: SpacerProps) {
   const edge = resolveEdge(props);
   const size = props.size ?? 'md';
 
-  return <StyledSpacer testID="ds-spacer" $edge={edge} $spacing={size} />;
+  return <StyledSpacer testID="ds-spacer" style={props.style} $edge={edge} $spacing={size} />;
 }

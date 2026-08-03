@@ -83,9 +83,17 @@ describe('DataSourceLogo organism (DSLIB-06)', () => {
     expect(component).toMatch(/brand\?:/);
   });
 
-  it('WHEN public props are inspected THEN style is not part of the controlled API', () => {
+  it('WHEN style is passed THEN it is accepted on the public props type and forwarded', async () => {
     type HasStyle = 'style' extends keyof DataSourceLogoProps ? true : false;
-    const hasStyle: HasStyle = false;
-    expect(hasStyle).toBe(false);
+    const hasStyle: HasStyle = true;
+    expect(hasStyle).toBe(true);
+
+    await render(<DataSourceLogo brand="github" style={{ opacity: 0.7 }} />, {
+      themeMode: 'light',
+    });
+
+    expect(screen.getByTestId('ds-datasource-logo-github-black').parent).toHaveStyle({
+      opacity: 0.7,
+    });
   });
 });

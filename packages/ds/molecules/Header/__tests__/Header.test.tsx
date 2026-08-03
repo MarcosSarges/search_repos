@@ -102,12 +102,15 @@ describe('Header molecule (DS-08, DS-09)', () => {
     expect(source).not.toMatch(/assets\/gitlab/);
   });
 
-  it('WHEN public props are inspected THEN style is not part of the controlled API and safe is', () => {
+  it('WHEN style is passed THEN it is accepted on the public props type and forwarded', async () => {
     type HasStyle = 'style' extends keyof HeaderProps ? true : false;
     type HasSafe = 'safe' extends keyof HeaderProps ? true : false;
-    const hasStyle: HasStyle = false;
+    const hasStyle: HasStyle = true;
     const hasSafe: HasSafe = true;
-    expect(hasStyle).toBe(false);
+    expect(hasStyle).toBe(true);
     expect(hasSafe).toBe(true);
+
+    await render(<Header title="Styled" style={{ opacity: 0.5 }} />);
+    expect(screen.getByTestId('ds-header')).toHaveStyle({ opacity: 0.5 });
   });
 });

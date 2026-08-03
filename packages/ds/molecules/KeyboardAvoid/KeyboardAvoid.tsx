@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Platform } from 'react-native';
+import { Platform, type StyleProp, type ViewStyle } from 'react-native';
 
 import { StyledKeyboardAvoid } from './styles';
 
@@ -30,6 +30,7 @@ export type KeyboardAvoidProps = {
   offset?: number;
   /** Overrides platform default behavior */
   behavior?: KeyboardAvoidBehavior;
+  style?: StyleProp<ViewStyle>;
   testID?: string;
 };
 
@@ -37,12 +38,13 @@ export function KeyboardAvoid({
   children,
   offset = 0,
   behavior: behaviorProp,
+  style,
   testID = 'ds-keyboard-avoid',
 }: KeyboardAvoidProps) {
   const behavior = resolveKeyboardAvoidBehavior(Platform.OS, behaviorProp);
 
   return (
-    <StyledKeyboardAvoid testID={testID} $behavior={behavior} $offset={offset}>
+    <StyledKeyboardAvoid testID={testID} style={style} $behavior={behavior} $offset={offset}>
       {children}
     </StyledKeyboardAvoid>
   );

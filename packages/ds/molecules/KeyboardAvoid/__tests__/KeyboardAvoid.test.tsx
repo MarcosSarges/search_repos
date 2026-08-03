@@ -44,10 +44,18 @@ describe('KeyboardAvoid molecule (DSLIB-11)', () => {
     expect(resolveKeyboardAvoidBehavior('android', 'padding')).toBe('padding');
   });
 
-  it('WHEN public props are inspected THEN style is not part of the controlled API', () => {
+  it('WHEN style is passed THEN it is accepted on the public props type and forwarded', async () => {
     type HasStyle = 'style' extends keyof KeyboardAvoidProps ? true : false;
-    const hasStyle: HasStyle = false;
-    expect(hasStyle).toBe(false);
+    const hasStyle: HasStyle = true;
+    expect(hasStyle).toBe(true);
+
+    await render(
+      <KeyboardAvoid style={{ opacity: 0.8 }}>
+        <View />
+      </KeyboardAvoid>,
+    );
+
+    expect(screen.getByTestId('ds-keyboard-avoid')).toHaveStyle({ opacity: 0.8 });
   });
 
   it('WHEN KeyboardAvoidProps are inspected THEN keyboard avoid is not required on Container', () => {
