@@ -48,9 +48,11 @@ export function RepoItem({
     <Card testID={testID} style={style}>
       <Card.Content>
         <BodyStack>
-          <Typography variant="heading">{toTitleCase(name)}</Typography>
+          <Typography variant="heading" numberOfLines={2}>
+            {toTitleCase(name)}
+          </Typography>
           {showDescription && trimmedDescription ? (
-            <Typography variant="body" color="muted">
+            <Typography variant="body" color="muted" numberOfLines={3}>
               {trimmedDescription}
             </Typography>
           ) : null}

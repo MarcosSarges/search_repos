@@ -6,7 +6,7 @@ import { RepoItem } from '@ds/organisms';
 
 export type RepoListItemProps = {
   repo: Repo;
-  /** When omitted, the row is presentational only (e.g. Explore). */
+  /** When omitted, the row is presentational only. */
   onPress?: (repoId: string) => void;
   testID?: string;
 };

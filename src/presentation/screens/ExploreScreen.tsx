@@ -1,11 +1,15 @@
+import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { useNavigation } from '@react-navigation/native';
+import { useCallback } from 'react';
 import { RefreshControl } from 'react-native';
 
-import { Loading, Typography } from '@ds/atoms';
-import { Container, FlatList } from '@ds/molecules';
 import type { Repo } from '@/domain';
 import { SessionSourceHeader } from '@/presentation/components';
 import { mapAppErrorToMessage } from '@/presentation/errors/map-app-error-to-message';
 import { useListTrendingRepos } from '@/presentation/hooks/use-list-trending-repos';
+import type { TabsParamList } from '@/presentation/navigation/types';
+import { Loading, Typography } from '@ds/atoms';
+import { Container, FlatList } from '@ds/molecules';
 
 import { RepoListItem } from './search/RepoListItem';
 
@@ -14,6 +18,7 @@ function flattenRepos(pages: { items: Repo[] }[] | undefined): Repo[] {
 }
 
 export function ExploreScreen() {
+  const navigation = useNavigation<BottomTabNavigationProp<TabsParamList, 'Explore'>>();
   const {
     data,
     error,
@@ -31,6 +36,16 @@ export function ExploreScreen() {
   const showInitialLoading = isPending && items.length === 0;
   const showEmpty = !isPending && !isError && items.length === 0;
   const showingList = !showInitialLoading && !(isError && items.length === 0) && !showEmpty;
+
+  const handlePress = useCallback(
+    (repoId: string) => {
+      navigation.navigate('Search', {
+        screen: 'RepoDetails',
+        params: { repoId },
+      });
+    },
+    [navigation],
+  );
 
   let body = null;
   if (showInitialLoading) {
@@ -53,7 +68,7 @@ export function ExploreScreen() {
         testID="explore-list"
         data={items}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <RepoListItem repo={item} />}
+        renderItem={({ item }) => <RepoListItem repo={item} onPress={handlePress} />}
         onEndReached={() => {
           if (hasNextPage && !isFetchingNextPage) {
             void fetchNextPage();
@@ -83,7 +98,7 @@ export function ExploreScreen() {
   return (
     <Container bg="background" flex={1} testID="explore-screen">
       <SessionSourceHeader safe title="Explore" />
-      <Container flex={1} px={showingList ? undefined : 'md'}>
+      <Container flex={1} px={showingList ? undefined : 'md'} pt="md">
         {body}
       </Container>
     </Container>

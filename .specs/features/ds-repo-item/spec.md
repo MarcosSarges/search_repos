@@ -11,7 +11,7 @@ A lista de repositórios ainda usa um `RepoListItem` de apresentação com Card 
 - [ ] `RepoListItem` de apresentação passa a compor o organism (adapter fino; sem estilos de card na tela)
 - [ ] Molecule **FlatList** em `packages/ds/molecules/FlatList`: padding via `contentContainerStyle` (não no wrapper externo), `Spacer` como separator default, defaults de performance, restante das props RN encaminháveis
 - [ ] **SearchReposScreen** e **RepoIssuesScreen** passam a usar a molécula FlatList (sem `FlatList` direto de `react-native` nessas listas)
-- [ ] **ExploreScreen** usa `RepoItem` (sem press — EXP read-only) + molécula FlatList
+- [ ] **ExploreScreen** usa `RepoItem` + molécula FlatList; tap no card navega para `RepoDetails`
 - [ ] Pasta AD-012 + stories Storybook + testes Jest+RNTL para Divider, RepoItem e FlatList; exports no barrel do DS
 
 ## Out of Scope
@@ -164,8 +164,8 @@ A lista de repositórios ainda usa um `RepoListItem` de apresentação com Card 
 
 1. WHEN `ExploreScreen` renders trending rows THEN each row SHALL use DS `RepoItem` (via shared domain→props mapping) showing Capitalize `name`, optional description, language Badge when present, owner Avatar, stars, and forks when defined
 2. WHEN `ExploreScreen` renders the list THEN it SHALL use `@ds/molecules` FlatList (not RN `FlatList`) with default Spacer/perf/content padding; parent SHALL NOT double-apply horizontal `px` while the list is showing
-3. WHEN Explore rows are inspected THEN they SHALL remain non-interactive (no `onPress` / navigation / Linking on the row) — EXP read-only constraint preserved
-4. WHEN ExploreScreen unit tests run THEN they SHALL assert RepoItem-visible outcomes (Title Case name, star/fork labels, language Badge) and FlatList adoption
+3. WHEN a trending row is pressed THEN Explore SHALL navigate to Search stack `RepoDetails` with the opaque `repo.id` (no Linking / external URL)
+4. WHEN ExploreScreen unit tests run THEN they SHALL assert RepoItem-visible outcomes (Title Case name, star/fork labels, language Badge), FlatList adoption, and press → details
 
 **Independent Test**: `ExploreScreen.test.tsx` green.
 

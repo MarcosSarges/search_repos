@@ -1,12 +1,13 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
+import { NavigationContainer } from '@react-navigation/native';
+
 import { createAppError, type Repo, type RepoRepository } from '@/domain';
 import { createInMemoryRepoRepository } from '@/infrastructure';
+import { TabsNavigator } from '@/presentation/navigation/TabsNavigator';
 import { mapAppErrorToMessage } from '@/presentation/errors/map-app-error-to-message';
 import { act, fireEvent, render, screen, waitFor } from '@/test';
-
-import { ExploreScreen } from '../ExploreScreen';
 
 const sampleRepos: Repo[] = [
   {
@@ -47,11 +48,31 @@ const sampleRepos: Repo[] = [
   },
 ];
 
+async function renderOnExploreTab(repository: RepoRepository) {
+  const result = await render(
+    <NavigationContainer>
+      <TabsNavigator />
+    </NavigationContainer>,
+    { repository, dataSource: 'github' },
+  );
+
+  await act(async () => {
+    const matches = screen.getAllByText('Explore');
+    fireEvent.press(matches[matches.length - 1]!);
+  });
+
+  await waitFor(() => {
+    expect(screen.getByTestId('explore-screen')).toBeTruthy();
+  });
+
+  return result;
+}
+
 describe('ExploreScreen (EXP-02,04,05,07,16, RITEM-13)', () => {
   it('WHEN trending results are available THEN rows use RepoItem (Capitalize name, stars, language Badge) (EXP-02, RITEM-13)', async () => {
     const repository = createInMemoryRepoRepository(sampleRepos);
 
-    await render(<ExploreScreen />, { repository, dataSource: 'github' });
+    await renderOnExploreTab(repository);
 
     await waitFor(() => {
       expect(screen.getByText('React')).toBeTruthy();
@@ -77,7 +98,7 @@ describe('ExploreScreen (EXP-02,04,05,07,16, RITEM-13)', () => {
         }),
     };
 
-    await render(<ExploreScreen />, { repository, dataSource: 'github' });
+    await renderOnExploreTab(repository);
 
     expect(screen.getByTestId('explore-initial-loading')).toBeTruthy();
 
@@ -98,7 +119,7 @@ describe('ExploreScreen (EXP-02,04,05,07,16, RITEM-13)', () => {
   it('WHEN first page returns zero items THEN shows empty state (EXP-05)', async () => {
     const repository = createInMemoryRepoRepository([]);
 
-    await render(<ExploreScreen />, { repository, dataSource: 'github' });
+    await renderOnExploreTab(repository);
 
     await waitFor(() => {
       expect(screen.getByTestId('explore-empty')).toBeTruthy();
@@ -124,7 +145,7 @@ describe('ExploreScreen (EXP-02,04,05,07,16, RITEM-13)', () => {
       },
     };
 
-    await render(<ExploreScreen />, { repository, dataSource: 'github' });
+    await renderOnExploreTab(repository);
 
     await waitFor(() => {
       expect(screen.getByTestId('explore-error')).toBeTruthy();
@@ -155,7 +176,7 @@ describe('ExploreScreen (EXP-02,04,05,07,16, RITEM-13)', () => {
       },
     };
 
-    await render(<ExploreScreen />, { repository, dataSource: 'github' });
+    await renderOnExploreTab(repository);
 
     await waitFor(() => {
       expect(screen.getByText('React')).toBeTruthy();
@@ -203,7 +224,7 @@ describe('ExploreScreen (EXP-02,04,05,07,16, RITEM-13)', () => {
       },
     };
 
-    await render(<ExploreScreen />, { repository, dataSource: 'github' });
+    await renderOnExploreTab(repository);
 
     await waitFor(() => {
       expect(screen.getByText('React')).toBeTruthy();
@@ -233,7 +254,7 @@ describe('ExploreScreen (EXP-02,04,05,07,16, RITEM-13)', () => {
       },
     };
 
-    await render(<ExploreScreen />, { repository, dataSource: 'github' });
+    await renderOnExploreTab(repository);
 
     await waitFor(() => {
       expect(screen.getByText('React')).toBeTruthy();
@@ -254,10 +275,30 @@ describe('ExploreScreen (EXP-02,04,05,07,16, RITEM-13)', () => {
     expect(screen.getByText('React')).toBeTruthy();
   });
 
-  it('WHEN Explore source is inspected THEN no navigation, Linking, or onPress on rows', () => {
+  it('WHEN Explore source is inspected THEN no Linking or Expo template leftovers', () => {
     const source = readFileSync(join(__dirname, '../ExploreScreen.tsx'), 'utf8');
-    expect(source).not.toMatch(/Linking|navigation\.|useNavigation|onPress|ExternalLink/);
+    expect(source).not.toMatch(/Linking|ExternalLink/);
     expect(source).not.toMatch(/ParallaxScrollView|ThemedText|Collapsible|HelloWave/);
+    expect(source).toMatch(/navigate\(\s*['"]Search['"]/);
+    expect(source).toMatch(/RepoDetails/);
+  });
+
+  it('WHEN a trending row is pressed THEN navigates to RepoDetails with opaque repo.id', async () => {
+    const repository = createInMemoryRepoRepository(sampleRepos);
+
+    await renderOnExploreTab(repository);
+
+    await waitFor(() => {
+      expect(screen.getByText('React')).toBeTruthy();
+    });
+
+    await act(async () => {
+      fireEvent.press(screen.getByText('React'));
+    });
+
+    await waitFor(() => {
+      expect(screen.getByTestId('repo-details-full-name')).toHaveTextContent('facebook/react');
+    });
   });
 
   it('WHEN Explore list is inspected THEN it uses DS FlatList + RepoListItem without RN FlatList (RITEM-13)', () => {
@@ -271,11 +312,11 @@ describe('ExploreScreen (EXP-02,04,05,07,16, RITEM-13)', () => {
   it('WHEN SessionSourceHeader is shown THEN title is Explore with source toggle', async () => {
     const repository = createInMemoryRepoRepository(sampleRepos);
 
-    await render(<ExploreScreen />, { repository, dataSource: 'github' });
+    await renderOnExploreTab(repository);
 
-    await waitFor(() => {
-      expect(screen.getByText('Explore')).toBeTruthy();
-    });
+    expect(screen.getByTestId('explore-screen')).toBeTruthy();
+    expect(screen.getByTestId('ds-source-header')).toBeTruthy();
+    expect(screen.getAllByText('Explore').length).toBeGreaterThanOrEqual(1);
 
     const source = readFileSync(join(__dirname, '../ExploreScreen.tsx'), 'utf8');
     expect(source).toMatch(/SessionSourceHeader/);
