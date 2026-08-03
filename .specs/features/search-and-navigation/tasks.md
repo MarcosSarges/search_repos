@@ -258,9 +258,9 @@ T8 → T9 → T10
 
 **Done when**:
 
-- [ ] Nav smoke test passes with `repoId`
-- [ ] Barrel exports debounce API
-- [ ] Gate: `pnpm lint` + `pnpm test -- src/screens src/navigation src/presentation --watchman=false`
+- [x] Nav smoke test passes with `repoId`
+- [x] Barrel exports debounce API
+- [x] Gate: `pnpm lint` + `pnpm test -- src/screens src/navigation src/presentation --watchman=false`
 
 **Tests**: unit (RNTL)  
 **Gate**: build  
