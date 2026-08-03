@@ -304,4 +304,12 @@ describe('SearchReposScreen (SRCH-01..11, CFG-04, NAV-05)', () => {
     expect(source).toMatch(/useDebouncedValue/);
     expect(source).toMatch(/mapAppErrorToMessage/);
   });
+
+  it('WHEN SearchRepos list region is inspected THEN it uses Container not View (DSLIB-13)', () => {
+    const source = readFileSync(join(__dirname, '../SearchReposScreen.tsx'), 'utf8');
+    expect(source).toMatch(/<Container[^>]*testID="search-repos-list-region"/);
+    expect(source).not.toMatch(/<View[^>]*testID="search-repos-list-region"/);
+    expect(source).toMatch(/\bFlatList\b/);
+    expect(source).toMatch(/\bRefreshControl\b/);
+  });
 });

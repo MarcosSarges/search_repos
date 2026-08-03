@@ -103,4 +103,32 @@ describe('packages/ds isolation (DSLIB-02)', () => {
 
     expect(leftover).toEqual([]);
   });
+
+  it('WHEN Storybook preview imports the DS THEN it uses the @ds alias (DSLIB-01/12)', () => {
+    const repoRoot = path.join(__dirname, '../../..');
+    const preview = fs.readFileSync(path.join(repoRoot, '.rnstorybook/preview.tsx'), 'utf8');
+    expect(preview).toMatch(/from ['"]@ds['"]/);
+    expect(preview).not.toMatch(/from ['"]\.\.\/packages\/ds['"]/);
+  });
+
+  it('WHEN README Design System section is read THEN it documents packages/ds, @ds, and presentation bridge (DSLIB-14)', () => {
+    const repoRoot = path.join(__dirname, '../../..');
+    const readme = fs.readFileSync(path.join(repoRoot, 'README.md'), 'utf8');
+    expect(readme).toMatch(/packages\/ds/);
+    expect(readme).toMatch(/`@ds`/);
+    expect(readme).toMatch(/presentation\/theme|AppThemeProvider/);
+  });
+
+  it('WHEN brand SVG imports are scanned THEN only DataSourceLogo organism imports them', () => {
+    const dsRoot = path.join(__dirname, '..');
+    const sourceFiles = listSourceFiles(dsRoot);
+    const assetImporters = sourceFiles.filter((filePath) => {
+      const content = fs.readFileSync(filePath, 'utf8');
+      return /assets\/(github|gitlab)\//.test(content);
+    });
+
+    expect(assetImporters.map((f) => path.relative(dsRoot, f))).toEqual([
+      path.join('organisms', 'DataSourceLogo', 'styles.tsx'),
+    ]);
+  });
 });

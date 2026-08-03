@@ -1,10 +1,11 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 
 import { render, screen } from '@/test';
 
+import { Container } from '../../Container';
 import {
   KeyboardAvoid,
   keyboardAvoidBehaviorByOs,
@@ -50,11 +51,22 @@ describe('KeyboardAvoid molecule (DSLIB-11)', () => {
   });
 
   it('WHEN KeyboardAvoidProps are inspected THEN keyboard avoid is not required on Container', () => {
-    const containerSource = readFileSync(
-      join(__dirname, '../../Container/Container.tsx'),
-      'utf8',
-    );
+    const containerSource = readFileSync(join(__dirname, '../../Container/Container.tsx'), 'utf8');
     expect(containerSource).not.toMatch(/keyboardAvoid\?:/);
     expect(containerSource).not.toMatch(/KeyboardAvoid/);
+  });
+
+  it('WHEN nested with Container THEN both mount without a combined component', async () => {
+    await render(
+      <KeyboardAvoid>
+        <Container testID="nested-container" p="md">
+          <View testID="nested-child" />
+        </Container>
+      </KeyboardAvoid>,
+    );
+
+    expect(screen.getByTestId('ds-keyboard-avoid')).toBeTruthy();
+    expect(screen.getByTestId('nested-container')).toBeTruthy();
+    expect(screen.getByTestId('nested-child')).toBeTruthy();
   });
 });

@@ -1,7 +1,7 @@
 import type { Preview } from '@storybook/react-native';
 import { View } from 'react-native';
 
-import { spacing, type ThemeMode } from '../packages/ds';
+import { spacing, type ThemeMode } from '@ds';
 import { AppThemeProvider } from '../src/presentation/theme';
 import type { DataSource } from '../src/application';
 

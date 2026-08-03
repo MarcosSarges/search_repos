@@ -19,9 +19,7 @@ export const WithContainer: Story = {
     offset: 0,
     children: (
       <Container p="md" flex={1} keyboardDismiss>
-        <Typography>
-          KeyboardAvoid outside + Container inside (tap to dismiss keyboard)
-        </Typography>
+        <Typography>KeyboardAvoid outside + Container inside (tap to dismiss keyboard)</Typography>
       </Container>
     ),
   },

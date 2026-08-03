@@ -1,4 +1,4 @@
-import { Keyboard, View } from 'react-native';
+import { Keyboard, TextInput, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { fireEvent, render, screen } from '@/test';
@@ -160,6 +160,46 @@ describe('Container molecule (DSLIB-07..10)', () => {
     expect(dismissSpy).not.toHaveBeenCalled();
 
     dismissSpy.mockRestore();
+  });
+
+  it('WHEN safe is false THEN it does not add safe-area padding', async () => {
+    await render(
+      <SafeAreaProvider initialMetrics={safeAreaMetrics}>
+        <Container p="md" safe={false}>
+          <View />
+        </Container>
+      </SafeAreaProvider>,
+    );
+
+    const node = screen.getByTestId('ds-container');
+    expect(node).toHaveStyleRule('padding-top', spacing.md);
+    expect(node).toHaveStyleRule('padding-bottom', spacing.md);
+  });
+
+  it('WHEN keyboardDismiss is true and TextInput is focused THEN Keyboard.dismiss is not called', async () => {
+    const dismissSpy = jest.spyOn(Keyboard, 'dismiss').mockImplementation(() => {});
+
+    await render(
+      <Container keyboardDismiss>
+        <TextInput testID="field" />
+      </Container>,
+    );
+
+    fireEvent(screen.getByTestId('field'), 'focus');
+    fireEvent.changeText(screen.getByTestId('field'), 'query');
+    expect(dismissSpy).not.toHaveBeenCalled();
+
+    dismissSpy.mockRestore();
+  });
+
+  it('WHEN spacing props are typed THEN raw number is not assignable to Spacing keys', () => {
+    type RejectsNumber = number extends import('@ds/tokens').Spacing ? true : false;
+    const rejectsNumber: RejectsNumber = false;
+    expect(rejectsNumber).toBe(false);
+
+    type HasPadding = 'padding' extends keyof ContainerProps ? true : false;
+    const hasPadding: HasPadding = false;
+    expect(hasPadding).toBe(false);
   });
 
   it('WHEN public props are inspected THEN style is not part of the controlled API', () => {

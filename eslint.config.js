@@ -9,6 +9,19 @@ module.exports = defineConfig([
   eslintPluginPrettierRecommended,
   {
     ignores: ['dist/*'],
+    // Later expo flat configs replace import/resolver with node-only and drop
+    // typescript path aliases — re-enable so `@ds/*` / `@/*` resolve.
+    settings: {
+      'import/resolver': {
+        typescript: {
+          alwaysTryTypes: true,
+          project: './tsconfig.json',
+        },
+        node: {
+          extensions: ['.ts', '.tsx', '.js', '.jsx', '.mjs', '.cjs'],
+        },
+      },
+    },
     rules: {
       'prettier/prettier': ['error', prettierOptions],
     },

@@ -16,7 +16,7 @@ import {
 
 export type SafeEdge = 'top' | 'bottom' | 'left' | 'right';
 
-const ALL_SAFE_EDGES = ['top', 'bottom', 'left', 'right'] as const satisfies ReadonlyArray<SafeEdge>;
+const ALL_SAFE_EDGES = ['top', 'bottom', 'left', 'right'] as const satisfies readonly SafeEdge[];
 
 const safeEdgeInsetKey = {
   top: 'top',
@@ -26,7 +26,7 @@ const safeEdgeInsetKey = {
 } as const satisfies Record<SafeEdge, SafeEdge>;
 
 function resolveSafeEdgeSet(
-  safe: boolean | ReadonlyArray<SafeEdge> | undefined,
+  safe: boolean | readonly SafeEdge[] | undefined,
 ): ReadonlySet<SafeEdge> {
   if (safe === true) {
     return new Set(ALL_SAFE_EDGES);
@@ -61,7 +61,7 @@ export type ContainerProps = {
   justify?: ContainerJustify;
   align?: ContainerAlign;
   wrap?: ContainerWrap;
-  safe?: boolean | ReadonlyArray<SafeEdge>;
+  safe?: boolean | readonly SafeEdge[];
   keyboardDismiss?: boolean;
 };
 
@@ -113,14 +113,12 @@ export function Container({
   });
   const safeEdges = resolveSafeEdgeSet(safe);
 
-  const paddingTop =
-    box.paddingTop + (safeEdges.has(safeEdgeInsetKey.top) ? insets.top : 0);
+  const paddingTop = box.paddingTop + (safeEdges.has(safeEdgeInsetKey.top) ? insets.top : 0);
   const paddingRight =
     box.paddingRight + (safeEdges.has(safeEdgeInsetKey.right) ? insets.right : 0);
   const paddingBottom =
     box.paddingBottom + (safeEdges.has(safeEdgeInsetKey.bottom) ? insets.bottom : 0);
-  const paddingLeft =
-    box.paddingLeft + (safeEdges.has(safeEdgeInsetKey.left) ? insets.left : 0);
+  const paddingLeft = box.paddingLeft + (safeEdges.has(safeEdgeInsetKey.left) ? insets.left : 0);
 
   const content = keyboardDismiss ? (
     <Pressable accessible={false} onPress={Keyboard.dismiss} style={{ flex: 1 }}>

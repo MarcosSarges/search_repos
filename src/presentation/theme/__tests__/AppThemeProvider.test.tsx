@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { Text, View } from 'react-native';
-import { waitFor } from '@testing-library/react-native';
 
 import { useTheme } from '@ds/theme';
 import { useAppTheme } from '@/presentation/theme';
