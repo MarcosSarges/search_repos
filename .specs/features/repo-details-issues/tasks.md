@@ -17,6 +17,8 @@ Implement these tasks with the `tlc-spec-driven` skill: **activate it by name an
 
 **Batch 1 results** ([T1–T7 DS](07056ee3-a0e1-452f-b8aa-0f70a3645d2e)): T1 `60ab124` · T2 `f3626b9` · T3 `c5ca2c9` · T4 `c357168` · T5 `ed6e893` · T6 `e38a4a0` · T7 `6e52297` — 236 passed scoped. Deviations: none.
 
+**Batch 2 results** ([T8–T14 screens](5287b72d-db1f-475f-83e7-af7117c6a747)): T8 `8c91f57` · T9 `25e6a21` · T10 `d806665` · T11 `2164572` · T12 `d1e0b89` · T13 `1be7e6f` · T14 `b8bece7` — 356 passed (`packages/ds` + `src/presentation`); lint clean. Deviation: TabsNavigator Config probe updated with T10 (theme section vs removed fonte).
+
 ---
 
 ## Test Coverage Matrix

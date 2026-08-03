@@ -237,9 +237,9 @@
 ## Handoff
 
 - **Feature**: repo-details-issues (`.specs/features/repo-details-issues/`)
-- **Phase / Task**: Execute — Batch 2 (T8–T14) in flight
-- **Completed**: Batch 1 T1–T7 (`60ab124`…`6e52297`)
-- **In-progress**: Batch Worker 2 (Phases 3–4)
-- **Next step**: Await Batch 2 summary → Verifier
+- **Phase / Task**: Execute — Verifier in flight
+- **Completed**: T1–T14 (Batch 1 + Batch 2)
+- **In-progress**: Verifier sub-agent
+- **Next step**: Await validation.md PASS/FAIL; fix loop ≤3 if FAIL
 - **Blockers**: none
 - **Branch**: `feat/repo-details-issues`
