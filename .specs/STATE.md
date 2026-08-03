@@ -220,11 +220,11 @@
 
 ## Handoff
 
-- **Feature**: ds-as-lib (`.specs/features/ds-as-lib/`)
-- **Phase / Task**: Execute complete (T1–T12) — Verifier pending
-- **Completed**: T1–T12 on `feat/ds-as-lib`
-- **In-progress**: Verifier sub-agent
-- **Next step**: Dispatch Verifier; write validation.md; push PR #11
+- **Feature**: ds-as-lib (`.specs/features/ds-as-lib/`) — DONE
+- **Phase / Task**: Execute + Verifier PASS
+- **Completed**: T1–T12; Verifier PASS (29/29 ACs; sensor 3/3 killed; 385 tests; lint 0 errors)
+- **In-progress**: none
+- **Next step**: Optional mark PR #11 ready-for-review; merge when ready
 - **Blockers**: none
-- **Uncommitted files**: none after T12 commit
-- **Branch**: `feat/ds-as-lib`
+- **Uncommitted files**: none after validation closeout commit
+- **Branch**: `feat/ds-as-lib` (PR https://github.com/MarcosSarges/search_repos/pull/11)

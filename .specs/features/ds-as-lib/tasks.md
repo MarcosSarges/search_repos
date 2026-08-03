@@ -9,7 +9,7 @@ Implement these tasks with the `tlc-spec-driven` skill: **activate it by name an
 ---
 
 **Design**: `.specs/features/ds-as-lib/design.md`  
-**Status**: Done — Execute complete; Verifier pending  
+**Status**: Done — Verifier PASS (2026-08-03)
 
 **Tools (locked):** `tlc-spec-driven` + código (Shell/Read/Write/Edit/Grep). **Sem** Maestro MCP nesta feature.
 ---
