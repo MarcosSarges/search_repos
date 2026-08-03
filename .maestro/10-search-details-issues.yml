@@ -1,0 +1,52 @@
+appId: host.exp.Exponent
+name: Search → Details → Issues (live API)
+tags:
+  - p1
+  - search
+---
+- runFlow: shared/boot.yml
+- tapOn:
+    id: search-repos-input
+    label: Focus search field
+- tapOn:
+    id: ds-input-field
+    optional: true
+    label: Focus TextInput if nested
+- inputText: react
+- hideKeyboard
+- extendedWaitUntil:
+    visible:
+      id: search-repos-list
+    timeout: 60000
+    label: E2E-03 — search results list
+- tapOn:
+    id: repo-list-item
+    index: 0
+    label: Open first search result
+- extendedWaitUntil:
+    visible:
+      id: repo-details-content
+    timeout: 60000
+    label: E2E-04 — details content
+- assertVisible:
+    id: repo-details-full-name
+- tapOn:
+    id: repo-details-issues-cta
+    label: Open issues
+- extendedWaitUntil:
+    visible:
+      id: "repo-issues-(list|empty)"
+    timeout: 60000
+    label: E2E-05 — issues list or empty
+- tapOn:
+    id: ds-back-header-back
+    label: Back to details
+- assertVisible:
+    id: repo-details-content
+    label: E2E-06 — back to details
+- tapOn:
+    id: ds-back-header-back
+    label: Back to search list
+- assertVisible:
+    id: search-repos-list
+    label: E2E-06 — back to search list
