@@ -17,6 +17,12 @@ export type ListIssuesInput = {
   perPage?: number;
 };
 
+export type ListTrendingInput = {
+  /** 1-based page index (page `1` is the first page). */
+  page: number;
+  perPage?: number;
+};
+
 /**
  * Provider-agnostic repository port.
  *
@@ -27,4 +33,5 @@ export type RepoRepository = {
   search: (input: SearchReposInput) => Promise<PaginatedResult<Repo>>;
   getById: (repoId: string) => Promise<Repo>;
   listIssues: (input: ListIssuesInput) => Promise<PaginatedResult<Issue>>;
+  listTrending: (input: ListTrendingInput) => Promise<PaginatedResult<Repo>>;
 };
