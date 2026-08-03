@@ -360,11 +360,11 @@ T11 → T12
 
 **Done when**:
 
-- [ ] No layout-only `View` remains in this screen for the list region
-- [ ] `testID="search-repos-list-region"` preserved
-- [ ] `FlatList` / `Pressable` (RepoListItem) unchanged as hosts
-- [ ] Gate: `pnpm test -- src/presentation/screens`
-- [ ] Test count: existing search screen tests still pass
+- [x] No layout-only `View` remains in this screen for the list region
+- [x] `testID="search-repos-list-region"` preserved
+- [x] `FlatList` / `Pressable` (RepoListItem) unchanged as hosts
+- [x] Gate: `pnpm test -- src/presentation/screens`
+- [x] Test count: existing search screen tests still pass
 
 **Tests**: unit  
 **Gate**: quick  

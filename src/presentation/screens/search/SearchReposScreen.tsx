@@ -1,6 +1,6 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useCallback, useMemo, useState, type ReactNode } from 'react';
-import { FlatList, RefreshControl, View } from 'react-native';
+import { FlatList, RefreshControl } from 'react-native';
 
 import { Button, Loading, Typography } from '@ds/atoms';
 import { Container, Header, InputField } from '@ds/molecules';
@@ -116,7 +116,7 @@ export function SearchReposScreen({ navigation }: Props) {
         accessibilityLabel="Buscar repositórios"
         testID="search-repos-input"
       />
-      <View testID="search-repos-list-region">{listBody}</View>
+      <Container testID="search-repos-list-region">{listBody}</Container>
     </Container>
   );
 }
