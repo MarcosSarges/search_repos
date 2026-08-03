@@ -236,10 +236,10 @@
 
 ## Handoff
 
-- **Feature**: repo-details-issues (`.specs/features/repo-details-issues/`)
-- **Phase / Task**: Execute — Verifier in flight
-- **Completed**: T1–T14 (Batch 1 + Batch 2)
-- **In-progress**: Verifier sub-agent
-- **Next step**: Await validation.md PASS/FAIL; fix loop ≤3 if FAIL
+- **Feature**: none — repo-details-issues **Done** (Verifier PASS)
+- **Phase / Task**: —
+- **Completed**: T1–T14 + validation (`751eced`); branch `feat/repo-details-issues`
+- **In-progress**: none
+- **Next step**: review/merge feature branch; optional PR
 - **Blockers**: none
 - **Branch**: `feat/repo-details-issues`
