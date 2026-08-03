@@ -17,9 +17,7 @@ describe('SettingsRow molecule (DIC-10)', () => {
   });
 
   it('WHEN subtitle is set THEN it shows the supporting subtitle', async () => {
-    await render(
-      <SettingsRow icon="key-outline" title="Token de API" subtitle="Em breve" />,
-    );
+    await render(<SettingsRow icon="key-outline" title="Token de API" subtitle="Em breve" />);
 
     expect(screen.getByText('Token de API')).toBeTruthy();
     expect(screen.getByText('Em breve')).toBeTruthy();

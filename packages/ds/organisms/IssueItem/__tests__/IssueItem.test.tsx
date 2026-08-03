@@ -20,10 +20,7 @@ const baseProps: IssueItemProps = {
   titleHref: 'https://github.com/facebook/react/issues/42',
   authorName: 'octocat',
   authorAvatarUrl: 'https://avatars.example/octocat.png',
-  labels: [
-    { label: 'bug', swatch: 'ff0000' },
-    { label: 'priority' },
-  ],
+  labels: [{ label: 'bug', swatch: 'ff0000' }, { label: 'priority' }],
   state: 'open',
   comments: 3,
   updatedAt: '2026-08-03T11:00:00.000Z',

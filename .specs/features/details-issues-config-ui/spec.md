@@ -6,11 +6,11 @@ Details e Issues já entregam dados (feature `repo-details-issues`), mas a UI é
 
 ## Goals
 
-- [ ] `RepoDetailsScreen` com hero denso e métricas stars/forks/watchers com os mesmos ícones do `RepoItem` (+ olho para watchers)
-- [ ] Organismo DS `IssueItem` no padrão `RepoItem` + adapter presentation fino
-- [ ] Domínio `Issue` enriquecido (`state`, `comments`, `updatedAt`) com mappers/fixtures GitHub + GitLab
-- [ ] `ConfigScreen` em settings rows: tema, fonte ativa (read-only), token placeholder
-- [ ] Stories + testes Jest/RNTL alinhados aos ACs (sem enfraquecer testes existentes)
+- [x] `RepoDetailsScreen` com hero denso e métricas stars/forks/watchers com os mesmos ícones do `RepoItem` (+ olho para watchers)
+- [x] Organismo DS `IssueItem` no padrão `RepoItem` + adapter presentation fino
+- [x] Domínio `Issue` enriquecido (`state`, `comments`, `updatedAt`) com mappers/fixtures GitHub + GitLab
+- [x] `ConfigScreen` em settings rows: tema, fonte ativa (read-only), token placeholder
+- [x] Stories + testes Jest/RNTL alinhados aos ACs (sem enfraquecer testes existentes)
 
 ## Out of Scope
 
@@ -159,16 +159,16 @@ Details e Issues já entregam dados (feature `repo-details-issues`), mas a UI é
 
 | Requirement ID | Story | Phase | Status |
 | -------------- | ----- | ----- | ------ |
-| DIC-01 | P1: Details hero + metrics | Tasks (T5) | Pending |
-| DIC-02 | P1: Details icons match RepoItem + eye watchers | Tasks (T5) | Pending |
-| DIC-03 | P1: Details keeps CTA/Hyperlink/loading/error; no RepoDetails organism | Tasks (T5) | Pending |
-| DIC-04 | P1: Issue domain `state` / `comments` / `updatedAt` | Tasks (T1) | Pending |
-| DIC-05 | P1: GitHub + GitLab mappers + fixtures + Fake | Tasks (T1) | Pending |
-| DIC-06 | P1: Filter GitHub `pull_request` items | Tasks (T1) | Pending |
-| DIC-07 | P1: IssueItem organism (RepoItem pattern) | Tasks (T3) | Pending |
-| DIC-08 | P1: IssueListItem adapter + RepoIssuesScreen adoption | Tasks (T4) | Pending |
-| DIC-09 | P1: Config settings rows (theme / source RO / token placeholder) | Tasks (T6) | Pending |
-| DIC-10 | P2: SettingsRow molecule | Tasks (T2) | Pending |
+| DIC-01 | P1: Details hero + metrics | Tasks (T5) | Done |
+| DIC-02 | P1: Details icons match RepoItem + eye watchers | Tasks (T5) | Done |
+| DIC-03 | P1: Details keeps CTA/Hyperlink/loading/error; no RepoDetails organism | Tasks (T5) | Done |
+| DIC-04 | P1: Issue domain `state` / `comments` / `updatedAt` | Tasks (T1) | Done |
+| DIC-05 | P1: GitHub + GitLab mappers + fixtures + Fake | Tasks (T1) | Done |
+| DIC-06 | P1: Filter GitHub `pull_request` items | Tasks (T1) | Done |
+| DIC-07 | P1: IssueItem organism (RepoItem pattern) | Tasks (T3) | Done |
+| DIC-08 | P1: IssueListItem adapter + RepoIssuesScreen adoption | Tasks (T4) | Done |
+| DIC-09 | P1: Config settings rows (theme / source RO / token placeholder) | Tasks (T6) | Done |
+| DIC-10 | P2: SettingsRow molecule | Tasks (T2) | Done |
 
 **Coverage:** 10 total, 10 mapped to tasks, 0 unmapped
 
@@ -176,8 +176,8 @@ Details e Issues já entregam dados (feature `repo-details-issues`), mas a UI é
 
 ## Success Criteria
 
-- [ ] Details shows iconed stars/forks/watchers in a clear hero without a DS `RepoDetails` organism
-- [ ] Issues list uses DS `IssueItem` with `#number`, state, comments, relative `updatedAt`, labels, author
-- [ ] Domain + both ACLs expose the new Issue fields; GitHub PRs filtered out
-- [ ] Config reads as settings rows with theme toggle, read-only source, token placeholder
-- [ ] Gate: relevant Jest suites green; isolation test still passes for new DS pieces
+- [x] Details shows iconed stars/forks/watchers in a clear hero without a DS `RepoDetails` organism
+- [x] Issues list uses DS `IssueItem` with `#number`, state, comments, relative `updatedAt`, labels, author
+- [x] Domain + both ACLs expose the new Issue fields; GitHub PRs filtered out
+- [x] Config reads as settings rows with theme toggle, read-only source, token placeholder
+- [x] Gate: relevant Jest suites green; isolation test still passes for new DS pieces

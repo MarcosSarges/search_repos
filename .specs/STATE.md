@@ -245,9 +245,9 @@
 ## Handoff
 
 - **Feature**: details-issues-config-ui
-- **Phase / Task**: Design + Tasks ready — awaiting Execute
-- **Completed**: Specify + discuss + design.md + tasks.md (T1–T6)
+- **Phase / Task**: Execute complete (T1–T6); next Verifier
+- **Completed**: Specify + Design + Tasks; Execute — T1 (`1c7c7ee`), T2 (`8773b86`), T3 (`e00061f`), T4 (`be8562c`), T5 (`559b3ac`), T6 (`c62157b`)
 - **In-progress**: none
-- **Next step**: User approves tasks → Execute T1…T6 (single batch) → Verifier
+- **Next step**: Verifier (author ≠ verifier) — write validation.md
 - **Blockers**: none
-- **Branch**: (TBD for implementation)
+- **Branch**: `feat/details-issues-config-ui`

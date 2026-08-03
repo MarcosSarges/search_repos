@@ -9,7 +9,7 @@ Implement these tasks with the `tlc-spec-driven` skill: **activate it by name an
 ---
 
 **Design**: `.specs/features/details-issues-config-ui/design.md`  
-**Status**: In Progress — Execute Batch 2 (T4–T6)
+**Status**: Execute complete — awaiting Verifier
 
 ---
 
@@ -171,7 +171,7 @@ T4 → T5 → T6
 
 **Tests**: unit
 **Gate**: quick
-**Commit**: `refactor(presentation): adapt IssueListItem to IssueItem`
+**Commit**: `refactor(presentation): adapt IssueListItem to IssueItem` (`be8562c`)
 
 ---
 
@@ -198,7 +198,7 @@ T4 → T5 → T6
 
 **Tests**: unit
 **Gate**: quick
-**Commit**: `feat(presentation): restyle RepoDetails hero and metrics`
+**Commit**: `feat(presentation): restyle RepoDetails hero and metrics` (`559b3ac`)
 
 ---
 
@@ -217,16 +217,16 @@ T4 → T5 → T6
 
 **Done when**:
 
-- [ ] Three rows with icon + title + subtitle
-- [ ] Theme trailing toggles and persists
-- [ ] Source shows GitHub/GitLab from store; no toggle control
-- [ ] Token placeholder “Em breve”; no TextInput/SecureStore/setToken
-- [ ] Gate: `pnpm test -- src/presentation/screens/__tests__/ConfigScreen.test.tsx` passes
-- [ ] Full gate after this task: `pnpm test` && `pnpm lint`
+- [x] Three rows with icon + title + subtitle
+- [x] Theme trailing toggles and persists
+- [x] Source shows GitHub/GitLab from store; no toggle control
+- [x] Token placeholder “Em breve”; no TextInput/SecureStore/setToken
+- [x] Gate: `pnpm test -- src/presentation/screens/__tests__/ConfigScreen.test.tsx` passes
+- [x] Full gate after this task: `pnpm test` && `pnpm lint`
 
 **Tests**: unit
 **Gate**: full
-**Commit**: `feat(presentation): redesign Config as settings rows`
+**Commit**: `feat(presentation): redesign Config as settings rows` (`c62157b`)
 
 ---
 
@@ -317,7 +317,7 @@ Execution is strictly sequential. **6 tasks → one inline batch** (no sub-agent
 | DIC-06 | T1 | Done (`1c7c7ee`) |
 | DIC-07 | T3 | Done (`e00061f`) |
 | DIC-08 | T4 | Done |
-| DIC-09 | T6 | Pending |
+| DIC-09 | T6 | Done |
 | DIC-10 | T2 | Done (`8773b86`) |
 
 **Coverage:** 10 total, 10 mapped to tasks, 0 unmapped

@@ -41,11 +41,7 @@ export function SettingsRow({
 
   if (onPress) {
     return (
-      <Pressable
-        accessibilityRole="button"
-        onPress={onPress}
-        style={style}
-        testID={testID}>
+      <Pressable accessibilityRole="button" onPress={onPress} style={style} testID={testID}>
         <RowRoot>{content}</RowRoot>
       </Pressable>
     );
