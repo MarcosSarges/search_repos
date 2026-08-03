@@ -3,7 +3,7 @@
   "promote_threshold": 2,
   "window_days": 45,
   "quarantine_threshold": 2,
-  "next_id": 31,
+  "next_id": 33,
   "lessons": [
     {
       "id": "L-001",
@@ -545,6 +545,42 @@
       ],
       "created": "2026-08-03T11:42:09Z",
       "last_seen": "2026-08-03T11:42:09Z"
+    },
+    {
+      "id": "L-031",
+      "key": "ac_gap::assert public component prop types reject sx with a type level or scan test not only readme wording",
+      "text": "Assert public component prop types reject sx with a type-level or scan test, not only README wording",
+      "signal": "ac_gap",
+      "scope": "packages/ds",
+      "status": "candidate",
+      "features": [
+        "ds-mui-props"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "PROP-21 (packages/ds)"
+      ],
+      "created": "2026-08-03T12:39:44Z",
+      "last_seen": "2026-08-03T12:39:44Z"
+    },
+    {
+      "id": "L-032",
+      "key": "ac_gap::when an ac covers omitted or explicit default prop values assert both branches in the test",
+      "text": "When an AC covers omitted OR explicit default prop values, assert both branches in the test",
+      "signal": "ac_gap",
+      "scope": "packages/ds",
+      "status": "candidate",
+      "features": [
+        "ds-mui-props"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "PROP-13 (packages/ds)"
+      ],
+      "created": "2026-08-03T12:39:45Z",
+      "last_seen": "2026-08-03T12:39:45Z"
     }
   ]
 }

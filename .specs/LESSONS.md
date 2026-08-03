@@ -194,6 +194,18 @@ Seen once or not yet corroborated. Tracked, not trusted.
 - evidence: Edge: keyboardDismiss + TextInput focus (packages/ds)
 - last seen: 2026-08-03T11:42:09Z
 
+### L-031 — Assert public component prop types reject sx with a type-level or scan test, not only README wording
+- signal: `ac_gap` · recurrence: 1 feature(s) · scope: `packages/ds` · harmful: 0
+- features: ds-mui-props
+- evidence: PROP-21 (packages/ds)
+- last seen: 2026-08-03T12:39:44Z
+
+### L-032 — When an AC covers omitted OR explicit default prop values, assert both branches in the test
+- signal: `ac_gap` · recurrence: 1 feature(s) · scope: `packages/ds` · harmful: 0
+- features: ds-mui-props
+- evidence: PROP-13 (packages/ds)
+- last seen: 2026-08-03T12:39:45Z
+
 ## Quarantined (failed when applied — ignore)
 
 A confirmed lesson that recurred alongside failure. Kept for the maintainer to review.
