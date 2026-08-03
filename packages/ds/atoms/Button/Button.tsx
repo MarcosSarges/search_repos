@@ -45,7 +45,7 @@ export function Button({
       testID={testID}
       {...rest}>
       {loading ? (
-        <Loading variant={loadingSize} />
+        <Loading size={loadingSize} />
       ) : (
         <ContentRow>
           {leading}

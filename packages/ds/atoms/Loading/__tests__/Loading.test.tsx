@@ -3,7 +3,7 @@ import { getTheme } from '@ds/theme';
 
 import { Loading, type LoadingProps } from '../Loading';
 
-describe('Loading atom (DS-06, DS-09)', () => {
+describe('Loading atom (PROP-18, PROP-20)', () => {
   it('WHEN shown in light mode THEN indicator color is theme.colors.primary (not hardcoded)', async () => {
     await render(<Loading />, { themeMode: 'light' });
 
@@ -22,21 +22,36 @@ describe('Loading atom (DS-06, DS-09)', () => {
     expect(node.props.color).toBe('#5FED83');
   });
 
-  it('WHEN variant is lg THEN ActivityIndicator uses large size from loading token', async () => {
-    await render(<Loading variant="lg" />);
+  it('WHEN size is lg THEN ActivityIndicator uses large size from loading token', async () => {
+    await render(<Loading size="lg" />);
 
     expect(screen.getByTestId('ds-loading').props.size).toBe('large');
   });
 
-  it('WHEN public props are inspected THEN style size and color are not part of the controlled API', () => {
+  it('WHEN size is sm THEN ActivityIndicator uses small size from loading token', async () => {
+    await render(<Loading size="sm" />);
+
+    expect(screen.getByTestId('ds-loading').props.size).toBe('small');
+  });
+
+  it('WHEN style is passed THEN it is accepted on the public props type and forwarded', async () => {
     type HasStyle = 'style' extends keyof LoadingProps ? true : false;
+    const hasStyle: HasStyle = true;
+    expect(hasStyle).toBe(true);
+
+    await render(<Loading testID="ds-loading" style={{ opacity: 0.3 }} />);
+    expect(screen.getByTestId('ds-loading')).toHaveStyle({ opacity: 0.3 });
+  });
+
+  it('WHEN public props are inspected THEN size is DS prop and variant is not', () => {
     type HasSize = 'size' extends keyof LoadingProps ? true : false;
+    type HasVariant = 'variant' extends keyof LoadingProps ? true : false;
     type HasColor = 'color' extends keyof LoadingProps ? true : false;
-    const hasStyle: HasStyle = false;
-    const hasSize: HasSize = false;
+    const hasSize: HasSize = true;
+    const hasVariant: HasVariant = false;
     const hasColor: HasColor = false;
-    expect(hasStyle).toBe(false);
-    expect(hasSize).toBe(false);
+    expect(hasSize).toBe(true);
+    expect(hasVariant).toBe(false);
     expect(hasColor).toBe(false);
   });
 });

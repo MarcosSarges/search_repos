@@ -4,19 +4,19 @@ import type { LoadingSize } from '@ds/tokens';
 
 import { StyledLoading } from './styles';
 
-export type LoadingProps = Omit<ActivityIndicatorProps, 'style' | 'size' | 'color'> & {
-  variant?: LoadingSize;
+export type LoadingProps = Omit<ActivityIndicatorProps, 'size' | 'color'> & {
+  size?: LoadingSize;
 };
 
 export function Loading({
-  variant = 'sm',
+  size = 'sm',
   accessibilityRole = 'progressbar',
   testID = 'ds-loading',
   ...rest
 }: LoadingProps) {
   return (
     <StyledLoading
-      $variant={variant}
+      $size={size}
       accessibilityRole={accessibilityRole}
       testID={testID}
       {...rest}

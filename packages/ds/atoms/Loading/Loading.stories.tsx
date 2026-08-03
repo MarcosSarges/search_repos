@@ -21,14 +21,14 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const Small: Story = {
   args: {
-    variant: 'sm',
+    size: 'sm',
   },
 };
 
 export const Large: Story = {
   args: {
-    variant: 'lg',
+    size: 'lg',
   },
 };

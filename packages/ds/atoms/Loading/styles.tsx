@@ -4,8 +4,8 @@ import { styled } from 'styled-components/native';
 import type { LoadingSize } from '@ds/tokens';
 
 export const StyledLoading = styled(ActivityIndicator).attrs<{
-  $variant: LoadingSize;
-}>(({ theme, $variant }) => ({
+  $size: LoadingSize;
+}>(({ theme, $size }) => ({
   color: theme.colors.primary,
-  size: theme.loading[$variant].indicatorSize,
+  size: theme.loading[$size].indicatorSize,
 }))``;
