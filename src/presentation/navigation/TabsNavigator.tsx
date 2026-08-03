@@ -1,9 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 
-import { useTheme } from '@/components/ds';
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
+import { Icon, useTheme } from '@/components/ds';
 import { SearchStackNavigator } from '@/presentation/navigation/SearchStackNavigator';
 import type { TabsParamList } from '@/presentation/navigation/types';
 import { ConfigScreen } from '@/presentation/screens/ConfigScreen';
@@ -23,14 +21,15 @@ export function TabsNavigator() {
           backgroundColor: theme.colors.surface,
         },
         headerShown: false,
-        tabBarButton: HapticTab,
       }}>
       <Tabs.Screen
         name="Search"
         component={SearchStackNavigator}
         options={{
           title: 'Search',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="magnifyingglass" color={color} />,
+          tabBarIcon: ({ focused }) => (
+            <Icon variant="lg" name="search" tone={focused ? 'primary' : 'muted'} />
+          ),
         }}
       />
       <Tabs.Screen
@@ -38,7 +37,9 @@ export function TabsNavigator() {
         component={FavoritosScreen}
         options={{
           title: 'Favoritos',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="heart.fill" color={color} />,
+          tabBarIcon: ({ focused }) => (
+            <Icon variant="lg" name="heart" tone={focused ? 'primary' : 'muted'} />
+          ),
         }}
       />
       <Tabs.Screen
@@ -46,7 +47,9 @@ export function TabsNavigator() {
         component={ExploreScreen}
         options={{
           title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          tabBarIcon: ({ focused }) => (
+            <Icon variant="lg" name="paper-plane" tone={focused ? 'primary' : 'muted'} />
+          ),
         }}
       />
       <Tabs.Screen
@@ -54,7 +57,9 @@ export function TabsNavigator() {
         component={ConfigScreen}
         options={{
           title: 'Config',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="gearshape.fill" color={color} />,
+          tabBarIcon: ({ focused }) => (
+            <Icon variant="lg" name="settings" tone={focused ? 'primary' : 'muted'} />
+          ),
         }}
       />
     </Tabs.Navigator>

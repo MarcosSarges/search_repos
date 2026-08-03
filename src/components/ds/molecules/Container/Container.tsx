@@ -11,6 +11,7 @@ export type ContainerProps = {
   flex?: boolean;
   justify?: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly';
   align?: 'start' | 'center' | 'end' | 'stretch' | 'baseline';
+  testID?: string;
 };
 
 export function Container({
@@ -20,10 +21,11 @@ export function Container({
   flex = false,
   justify = 'start',
   align = 'start',
+  testID = 'ds-container',
 }: ContainerProps) {
   return (
     <StyledContainer
-      testID="ds-container"
+      testID={testID}
       $padding={padding}
       $tone={tone}
       $flex={flex}
