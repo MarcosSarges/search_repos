@@ -4,6 +4,8 @@ export type IssueLabel = {
   color?: string;
 };
 
+export type IssueState = 'open' | 'closed';
+
 export type Issue = {
   id: string;
   number: number;
@@ -12,5 +14,8 @@ export type Issue = {
   authorAvatarUrl?: string;
   labels: IssueLabel[];
   createdAt: string;
+  updatedAt: string;
+  state: IssueState;
+  comments: number;
   htmlUrl: string;
 };

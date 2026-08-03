@@ -31,5 +31,8 @@ export type GitlabIssueDto = {
   /** GitLab returns labels as string names. */
   labels?: string[];
   created_at: string;
+  updated_at: string;
+  state: 'opened' | 'closed';
+  user_notes_count: number;
   web_url: string;
 };

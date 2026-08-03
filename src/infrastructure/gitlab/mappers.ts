@@ -38,6 +38,10 @@ function mapGitlabLabel(name: string): IssueLabel {
   };
 }
 
+function mapGitlabIssueState(state: GitlabIssueDto['state']): Issue['state'] {
+  return state === 'opened' ? 'open' : 'closed';
+}
+
 export function mapGitlabIssue(dto: GitlabIssueDto): Issue {
   return {
     id: String(dto.id),
@@ -47,6 +51,9 @@ export function mapGitlabIssue(dto: GitlabIssueDto): Issue {
     authorAvatarUrl: nullToUndefined(dto.author?.avatar_url),
     labels: (dto.labels ?? []).map(mapGitlabLabel),
     createdAt: dto.created_at,
+    updatedAt: dto.updated_at,
+    state: mapGitlabIssueState(dto.state),
+    comments: dto.user_notes_count,
     htmlUrl: dto.web_url,
   };
 }

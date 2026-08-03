@@ -31,6 +31,9 @@ const sampleIssues: Issue[] = [
     authorName: 'alice',
     labels: [],
     createdAt: '2024-01-01T00:00:00Z',
+    updatedAt: '2024-01-01T12:00:00Z',
+    state: 'open',
+    comments: 1,
     htmlUrl: 'https://github.com/facebook/react/issues/1',
   },
   {
@@ -40,6 +43,9 @@ const sampleIssues: Issue[] = [
     authorName: 'bob',
     labels: [],
     createdAt: '2024-01-02T00:00:00Z',
+    updatedAt: '2024-01-02T12:00:00Z',
+    state: 'open',
+    comments: 0,
     htmlUrl: 'https://github.com/facebook/react/issues/2',
   },
 ];

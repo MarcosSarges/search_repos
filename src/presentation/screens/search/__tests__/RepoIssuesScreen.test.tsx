@@ -39,6 +39,9 @@ const sampleIssues: Issue[] = [
     authorName: 'alice',
     labels: [{ id: 'bug', name: 'bug', color: 'ff0000' }],
     createdAt: '2026-08-03T10:00:00.000Z',
+    updatedAt: '2026-08-03T11:00:00.000Z',
+    state: 'open',
+    comments: 2,
     htmlUrl: 'https://github.com/facebook/react/issues/1',
   },
   {
@@ -48,6 +51,9 @@ const sampleIssues: Issue[] = [
     authorName: 'bob',
     labels: [],
     createdAt: '2026-08-02T10:00:00.000Z',
+    updatedAt: '2026-08-02T11:00:00.000Z',
+    state: 'closed',
+    comments: 0,
     htmlUrl: 'https://github.com/facebook/react/issues/2',
   },
 ];
@@ -100,7 +106,7 @@ describe('RepoIssuesScreen (RDI-06, RDI-07)', () => {
     });
   });
 
-  it('WHEN issues arrive THEN rows show title Hyperlink, labels, author, and relative date', async () => {
+  it('WHEN issues arrive THEN rows show title Hyperlink, labels, author, and relative updatedAt via IssueItem', async () => {
     await renderIssues(
       'facebook/react',
       createInMemoryRepoRepository([sampleRepo], { 'facebook/react': sampleIssues }),
@@ -112,9 +118,14 @@ describe('RepoIssuesScreen (RDI-06, RDI-07)', () => {
 
     expect(screen.getByText('bug')).toBeTruthy();
     expect(screen.getByText('alice')).toBeTruthy();
+    expect(screen.getByText('#1')).toBeTruthy();
+    expect(screen.getByText('Aberta')).toBeTruthy();
     expect(screen.getByText('Second issue')).toBeTruthy();
     expect(screen.getByText('bob')).toBeTruthy();
-    expect(screen.getAllByTestId('issue-list-item-date').length).toBeGreaterThanOrEqual(2);
+    expect(screen.getByText('#2')).toBeTruthy();
+    expect(screen.getByText('Fechada')).toBeTruthy();
+    expect(screen.getAllByTestId('ds-issue-item').length).toBeGreaterThanOrEqual(2);
+    expect(screen.getAllByTestId('ds-issue-item-date').length).toBeGreaterThanOrEqual(2);
   });
 
   it('WHEN details are ready THEN repo Hyperlink opens htmlUrl', async () => {

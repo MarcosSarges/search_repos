@@ -39,6 +39,9 @@ export function mapGithubIssue(dto: GithubIssueDto): Issue {
     authorAvatarUrl: nullToUndefined(dto.user?.avatar_url),
     labels: (dto.labels ?? []).map(mapGithubLabel),
     createdAt: dto.created_at,
+    updatedAt: dto.updated_at,
+    state: dto.state,
+    comments: dto.comments,
     htmlUrl: dto.html_url,
   };
 }

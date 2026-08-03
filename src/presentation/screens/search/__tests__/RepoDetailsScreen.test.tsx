@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -47,6 +47,15 @@ const minimalRepo: Repo = {
   htmlUrl: 'https://github.com/owner/minimal',
 };
 
+const whitespaceDescriptionRepo: Repo = {
+  ...minimalRepo,
+  id: 'owner/whitespace',
+  name: 'whitespace',
+  fullName: 'owner/whitespace',
+  description: '   \n\t  ',
+  htmlUrl: 'https://github.com/owner/whitespace',
+};
+
 async function renderDetails(
   repoId: string,
   repository?: RepoRepository,
@@ -69,7 +78,7 @@ async function renderDetails(
   );
 }
 
-describe('RepoDetailsScreen (RDI-05)', () => {
+describe('RepoDetailsScreen (DIC-01, DIC-02, DIC-03)', () => {
   beforeEach(() => {
     jest.mocked(Linking.openURL).mockReset();
     jest.mocked(Linking.openURL).mockResolvedValue(undefined as never);
@@ -107,22 +116,35 @@ describe('RepoDetailsScreen (RDI-05)', () => {
     });
   });
 
-  it('WHEN data arrives THEN it shows §4.3 fields from Fake repo', async () => {
+  it('WHEN data arrives THEN hero shows avatar lg, owner, fullName and three iconed metrics', async () => {
     await renderDetails('facebook/react', createInMemoryRepoRepository([sampleRepo]));
 
     await waitFor(() => {
-      expect(screen.getByText('facebook/react')).toBeTruthy();
+      expect(screen.getByTestId('repo-details-full-name')).toHaveTextContent('facebook/react');
     });
 
     expect(screen.getByText('facebook')).toBeTruthy();
     expect(screen.getByTestId('ds-avatar')).toBeTruthy();
+    expect(screen.getByTestId('repo-details-content')).toBeTruthy();
+
+    expect(screen.getByLabelText('1000 stars')).toBeTruthy();
+    expect(screen.getByLabelText('200 forks')).toBeTruthy();
+    expect(screen.getByLabelText('1500 watchers')).toBeTruthy();
     expect(screen.getByText('1000')).toBeTruthy();
     expect(screen.getByText('200')).toBeTruthy();
     expect(screen.getByText('1500')).toBeTruthy();
+
     expect(screen.getByText('JavaScript')).toBeTruthy();
     expect(screen.getByText('A JavaScript library for building user interfaces')).toBeTruthy();
     expect(screen.getByText('Abrir no site')).toBeTruthy();
     expect(screen.getByTestId('repo-details-issues-cta')).toBeTruthy();
+  });
+
+  it('WHEN RepoDetailsScreen source is inspected THEN metrics use star, git-network, and eye-outline', () => {
+    const source = readFileSync(join(__dirname, '../RepoDetailsScreen.tsx'), 'utf8');
+    expect(source).toMatch(/name=["']star["']/);
+    expect(source).toMatch(/name=["']git-network["']/);
+    expect(source).toMatch(/name=["']eye-outline["']/);
   });
 
   it('WHEN description is missing THEN description block is omitted', async () => {
@@ -130,6 +152,19 @@ describe('RepoDetailsScreen (RDI-05)', () => {
 
     await waitFor(() => {
       expect(screen.getByText('owner/minimal')).toBeTruthy();
+    });
+
+    expect(screen.queryByTestId('repo-details-description')).toBeNull();
+  });
+
+  it('WHEN description is whitespace-only THEN description block is omitted', async () => {
+    await renderDetails(
+      'owner/whitespace',
+      createInMemoryRepoRepository([whitespaceDescriptionRepo]),
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText('owner/whitespace')).toBeTruthy();
     });
 
     expect(screen.queryByTestId('repo-details-description')).toBeNull();
@@ -207,7 +242,7 @@ describe('RepoDetailsScreen (RDI-05)', () => {
     expect(screen.queryByTestId('ds-source-header-toggle')).toBeNull();
   });
 
-  it('WHEN RepoDetailsScreen source is inspected THEN it uses hooks only (RDI-05)', () => {
+  it('WHEN RepoDetailsScreen source is inspected THEN it uses hooks only and no RepoDetails organism', () => {
     const source = readFileSync(join(__dirname, '../RepoDetailsScreen.tsx'), 'utf8');
     expect(source).toMatch(/useRepoDetails/);
     expect(source).toMatch(/StackBackHeader/);
@@ -216,6 +251,11 @@ describe('RepoDetailsScreen (RDI-05)', () => {
     expect(source).not.toMatch(/@\/infrastructure\/(github|gitlab)/);
     expect(source).not.toMatch(/\bfetch\s*\(/);
     expect(source).not.toMatch(/useSessionPreferencesStore/);
+    expect(source).not.toMatch(/organisms\/RepoDetails/);
+    expect(source).not.toMatch(/\bimport\s*\{[^}]*\bRepoDetails\b/);
+    expect(existsSync(join(__dirname, '../../../../packages/ds/organisms/RepoDetails'))).toBe(
+      false,
+    );
   });
 
   describe('favorite toggle (FAV-06/07/08)', () => {

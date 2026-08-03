@@ -260,11 +260,11 @@
 
 ## Handoff
 
-- **Feature**: favorites — Done locally
-- **Phase / Task**: Verifier PASS (re-check 1/3 after lint fix `f9008ba`)
-- **Completed**: MVP P1 (FAV-01..13, FAV-15) + AD-032 CA; gate `pnpm test` 635 + `pnpm lint` exit 0; sensor 3/3 prior
-- **In-progress**: none
-- **Next step**: optional PR; P2 (FAV-14) deferred
+- **Feature**: favorites — merging main into PR #16
+- **Phase / Task**: Resolve merge conflicts with `origin/main` (details-issues-config-ui)
+- **Completed**: MVP P1 + AD-032 CA; Verifier PASS prior to merge
+- **In-progress**: conflict resolution
+- **Next step**: finish merge commit, push, confirm PR mergeable
 - **Blockers**: none
 - **Branch**: `feat/favorites`
 - **Worktree**: `/Users/marcos/searchrepos-favorites`

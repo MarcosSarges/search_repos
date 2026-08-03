@@ -33,6 +33,7 @@ describe('domain public API (DOM-01, DOM-16)', () => {
     expect(barrelSource).toMatch(/\bRepo\b/);
     expect(barrelSource).toMatch(/\bIssue\b/);
     expect(barrelSource).toMatch(/\bIssueLabel\b/);
+    expect(barrelSource).toMatch(/\bIssueState\b/);
     expect(barrelSource).toMatch(/\bPaginatedResult\b/);
     expect(barrelSource).toMatch(/\bRepoRepository\b/);
     expect(barrelSource).toMatch(/\bSearchReposInput\b/);

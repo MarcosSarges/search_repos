@@ -3,7 +3,7 @@
   "promote_threshold": 2,
   "window_days": 45,
   "quarantine_threshold": 2,
-  "next_id": 37,
+  "next_id": 40,
   "lessons": [
     {
       "id": "L-001",
@@ -18,7 +18,7 @@
       "recurrence": 1,
       "harmful": 0,
       "evidence": [
-        "validation.md Gate Check — 5 prettier/prettier errors in Icon/Spacer/Container/Header (lint)"
+        "validation.md Gate Check \u2014 5 prettier/prettier errors in Icon/Spacer/Container/Header (lint)"
       ],
       "created": "2026-07-31T13:50:22Z",
       "last_seen": "2026-07-31T13:50:22Z"
@@ -36,7 +36,7 @@
       "recurrence": 1,
       "harmful": 0,
       "evidence": [
-        "DS-02 AC4 — AppThemeProvider.test.tsx lacks theme.colors.primary after setDataSource (theme)"
+        "DS-02 AC4 \u2014 AppThemeProvider.test.tsx lacks theme.colors.primary after setDataSource (theme)"
       ],
       "created": "2026-07-31T13:50:22Z",
       "last_seen": "2026-07-31T13:50:22Z"
@@ -54,7 +54,7 @@
       "recurrence": 1,
       "harmful": 0,
       "evidence": [
-        "Edge case Typography tone=primary + dataSource flip — no file:line evidence (ds-atoms)"
+        "Edge case Typography tone=primary + dataSource flip \u2014 no file:line evidence (ds-atoms)"
       ],
       "created": "2026-07-31T13:50:22Z",
       "last_seen": "2026-07-31T13:50:22Z"
@@ -72,7 +72,7 @@
       "recurrence": 1,
       "harmful": 0,
       "evidence": [
-        "Atoms Loading AC — primary (or muted) without when-muted rule (spec)"
+        "Atoms Loading AC \u2014 primary (or muted) without when-muted rule (spec)"
       ],
       "created": "2026-07-31T13:50:22Z",
       "last_seen": "2026-07-31T13:50:22Z"
@@ -180,7 +180,7 @@
       "recurrence": 1,
       "harmful": 0,
       "evidence": [
-        "tokens/typography.ts body fontWeight 400→600; typography.test.ts:12 (ds/tokens)"
+        "tokens/typography.ts body fontWeight 400\u2192600; typography.test.ts:12 (ds/tokens)"
       ],
       "created": "2026-07-31T14:33:47Z",
       "last_seen": "2026-07-31T14:33:47Z"
@@ -386,7 +386,7 @@
     {
       "id": "L-022",
       "key": "ac_gap::when a spec mandates http query params sort order assert those params on the intercepted request mapping assertions alone do not cover the request contract",
-      "text": "When a spec mandates HTTP query params (sort/order), assert those params on the intercepted request — mapping assertions alone do not cover the request contract",
+      "text": "When a spec mandates HTTP query params (sort/order), assert those params on the intercepted request \u2014 mapping assertions alone do not cover the request contract",
       "signal": "ac_gap",
       "scope": "infrastructure/http-adapters",
       "status": "candidate",
@@ -423,7 +423,7 @@
     {
       "id": "L-024",
       "key": "ac_gap::after introducing a path alias for a lib assert storybook preview and app entry import via that alias only not relative packages paths",
-      "text": "After introducing a path alias for a lib, assert Storybook preview and app entry import via that alias only—not relative packages/ paths",
+      "text": "After introducing a path alias for a lib, assert Storybook preview and app entry import via that alias only\u2014not relative packages/ paths",
       "signal": "ac_gap",
       "scope": "packages/ds",
       "status": "candidate",
@@ -441,7 +441,7 @@
     {
       "id": "L-025",
       "key": "ac_gap::when props must accept only token union keys add a type level test that raw number is not assignable mirroring the existing style prop exclusion pattern",
-      "text": "When props must accept only token union keys, add a type-level test that raw number is not assignable—mirroring the existing style-prop exclusion pattern",
+      "text": "When props must accept only token union keys, add a type-level test that raw number is not assignable\u2014mirroring the existing style-prop exclusion pattern",
       "signal": "ac_gap",
       "scope": "packages/ds",
       "status": "candidate",
@@ -477,7 +477,7 @@
     {
       "id": "L-027",
       "key": "ac_gap::when replacing a host element assert the new component identity in source or queries not only a preserved testid that would still pass on the old host",
-      "text": "When replacing a host element, assert the new component identity in source or queries—not only a preserved testID that would still pass on the old host",
+      "text": "When replacing a host element, assert the new component identity in source or queries\u2014not only a preserved testID that would still pass on the old host",
       "signal": "ac_gap",
       "scope": "presentation",
       "status": "candidate",
@@ -513,7 +513,7 @@
     {
       "id": "L-029",
       "key": "spec_precision_gap::when the spec says only one module may import an asset set assert a repo wide scan for those import paths not only that the allowed module imports them",
-      "text": "When the spec says only one module may import an asset set, assert a repo-wide scan for those import paths—not only that the allowed module imports them",
+      "text": "When the spec says only one module may import an asset set, assert a repo-wide scan for those import paths\u2014not only that the allowed module imports them",
       "signal": "spec_precision_gap",
       "scope": "packages/ds",
       "status": "candidate",
@@ -638,6 +638,60 @@
     },
     {
       "id": "L-036",
+      "key": "spec_precision_gap::when a spec names a concrete prop value e g avatar size lg assert that exact value or source match it presence of a shared testid alone is not enough",
+      "text": "When a spec names a concrete prop value (e.g. Avatar size lg), assert that exact value or source-match it \u2014 presence of a shared testID alone is not enough",
+      "signal": "spec_precision_gap",
+      "scope": "presentation/screens",
+      "status": "candidate",
+      "features": [
+        "details-issues-config-ui"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "DIC-01 RepoDetailsScreen.test.tsx:114 (presentation/screens)"
+      ],
+      "created": "2026-08-03T18:09:37Z",
+      "last_seen": "2026-08-03T18:09:37Z"
+    },
+    {
+      "id": "L-037",
+      "key": "spec_precision_gap::for settings row uis assert each row s icon name and supporting subtitle text not only section titles and interactive trailing controls",
+      "text": "For settings-row UIs, assert each row's icon name and supporting subtitle text, not only section titles and interactive trailing controls",
+      "signal": "spec_precision_gap",
+      "scope": "presentation/config",
+      "status": "candidate",
+      "features": [
+        "details-issues-config-ui"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "DIC-09 ConfigScreen.test.tsx theme subtitle/icons (presentation/config)"
+      ],
+      "created": "2026-08-03T18:09:37Z",
+      "last_seen": "2026-08-03T18:09:37Z"
+    },
+    {
+      "id": "L-038",
+      "key": "spec_precision_gap::new ds pieces that require ad 012 folders need an existssync or equivalent file set assertion in colocated tests same as organism peers",
+      "text": "New DS pieces that require AD-012 folders need an existsSync (or equivalent) file-set assertion in colocated tests, same as organism peers",
+      "signal": "spec_precision_gap",
+      "scope": "packages/ds",
+      "status": "candidate",
+      "features": [
+        "details-issues-config-ui"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "DIC-10 SettingsRow AD-012 files (packages/ds)"
+      ],
+      "created": "2026-08-03T18:09:37Z",
+      "last_seen": "2026-08-03T18:09:37Z"
+    },
+    {
+      "id": "L-039",
       "key": "gate_fail::before declaring a feature gate green ensure every feature touched storybook stories file ends with a prettier compliant newline so pnpm lint exits 0",
       "text": "Before declaring a feature gate green, ensure every feature-touched Storybook/stories file ends with a prettier-compliant newline so pnpm lint exits 0",
       "signal": "gate_fail",
