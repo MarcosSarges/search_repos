@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import type { DataSource } from '@/application';
 import type { RepoRepository } from '@/domain';
 import { createContainer, type AppContainer } from '@/infrastructure/di/create-container';
-import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
+import { useSessionPreferencesStore } from '@/presentation/stores/session-preferences-store';
 
 /** Test-only Fake injection — product code must not call this. */
 let testRepositoryOverride: RepoRepository | undefined;

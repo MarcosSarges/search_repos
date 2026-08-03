@@ -1,7 +1,7 @@
 import { Button, Icon, Typography } from '@ds/atoms';
 import { Container, Header } from '@ds/molecules';
 import { useAppTheme } from '@/presentation/theme';
-import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
+import { useSessionPreferencesStore } from '@/presentation/stores/session-preferences-store';
 
 export function ConfigScreen() {
   const { mode } = useAppTheme();

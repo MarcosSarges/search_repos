@@ -16,7 +16,7 @@ import type { DataSource } from '@/application';
 import type { RepoRepository } from '@/domain';
 import { setAppContainerTestRepository } from '@/presentation/hooks/use-app-container';
 import { AppQueryProvider } from '@/presentation/providers/AppQueryProvider';
-import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
+import { useSessionPreferencesStore } from '@/presentation/stores/session-preferences-store';
 
 const initialSafeAreaMetrics = {
   frame: { x: 0, y: 0, width: 390, height: 844 },

@@ -96,11 +96,11 @@ T10 → T11
 
 **Done when**:
 
-- [ ] No `src/stores/` directory remains
-- [ ] Zero production/test imports of `@/stores` (grep clean)
-- [ ] Session preference + hydrate + theme gate tests still pass
-- [ ] Domain/application production sources do not import presentation stores
-- [ ] Gate: `pnpm test -- src/presentation/stores src/presentation/theme src/domain`
+- [x] No `src/stores/` directory remains
+- [x] Zero production/test imports of `@/stores` (grep clean)
+- [x] Session preference + hydrate + theme gate tests still pass
+- [x] Domain/application production sources do not import presentation stores
+- [x] Gate: `pnpm test -- src/presentation/stores src/presentation/theme src/domain`
 
 **Tests**: unit  
 **Gate**: quick  

@@ -10,7 +10,7 @@ import {
 
 import type { Repo } from '@/domain';
 import { createInMemoryRepoRepository } from '@/infrastructure';
-import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
+import { useSessionPreferencesStore } from '@/presentation/stores/session-preferences-store';
 import { act, screen } from '@/test/render';
 
 import { setAppContainerTestRepository, useAppContainer } from '../use-app-container';
