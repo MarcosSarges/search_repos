@@ -3,3 +3,6 @@ export type { DataSourceLogoProps } from './DataSourceLogo';
 
 export { Hyperlink } from './Hyperlink';
 export type { HyperlinkProps } from './Hyperlink';
+
+export { SourceHeader } from './SourceHeader';
+export type { SourceHeaderProps } from './SourceHeader';
