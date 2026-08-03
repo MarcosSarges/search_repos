@@ -2,6 +2,7 @@ import {
   createAppError,
   type Issue,
   type ListIssuesInput,
+  type ListTrendingInput,
   type PaginatedResult,
   type Repo,
   type RepoRepository,
@@ -53,6 +54,21 @@ export function createInMemoryRepoRepository(
         page: input.page,
         perPage,
         hasNextPage: start + perPage < all.length,
+      };
+    },
+
+    async listTrending(input: ListTrendingInput): Promise<PaginatedResult<Repo>> {
+      const perPage = input.perPage ?? 20;
+      // Fake ignores the temporal trending window — sort by stars desc only (EXP-15).
+      const sorted = [...repos].sort((a, b) => b.stars - a.stars);
+      const start = (input.page - 1) * perPage;
+      const items = sorted.slice(start, start + perPage);
+
+      return {
+        items,
+        page: input.page,
+        perPage,
+        hasNextPage: start + perPage < sorted.length,
       };
     },
   };

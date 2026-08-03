@@ -1,10 +1,12 @@
 import {
   createGetRepoDetails,
   createListRepoIssues,
+  createListTrendingRepos,
   createSearchRepos,
   type DataSource,
   type GetRepoDetails,
   type ListRepoIssues,
+  type ListTrendingRepos,
   type SearchRepos,
 } from '@/application';
 import type { RepoRepository } from '@/domain';
@@ -27,6 +29,7 @@ export type AppContainer = {
   searchRepos: SearchRepos;
   getRepoDetails: GetRepoDetails;
   listRepoIssues: ListRepoIssues;
+  listTrendingRepos: ListTrendingRepos;
 };
 
 export function createContainer(deps: CreateContainerDeps): AppContainer {
@@ -37,5 +40,6 @@ export function createContainer(deps: CreateContainerDeps): AppContainer {
     searchRepos: createSearchRepos(repository),
     getRepoDetails: createGetRepoDetails(repository),
     listRepoIssues: createListRepoIssues(repository),
+    listTrendingRepos: createListTrendingRepos(repository),
   };
 }

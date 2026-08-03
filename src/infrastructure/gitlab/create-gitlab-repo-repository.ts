@@ -1,6 +1,7 @@
 import type {
   Issue,
   ListIssuesInput,
+  ListTrendingInput,
   PaginatedResult,
   Repo,
   RepoRepository,
@@ -9,6 +10,7 @@ import type {
 
 import { jsonFetch } from '../http/json-fetch';
 import { resolveHasNextPage } from '../http/resolve-has-next-page';
+import { getTrendingSinceIso } from '../trending/window';
 import { assertGitlabRepoId } from './assert-repo-id';
 import { mapGitlabIssue, mapGitlabRepo } from './mappers';
 import type { GitlabIssueDto, GitlabProjectDto } from './types';
@@ -90,6 +92,35 @@ export function createGitlabRepoRepository(
 
       const { data, headers } = await jsonFetch<GitlabIssueDto[]>(url.toString(), authInit(token));
       const items = data.map(mapGitlabIssue);
+
+      return {
+        items,
+        page,
+        perPage,
+        hasNextPage: resolveHasNextPage({
+          itemsLength: items.length,
+          perPage,
+          headerIndicatesNext: headerIndicatesNext(headers),
+        }),
+      };
+    },
+
+    async listTrending(input: ListTrendingInput): Promise<PaginatedResult<Repo>> {
+      const perPage = input.perPage ?? 20;
+      const page = input.page;
+      const url = new URL(`${GITLAB_API_BASE}/projects`);
+      url.searchParams.set('order_by', 'star_count');
+      url.searchParams.set('sort', 'desc');
+      url.searchParams.set('visibility', 'public');
+      url.searchParams.set('last_activity_after', getTrendingSinceIso());
+      url.searchParams.set('page', String(page));
+      url.searchParams.set('per_page', String(perPage));
+
+      const { data, headers } = await jsonFetch<GitlabProjectDto[]>(
+        url.toString(),
+        authInit(token),
+      );
+      const items = data.map(mapGitlabRepo);
 
       return {
         items,

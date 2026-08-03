@@ -3,8 +3,9 @@ import { join } from 'node:path';
 
 import { NavigationContainer } from '@react-navigation/native';
 
+import { createInMemoryRepoRepository } from '@/infrastructure';
 import { TabsNavigator } from '@/presentation/navigation/TabsNavigator';
-import { act, fireEvent, render, screen } from '@/test';
+import { act, fireEvent, render, screen, waitFor } from '@/test';
 
 function pressTabLabel(label: string) {
   const matches = screen.getAllByText(label);
@@ -14,10 +15,13 @@ function pressTabLabel(label: string) {
 
 describe('TabsNavigator product shell (NAV-01, NAV-03)', () => {
   it('WHEN tabs mount THEN Search, Favoritos, Explore, and Config are reachable', async () => {
+    const repository = createInMemoryRepoRepository([]);
+
     await render(
       <NavigationContainer>
         <TabsNavigator />
       </NavigationContainer>,
+      { repository, dataSource: 'github' },
     );
 
     expect(screen.getAllByText('Search').length).toBeGreaterThanOrEqual(1);
@@ -37,6 +41,9 @@ describe('TabsNavigator product shell (NAV-01, NAV-03)', () => {
       pressTabLabel('Explore');
     });
     expect(screen.getByTestId('explore-screen')).toBeTruthy();
+    await waitFor(() => {
+      expect(screen.getByTestId('explore-empty')).toBeTruthy();
+    });
 
     await act(async () => {
       pressTabLabel('Config');

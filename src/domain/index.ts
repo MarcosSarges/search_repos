@@ -5,6 +5,7 @@ export { createAppError, isAppError } from './errors/app-error';
 export type { AppError, AppErrorCode } from './errors/app-error';
 export type {
   ListIssuesInput,
+  ListTrendingInput,
   RepoRepository,
   SearchReposInput,
 } from './repositories/repo-repository';

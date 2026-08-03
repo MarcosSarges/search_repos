@@ -160,6 +160,9 @@ describe('useSearchRepos (PRES-07, PRES-10..12, PRES-19)', () => {
       listIssues: async () => {
         throw createAppError('not_found');
       },
+      listTrending: async () => {
+        throw createAppError('not_found');
+      },
     };
 
     const { result } = await renderHook(() => useSearchRepos({ query: 'react' }), {

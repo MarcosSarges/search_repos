@@ -8,3 +8,4 @@ export { useDebouncedValue } from './hooks/use-debounced-value';
 export { useSearchRepos } from './hooks/use-search-repos';
 export { useRepoDetails } from './hooks/use-repo-details';
 export { useRepoIssues } from './hooks/use-repo-issues';
+export { useListTrendingRepos } from './hooks/use-list-trending-repos';
