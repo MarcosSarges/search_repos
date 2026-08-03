@@ -237,9 +237,9 @@
 ## Handoff
 
 - **Feature**: repo-details-issues (`.specs/features/repo-details-issues/`)
-- **Phase / Task**: Tasks — draft ready for approval (T1–T14)
-- **Completed**: Specify + Discuss + Design (Approved) + AD-029; date util moved to DS per user
-- **In-progress**: none
-- **Next step**: User approves tasks → Execute (offer batch sub-agents: T1–T7, T8–T14)
+- **Phase / Task**: Execute — Batch 1 (T1–T7) in flight
+- **Completed**: Specify + Discuss + Design + Tasks; specs committed
+- **In-progress**: Batch Worker 1 (Phases 1–2)
+- **Next step**: Await Batch 1 compact summary → Batch 2 (T8–T14) → Verifier
 - **Blockers**: none
-- **Branch**: `feat/ds-as-lib`
+- **Branch**: `feat/repo-details-issues`
