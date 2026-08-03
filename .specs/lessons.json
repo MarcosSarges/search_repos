@@ -3,7 +3,7 @@
   "promote_threshold": 2,
   "window_days": 45,
   "quarantine_threshold": 2,
-  "next_id": 36,
+  "next_id": 39,
   "lessons": [
     {
       "id": "L-001",
@@ -635,6 +635,60 @@
       ],
       "created": "2026-08-03T15:37:53Z",
       "last_seen": "2026-08-03T15:37:53Z"
+    },
+    {
+      "id": "L-036",
+      "key": "spec_precision_gap::when a spec names a concrete prop value e g avatar size lg assert that exact value or source match it presence of a shared testid alone is not enough",
+      "text": "When a spec names a concrete prop value (e.g. Avatar size lg), assert that exact value or source-match it — presence of a shared testID alone is not enough",
+      "signal": "spec_precision_gap",
+      "scope": "presentation/screens",
+      "status": "candidate",
+      "features": [
+        "details-issues-config-ui"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "DIC-01 RepoDetailsScreen.test.tsx:114 (presentation/screens)"
+      ],
+      "created": "2026-08-03T18:09:37Z",
+      "last_seen": "2026-08-03T18:09:37Z"
+    },
+    {
+      "id": "L-037",
+      "key": "spec_precision_gap::for settings row uis assert each row s icon name and supporting subtitle text not only section titles and interactive trailing controls",
+      "text": "For settings-row UIs, assert each row's icon name and supporting subtitle text, not only section titles and interactive trailing controls",
+      "signal": "spec_precision_gap",
+      "scope": "presentation/config",
+      "status": "candidate",
+      "features": [
+        "details-issues-config-ui"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "DIC-09 ConfigScreen.test.tsx theme subtitle/icons (presentation/config)"
+      ],
+      "created": "2026-08-03T18:09:37Z",
+      "last_seen": "2026-08-03T18:09:37Z"
+    },
+    {
+      "id": "L-038",
+      "key": "spec_precision_gap::new ds pieces that require ad 012 folders need an existssync or equivalent file set assertion in colocated tests same as organism peers",
+      "text": "New DS pieces that require AD-012 folders need an existsSync (or equivalent) file-set assertion in colocated tests, same as organism peers",
+      "signal": "spec_precision_gap",
+      "scope": "packages/ds",
+      "status": "candidate",
+      "features": [
+        "details-issues-config-ui"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "DIC-10 SettingsRow AD-012 files (packages/ds)"
+      ],
+      "created": "2026-08-03T18:09:37Z",
+      "last_seen": "2026-08-03T18:09:37Z"
     }
   ]
 }

@@ -224,6 +224,24 @@ Seen once or not yet corroborated. Tracked, not trusted.
 - evidence: RITEM-12 AC3 no double-pad (src/presentation/screens)
 - last seen: 2026-08-03T15:37:53Z
 
+### L-036 — When a spec names a concrete prop value (e.g. Avatar size lg), assert that exact value or source-match it — presence of a shared testID alone is not enough
+- signal: `spec_precision_gap` · recurrence: 1 feature(s) · scope: `presentation/screens` · harmful: 0
+- features: details-issues-config-ui
+- evidence: DIC-01 RepoDetailsScreen.test.tsx:114 (presentation/screens)
+- last seen: 2026-08-03T18:09:37Z
+
+### L-037 — For settings-row UIs, assert each row's icon name and supporting subtitle text, not only section titles and interactive trailing controls
+- signal: `spec_precision_gap` · recurrence: 1 feature(s) · scope: `presentation/config` · harmful: 0
+- features: details-issues-config-ui
+- evidence: DIC-09 ConfigScreen.test.tsx theme subtitle/icons (presentation/config)
+- last seen: 2026-08-03T18:09:37Z
+
+### L-038 — New DS pieces that require AD-012 folders need an existsSync (or equivalent) file-set assertion in colocated tests, same as organism peers
+- signal: `spec_precision_gap` · recurrence: 1 feature(s) · scope: `packages/ds` · harmful: 0
+- features: details-issues-config-ui
+- evidence: DIC-10 SettingsRow AD-012 files (packages/ds)
+- last seen: 2026-08-03T18:09:37Z
+
 ## Quarantined (failed when applied — ignore)
 
 A confirmed lesson that recurred alongside failure. Kept for the maintainer to review.

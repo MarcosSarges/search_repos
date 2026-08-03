@@ -245,9 +245,10 @@
 ## Handoff
 
 - **Feature**: details-issues-config-ui
-- **Phase / Task**: Execute complete (T1–T6); next Verifier
-- **Completed**: Specify + Design + Tasks; Execute — T1 (`1c7c7ee`), T2 (`8773b86`), T3 (`e00061f`), T4 (`be8562c`), T5 (`559b3ac`), T6 (`d41d38c`)
+- **Phase / Task**: Verifier complete — PASS ✅ (3 minor spec-precision gaps)
+- **Completed**: Specify + Design + Tasks; Execute T1–T6; Verifier — `.specs/features/details-issues-config-ui/validation.md`
 - **In-progress**: none
-- **Next step**: Verifier (author ≠ verifier) — write validation.md
+- **Next step**: Optional precision-gap fixes (avatar `size="lg"` assert; Config icon/theme-subtitle asserts; SettingsRow AD-012 file test) or merge/PR
+- **Verifier**: PASS — 10/10 ACs primary evidence; gate 619 passed / lint 0 errors; sensor 3/3 killed; gaps are precision-only (not uncovered ACs)
 - **Blockers**: none
 - **Branch**: `feat/details-issues-config-ui`
