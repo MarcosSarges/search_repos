@@ -277,12 +277,12 @@ T10 → T11
 
 **Done when**:
 
-- [ ] Screen uses `SessionSourceHeader` (not plain `Header`) with title Favoritos
-- [ ] No false empty before hydrate
-- [ ] Both empty → copy + Search + Explore CTAs
-- [ ] Items partitioned by source; no interleaved flat list
-- [ ] Tap switches source when needed and navigates with `repoId`
-- [ ] Gate: `pnpm test -- src/presentation/screens`
+- [x] Screen uses `SessionSourceHeader` (not plain `Header`) with title Favoritos
+- [x] No false empty before hydrate
+- [x] Both empty → copy + Search + Explore CTAs
+- [x] Items partitioned by source; no interleaved flat list
+- [x] Tap switches source when needed and navigates with `repoId`
+- [x] Gate: `pnpm test -- src/presentation/screens`
 
 **Tests**: unit  
 **Gate**: quick  
