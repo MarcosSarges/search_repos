@@ -107,9 +107,9 @@ T8 → T9 → T10
 
 **Done when**:
 
-- [ ] Fake compiles against extended port
-- [ ] Tests cover multi-page + `hasNextPage` + star ordering
-- [ ] Gate: `pnpm test -- src/infrastructure/repositories`
+- [x] Fake compiles against extended port
+- [x] Tests cover multi-page + `hasNextPage` + star ordering
+- [x] Gate: `pnpm test -- src/infrastructure/repositories`
 
 **Tests**: unit  
 **Gate**: quick  
