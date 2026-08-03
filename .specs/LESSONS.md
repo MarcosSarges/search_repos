@@ -206,6 +206,12 @@ Seen once or not yet corroborated. Tracked, not trusted.
 - evidence: PROP-13 (packages/ds)
 - last seen: 2026-08-03T12:39:45Z
 
+### L-033 — Specify measurable spacing or typography outcomes (token/gap/variant) before asserting visual polish ACs
+- signal: `spec_precision_gap` · recurrence: 1 feature(s) · scope: `presentation/screens` · harmful: 0
+- features: repo-details-issues
+- evidence: validation.md:P2 Search polish AC1 (spacing/typography tightened) (presentation/screens)
+- last seen: 2026-08-03T13:55:08Z
+
 ## Quarantined (failed when applied — ignore)
 
 A confirmed lesson that recurred alongside failure. Kept for the maintainer to review.

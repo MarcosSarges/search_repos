@@ -9,7 +9,7 @@ Implement these tasks with the `tlc-spec-driven` skill: **activate it by name an
 ---
 
 **Design**: `.specs/features/repo-details-issues/design.md`  
-**Status**: In Progress
+**Status**: Done
 
 **Tools (locked):** `tlc-spec-driven` + `frontend-design` (telas/atoms) + código. **Sem** Maestro MCP. Branch: `feat/repo-details-issues`.
 

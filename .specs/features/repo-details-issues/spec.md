@@ -194,16 +194,16 @@ Remaining dimensions covered above or N/A for this scope.
 
 | Requirement ID | Story | Phase | Status |
 | -------------- | ----- | ----- | ------ |
-| RDI-01 | P1: Hyperlink | Design | Pending |
-| RDI-02 | P1: Avatar + Badge | Design | Pending |
-| RDI-03 | P1: Source header DS + presentation wrapper | Design | Pending |
-| RDI-04 | P1: Config removes source toggle | Design | Pending |
-| RDI-05 | P1: Repo details UI | Design | Pending |
-| RDI-06 | P1: Repo issues UI + hyperlinks | Design | Pending |
-| RDI-07 | P1: Issues pagination + refresh + empty/error | Design | Pending |
-| RDI-08 | P2: Search polish + SourceHeader on Search | Design | Pending |
+| RDI-01 | P1: Hyperlink | Validate | ✅ Verified |
+| RDI-02 | P1: Avatar + Badge | Validate | ✅ Verified |
+| RDI-03 | P1: Source header DS + presentation wrapper | Validate | ✅ Verified |
+| RDI-04 | P1: Config removes source toggle | Validate | ✅ Verified |
+| RDI-05 | P1: Repo details UI | Validate | ✅ Verified |
+| RDI-06 | P1: Repo issues UI + hyperlinks | Validate | ✅ Verified |
+| RDI-07 | P1: Issues pagination + refresh + empty/error | Validate | ✅ Verified |
+| RDI-08 | P2: Search polish + SourceHeader on Search | Validate | ✅ Verified |
 
-**Coverage:** 8 total, 0 mapped to tasks, 8 unmapped ⚠️
+**Coverage:** 8 total, all verified ✅ (P2 spacing polish: spec-precision gap flagged in validation.md)
 
 ---
 
