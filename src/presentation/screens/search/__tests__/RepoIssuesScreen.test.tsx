@@ -106,7 +106,7 @@ describe('RepoIssuesScreen (RDI-06, RDI-07)', () => {
     });
   });
 
-  it('WHEN issues arrive THEN rows show title Hyperlink, labels, author, and relative date', async () => {
+  it('WHEN issues arrive THEN rows show title Hyperlink, labels, author, and relative updatedAt via IssueItem', async () => {
     await renderIssues(
       'facebook/react',
       createInMemoryRepoRepository([sampleRepo], { 'facebook/react': sampleIssues }),
@@ -118,9 +118,14 @@ describe('RepoIssuesScreen (RDI-06, RDI-07)', () => {
 
     expect(screen.getByText('bug')).toBeTruthy();
     expect(screen.getByText('alice')).toBeTruthy();
+    expect(screen.getByText('#1')).toBeTruthy();
+    expect(screen.getByText('Aberta')).toBeTruthy();
     expect(screen.getByText('Second issue')).toBeTruthy();
     expect(screen.getByText('bob')).toBeTruthy();
-    expect(screen.getAllByTestId('issue-list-item-date').length).toBeGreaterThanOrEqual(2);
+    expect(screen.getByText('#2')).toBeTruthy();
+    expect(screen.getByText('Fechada')).toBeTruthy();
+    expect(screen.getAllByTestId('ds-issue-item').length).toBeGreaterThanOrEqual(2);
+    expect(screen.getAllByTestId('ds-issue-item-date').length).toBeGreaterThanOrEqual(2);
   });
 
   it('WHEN details are ready THEN repo Hyperlink opens htmlUrl', async () => {

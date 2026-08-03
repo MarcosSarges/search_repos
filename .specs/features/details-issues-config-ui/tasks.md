@@ -9,7 +9,7 @@ Implement these tasks with the `tlc-spec-driven` skill: **activate it by name an
 ---
 
 **Design**: `.specs/features/details-issues-config-ui/design.md`  
-**Status**: Draft — awaiting Execute approval
+**Status**: In Progress — Execute Batch 2 (T4–T6)
 
 ---
 
@@ -78,16 +78,16 @@ T4 → T5 → T6
 
 **Done when**:
 
-- [ ] `Issue` includes `state: 'open' | 'closed'`, `comments: number`, `updatedAt: string`
-- [ ] GitHub mapper maps `state` / `comments` / `updated_at`; GitLab maps `opened`→`open`, `user_notes_count`, `updated_at`
-- [ ] GitHub `listIssues` excludes DTOs with `pull_request`
-- [ ] Fixtures + Fake/test Issue objects include new fields
-- [ ] Gate: `pnpm test -- src/infrastructure/github src/infrastructure/gitlab src/domain` (and any updated fixture consumers) passes
-- [ ] Test count: mapper + repo tests updated; no silent deletions
+- [x] `Issue` includes `state: 'open' | 'closed'`, `comments: number`, `updatedAt: string`
+- [x] GitHub mapper maps `state` / `comments` / `updated_at`; GitLab maps `opened`→`open`, `user_notes_count`, `updated_at`
+- [x] GitHub `listIssues` excludes DTOs with `pull_request`
+- [x] Fixtures + Fake/test Issue objects include new fields
+- [x] Gate: `pnpm test -- src/infrastructure/github src/infrastructure/gitlab src/domain` (and any updated fixture consumers) passes
+- [x] Test count: mapper + repo tests updated; no silent deletions
 
 **Tests**: unit
 **Gate**: quick
-**Commit**: `feat(domain): enrich Issue with state, comments, and updatedAt`
+**Commit**: `feat(domain): enrich Issue with state, comments, and updatedAt` (`1c7c7ee`)
 
 ---
 
@@ -106,16 +106,16 @@ T4 → T5 → T6
 
 **Done when**:
 
-- [ ] Folder AD-012 complete (`index.ts`, component, styles, stories, `__tests__`)
-- [ ] Renders icon + title + optional subtitle + trailing
-- [ ] `onPress` → Pressable/`accessibilityRole="button"`; without `onPress` → static
-- [ ] Exported from `@ds/molecules`
-- [ ] Gate: `pnpm test -- packages/ds/molecules/SettingsRow` passes
-- [ ] Isolation: no `@/` imports
+- [x] Folder AD-012 complete (`index.ts`, component, styles, stories, `__tests__`)
+- [x] Renders icon + title + optional subtitle + trailing
+- [x] `onPress` → Pressable/`accessibilityRole="button"`; without `onPress` → static
+- [x] Exported from `@ds/molecules`
+- [x] Gate: `pnpm test -- packages/ds/molecules/SettingsRow` passes
+- [x] Isolation: no `@/` imports
 
 **Tests**: unit
 **Gate**: quick
-**Commit**: `feat(ds): add SettingsRow molecule`
+**Commit**: `feat(ds): add SettingsRow molecule` (`8773b86`)
 
 **Note on Depends on**: Listed as **T1** in execution order only so Phase 1 finishes first; SettingsRow has **no code dependency** on T1. Diagram uses T1 → T2 for phase sequencing.
 
@@ -136,16 +136,16 @@ T4 → T5 → T6
 
 **Done when**:
 
-- [ ] AD-012 folder + barrel export
-- [ ] Props match design (primitives only; `now?` for dates)
-- [ ] Empty labels omit badge row; comments `0` still shown
-- [ ] Relative date from `updatedAt` via `formatRelativeDate`
-- [ ] Gate: `pnpm test -- packages/ds/organisms/IssueItem packages/ds/__tests__/isolation` passes
-- [ ] No `@/domain` / Zustand imports
+- [x] AD-012 folder + barrel export
+- [x] Props match design (primitives only; `now?` for dates)
+- [x] Empty labels omit badge row; comments `0` still shown
+- [x] Relative date from `updatedAt` via `formatRelativeDate`
+- [x] Gate: `pnpm test -- packages/ds/organisms/IssueItem packages/ds/__tests__/isolation` passes
+- [x] No `@/domain` / Zustand imports
 
 **Tests**: unit
 **Gate**: quick
-**Commit**: `feat(ds): add IssueItem organism`
+**Commit**: `feat(ds): add IssueItem organism` (`e00061f`)
 
 ---
 
@@ -164,10 +164,10 @@ T4 → T5 → T6
 
 **Done when**:
 
-- [ ] No Card/Badge layout invented in adapter — only prop mapping
-- [ ] Tests assert `#number`/state/comments/`updatedAt` relative + openURL
-- [ ] `RepoIssuesScreen` still uses FlatList + IssueListItem
-- [ ] Gate: `pnpm test -- src/presentation/screens/search/__tests__/IssueListItem.test.tsx src/presentation/screens/search/__tests__/RepoIssuesScreen.test.tsx` passes
+- [x] No Card/Badge layout invented in adapter — only prop mapping
+- [x] Tests assert `#number`/state/comments/`updatedAt` relative + openURL
+- [x] `RepoIssuesScreen` still uses FlatList + IssueListItem
+- [x] Gate: `pnpm test -- src/presentation/screens/search/__tests__/IssueListItem.test.tsx src/presentation/screens/search/__tests__/RepoIssuesScreen.test.tsx` passes
 
 **Tests**: unit
 **Gate**: quick
@@ -312,12 +312,12 @@ Execution is strictly sequential. **6 tasks → one inline batch** (no sub-agent
 | DIC-01 | T5 | Pending |
 | DIC-02 | T5 | Pending |
 | DIC-03 | T5 | Pending |
-| DIC-04 | T1 | Pending |
-| DIC-05 | T1 | Pending |
-| DIC-06 | T1 | Pending |
-| DIC-07 | T3 | Pending |
-| DIC-08 | T4 | Pending |
+| DIC-04 | T1 | Done (`1c7c7ee`) |
+| DIC-05 | T1 | Done (`1c7c7ee`) |
+| DIC-06 | T1 | Done (`1c7c7ee`) |
+| DIC-07 | T3 | Done (`e00061f`) |
+| DIC-08 | T4 | Done |
 | DIC-09 | T6 | Pending |
-| DIC-10 | T2 | Pending |
+| DIC-10 | T2 | Done (`8773b86`) |
 
 **Coverage:** 10 total, 10 mapped to tasks, 0 unmapped
