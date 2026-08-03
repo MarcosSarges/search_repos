@@ -220,13 +220,11 @@
 
 ## Handoff
 
-- **Feature**: search-and-navigation — DONE + AD-027 path move (screens/nav → presentation)
-- **Phase / Task**: Post-feature cleanup — colocate product UI under presentation
-- **Completed**: Verifier PASS; screens+navigation moved under `src/presentation/`
-- **In-progress**: none
-- **Next step**: Optional PR for `feat/search-and-navigation`; next specs from NEXT.md
+- **Feature**: ds-as-lib (`.specs/features/ds-as-lib/`)
+- **Phase / Task**: Execute interrupted after T9 — branch `feat/ds-as-lib` + draft PR
+- **Completed**: T1–T9 (aliases → move → Brand → bridge → Logo → resolveBoxSpacing → Container)
+- **In-progress**: none (Batch 2 stopped before T10)
+- **Next step**: Resume Execute T10–T12 (KeyboardAvoid, Search View→Container, README/isolation) then Verifier
 - **Blockers**: none
-- **Uncommitted files**: path move + AD-027
-- **Branch**: `feat/search-and-navigation`
-
-
+- **Uncommitted files**: none after specs commit
+- **Branch**: `feat/ds-as-lib` (base: `feat/search-and-navigation`)
