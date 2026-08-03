@@ -10,21 +10,36 @@ import { RepoIssuesScreen } from '../RepoIssuesScreen';
 
 const Stack = createNativeStackNavigator<SearchStackParamList>();
 
-describe('RepoDetailsScreen / RepoIssuesScreen stubs (NAV-06..08)', () => {
-  it('WHEN RepoDetails opens with repoId THEN Issues CTA navigates with same repoId', async () => {
+describe('RepoDetails → RepoIssues navigation (NAV-06..08)', () => {
+  it('WHEN RepoDetails Issues CTA is pressed THEN RepoIssues opens for the same repoId', async () => {
     const repoId = 'facebook/react';
-    const repository = createInMemoryRepoRepository([
+    const repository = createInMemoryRepoRepository(
+      [
+        {
+          id: repoId,
+          name: 'react',
+          fullName: 'facebook/react',
+          stars: 1,
+          forks: 0,
+          watchers: 1,
+          ownerName: 'facebook',
+          htmlUrl: 'https://github.com/facebook/react',
+        },
+      ],
       {
-        id: repoId,
-        name: 'react',
-        fullName: 'facebook/react',
-        stars: 1,
-        forks: 0,
-        watchers: 1,
-        ownerName: 'facebook',
-        htmlUrl: 'https://github.com/facebook/react',
+        [repoId]: [
+          {
+            id: '1',
+            number: 1,
+            title: 'Sample issue',
+            authorName: 'dev',
+            labels: [],
+            createdAt: '2026-08-01T00:00:00.000Z',
+            htmlUrl: 'https://github.com/facebook/react/issues/1',
+          },
+        ],
       },
-    ]);
+    );
 
     await render(
       <NavigationContainer>
@@ -35,7 +50,11 @@ describe('RepoDetailsScreen / RepoIssuesScreen stubs (NAV-06..08)', () => {
             initialParams={{ repoId }}
             options={{ headerShown: false }}
           />
-          <Stack.Screen name="RepoIssues" component={RepoIssuesScreen} />
+          <Stack.Screen
+            name="RepoIssues"
+            component={RepoIssuesScreen}
+            options={{ headerShown: false }}
+          />
         </Stack.Navigator>
       </NavigationContainer>,
       { repository, dataSource: 'github' },
@@ -49,20 +68,10 @@ describe('RepoDetailsScreen / RepoIssuesScreen stubs (NAV-06..08)', () => {
       fireEvent.press(screen.getByTestId('repo-details-issues-cta'));
     });
 
-    expect(screen.getByTestId('repo-issues-repo-id')).toHaveTextContent(repoId);
-  });
-
-  it('WHEN RepoIssues opens with repoId THEN it shows that id', async () => {
-    const repoId = 'vercel/next.js';
-
-    await render(
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="RepoIssues" component={RepoIssuesScreen} initialParams={{ repoId }} />
-        </Stack.Navigator>
-      </NavigationContainer>,
-    );
-
-    expect(screen.getByTestId('repo-issues-repo-id')).toHaveTextContent(repoId);
+    await waitFor(() => {
+      expect(screen.getByText('Issues')).toBeTruthy();
+      expect(screen.getByTestId('repo-issues-repo-link')).toBeTruthy();
+      expect(screen.getByText('Sample issue')).toBeTruthy();
+    });
   });
 });

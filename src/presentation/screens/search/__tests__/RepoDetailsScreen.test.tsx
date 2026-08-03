@@ -147,7 +147,9 @@ describe('RepoDetailsScreen (RDI-05)', () => {
       fireEvent.press(screen.getByTestId('repo-details-issues-cta'));
     });
 
-    expect(screen.getByTestId('repo-issues-repo-id')).toHaveTextContent('facebook/react');
+    await waitFor(() => {
+      expect(screen.getByTestId('repo-issues-repo-link')).toHaveTextContent('facebook/react');
+    });
   });
 
   it('WHEN query errors THEN mapAppErrorToMessage and Retry refetch', async () => {

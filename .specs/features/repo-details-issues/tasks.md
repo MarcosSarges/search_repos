@@ -403,9 +403,9 @@ T11 → T12 → T13 → T14
 
 **Done when**:
 
-- [ ] Issue + repo Hyperlinks present
-- [ ] Pagination + refresh + empty + error covered by tests
-- [ ] Gate: `pnpm test -- src/presentation/screens/search`
+- [x] Issue + repo Hyperlinks present
+- [x] Pagination + refresh + empty + error covered by tests
+- [x] Gate: `pnpm test -- src/presentation/screens/search`
 
 **Tests**: unit
 **Gate**: quick

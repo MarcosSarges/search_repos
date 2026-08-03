@@ -20,7 +20,11 @@ export function SearchStackNavigator() {
         component={RepoDetailsScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="RepoIssues" component={RepoIssuesScreen} options={{ title: 'Issues' }} />
+      <Stack.Screen
+        name="RepoIssues"
+        component={RepoIssuesScreen}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 }
