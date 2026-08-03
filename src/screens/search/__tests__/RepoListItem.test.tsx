@@ -1,0 +1,60 @@
+import type { Repo } from '@/domain';
+import { fireEvent, render, screen } from '@/test';
+
+import { RepoListItem } from '../RepoListItem';
+
+const fullRepo: Repo = {
+  id: 'facebook/react',
+  name: 'react',
+  fullName: 'facebook/react',
+  description: 'A JavaScript library for building user interfaces',
+  stars: 1000,
+  forks: 200,
+  watchers: 1000,
+  language: 'JavaScript',
+  ownerName: 'facebook',
+  htmlUrl: 'https://github.com/facebook/react',
+};
+
+const minimalRepo: Repo = {
+  id: 'owner/minimal',
+  name: 'minimal',
+  fullName: 'owner/minimal',
+  stars: 0,
+  forks: 0,
+  watchers: 0,
+  ownerName: 'owner',
+  htmlUrl: 'https://github.com/owner/minimal',
+};
+
+describe('RepoListItem (SRCH-05, SRCH-11)', () => {
+  it('WHEN a repo with all fields is rendered THEN name, owner, stars, language, and description show', async () => {
+    await render(<RepoListItem repo={fullRepo} onPress={() => undefined} />);
+
+    expect(screen.getByText('react')).toBeTruthy();
+    expect(screen.getByText('facebook')).toBeTruthy();
+    expect(screen.getByText('1000')).toBeTruthy();
+    expect(screen.getByText('JavaScript')).toBeTruthy();
+    expect(screen.getByText('A JavaScript library for building user interfaces')).toBeTruthy();
+    expect(screen.getByTestId('ds-card')).toBeTruthy();
+  });
+
+  it('WHEN optional description and language are missing THEN the row still renders without crashing', async () => {
+    await render(<RepoListItem repo={minimalRepo} onPress={() => undefined} />);
+
+    expect(screen.getByText('minimal')).toBeTruthy();
+    expect(screen.getByText('owner')).toBeTruthy();
+    expect(screen.getByText('0')).toBeTruthy();
+    expect(screen.queryByText('JavaScript')).toBeNull();
+  });
+
+  it('WHEN the row is pressed THEN onPress is called with the opaque repo.id', async () => {
+    const onPress = jest.fn();
+    await render(<RepoListItem repo={fullRepo} onPress={onPress} />);
+
+    fireEvent.press(screen.getByTestId('repo-list-item'));
+
+    expect(onPress).toHaveBeenCalledTimes(1);
+    expect(onPress).toHaveBeenCalledWith('facebook/react');
+  });
+});

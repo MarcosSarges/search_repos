@@ -217,9 +217,9 @@ T8 → T9 → T10
 
 **Done when**:
 
-- [ ] Fields render; missing optional fields safe
-- [ ] Press invokes callback with opaque id
-- [ ] Gate: quick test path for RepoListItem
+- [x] Fields render; missing optional fields safe
+- [x] Press invokes callback with opaque id
+- [x] Gate: quick test path for RepoListItem
 
 **Tests**: unit (RNTL)  
 **Gate**: quick  
