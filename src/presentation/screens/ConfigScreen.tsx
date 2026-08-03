@@ -12,7 +12,7 @@ export function ConfigScreen() {
   const themeA11yLabel = mode === 'light' ? 'Switch to dark mode' : 'Switch to light mode';
 
   return (
-    <Container tone="background">
+    <Container bg="background">
       <Header safe title="Config" />
 
       <Typography variant="heading" testID="config-data-source-section">

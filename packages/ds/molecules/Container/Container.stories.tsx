@@ -16,23 +16,30 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     p: 'md',
-    tone: 'background',
-    children: <Typography>Container with md padding</Typography>,
+    bg: 'background',
+    children: <Typography>Background fill with md padding</Typography>,
   },
 };
 
 export const Surface: Story = {
   args: {
     p: 'lg',
-    tone: 'surface',
-    children: <Typography>Surface tone container</Typography>,
+    bg: 'surface',
+    children: <Typography>Surface fill container</Typography>,
+  },
+};
+
+export const NoFill: Story = {
+  args: {
+    p: 'md',
+    children: <Typography>No bg — inherits / transparent</Typography>,
   },
 };
 
 export const Compact: Story = {
   args: {
     p: 'xs',
-    tone: 'background',
+    bg: 'background',
     children: <Typography variant="caption">Compact padding</Typography>,
   },
 };

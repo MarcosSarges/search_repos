@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Keyboard, Pressable } from 'react-native';
+import { Keyboard, Pressable, type StyleProp, type ViewStyle } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from 'styled-components/native';
 
@@ -39,7 +39,8 @@ function resolveSafeEdgeSet(
 
 export type ContainerProps = {
   children?: ReactNode;
-  tone?: SurfaceBg;
+  bg?: SurfaceBg;
+  style?: StyleProp<ViewStyle>;
   testID?: string;
   p?: Spacing;
   px?: Spacing;
@@ -67,7 +68,8 @@ export type ContainerProps = {
 
 export function Container({
   children,
-  tone = 'background',
+  bg,
+  style,
   testID = 'ds-container',
   p,
   px,
@@ -131,7 +133,8 @@ export function Container({
   return (
     <StyledContainer
       testID={testID}
-      $tone={tone}
+      style={style}
+      $bg={bg}
       $paddingTop={paddingTop}
       $paddingRight={paddingRight}
       $paddingBottom={paddingBottom}

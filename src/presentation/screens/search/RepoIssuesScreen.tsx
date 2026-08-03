@@ -10,7 +10,7 @@ export function RepoIssuesScreen({ route }: Props) {
   const { repoId } = route.params;
 
   return (
-    <Container tone="background">
+    <Container bg="background">
       <Typography variant="body" testID="repo-issues-repo-id">
         {repoId}
       </Typography>

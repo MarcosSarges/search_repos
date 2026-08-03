@@ -106,7 +106,7 @@ export function SearchReposScreen({ navigation }: Props) {
   }
 
   return (
-    <Container tone="background">
+    <Container bg="background">
       <Header safe title="Search" />
       <InputField
         label="Buscar"

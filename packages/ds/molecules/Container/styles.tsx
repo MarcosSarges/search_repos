@@ -103,14 +103,19 @@ export const StyledContainer = styled.View<{
   $marginBottom: number;
   $marginLeft: number;
   $gap: number;
-  $tone?: SurfaceBg;
+  $bg?: SurfaceBg;
   $flex?: number;
   $direction?: ContainerDirection;
   $justify?: ContainerJustify;
   $align?: ContainerAlign;
   $wrap?: ContainerWrap;
 }>`
-  background-color: ${({ theme, $tone }) => ($tone ? theme.colors[$tone] : theme.colors.background)};
+  ${({ theme, $bg }) =>
+    $bg === undefined
+      ? css``
+      : css`
+          background-color: ${theme.colors[$bg]};
+        `}
   padding-top: ${({ $paddingTop }) => $paddingTop}px;
   padding-right: ${({ $paddingRight }) => $paddingRight}px;
   padding-bottom: ${({ $paddingBottom }) => $paddingBottom}px;

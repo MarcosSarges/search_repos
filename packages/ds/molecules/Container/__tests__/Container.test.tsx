@@ -12,7 +12,7 @@ const safeAreaMetrics = {
   insets: { top: 47, left: 11, right: 13, bottom: 34 },
 };
 
-describe('Container molecule (DSLIB-07..10)', () => {
+describe('Container molecule (PROP-04..05,20)', () => {
   it('WHEN p is md THEN it applies theme.spacing.md on all padding edges', async () => {
     await render(
       <Container p="md">
@@ -56,9 +56,9 @@ describe('Container molecule (DSLIB-07..10)', () => {
     expect(node).toHaveStyleRule('flex-wrap', 'wrap');
   });
 
-  it('WHEN tone is surface THEN background uses theme.colors.surface', async () => {
+  it('WHEN bg is surface THEN background uses theme.colors.surface', async () => {
     await render(
-      <Container tone="surface">
+      <Container bg="surface">
         <View />
       </Container>,
       { themeMode: 'light' },
@@ -71,9 +71,9 @@ describe('Container molecule (DSLIB-07..10)', () => {
     );
   });
 
-  it('WHEN tone is background THEN background uses theme.colors.background', async () => {
+  it('WHEN bg is background THEN background uses theme.colors.background', async () => {
     await render(
-      <Container tone="background">
+      <Container bg="background">
         <View />
       </Container>,
       { themeMode: 'dark' },
@@ -84,6 +84,40 @@ describe('Container molecule (DSLIB-07..10)', () => {
       'background-color',
       theme.colors.background,
     );
+  });
+
+  it('WHEN bg is omitted THEN it does not apply theme fill background-color', async () => {
+    await render(
+      <Container>
+        <View />
+      </Container>,
+      { themeMode: 'light' },
+    );
+
+    const theme = getTheme('light');
+    const node = screen.getByTestId('ds-container');
+    expect(node).not.toHaveStyleRule('background-color', theme.colors.background);
+    expect(node).not.toHaveStyleRule('background-color', theme.colors.surface);
+  });
+
+  it('WHEN style is passed THEN it is accepted on the public props type and forwarded', async () => {
+    type HasStyle = 'style' extends keyof ContainerProps ? true : false;
+    const hasStyle: HasStyle = true;
+    expect(hasStyle).toBe(true);
+
+    await render(
+      <Container testID="box" style={{ opacity: 0.4 }}>
+        <View />
+      </Container>,
+    );
+
+    expect(screen.getByTestId('box')).toHaveStyle({ opacity: 0.4 });
+  });
+
+  it('WHEN public props are inspected THEN tone is not part of the API', () => {
+    type HasTone = 'tone' extends keyof ContainerProps ? true : false;
+    const hasTone: HasTone = false;
+    expect(hasTone).toBe(false);
   });
 
   it('WHEN safe is omitted THEN it does not add safe-area padding', async () => {
@@ -200,11 +234,5 @@ describe('Container molecule (DSLIB-07..10)', () => {
     type HasPadding = 'padding' extends keyof ContainerProps ? true : false;
     const hasPadding: HasPadding = false;
     expect(hasPadding).toBe(false);
-  });
-
-  it('WHEN public props are inspected THEN style is not part of the controlled API', () => {
-    type HasStyle = 'style' extends keyof ContainerProps ? true : false;
-    const hasStyle: HasStyle = false;
-    expect(hasStyle).toBe(false);
   });
 });
