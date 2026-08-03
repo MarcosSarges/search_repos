@@ -9,7 +9,7 @@ Implement these tasks with the `tlc-spec-driven` skill: **activate it by name an
 ---
 
 **Design**: `.specs/features/explore-trending/design.md`  
-**Status**: In Progress — Batch A (T1–T7) dispatched
+**Status**: Done — Batch A (T1–T7) + Batch B (T8–T10) complete; ready for Verifier
 
 ---
 
@@ -26,7 +26,7 @@ Implement these tasks with the `tlc-spec-driven` skill: **activate it by name an
 | GitHub / GitLab adapters | unit (MSW) | EXP-13/14: URL/params trending; map Repo; pagination; auth header opcional | `src/infrastructure/github|gitlab/__tests__/**` | `pnpm test -- src/infrastructure/github` / `gitlab` |
 | DI container | unit | EXP-12: `listTrendingRepos` callable; Fake inject | `src/infrastructure/di/__tests__/**` | `pnpm test -- src/infrastructure/di` |
 | Presentation hook + queryKeys | unit (RNTL + Fake) | EXP-01/03/06/08/09/16/17: infinite pages; key has dataSource; no invalidate | `src/presentation/hooks/__tests__/**`, `src/presentation/__tests__/**` | `pnpm test -- src/presentation` |
-| ExploreScreen | unit (RNTL) | EXP-02/04/05/07/16: rows fields; loading; empty; error; footer loading; no nav | `src/screens/__tests__/ExploreScreen.test.tsx` | `pnpm test -- src/screens` |
+| ExploreScreen | unit (RNTL) | EXP-02/04/05/07/16: rows fields; loading; empty; error; footer loading; no nav | `src/presentation/screens/__tests__/ExploreScreen.test.tsx` | `pnpm test -- src/presentation/screens` |
 | Isolation (no provider in UI) | unit | Hooks/screens sem import github/gitlab/fetch | `src/presentation/__tests__/isolation.test.ts` (extend) | `pnpm test -- src/presentation` |
 | Maestro E2E | none (this slice) | Out of scope | — | — |
 
@@ -37,7 +37,7 @@ Implement these tasks with the `tlc-spec-driven` skill: **activate it by name an
 | Gate Level | When to Use | Command |
 | ---------- | ----------- | ------- |
 | Quick | Single layer / task path | `pnpm test -- <scoped path from task>` |
-| Full | After infra or presentation cluster | `pnpm test -- src/domain src/application src/infrastructure src/presentation src/screens` |
+| Full | After infra or presentation cluster | `pnpm test -- src/domain src/application src/infrastructure src/presentation` |
 | Build | Phase end / feature close | `pnpm test` && `pnpm lint` |
 
 ---
@@ -262,10 +262,10 @@ T8 → T9 → T10
 
 **Done when**:
 
-- [ ] `queryKeys.repos.trending(dataSource)` includes `dataSource`
-- [ ] Infinite query uses `container.listTrendingRepos`
-- [ ] Tests cover next page / no extra fetch / key isolation (no invalidate)
-- [ ] Gate: `pnpm test -- src/presentation`
+- [x] `queryKeys.repos.trending(dataSource)` includes `dataSource`
+- [x] Infinite query uses `container.listTrendingRepos`
+- [x] Tests cover next page / no extra fetch / key isolation (no invalidate)
+- [x] Gate: `pnpm test -- src/presentation`
 
 **Tests**: unit  
 **Gate**: quick  
@@ -276,7 +276,7 @@ T8 → T9 → T10
 ### T9: Rewrite `ExploreScreen` (simple list + states)
 
 **What**: Replace Expo template Explore with DS-based FlatList: rows (`fullName`, stars, language), loading/empty/error/footer/pull-to-refresh; **no** navigation/`Linking` on press. Screen tests with Fake.  
-**Where**: `src/screens/ExploreScreen.tsx`, `src/screens/__tests__/ExploreScreen.test.tsx`  
+**Where**: `src/presentation/screens/ExploreScreen.tsx`, `src/presentation/screens/__tests__/ExploreScreen.test.tsx`  
 **Depends on**: T8  
 **Reuses**: `HomeScreen` Container/Header patterns; `mapAppErrorToMessage`; `Loading` atom  
 **Requirement**: EXP-02, EXP-04, EXP-05, EXP-07, EXP-16 (+ edge rate_limit via mapper)
@@ -288,10 +288,10 @@ T8 → T9 → T10
 
 **Done when**:
 
-- [ ] Template Parallax/Themed/Collapsible removed from Explore
-- [ ] Renders trending via hook; states covered by tests
-- [ ] No `onPress` navigation to details
-- [ ] Gate: `pnpm test -- src/screens`
+- [x] Template Parallax/Themed/Collapsible removed from Explore
+- [x] Renders trending via hook; states covered by tests
+- [x] No `onPress` navigation to details
+- [x] Gate: `pnpm test -- src/presentation/screens`
 
 **Tests**: unit  
 **Gate**: quick  
@@ -314,10 +314,10 @@ T8 → T9 → T10
 
 **Done when**:
 
-- [ ] Isolation asserts cover Explore hook/screen paths
-- [ ] Gate: `pnpm test` && `pnpm lint`
-- [ ] STATE Handoff updated (feature in progress → ready for Verifier after last commit)
-- [ ] Spec requirement statuses → Implementing/Verified as applicable
+- [x] Isolation asserts cover Explore hook/screen paths
+- [x] Gate: `pnpm test` && `pnpm lint`
+- [x] STATE Handoff updated (feature in progress → ready for Verifier after last commit)
+- [x] Spec requirement statuses → Implementing/Verified as applicable
 
 **Tests**: unit  
 **Gate**: build  

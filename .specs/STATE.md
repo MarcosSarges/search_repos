@@ -237,10 +237,10 @@
 ## Handoff
 
 - **Feature**: `explore-trending`
-- **Phase / Task**: porting onto main (cherry-pick T1–T7; presentation adapting)
-- **Completed**: domain → DI cherry-picked onto `feat/explore-trending` from `origin/main`
-- **In-progress**: presentation hook + ExploreScreen (main paths `@ds` / `presentation/screens`)
-- **Next step**: finish port → push → PR
+- **Phase / Task**: Execute complete (T1–T10); ready for Verifier
+- **Completed**: Batch A T1–T7 (domain→DI); Batch B T8–T10 (hook, ExploreScreen `@ds`, isolation + gate) on `feat/explore-trending`
+- **In-progress**: none
+- **Next step**: Verifier (automatic) — write `validation.md`
 - **Blockers**: none
 - **Branch**: `feat/explore-trending`
 
