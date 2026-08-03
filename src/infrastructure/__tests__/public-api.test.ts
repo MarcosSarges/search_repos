@@ -10,6 +10,8 @@ describe('infrastructure public API (INFRA-33)', () => {
   it('WHEN importing from @/infrastructure THEN createContainer, Fake, resolveRepository, and HTTP factories are reachable', () => {
     expect(typeof infrastructure.createContainer).toBe('function');
     expect(typeof infrastructure.createInMemoryRepoRepository).toBe('function');
+    expect(typeof infrastructure.createInMemoryFavoritesRepository).toBe('function');
+    expect(typeof infrastructure.createAsyncStorageFavoritesRepository).toBe('function');
     expect(typeof infrastructure.resolveRepository).toBe('function');
     expect(typeof infrastructure.createGithubRepoRepository).toBe('function');
     expect(typeof infrastructure.createGitlabRepoRepository).toBe('function');
@@ -19,6 +21,8 @@ describe('infrastructure public API (INFRA-33)', () => {
     expect(typeof container.getRepoDetails).toBe('function');
     expect(typeof container.listRepoIssues).toBe('function');
     expect(typeof container.listTrendingRepos).toBe('function');
+    expect(typeof container.listFavorites).toBe('function');
+    expect(typeof container.toggleFavorite).toBe('function');
   });
 
   it('WHEN the infrastructure barrel source is inspected THEN it re-exports DI, Fake, and HTTP factories', () => {
@@ -28,6 +32,8 @@ describe('infrastructure public API (INFRA-33)', () => {
     expect(barrelSource).toMatch(/\bCreateContainerDeps\b/);
     expect(barrelSource).toMatch(/\bAppContainer\b/);
     expect(barrelSource).toMatch(/\bcreateInMemoryRepoRepository\b/);
+    expect(barrelSource).toMatch(/\bcreateInMemoryFavoritesRepository\b/);
+    expect(barrelSource).toMatch(/\bcreateAsyncStorageFavoritesRepository\b/);
     expect(barrelSource).toMatch(/\bresolveRepository\b/);
     expect(barrelSource).toMatch(/\bcreateGithubRepoRepository\b/);
     expect(barrelSource).toMatch(/\bcreateGitlabRepoRepository\b/);
