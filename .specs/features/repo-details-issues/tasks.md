@@ -327,9 +327,9 @@ T11 → T12 → T13 → T14
 
 **Done when**:
 
-- [ ] No `config-data-source-toggle` / fonte section
-- [ ] Theme + token placeholder remain
-- [ ] Gate: `pnpm test -- src/presentation/screens/__tests__/ConfigScreen.test.tsx`
+- [x] No `config-data-source-toggle` / fonte section
+- [x] Theme + token placeholder remain
+- [x] Gate: `pnpm test -- src/presentation/screens/__tests__/ConfigScreen.test.tsx`
 
 **Tests**: unit
 **Gate**: quick
