@@ -1,38 +1,34 @@
 import { Pressable } from 'react-native';
 
 import type { Repo } from '@/domain';
-import { Typography } from '@ds/atoms';
-import { Card } from '@ds/molecules';
+import { RepoItem } from '@ds/organisms';
 
 export type RepoListItemProps = {
   repo: Repo;
   onPress: (repoId: string) => void;
 };
 
+/**
+ * Presentation adapter: maps domain `Repo` → DS `RepoItem` and owns press.
+ */
 export function RepoListItem({ repo, onPress }: RepoListItemProps) {
+  const languages = repo.language ? [{ label: repo.language }] : undefined;
+
   return (
     <Pressable
       accessibilityRole="button"
       accessibilityLabel={repo.fullName}
       testID="repo-list-item"
       onPress={() => onPress(repo.id)}>
-      <Card>
-        <Card.Header>
-          <Typography variant="heading">{repo.name}</Typography>
-          <Typography variant="caption" color="muted">
-            {repo.ownerName}
-          </Typography>
-        </Card.Header>
-        <Card.Content>
-          {repo.description ? (
-            <Typography variant="body" color="muted">
-              {repo.description}
-            </Typography>
-          ) : null}
-          <Typography variant="caption">{String(repo.stars)}</Typography>
-          {repo.language ? <Typography variant="caption">{repo.language}</Typography> : null}
-        </Card.Content>
-      </Card>
+      <RepoItem
+        name={repo.name}
+        description={repo.description}
+        languages={languages}
+        ownerName={repo.ownerName}
+        ownerAvatarUrl={repo.ownerAvatarUrl}
+        stars={repo.stars}
+        forks={repo.forks}
+      />
     </Pressable>
   );
 }
