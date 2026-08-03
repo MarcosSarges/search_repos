@@ -1,8 +1,9 @@
 import { RefreshControl } from 'react-native';
 
 import { Loading, Typography } from '@ds/atoms';
-import { Container, FlatList, Header } from '@ds/molecules';
+import { Container, FlatList } from '@ds/molecules';
 import type { Repo } from '@/domain';
+import { SessionSourceHeader } from '@/presentation/components';
 import { mapAppErrorToMessage } from '@/presentation/errors/map-app-error-to-message';
 import { useListTrendingRepos } from '@/presentation/hooks/use-list-trending-repos';
 
@@ -81,7 +82,7 @@ export function ExploreScreen() {
 
   return (
     <Container bg="background" flex={1} testID="explore-screen">
-      <Header safe title="Explore" />
+      <SessionSourceHeader safe title="Explore" />
       <Container flex={1} px={showingList ? undefined : 'md'}>
         {body}
       </Container>

@@ -13,7 +13,7 @@ export type SessionSourceHeaderProps = {
 
 /**
  * Presentation adapter: session store dataSource ↔ DS SourceHeader (AD-029).
- * Search (and other root chrome) use this for source toggle — not Details/Issues.
+ * Search / Explore (and other root chrome) use this for source toggle — not Details/Issues.
  */
 export function SessionSourceHeader({ title, safe, style, testID }: SessionSourceHeaderProps) {
   const dataSource = useSessionPreferencesStore((state) => state.dataSource);

@@ -268,7 +268,7 @@ describe('ExploreScreen (EXP-02,04,05,07,16, RITEM-13)', () => {
     expect(source).toMatch(/px=\{showingList \? undefined : ['"]md['"]\}/);
   });
 
-  it('WHEN Header is shown THEN title is Explore', async () => {
+  it('WHEN SessionSourceHeader is shown THEN title is Explore with source toggle', async () => {
     const repository = createInMemoryRepoRepository(sampleRepos);
 
     await render(<ExploreScreen />, { repository, dataSource: 'github' });
@@ -276,5 +276,9 @@ describe('ExploreScreen (EXP-02,04,05,07,16, RITEM-13)', () => {
     await waitFor(() => {
       expect(screen.getByText('Explore')).toBeTruthy();
     });
+
+    const source = readFileSync(join(__dirname, '../ExploreScreen.tsx'), 'utf8');
+    expect(source).toMatch(/SessionSourceHeader/);
+    expect(source).not.toMatch(/<Header\b/);
   });
 });
