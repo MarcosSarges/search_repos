@@ -1,11 +1,11 @@
-import { Typography } from '@/components/ds/atoms';
-import { Container, Header } from '@/components/ds/molecules';
+import { Typography } from '@ds/atoms';
+import { Container, Header } from '@ds/molecules';
 
 export function ExploreScreen() {
   return (
-    <Container tone="background">
+    <Container bg="background">
       <Header safe title="Explore" />
-      <Typography variant="body" tone="muted" testID="explore-screen">
+      <Typography variant="body" color="muted" testID="explore-screen">
         Repos em alta — em breve.
       </Typography>
     </Container>

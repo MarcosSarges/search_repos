@@ -5,6 +5,8 @@
     "ignoreDeprecations": "6.0",
     "baseUrl": ".",
     "paths": {
+      "@ds": ["./packages/ds/index.ts"],
+      "@ds/*": ["./packages/ds/*"],
       "@/*": ["./src/*"]
     },
     "types": ["jest"]

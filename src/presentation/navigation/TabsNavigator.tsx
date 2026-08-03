@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 
-import { Icon, useTheme } from '@/components/ds';
+import { Icon, useTheme } from '@ds';
 import { SearchStackNavigator } from '@/presentation/navigation/SearchStackNavigator';
 import type { TabsParamList } from '@/presentation/navigation/types';
 import { ConfigScreen } from '@/presentation/screens/ConfigScreen';
@@ -28,7 +28,7 @@ export function TabsNavigator() {
         options={{
           title: 'Search',
           tabBarIcon: ({ focused }) => (
-            <Icon variant="lg" name="search" tone={focused ? 'primary' : 'muted'} />
+            <Icon size="lg" name="search" color={focused ? 'primary' : 'muted'} />
           ),
         }}
       />
@@ -38,7 +38,7 @@ export function TabsNavigator() {
         options={{
           title: 'Favoritos',
           tabBarIcon: ({ focused }) => (
-            <Icon variant="lg" name="heart" tone={focused ? 'primary' : 'muted'} />
+            <Icon size="lg" name="heart" color={focused ? 'primary' : 'muted'} />
           ),
         }}
       />
@@ -48,7 +48,7 @@ export function TabsNavigator() {
         options={{
           title: 'Explore',
           tabBarIcon: ({ focused }) => (
-            <Icon variant="lg" name="paper-plane" tone={focused ? 'primary' : 'muted'} />
+            <Icon size="lg" name="paper-plane" color={focused ? 'primary' : 'muted'} />
           ),
         }}
       />
@@ -58,7 +58,7 @@ export function TabsNavigator() {
         options={{
           title: 'Config',
           tabBarIcon: ({ focused }) => (
-            <Icon variant="lg" name="settings" tone={focused ? 'primary' : 'muted'} />
+            <Icon size="lg" name="settings" color={focused ? 'primary' : 'muted'} />
           ),
         }}
       />

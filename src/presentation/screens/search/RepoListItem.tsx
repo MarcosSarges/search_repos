@@ -1,8 +1,8 @@
 import { Pressable } from 'react-native';
 
-import { Typography } from '@/components/ds/atoms';
-import { Card } from '@/components/ds/molecules';
 import type { Repo } from '@/domain';
+import { Typography } from '@ds/atoms';
+import { Card } from '@ds/molecules';
 
 export type RepoListItemProps = {
   repo: Repo;
@@ -19,13 +19,13 @@ export function RepoListItem({ repo, onPress }: RepoListItemProps) {
       <Card>
         <Card.Header>
           <Typography variant="heading">{repo.name}</Typography>
-          <Typography variant="caption" tone="muted">
+          <Typography variant="caption" color="muted">
             {repo.ownerName}
           </Typography>
         </Card.Header>
         <Card.Content>
           {repo.description ? (
-            <Typography variant="body" tone="muted">
+            <Typography variant="body" color="muted">
               {repo.description}
             </Typography>
           ) : null}

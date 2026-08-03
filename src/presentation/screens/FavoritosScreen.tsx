@@ -1,11 +1,11 @@
-import { Typography } from '@/components/ds/atoms';
-import { Container, Header } from '@/components/ds/molecules';
+import { Typography } from '@ds/atoms';
+import { Container, Header } from '@ds/molecules';
 
 export function FavoritosScreen() {
   return (
-    <Container tone="background">
+    <Container bg="background">
       <Header safe title="Favoritos" />
-      <Typography variant="body" tone="muted" testID="favoritos-screen">
+      <Typography variant="body" color="muted" testID="favoritos-screen">
         Em breve — seus repositórios favoritos (AsyncStorage).
       </Typography>
     </Container>

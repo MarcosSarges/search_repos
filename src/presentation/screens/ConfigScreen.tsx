@@ -1,7 +1,7 @@
-import { Button, Icon, Typography } from '@/components/ds/atoms';
-import { Container, Header } from '@/components/ds/molecules';
-import { DataSourceLogo } from '@/components/ds/organisms';
-import { useAppTheme } from '@/components/ds/theme';
+import { Button, Icon, Typography } from '@ds/atoms';
+import { Container, Header } from '@ds/molecules';
+import { DataSourceLogo } from '@ds/organisms';
+import { useAppTheme } from '@/presentation/theme';
 import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
 
 export function ConfigScreen() {
@@ -12,17 +12,17 @@ export function ConfigScreen() {
   const themeA11yLabel = mode === 'light' ? 'Switch to dark mode' : 'Switch to light mode';
 
   return (
-    <Container tone="background">
+    <Container bg="background">
       <Header safe title="Config" />
 
       <Typography variant="heading" testID="config-data-source-section">
         Fonte de dados
       </Typography>
-      <Typography variant="body" tone="muted">
+      <Typography variant="body" color="muted">
         Escolha GitHub ou GitLab.
       </Typography>
       <Button
-        variant="ghost"
+        variant="text"
         accessibilityRole="button"
         accessibilityLabel="Switch data source"
         onPress={() => toggleDataSource()}
@@ -33,22 +33,22 @@ export function ConfigScreen() {
       <Typography variant="heading" testID="config-theme-section">
         Tema
       </Typography>
-      <Typography variant="body" tone="muted">
+      <Typography variant="body" color="muted">
         Alternar entre claro e escuro.
       </Typography>
       <Button
-        variant="ghost"
+        variant="text"
         accessibilityRole="button"
         accessibilityLabel={themeA11yLabel}
         onPress={() => toggleMode()}
         testID="config-theme-toggle">
-        <Icon name={themeIconName} variant="lg" />
+        <Icon name={themeIconName} size="lg" />
       </Button>
 
       <Typography variant="heading" testID="config-token-section">
         Token de API
       </Typography>
-      <Typography variant="body" tone="muted" testID="config-token-placeholder">
+      <Typography variant="body" color="muted" testID="config-token-placeholder">
         Em breve — configure seu token com segurança.
       </Typography>
     </Container>

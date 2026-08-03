@@ -146,6 +146,66 @@ Seen once or not yet corroborated. Tracked, not trusted.
 - evidence: INFRA-04 (infrastructure/http-adapters) (+1 more)
 - last seen: 2026-08-02T21:53:59Z
 
+### L-023 — Run pnpm lint to zero errors before declaring a feature build gate green; prettier and typescript-eslint errors in new files count as gate failure even when Jest is green
+- signal: `gate_fail` · recurrence: 1 feature(s) · scope: `tooling` · harmful: 0
+- features: ds-as-lib
+- evidence: validation.md Gate Check / pnpm lint exit 1 (tooling)
+- last seen: 2026-08-03T11:42:01Z
+
+### L-024 — After introducing a path alias for a lib, assert Storybook preview and app entry import via that alias only—not relative packages/ paths
+- signal: `ac_gap` · recurrence: 1 feature(s) · scope: `packages/ds` · harmful: 0
+- features: ds-as-lib
+- evidence: DSLIB-01/12 Storybook preview ../packages/ds (packages/ds)
+- last seen: 2026-08-03T11:42:01Z
+
+### L-025 — When props must accept only token union keys, add a type-level test that raw number is not assignable—mirroring the existing style-prop exclusion pattern
+- signal: `ac_gap` · recurrence: 1 feature(s) · scope: `packages/ds` · harmful: 0
+- features: ds-as-lib
+- evidence: DSLIB-07 Container spacing type AC (packages/ds)
+- last seen: 2026-08-03T11:42:01Z
+
+### L-026 — When the spec Independent Test requires nested composition of two components, mount both in a unit test; stories alone are not coverage
+- signal: `ac_gap` · recurrence: 1 feature(s) · scope: `packages/ds` · harmful: 0
+- features: ds-as-lib
+- evidence: DSLIB-11 KeyboardAvoid>Container composition (packages/ds)
+- last seen: 2026-08-03T11:42:01Z
+
+### L-027 — When replacing a host element, assert the new component identity in source or queries—not only a preserved testID that would still pass on the old host
+- signal: `ac_gap` · recurrence: 1 feature(s) · scope: `presentation` · harmful: 0
+- features: ds-as-lib
+- evidence: DSLIB-13 search-repos-list-region host (presentation)
+- last seen: 2026-08-03T11:42:01Z
+
+### L-028 — Documentation acceptance criteria need an automated assertion of the required phrases or paths, otherwise evidence-or-zero marks them uncovered
+- signal: `ac_gap` · recurrence: 1 feature(s) · scope: `docs` · harmful: 0
+- features: ds-as-lib
+- evidence: DSLIB-14 README docs AC (docs)
+- last seen: 2026-08-03T11:42:01Z
+
+### L-029 — When the spec says only one module may import an asset set, assert a repo-wide scan for those import paths—not only that the allowed module imports them
+- signal: `spec_precision_gap` · recurrence: 1 feature(s) · scope: `packages/ds` · harmful: 0
+- features: ds-as-lib
+- evidence: DSLIB-03 brand SVG exclusivity (packages/ds)
+- last seen: 2026-08-03T11:42:01Z
+
+### L-030 — When keyboard-dismiss wrappers are specified, test that presses on TextInput still focus and that dismiss fires only from the non-input press target
+- signal: `ac_gap` · recurrence: 1 feature(s) · scope: `packages/ds` · harmful: 0
+- features: ds-as-lib
+- evidence: Edge: keyboardDismiss + TextInput focus (packages/ds)
+- last seen: 2026-08-03T11:42:09Z
+
+### L-031 — Assert public component prop types reject sx with a type-level or scan test, not only README wording
+- signal: `ac_gap` · recurrence: 1 feature(s) · scope: `packages/ds` · harmful: 0
+- features: ds-mui-props
+- evidence: PROP-21 (packages/ds)
+- last seen: 2026-08-03T12:39:44Z
+
+### L-032 — When an AC covers omitted OR explicit default prop values, assert both branches in the test
+- signal: `ac_gap` · recurrence: 1 feature(s) · scope: `packages/ds` · harmful: 0
+- features: ds-mui-props
+- evidence: PROP-13 (packages/ds)
+- last seen: 2026-08-03T12:39:45Z
+
 ## Quarantined (failed when applied — ignore)
 
 A confirmed lesson that recurred alongside failure. Kept for the maintainer to review.

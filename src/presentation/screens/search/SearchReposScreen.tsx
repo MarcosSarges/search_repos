@@ -1,9 +1,9 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useCallback, useMemo, useState, type ReactNode } from 'react';
-import { FlatList, RefreshControl, View } from 'react-native';
+import { FlatList, RefreshControl } from 'react-native';
 
-import { Button, Loading, Typography } from '@/components/ds/atoms';
-import { Container, Header, InputField } from '@/components/ds/molecules';
+import { Button, Loading, Typography } from '@ds/atoms';
+import { Container, Header, InputField } from '@ds/molecules';
 import type { Repo } from '@/domain';
 import { mapAppErrorToMessage } from '@/presentation/errors/map-app-error-to-message';
 import { useDebouncedValue } from '@/presentation/hooks/use-debounced-value';
@@ -57,7 +57,7 @@ export function SearchReposScreen({ navigation }: Props) {
   let listBody: ReactNode;
   if (isIdle) {
     listBody = (
-      <Typography variant="body" tone="muted" testID="search-repos-idle">
+      <Typography variant="body" color="muted" testID="search-repos-idle">
         Digite para buscar repositórios.
       </Typography>
     );
@@ -66,7 +66,7 @@ export function SearchReposScreen({ navigation }: Props) {
   } else if (isError) {
     listBody = (
       <>
-        <Typography variant="body" tone="danger" testID="search-repos-error">
+        <Typography variant="body" color="danger" testID="search-repos-error">
           {mapAppErrorToMessage(error)}
         </Typography>
         <Button
@@ -80,7 +80,7 @@ export function SearchReposScreen({ navigation }: Props) {
     );
   } else if (items.length === 0) {
     listBody = (
-      <Typography variant="body" tone="muted" testID="search-repos-empty">
+      <Typography variant="body" color="muted" testID="search-repos-empty">
         Nenhum repositório encontrado.
       </Typography>
     );
@@ -106,7 +106,7 @@ export function SearchReposScreen({ navigation }: Props) {
   }
 
   return (
-    <Container tone="background">
+    <Container bg="background">
       <Header safe title="Search" />
       <InputField
         label="Buscar"
@@ -116,7 +116,7 @@ export function SearchReposScreen({ navigation }: Props) {
         accessibilityLabel="Buscar repositórios"
         testID="search-repos-input"
       />
-      <View testID="search-repos-list-region">{listBody}</View>
+      <Container testID="search-repos-list-region">{listBody}</Container>
     </Container>
   );
 }

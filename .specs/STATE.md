@@ -107,12 +107,12 @@
 - **Status**: active
 
 ### AD-014
-- **Decision**: Tokens tipográficos definem a variação completa por variant (`body` | `label` | `caption` | `heading`, …): `fontFamily`, `fontWeight`, `fontSize`, `lineHeight`. O atom Typography só seleciona `variant` (+ `tone`); **não** compõe `size` × metrics.
+- **Decision**: Tokens tipográficos definem a variação completa por variant (`body` | `label` | `caption` | `heading`, …): `fontFamily`, `fontWeight`, `fontSize`, `lineHeight`. O atom Typography só seleciona `variant` (+ `color` per AD-028); **não** compõe `size` × metrics.
 - **Reason**: Variações pertencem aos tokens, não aos componentes — evita lógica tipográfica no styled layer e special-cases.
 - **Trade-off**: Novos tamanhos = novas variants de token (ex. `bodySm`), não prop `size` no Typography.
-- **Scope**: `src/components/ds/tokens/**`, atom `Typography`
+- **Scope**: `packages/ds/tokens/**`, atom `Typography`
 - **Date**: 2026-07-31
-- **Status**: active
+- **Status**: active (content prop renamed `tone`→`color` by AD-028; no typography `size` still stands)
 
 ### AD-015
 - **Decision**: Nesta fatia `ds-conventions`, `fontFamily` tipográfico usa família de **sistema** do RN; sem bundling `expo-font` / arquivos `.ttf` novos.
@@ -128,7 +128,7 @@
 - **Trade-off**: Um módulo a mais em tokens; tones de surface e content compartilham o mesmo arquivo.
 - **Scope**: `src/components/ds/tokens/tone.ts`, Typography, Icon, Container
 - **Date**: 2026-07-31
-- **Status**: active
+- **Status**: superseded by AD-028
 
 ### AD-017
 - **Decision**: Padrão unificado dos atoms: (1) variações tipadas nos tokens (`variant` / `tone` / `SpacerEdge`); Icon e Loading usam `variant` em vez de `size?: Size`; (2) props `Omit<Host,'style'|controlled>` + `...rest`, exceto Spacer (props fechadas edge+size); (3) styled template para CSS, `.attrs` só para props de host third-party; (4) defaults de a11y na composição (`Name.tsx`), não em `styles.tsx`; (5) `styles.tsx` não exporta unions de domínio.
@@ -136,7 +136,7 @@
 - **Trade-off**: Icon/Loading perdem a prop `size` genérica; novos tamanhos = novas variants de token.
 - **Scope**: `src/components/ds/atoms/**`, `src/components/ds/tokens/**`
 - **Date**: 2026-07-31
-- **Status**: active
+- **Status**: partially superseded by AD-028 (`tone`, Icon/Loading `variant`-as-size, and public `Omit<…,'style'>`); object maps, `styles.tsx` boundary, a11y defaults, Spacer edge exclusivity remain active
 
 ### AD-018
 - **Decision**: Preferências de sessão (`mode`, `dataSource`) vivem em Zustand + `persist` (AsyncStorage); `AppThemeProvider` é bridge (hydrate gate + `StyledThemeProvider`), sem `useState` paralelo. Limpeza runtime via `reset()` (`set` initial + `persist.clearStorage()`); testes via `__mocks__/zustand.ts` (docs Jest).
@@ -216,17 +216,22 @@
 - **Trade-off**: Longer import paths; historical specs still mention old paths.
 - **Scope**: `src/presentation/screens/**`, `src/presentation/navigation/**`, `App.tsx`, README
 - **Date**: 2026-08-02
+- **Status**: active (DS path later moved to `packages/ds` in feature ds-as-lib; presentation paths still stand)
+
+### AD-028
+- **Decision**: Public DS props follow MUI-like axes: content `color` (`text`\|`muted`\|`primary`\|`danger`), surface `bg` (`background`\|`surface`), Button `variant` (`contained`\|`outlined`\|`text`) × `color` (`primary`\|`success`\|`warning`\|`danger`) × `size` × `width` (`hug`\|`full`), scale via `size` on Icon/Loading/Logo/Button, and `style` passthrough on every public export — **no** `sx`, **no** `tone` / `Tone` / `SurfaceTone` / `toneColorMap` aliases. Tokens: `ContentColor` + `SurfaceBg` (replace `tone.ts`); Container omits fill when `bg` omitted; Card defaults to `card.defaultBg` (`surface`). Migration is big-bang across DS + presentation.
+- **Reason**: Clearer mental model and better tooling for building screens; remove overloaded `tone` and size-via-`variant`.
+- **Trade-off**: Breaking API change in one cut; consumers must update in the same change set.
+- **Scope**: `packages/ds/**`, `src/presentation/**`, README Design System section
+- **Date**: 2026-08-03
 - **Status**: active
 
 ## Handoff
 
-- **Feature**: search-and-navigation — DONE + AD-027 path move (screens/nav → presentation)
-- **Phase / Task**: Post-feature cleanup — colocate product UI under presentation
-- **Completed**: Verifier PASS; screens+navigation moved under `src/presentation/`
+- **Feature**: none — ds-as-lib + ds-mui-props **Done** (Verifier PASS)
+- **Phase / Task**: —
+- **Completed**: Both features on `feat/ds-as-lib`; PR https://github.com/MarcosSarges/search_repos/pull/11
 - **In-progress**: none
-- **Next step**: Optional PR for `feat/search-and-navigation`; next specs from NEXT.md
+- **Next step**: review/merge PR #11; clean unrelated dirty tree (legacy logos/hooks) if desired
 - **Blockers**: none
-- **Uncommitted files**: path move + AD-027
-- **Branch**: `feat/search-and-navigation`
-
-
+- **Branch**: `feat/ds-as-lib`

@@ -3,7 +3,7 @@
   "promote_threshold": 2,
   "window_days": 45,
   "quarantine_threshold": 2,
-  "next_id": 23,
+  "next_id": 33,
   "lessons": [
     {
       "id": "L-001",
@@ -401,6 +401,186 @@
       ],
       "created": "2026-08-02T21:53:59Z",
       "last_seen": "2026-08-02T21:53:59Z"
+    },
+    {
+      "id": "L-023",
+      "key": "gate_fail::run pnpm lint to zero errors before declaring a feature build gate green prettier and typescript eslint errors in new files count as gate failure even when jest is green",
+      "text": "Run pnpm lint to zero errors before declaring a feature build gate green; prettier and typescript-eslint errors in new files count as gate failure even when Jest is green",
+      "signal": "gate_fail",
+      "scope": "tooling",
+      "status": "candidate",
+      "features": [
+        "ds-as-lib"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "validation.md Gate Check / pnpm lint exit 1 (tooling)"
+      ],
+      "created": "2026-08-03T11:42:01Z",
+      "last_seen": "2026-08-03T11:42:01Z"
+    },
+    {
+      "id": "L-024",
+      "key": "ac_gap::after introducing a path alias for a lib assert storybook preview and app entry import via that alias only not relative packages paths",
+      "text": "After introducing a path alias for a lib, assert Storybook preview and app entry import via that alias only—not relative packages/ paths",
+      "signal": "ac_gap",
+      "scope": "packages/ds",
+      "status": "candidate",
+      "features": [
+        "ds-as-lib"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "DSLIB-01/12 Storybook preview ../packages/ds (packages/ds)"
+      ],
+      "created": "2026-08-03T11:42:01Z",
+      "last_seen": "2026-08-03T11:42:01Z"
+    },
+    {
+      "id": "L-025",
+      "key": "ac_gap::when props must accept only token union keys add a type level test that raw number is not assignable mirroring the existing style prop exclusion pattern",
+      "text": "When props must accept only token union keys, add a type-level test that raw number is not assignable—mirroring the existing style-prop exclusion pattern",
+      "signal": "ac_gap",
+      "scope": "packages/ds",
+      "status": "candidate",
+      "features": [
+        "ds-as-lib"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "DSLIB-07 Container spacing type AC (packages/ds)"
+      ],
+      "created": "2026-08-03T11:42:01Z",
+      "last_seen": "2026-08-03T11:42:01Z"
+    },
+    {
+      "id": "L-026",
+      "key": "ac_gap::when the spec independent test requires nested composition of two components mount both in a unit test stories alone are not coverage",
+      "text": "When the spec Independent Test requires nested composition of two components, mount both in a unit test; stories alone are not coverage",
+      "signal": "ac_gap",
+      "scope": "packages/ds",
+      "status": "candidate",
+      "features": [
+        "ds-as-lib"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "DSLIB-11 KeyboardAvoid>Container composition (packages/ds)"
+      ],
+      "created": "2026-08-03T11:42:01Z",
+      "last_seen": "2026-08-03T11:42:01Z"
+    },
+    {
+      "id": "L-027",
+      "key": "ac_gap::when replacing a host element assert the new component identity in source or queries not only a preserved testid that would still pass on the old host",
+      "text": "When replacing a host element, assert the new component identity in source or queries—not only a preserved testID that would still pass on the old host",
+      "signal": "ac_gap",
+      "scope": "presentation",
+      "status": "candidate",
+      "features": [
+        "ds-as-lib"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "DSLIB-13 search-repos-list-region host (presentation)"
+      ],
+      "created": "2026-08-03T11:42:01Z",
+      "last_seen": "2026-08-03T11:42:01Z"
+    },
+    {
+      "id": "L-028",
+      "key": "ac_gap::documentation acceptance criteria need an automated assertion of the required phrases or paths otherwise evidence or zero marks them uncovered",
+      "text": "Documentation acceptance criteria need an automated assertion of the required phrases or paths, otherwise evidence-or-zero marks them uncovered",
+      "signal": "ac_gap",
+      "scope": "docs",
+      "status": "candidate",
+      "features": [
+        "ds-as-lib"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "DSLIB-14 README docs AC (docs)"
+      ],
+      "created": "2026-08-03T11:42:01Z",
+      "last_seen": "2026-08-03T11:42:01Z"
+    },
+    {
+      "id": "L-029",
+      "key": "spec_precision_gap::when the spec says only one module may import an asset set assert a repo wide scan for those import paths not only that the allowed module imports them",
+      "text": "When the spec says only one module may import an asset set, assert a repo-wide scan for those import paths—not only that the allowed module imports them",
+      "signal": "spec_precision_gap",
+      "scope": "packages/ds",
+      "status": "candidate",
+      "features": [
+        "ds-as-lib"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "DSLIB-03 brand SVG exclusivity (packages/ds)"
+      ],
+      "created": "2026-08-03T11:42:01Z",
+      "last_seen": "2026-08-03T11:42:01Z"
+    },
+    {
+      "id": "L-030",
+      "key": "ac_gap::when keyboard dismiss wrappers are specified test that presses on textinput still focus and that dismiss fires only from the non input press target",
+      "text": "When keyboard-dismiss wrappers are specified, test that presses on TextInput still focus and that dismiss fires only from the non-input press target",
+      "signal": "ac_gap",
+      "scope": "packages/ds",
+      "status": "candidate",
+      "features": [
+        "ds-as-lib"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "Edge: keyboardDismiss + TextInput focus (packages/ds)"
+      ],
+      "created": "2026-08-03T11:42:09Z",
+      "last_seen": "2026-08-03T11:42:09Z"
+    },
+    {
+      "id": "L-031",
+      "key": "ac_gap::assert public component prop types reject sx with a type level or scan test not only readme wording",
+      "text": "Assert public component prop types reject sx with a type-level or scan test, not only README wording",
+      "signal": "ac_gap",
+      "scope": "packages/ds",
+      "status": "candidate",
+      "features": [
+        "ds-mui-props"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "PROP-21 (packages/ds)"
+      ],
+      "created": "2026-08-03T12:39:44Z",
+      "last_seen": "2026-08-03T12:39:44Z"
+    },
+    {
+      "id": "L-032",
+      "key": "ac_gap::when an ac covers omitted or explicit default prop values assert both branches in the test",
+      "text": "When an AC covers omitted OR explicit default prop values, assert both branches in the test",
+      "signal": "ac_gap",
+      "scope": "packages/ds",
+      "status": "candidate",
+      "features": [
+        "ds-mui-props"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "PROP-13 (packages/ds)"
+      ],
+      "created": "2026-08-03T12:39:45Z",
+      "last_seen": "2026-08-03T12:39:45Z"
     }
   ]
 }

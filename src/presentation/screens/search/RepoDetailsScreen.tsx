@@ -1,7 +1,7 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import { Button, Typography } from '@/components/ds/atoms';
-import { Container } from '@/components/ds/molecules';
+import { Button, Typography } from '@ds/atoms';
+import { Container } from '@ds/molecules';
 import type { SearchStackParamList } from '@/presentation/navigation/types';
 
 type Props = NativeStackScreenProps<SearchStackParamList, 'RepoDetails'>;
@@ -10,7 +10,7 @@ export function RepoDetailsScreen({ route, navigation }: Props) {
   const { repoId } = route.params;
 
   return (
-    <Container tone="background">
+    <Container bg="background">
       <Typography variant="body" testID="repo-details-repo-id">
         {repoId}
       </Typography>
