@@ -1,10 +1,10 @@
-import type { FavoriteSnapshot } from '@/presentation/stores';
+import type { Favorite } from '@/domain';
 
 import { mapFavoriteToRepoItemProps } from '../map-favorite-to-repo-item-props';
 
-const favorite: FavoriteSnapshot = {
+const favorite: Favorite = {
   id: 'facebook/react',
-  dataSource: 'github',
+  source: 'github',
   name: 'react',
   fullName: 'facebook/react',
   description: 'A JavaScript library',

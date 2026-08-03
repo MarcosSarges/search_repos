@@ -13,8 +13,11 @@ import type { QueryClient } from '@tanstack/react-query';
 
 import { AppThemeProvider, type ThemeMode } from '@/presentation/theme';
 import type { DataSource } from '@/application';
-import type { RepoRepository } from '@/domain';
-import { setAppContainerTestRepository } from '@/presentation/hooks/use-app-container';
+import type { FavoritesRepository, RepoRepository } from '@/domain';
+import {
+  setAppContainerTestFavoritesRepository,
+  setAppContainerTestRepository,
+} from '@/presentation/hooks/use-app-container';
 import { AppQueryProvider } from '@/presentation/providers/AppQueryProvider';
 import { useSessionPreferencesStore } from '@/presentation/stores/session-preferences-store';
 
@@ -39,11 +42,18 @@ function seedSessionPreferences(themeMode?: ThemeMode, dataSource?: DataSource) 
 type AllTheProvidersProps = {
   children: ReactNode;
   repository?: RepoRepository;
+  favoritesRepository?: FavoritesRepository;
   queryClient?: QueryClient;
 };
 
-export function AllTheProviders({ children, repository, queryClient }: AllTheProvidersProps) {
+export function AllTheProviders({
+  children,
+  repository,
+  favoritesRepository,
+  queryClient,
+}: AllTheProvidersProps) {
   setAppContainerTestRepository(repository);
+  setAppContainerTestFavoritesRepository(favoritesRepository);
   return (
     <SafeAreaProvider initialMetrics={initialSafeAreaMetrics}>
       <AppThemeProvider>
@@ -57,6 +67,7 @@ type CustomRenderOptions = Omit<RenderOptions, 'wrapper'> & {
   themeMode?: ThemeMode;
   dataSource?: DataSource;
   repository?: RepoRepository;
+  favoritesRepository?: FavoritesRepository;
   queryClient?: QueryClient;
 };
 
@@ -73,18 +84,23 @@ export async function render(
     themeMode = 'light',
     dataSource,
     repository,
+    favoritesRepository,
     queryClient,
     ...options
   }: CustomRenderOptions = {},
 ): Promise<RenderResult> {
   seedSessionPreferences(themeMode, dataSource);
   setAppContainerTestRepository(repository);
+  setAppContainerTestFavoritesRepository(favoritesRepository);
   await waitForSessionHydration();
 
   return rtlRender(ui, {
     ...options,
     wrapper: ({ children }) => (
-      <AllTheProviders repository={repository} queryClient={queryClient}>
+      <AllTheProviders
+        repository={repository}
+        favoritesRepository={favoritesRepository}
+        queryClient={queryClient}>
         {children}
       </AllTheProviders>
     ),
@@ -95,6 +111,7 @@ type CustomRenderHookOptions<Props> = Omit<RenderHookOptions<Props>, 'wrapper'> 
   themeMode?: ThemeMode;
   dataSource?: DataSource;
   repository?: RepoRepository;
+  favoritesRepository?: FavoritesRepository;
   queryClient?: QueryClient;
 };
 
@@ -104,18 +121,23 @@ export async function renderHook<Result, Props>(
     themeMode = 'light',
     dataSource,
     repository,
+    favoritesRepository,
     queryClient,
     ...options
   }: CustomRenderHookOptions<Props> = {},
 ): Promise<RenderHookResult<Result, Props>> {
   seedSessionPreferences(themeMode, dataSource);
   setAppContainerTestRepository(repository);
+  setAppContainerTestFavoritesRepository(favoritesRepository);
   await waitForSessionHydration();
 
   return rtlRenderHook(callback, {
     ...options,
     wrapper: ({ children }) => (
-      <AllTheProviders repository={repository} queryClient={queryClient}>
+      <AllTheProviders
+        repository={repository}
+        favoritesRepository={favoritesRepository}
+        queryClient={queryClient}>
         {children}
       </AllTheProviders>
     ),

@@ -15,7 +15,9 @@ function createFakeFavoritesRepository(initial: Favorite[] = []): FavoritesRepos
       return [...items];
     },
     async upsert(favorite) {
-      const index = items.findIndex((item) => item.source === favorite.source && item.id === favorite.id);
+      const index = items.findIndex(
+        (item) => item.source === favorite.source && item.id === favorite.id,
+      );
       if (index >= 0) {
         items[index] = favorite;
         return;

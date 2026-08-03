@@ -1,90 +1,41 @@
 import { create } from 'zustand';
-import { createJSONStorage, persist, type StateStorage } from 'zustand/middleware';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import type { DataSource } from '@/application';
-
-import { sanitizePersistedFavorites, type FavoriteSnapshot } from './favorite-snapshot';
-
-export const FAVORITES_STORAGE_KEY = 'searchrepos:favorites';
+import type { Favorite } from '@/domain';
 
 export type FavoritesState = {
-  items: FavoriteSnapshot[];
-  /** True after persist rehydrate finishes (success or storage error). Not persisted. */
+  items: Favorite[];
+  /** True after hydrate finishes (success or error). */
   hasHydrated: boolean;
-  isFavorite: (dataSource: DataSource, id: string) => boolean;
-  toggleFavorite: (snapshot: FavoriteSnapshot) => void;
-  removeFavorite: (dataSource: DataSource, id: string) => void;
-  listBySource: (dataSource: DataSource) => FavoriteSnapshot[];
+  setItems: (items: Favorite[]) => void;
   setHasHydrated: (hasHydrated: boolean) => void;
+  isFavorite: (source: string, id: string) => boolean;
+  listBySource: (source: string) => Favorite[];
+  /** Load once / refresh from a use-case loader. On error → items [] + hasHydrated true. */
+  hydrate: (loader: () => Promise<Favorite[]>) => Promise<void>;
 };
 
-function sameFavorite(a: FavoriteSnapshot, dataSource: DataSource, id: string): boolean {
-  return a.dataSource === dataSource && a.id === id;
-}
-
-export type CreateFavoritesStoreOptions = {
-  storage?: StateStorage;
-};
-
-export function createFavoritesStore(options: CreateFavoritesStoreOptions = {}) {
-  let markHydrated: () => void = () => {};
-
-  const store = create<FavoritesState>()(
-    persist(
-      (set, get) => ({
-        items: [],
-        hasHydrated: false,
-        isFavorite: (dataSource, id) =>
-          get().items.some((item) => sameFavorite(item, dataSource, id)),
-        toggleFavorite: (snapshot) => {
-          const { dataSource, id } = snapshot;
-          if (get().isFavorite(dataSource, id)) {
-            set((state) => ({
-              items: state.items.filter((item) => !sameFavorite(item, dataSource, id)),
-            }));
-            return;
-          }
-          // Idempotent upsert: drop any same-key entry, then append refreshed snapshot.
-          set((state) => ({
-            items: [...state.items.filter((item) => !sameFavorite(item, dataSource, id)), snapshot],
-          }));
-        },
-        removeFavorite: (dataSource, id) => {
-          set((state) => ({
-            items: state.items.filter((item) => !sameFavorite(item, dataSource, id)),
-          }));
-        },
-        listBySource: (dataSource) =>
-          get()
-            .items.filter((item) => item.dataSource === dataSource)
-            .slice()
-            .sort((a, b) => b.favoritedAt - a.favoritedAt),
-        setHasHydrated: (hasHydrated) => set({ hasHydrated }),
-      }),
-      {
-        name: FAVORITES_STORAGE_KEY,
-        storage: createJSONStorage(() => options.storage ?? AsyncStorage),
-        partialize: (state) => ({ items: state.items }),
-        merge: (persistedState, currentState) => {
-          const sanitized = sanitizePersistedFavorites(persistedState);
-          return {
-            ...currentState,
-            items: sanitized.items,
-          };
-        },
-        onRehydrateStorage: () => () => {
-          markHydrated();
-        },
-      },
-    ),
-  );
-
-  markHydrated = () => {
-    store.setState({ hasHydrated: true });
-  };
-
-  return store;
+export function createFavoritesStore() {
+  return create<FavoritesState>((set, get) => ({
+    items: [],
+    hasHydrated: false,
+    setItems: (items) => set({ items }),
+    setHasHydrated: (hasHydrated) => set({ hasHydrated }),
+    isFavorite: (source, id) =>
+      get().items.some((item) => item.source === source && item.id === id),
+    listBySource: (source) =>
+      get()
+        .items.filter((item) => item.source === source)
+        .slice()
+        .sort((a, b) => b.favoritedAt - a.favoritedAt),
+    hydrate: async (loader) => {
+      try {
+        const items = await loader();
+        set({ items, hasHydrated: true });
+      } catch {
+        set({ items: [], hasHydrated: true });
+      }
+    },
+  }));
 }
 
 export const useFavoritesStore = createFavoritesStore();

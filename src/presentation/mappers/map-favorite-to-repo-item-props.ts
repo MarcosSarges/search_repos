@@ -1,9 +1,9 @@
-import type { FavoriteSnapshot } from '@/presentation/stores';
+import type { Favorite } from '@/domain';
 import type { RepoItemProps } from '@ds/organisms';
 
-/** Maps `FavoriteSnapshot` → DS `RepoItem` primitives (no press / a11y / forks). */
+/** Maps domain `Favorite` → DS `RepoItem` primitives (no press / a11y / forks). */
 export function mapFavoriteToRepoItemProps(
-  favorite: FavoriteSnapshot,
+  favorite: Favorite,
 ): Pick<
   RepoItemProps,
   'name' | 'description' | 'languages' | 'ownerName' | 'ownerAvatarUrl' | 'stars'

@@ -1,7 +1,5 @@
-export { sanitizePersistedFavorites, toFavoriteSnapshot } from './favorite-snapshot';
-export type { FavoriteSnapshot, FavoritesPersisted } from './favorite-snapshot';
-export { createFavoritesStore, FAVORITES_STORAGE_KEY, useFavoritesStore } from './favorites-store';
-export type { CreateFavoritesStoreOptions, FavoritesState } from './favorites-store';
+export { createFavoritesStore, useFavoritesStore } from './favorites-store';
+export type { FavoritesState } from './favorites-store';
 export {
   createSessionPreferencesStore,
   sanitizePersistedPreferences,

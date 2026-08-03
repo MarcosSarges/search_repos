@@ -1,15 +1,20 @@
 import { useMemo } from 'react';
 
 import type { DataSource } from '@/application';
-import type { RepoRepository } from '@/domain';
+import type { FavoritesRepository, RepoRepository } from '@/domain';
 import { createContainer, type AppContainer } from '@/infrastructure/di/create-container';
 import { useSessionPreferencesStore } from '@/presentation/stores/session-preferences-store';
 
 /** Test-only Fake injection — product code must not call this. */
 let testRepositoryOverride: RepoRepository | undefined;
+let testFavoritesRepositoryOverride: FavoritesRepository | undefined;
 
 export function setAppContainerTestRepository(repository?: RepoRepository): void {
   testRepositoryOverride = repository;
+}
+
+export function setAppContainerTestFavoritesRepository(repository?: FavoritesRepository): void {
+  testFavoritesRepositoryOverride = repository;
 }
 
 export type AppContainerHandle = {
@@ -31,6 +36,7 @@ export function useAppContainer(): AppContainerHandle {
         dataSource,
         tokens,
         repository: testRepositoryOverride,
+        favoritesRepository: testFavoritesRepositoryOverride,
       }),
     [dataSource, tokens],
   );
