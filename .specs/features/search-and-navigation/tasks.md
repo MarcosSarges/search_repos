@@ -154,10 +154,10 @@ T8 → T9 → T10
 
 **Done when**:
 
-- [ ] Toggles change `dataSource` and `mode` in store
-- [ ] Token placeholder visible; no SecureStore form
-- [ ] Former Home toggle ACs covered by Config tests
-- [ ] Gate: `pnpm test -- src/screens --watchman=false` (Config-focused)
+- [x] Toggles change `dataSource` and `mode` in store
+- [x] Token placeholder visible; no SecureStore form
+- [x] Former Home toggle ACs covered by Config tests
+- [x] Gate: `pnpm test -- src/screens --watchman=false` (Config-focused)
 
 **Tests**: unit (RNTL)  
 **Gate**: quick  
