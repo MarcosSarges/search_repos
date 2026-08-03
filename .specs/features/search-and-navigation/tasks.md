@@ -75,8 +75,8 @@ T8 → T9 → T10
 **Tools**: Skill `tlc-spec-driven`  
 **Done when**:
 
-- [ ] `SEARCH_DEBOUNCE_MS === 350` exported
-- [ ] Re-exported from constants barrel
+- [x] `SEARCH_DEBOUNCE_MS === 350` exported
+- [x] Re-exported from constants barrel
 
 **Tests**: none  
 **Gate**: build (`pnpm lint` on touched files / tsc via existing gate)  
