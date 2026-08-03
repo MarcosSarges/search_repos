@@ -1,43 +1,49 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
-import { render, screen } from '@/test';
 import { sizes } from '@ds/tokens';
+import { render, screen } from '@/test';
 
-import { resolveLogoAsset } from '../styles';
 import { DataSourceLogo, type DataSourceLogoProps } from '../DataSourceLogo';
+import { resolveLogoAsset } from '../styles';
 
-describe('DataSourceLogo organism (DSC-04 / DS-10)', () => {
-  it('WHEN dataSource is github and mode is light THEN it uses the black Invertocat asset', async () => {
-    await render(<DataSourceLogo dataSource="github" />, { themeMode: 'light' });
+describe('DataSourceLogo organism (DSLIB-06)', () => {
+  it('WHEN brand is github and mode is light THEN it uses the black Invertocat asset', async () => {
+    await render(<DataSourceLogo brand="github" />, { themeMode: 'light' });
 
     expect(screen.getByTestId('ds-datasource-logo-github-black')).toBeTruthy();
     expect(resolveLogoAsset('github', 'light')).toBe('github-black');
   });
 
-  it('WHEN dataSource is github and mode is dark THEN it uses the white Invertocat asset', async () => {
-    await render(<DataSourceLogo dataSource="github" />, { themeMode: 'dark' });
+  it('WHEN brand is github and mode is dark THEN it uses the white Invertocat asset', async () => {
+    await render(<DataSourceLogo brand="github" />, { themeMode: 'dark' });
 
     expect(screen.getByTestId('ds-datasource-logo-github-white')).toBeTruthy();
     expect(resolveLogoAsset('github', 'dark')).toBe('github-white');
   });
 
-  it('WHEN dataSource is gitlab THEN it uses a GitLab logo SVG from assets/gitlab', async () => {
-    await render(<DataSourceLogo dataSource="gitlab" />, { themeMode: 'light' });
+  it('WHEN brand is gitlab and mode is light THEN it uses a GitLab logo SVG', async () => {
+    await render(<DataSourceLogo brand="gitlab" />, { themeMode: 'light' });
 
     expect(screen.getByTestId('ds-datasource-logo-gitlab')).toBeTruthy();
     expect(resolveLogoAsset('gitlab', 'light')).toBe('gitlab');
   });
 
-  it('WHEN dataSource is gitlab in dark mode THEN it still uses the GitLab logo asset', async () => {
-    await render(<DataSourceLogo dataSource="gitlab" />, { themeMode: 'dark' });
+  it('WHEN brand is gitlab and mode is dark THEN it still uses the GitLab logo asset', async () => {
+    await render(<DataSourceLogo brand="gitlab" />, { themeMode: 'dark' });
 
     expect(screen.getByTestId('ds-datasource-logo-gitlab')).toBeTruthy();
     expect(resolveLogoAsset('gitlab', 'dark')).toBe('gitlab');
   });
 
+  it('WHEN brand prop is omitted THEN it falls back to theme.brand', async () => {
+    await render(<DataSourceLogo />, { themeMode: 'light', dataSource: 'gitlab' });
+
+    expect(screen.getByTestId('ds-datasource-logo-gitlab')).toBeTruthy();
+  });
+
   it('WHEN size token is provided THEN the logo scales to that size token in px', async () => {
-    await render(<DataSourceLogo dataSource="github" size="xl" />);
+    await render(<DataSourceLogo brand="github" size="xl" />);
 
     const node = screen.getByTestId('ds-datasource-logo-github-black');
     expect(node.props.width).toBe(sizes.xl);
@@ -45,7 +51,7 @@ describe('DataSourceLogo organism (DSC-04 / DS-10)', () => {
   });
 
   it('WHEN size is omitted THEN it defaults to the md size token', async () => {
-    await render(<DataSourceLogo dataSource="github" />);
+    await render(<DataSourceLogo brand="github" />);
 
     const node = screen.getByTestId('ds-datasource-logo-github-black');
     expect(node.props.width).toBe(sizes.md);
@@ -66,6 +72,15 @@ describe('DataSourceLogo organism (DSC-04 / DS-10)', () => {
     expect(source).toContain("'github-black': GitHubInvertocatBlack");
     expect(source).toContain("'github-white': GitHubInvertocatWhite");
     expect(source).toContain('gitlab: GitLabLogo');
+  });
+
+  it('WHEN organism sources are inspected THEN they do not import application or useAppTheme', () => {
+    const component = readFileSync(join(__dirname, '../DataSourceLogo.tsx'), 'utf8');
+    const styles = readFileSync(join(__dirname, '../styles.tsx'), 'utf8');
+
+    expect(component).not.toMatch(/@\/application|useAppTheme|dataSource\?:/);
+    expect(styles).not.toMatch(/@\/application/);
+    expect(component).toMatch(/brand\?:/);
   });
 
   it('WHEN public props are inspected THEN style is not part of the controlled API', () => {

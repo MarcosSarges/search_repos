@@ -29,21 +29,21 @@ export const FromContext: Story = {
 
 export const GitHub: Story = {
   args: {
-    dataSource: 'github',
+    brand: 'github',
     size: 'xl',
   },
 };
 
 export const GitLab: Story = {
   args: {
-    dataSource: 'gitlab',
+    brand: 'gitlab',
     size: 'xl',
   },
 };
 
 export const Small: Story = {
   args: {
-    dataSource: 'github',
+    brand: 'github',
     size: 'sm',
   },
 };
