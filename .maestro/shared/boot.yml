@@ -1,0 +1,10 @@
+appId: host.exp.Exponent
+---
+# Shared boot: open the Expo project in Expo Go and wait for Search idle.
+# 10.0.2.2 = host loopback from inside the Android emulator (Metro :8081).
+- openLink: exp://10.0.2.2:8081
+- extendedWaitUntil:
+    visible:
+      id: search-repos-idle
+    timeout: 120000
+    label: Wait for Search idle after Expo Go hydrate

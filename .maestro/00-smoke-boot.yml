@@ -1,0 +1,11 @@
+appId: host.exp.Exponent
+name: Smoke — Expo Go boot lands on Search
+tags:
+  - smoke
+  - p1
+---
+- runFlow: shared/boot.yml
+- assertVisible:
+    id: search-repos-idle
+    label: E2E-01/02 — Search idle visible after boot
+- assertNotVisible: "Welcome!"
