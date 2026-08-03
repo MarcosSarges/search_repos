@@ -1,6 +1,6 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useCallback } from 'react';
-import { ScrollView, View } from 'react-native';
+import { ScrollView } from 'react-native';
 
 import { Avatar, Button, Icon, Loading, Typography } from '@ds/atoms';
 import { Container } from '@ds/molecules';
@@ -63,27 +63,33 @@ export function RepoDetailsScreen({ route, navigation }: Props) {
             wrap="wrap"
             align="center"
             testID="repo-details-metrics">
-            <View
+            <Container
+              direction="row"
+              align="center"
+              gap="xs"
               accessibilityRole="text"
-              accessibilityLabel={`${data.stars} stars`}
-              style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+              accessibilityLabel={`${data.stars} stars`}>
               <Icon name="star" size="sm" color="muted" />
               <Typography variant="caption">{String(data.stars)}</Typography>
-            </View>
-            <View
+            </Container>
+            <Container
+              direction="row"
+              align="center"
+              gap="xs"
               accessibilityRole="text"
-              accessibilityLabel={`${data.forks} forks`}
-              style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+              accessibilityLabel={`${data.forks} forks`}>
               <Icon name="git-network" size="sm" color="muted" />
               <Typography variant="caption">{String(data.forks)}</Typography>
-            </View>
-            <View
+            </Container>
+            <Container
+              direction="row"
+              align="center"
+              gap="xs"
               accessibilityRole="text"
-              accessibilityLabel={`${data.watchers} watchers`}
-              style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+              accessibilityLabel={`${data.watchers} watchers`}>
               <Icon name="eye-outline" size="sm" color="muted" />
               <Typography variant="caption">{String(data.watchers)}</Typography>
-            </View>
+            </Container>
           </Container>
 
           {data.language ? (

@@ -3,7 +3,7 @@ import { Pressable, type StyleProp, type ViewStyle } from 'react-native';
 
 import { Icon, Typography, type IconProps } from '@ds/atoms';
 
-import { RowRoot, TextColumn, TrailingSlot } from './styles';
+import { Container } from '../Container';
 
 export type SettingsRowProps = {
   icon: IconProps['name'];
@@ -24,32 +24,34 @@ export function SettingsRow({
   style,
   testID = 'ds-settings-row',
 }: SettingsRowProps) {
-  const content = (
+  const body = (
     <>
       <Icon name={icon} size="md" color="muted" />
-      <TextColumn>
+      <Container flex={1} gap="xs">
         <Typography variant="body">{title}</Typography>
         {subtitle ? (
           <Typography variant="caption" color="muted" testID="ds-settings-row-subtitle">
             {subtitle}
           </Typography>
         ) : null}
-      </TextColumn>
-      {trailing ? <TrailingSlot>{trailing}</TrailingSlot> : null}
+      </Container>
+      {trailing}
     </>
   );
 
   if (onPress) {
     return (
       <Pressable accessibilityRole="button" onPress={onPress} style={style} testID={testID}>
-        <RowRoot>{content}</RowRoot>
+        <Container direction="row" align="center" gap="md" p="md">
+          {body}
+        </Container>
       </Pressable>
     );
   }
 
   return (
-    <RowRoot style={style} testID={testID}>
-      {content}
-    </RowRoot>
+    <Container direction="row" align="center" gap="md" p="md" style={style} testID={testID}>
+      {body}
+    </Container>
   );
 }

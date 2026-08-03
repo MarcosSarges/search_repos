@@ -1,11 +1,10 @@
 import type { StyleProp, ViewStyle } from 'react-native';
 
 import { Avatar, Badge, Divider, Icon, Typography } from '@ds/atoms';
-import { Card } from '@ds/molecules';
+import { Card, Container } from '@ds/molecules';
 import { formatRelativeDate } from '@ds/utils';
 
 import { Hyperlink } from '../Hyperlink';
-import { AuthorRow, BadgesRow, BodyStack, MetaRow, Stat, StatsRow } from './styles';
 
 export type IssueItemLabel = {
   label: string;
@@ -59,26 +58,26 @@ export function IssueItem({
   return (
     <Card testID={testID} style={style}>
       <Card.Content>
-        <BodyStack>
+        <Container gap="sm">
           <Hyperlink href={titleHref} variant="heading">
             {title}
           </Hyperlink>
-          <MetaRow>
+          <Container direction="row" align="center" gap="sm" wrap="wrap">
             <Typography variant="caption" color="muted">
               {`#${number}`}
             </Typography>
             <Badge>{stateLabelByState[state]}</Badge>
-          </MetaRow>
+          </Container>
           {showLabels ? (
-            <BadgesRow testID="ds-issue-item-labels">
+            <Container direction="row" align="center" gap="xs" wrap="wrap" testID="ds-issue-item-labels">
               {labelList.map((item) => (
                 <Badge key={item.label} swatch={item.swatch}>
                   {item.label}
                 </Badge>
               ))}
-            </BadgesRow>
+            </Container>
           ) : null}
-          <AuthorRow>
+          <Container direction="row" align="center" gap="sm">
             <Avatar name={authorName} uri={authorAvatarUrl} size="sm" />
             <Typography variant="caption" color="muted">
               {authorName}
@@ -86,20 +85,21 @@ export function IssueItem({
             <Typography variant="caption" color="muted" testID="ds-issue-item-date">
               {relativeUpdatedAt}
             </Typography>
-          </AuthorRow>
-        </BodyStack>
+          </Container>
+        </Container>
       </Card.Content>
       <Divider orientation="horizontal" />
       <Card.Footer>
-        <StatsRow>
-          <Stat
-            accessibilityRole="text"
-            accessibilityLabel={`${comments} comments`}
-            testID="ds-issue-item-comments">
-            <Icon name="chatbubble-outline" size="sm" color="muted" />
-            <Typography variant="caption">{String(comments)}</Typography>
-          </Stat>
-        </StatsRow>
+        <Container
+          direction="row"
+          align="center"
+          gap="xs"
+          testID="ds-issue-item-comments"
+          accessibilityRole="text"
+          accessibilityLabel={`${comments} comments`}>
+          <Icon name="chatbubble-outline" size="sm" color="muted" />
+          <Typography variant="caption">{String(comments)}</Typography>
+        </Container>
       </Card.Footer>
     </Card>
   );
