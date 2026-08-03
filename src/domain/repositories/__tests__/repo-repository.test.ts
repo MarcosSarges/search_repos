@@ -15,7 +15,9 @@ describe('RepoRepository port (EXP-10)', () => {
 
   it('WHEN ListTrendingInput is inspected THEN it SHALL include page and optional perPage only', () => {
     expect(portSource).toMatch(/export type ListTrendingInput = \{[\s\S]*?\bpage\s*:\s*number/);
-    expect(portSource).toMatch(/export type ListTrendingInput = \{[\s\S]*?\bperPage\?\s*:\s*number/);
+    expect(portSource).toMatch(
+      /export type ListTrendingInput = \{[\s\S]*?\bperPage\?\s*:\s*number/,
+    );
   });
 
   it('WHEN the port source is scanned THEN it SHALL NOT name providers (AD-019)', () => {

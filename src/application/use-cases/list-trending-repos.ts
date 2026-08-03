@@ -13,9 +13,7 @@ export type ListTrendingReposInput = {
   perPage?: number;
 };
 
-export type ListTrendingRepos = (
-  input?: ListTrendingReposInput,
-) => Promise<PaginatedResult<Repo>>;
+export type ListTrendingRepos = (input?: ListTrendingReposInput) => Promise<PaginatedResult<Repo>>;
 
 export function createListTrendingRepos(repository: RepoRepository): ListTrendingRepos {
   return async (input = {}) => {

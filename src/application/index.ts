@@ -5,9 +5,6 @@ export type { GetRepoDetails, GetRepoDetailsInput } from './use-cases/get-repo-d
 export { createListRepoIssues } from './use-cases/list-repo-issues';
 export type { ListRepoIssues, ListRepoIssuesInput } from './use-cases/list-repo-issues';
 export { createListTrendingRepos } from './use-cases/list-trending-repos';
-export type {
-  ListTrendingRepos,
-  ListTrendingReposInput,
-} from './use-cases/list-trending-repos';
+export type { ListTrendingRepos, ListTrendingReposInput } from './use-cases/list-trending-repos';
 export { createSearchRepos } from './use-cases/search-repos';
 export type { SearchRepos, SearchReposInput } from './use-cases/search-repos';

@@ -1,8 +1,4 @@
-import {
-  TRENDING_WINDOW_DAYS,
-  getTrendingSinceDate,
-  getTrendingSinceIso,
-} from '../window';
+import { TRENDING_WINDOW_DAYS, getTrendingSinceDate, getTrendingSinceIso } from '../window';
 
 /**
  * EXP-13 / EXP-14 enabler: 30-day window formats for GitHub and GitLab ACL.
