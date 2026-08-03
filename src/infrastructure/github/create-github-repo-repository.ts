@@ -1,5 +1,6 @@
 import type {
   ListIssuesInput,
+  ListTrendingInput,
   PaginatedResult,
   Repo,
   RepoRepository,
@@ -10,6 +11,7 @@ import type {
 import { jsonFetch } from '../http/json-fetch';
 import { hasRelNext } from '../http/parse-link-next';
 import { resolveHasNextPage } from '../http/resolve-has-next-page';
+import { getTrendingSinceDate } from '../trending/window';
 import { assertGithubRepoId } from './assert-repo-id';
 import { mapGithubIssue, mapGithubRepo } from './mappers';
 import type { GithubIssueDto, GithubRepoDto, GithubSearchReposResponse } from './types';
@@ -92,6 +94,33 @@ export function createGithubRepoRepository(
           itemsLength: items.length,
           perPage,
           headerIndicatesNext,
+        }),
+      };
+    },
+
+    async listTrending(input: ListTrendingInput): Promise<PaginatedResult<Repo>> {
+      const perPage = input.perPage ?? 20;
+      const page = input.page;
+      const since = getTrendingSinceDate();
+      const url = new URL(`${GITHUB_API_BASE}/search/repositories`);
+      url.searchParams.set('q', `created:>${since}`);
+      url.searchParams.set('sort', 'stars');
+      url.searchParams.set('order', 'desc');
+      url.searchParams.set('page', String(page));
+      url.searchParams.set('per_page', String(perPage));
+
+      const { data } = await jsonFetch<GithubSearchReposResponse>(url.toString(), authInit(token));
+      const items = data.items.map(mapGithubRepo);
+      const resolvedHasNext = page * perPage < Math.min(data.total_count, SEARCH_RESULT_WINDOW_CAP);
+
+      return {
+        items,
+        page,
+        perPage,
+        hasNextPage: resolveHasNextPage({
+          itemsLength: items.length,
+          perPage,
+          resolvedHasNext,
         }),
       };
     },

@@ -186,9 +186,9 @@ T8 → T9 → T10
 
 **Done when**:
 
-- [ ] Uses window helper; no hardcoded provider logic outside adapter
-- [ ] MSW asserts query string includes `created:>` + `sort=stars`
-- [ ] Gate: `pnpm test -- src/infrastructure/github`
+- [x] Uses window helper; no hardcoded provider logic outside adapter
+- [x] MSW asserts query string includes `created:>` + `sort=stars`
+- [x] Gate: `pnpm test -- src/infrastructure/github`
 
 **Tests**: unit (MSW)  
 **Gate**: quick  
