@@ -2,18 +2,22 @@
   "name": "searchrepos",
   "main": "index.js",
   "version": "1.0.0",
+  "private": true,
+  "description": "Expo + TypeScript app to search GitHub/GitLab repositories with runtime data-source switching, typed Design System, cache, and Clean Architecture.",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "start": "expo start",
-    "reset-project": "node ./scripts/reset-project.js",
+    "storybook": "cross-env STORYBOOK_ENABLED=true expo start",
+    "storybook:android": "cross-env STORYBOOK_ENABLED=true expo start --android",
+    "storybook:ios": "cross-env STORYBOOK_ENABLED=true expo start --ios",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
     "lint": "expo lint",
     "test": "jest --watchman=false",
-    "test:e2e": "maestro --device emulator-5554 test .maestro/00-smoke-boot.yml .maestro/10-search-details-issues.yml .maestro/20-source-toggle.yml .maestro/30-config-theme.yml .maestro/40-explore.yml",
-    "storybook": "cross-env STORYBOOK_ENABLED=true expo start",
-    "storybook:ios": "cross-env STORYBOOK_ENABLED=true expo start --ios",
-    "storybook:android": "cross-env STORYBOOK_ENABLED=true expo start --android",
+    "test:e2e": "maestro --device emulator-5554 test .maestro/",
     "prepare": "husky"
   },
   "dependencies": {
@@ -76,6 +80,5 @@
     "react-native-svg-transformer": "^1.5.3",
     "ts-node": "^10.9.2",
     "typescript": "~5.9.2"
-  },
-  "private": true
+  }
 }

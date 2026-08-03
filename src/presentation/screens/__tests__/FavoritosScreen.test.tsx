@@ -3,10 +3,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Text } from 'react-native';
 
+import type { DataSource } from '@/application';
 import type { Favorite, FavoritesRepository } from '@/domain';
 import { createInMemoryFavoritesRepository } from '@/infrastructure';
 import { setAppContainerTestFavoritesRepository } from '@/presentation/hooks/use-app-container';
-import { useFavoritesStore, useSessionPreferencesStore } from '@/presentation/stores';
+import { useFavoritesStore } from '@/presentation/stores';
 import type { SearchStackParamList, TabsParamList } from '@/presentation/navigation/types';
 import { act, fireEvent, render, screen, waitFor } from '@/test';
 
@@ -39,7 +40,7 @@ function ExploreStub() {
 
 let favoritesRepository: FavoritesRepository;
 
-async function renderFavoritosTab() {
+async function renderFavoritosTab(dataSource: DataSource = 'github') {
   return render(
     <NavigationContainer>
       <Tabs.Navigator screenOptions={{ headerShown: false }}>
@@ -49,7 +50,7 @@ async function renderFavoritosTab() {
         <Tabs.Screen name="Config" component={() => <Text>Config</Text>} />
       </Tabs.Navigator>
     </NavigationContainer>,
-    { dataSource: 'github', favoritesRepository },
+    { dataSource, favoritesRepository },
   );
 }
 
@@ -137,7 +138,7 @@ describe('FavoritosScreen (FAV-03/04/10/12/13)', () => {
     });
   });
 
-  it('WHEN favorites exist THEN renders dual sections without interleaving and omits empty source', async () => {
+  it('WHEN favorites exist in both sources THEN renders only the selected source', async () => {
     await seedFavorite({
       id: 'gh/one',
       source: 'github',
@@ -166,34 +167,34 @@ describe('FavoritosScreen (FAV-03/04/10/12/13)', () => {
       expect(screen.getByTestId('favoritos-list')).toBeTruthy();
     });
     expect(screen.getByTestId('favoritos-section-github')).toBeTruthy();
-    expect(screen.getByTestId('favoritos-section-gitlab')).toBeTruthy();
-    expect(screen.getByText('GitHub')).toBeTruthy();
-    expect(screen.getByText('GitLab')).toBeTruthy();
-    expect(screen.getAllByTestId('ds-repo-item')).toHaveLength(3);
+    expect(screen.queryByTestId('favoritos-section-gitlab')).toBeNull();
+    expect(screen.getByTestId('favoritos-row-github-gh/one')).toBeTruthy();
+    expect(screen.getByTestId('favoritos-row-github-gh/three')).toBeTruthy();
+    expect(screen.queryByTestId('favoritos-row-gitlab-gl/two')).toBeNull();
+    expect(screen.getAllByTestId('ds-repo-item')).toHaveLength(2);
     expect(screen.queryByTestId('favoritos-empty')).toBeNull();
   });
 
-  it('WHEN only one source has items THEN the empty source section is omitted', async () => {
-    await seedFavorite({ id: 'gh/only', source: 'github', name: 'only', fullName: 'gh/only' });
+  it('WHEN selected source has no favorites THEN shows empty even if another source has items', async () => {
+    await seedFavorite({ id: 'gl/only', source: 'gitlab', name: 'only', fullName: 'gl/only' });
 
     await renderFavoritosTab();
 
     await waitFor(() => {
-      expect(screen.getByTestId('favoritos-section-github')).toBeTruthy();
+      expect(screen.getByTestId('favoritos-empty')).toBeTruthy();
     });
+    expect(screen.queryByTestId('favoritos-list')).toBeNull();
     expect(screen.queryByTestId('favoritos-section-gitlab')).toBeNull();
   });
 
-  it('WHEN a row is tapped THEN setDataSource if needed and navigates to RepoDetails', async () => {
+  it('WHEN a row is tapped THEN navigates to RepoDetails for the selected source', async () => {
     await seedFavorite({
       id: 'gitlab-org/gitlab',
       source: 'gitlab',
       name: 'gitlab',
       fullName: 'gitlab-org/gitlab',
     });
-    expect(useSessionPreferencesStore.getState().dataSource).toBe('github');
-
-    await renderFavoritosTab();
+    await renderFavoritosTab('gitlab');
 
     await waitFor(() => {
       expect(screen.getByTestId('favoritos-row-gitlab-gitlab-org/gitlab')).toBeTruthy();
@@ -203,7 +204,6 @@ describe('FavoritosScreen (FAV-03/04/10/12/13)', () => {
       fireEvent.press(screen.getByTestId('favoritos-row-gitlab-gitlab-org/gitlab'));
     });
 
-    expect(useSessionPreferencesStore.getState().dataSource).toBe('gitlab');
     await waitFor(() => {
       expect(screen.getByTestId('repo-details-stub')).toHaveTextContent(
         'details:gitlab-org/gitlab',

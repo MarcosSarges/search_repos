@@ -2,14 +2,14 @@
 
 App React Native (Expo + TypeScript) para buscar repositórios em **GitHub** e **GitLab**, com troca de fonte em tempo de execução, Design System tipado, cache e Clean Architecture.
 
-> Teste técnico — Desenvolvedor React Native.
+> Teste técnico — Desenvolvedor React Native (`Teste_Tecnico_React_Native_v3.md`).
 
 ## Stack
 
 - Expo SDK 54 · TypeScript (strict) — alias `@/*` → `src/*`
 - React Navigation (Stack + Tabs) — ponto de entrada em `App.tsx`
 - styled-components (ThemeProvider do Design System)
-- [Storybook](https://storybookjs.github.io/react-native/) (Design System no dispositivo)
+- [Storybook](https://storybookjs.github.io/react-native/) (Showcase do Design System no dispositivo)
 - Jest + React Native Testing Library (unitário / componente / integração)
 - [Maestro](https://docs.maestro.dev/) (testes ponta a ponta via Expo Go)
 - ESLint + Prettier (+ Husky no pre-commit)
@@ -22,80 +22,94 @@ App React Native (Expo + TypeScript) para buscar repositórios em **GitHub** e *
 - [pnpm](https://pnpm.io/)
 - Expo Go (dispositivo) ou emulador iOS/Android
 
-### Setup
+### Setup rápido
 
 ```bash
 pnpm install
+pnpm start              # Metro; abra no Expo Go / emulador
 ```
 
 ### Tokens de API (opcionais)
 
 Tokens GitHub/GitLab são **opcionais** e **não** usam `.env` como fonte de verdade (AD-021). O composition root (`createContainer`) recebe um mapa `tokens?: { github?: string; gitlab?: string }` e encaminha só o token da fonte ativa aos adapters HTTP.
 
-Sem token, as APIs públicas funcionam anonimamente (limites mais baixos — trate HTTP 429 na interface). Persistência via SecureStore e o mapa no DI já existem; a UI de Config para informar o token ainda é placeholder.
+Sem token, as APIs públicas funcionam anonimamente (limites mais baixos — HTTP 429 vira `rate_limit` na UI). Persistência via SecureStore e o mapa no DI já existem; a UI de Config para informar o token ainda é placeholder.
 
 ### Scripts
 
 ```bash
 pnpm start              # servidor de desenvolvimento Expo (app)
-pnpm storybook          # Storybook no dispositivo (Design System)
+pnpm storybook          # Showcase / Storybook no dispositivo (Design System)
 pnpm storybook:android  # Storybook no Android
 pnpm storybook:ios      # Storybook no iOS
 pnpm android            # Android
 pnpm ios                # iOS
 pnpm web                # Web
 pnpm lint               # ESLint
-pnpm test               # Jest (unitário / componente / integração)
-# ponta a ponta: ver “Como rodar os testes”
+pnpm test               # Jest (domínio, use cases, componentes)
+pnpm test:e2e           # Maestro (ver “Como rodar os testes”)
 ```
 
-### Storybook (Design System)
+### Storybook (= Showcase do Design System)
 
-Desenvolvimento isolado dos componentes do Design System com [Storybook for React Native](https://storybookjs.github.io/react-native/) (troca do ponto de entrada via `STORYBOOK_ENABLED`):
+O enunciado pede uma tela Showcase com variações dos componentes (§4.5 / §9). Aqui o catálogo vive no **Storybook for React Native** (`pnpm storybook`), com stories colocadas ao lado de cada peça em `packages/ds/**/*.stories.tsx` (títulos `DS/Atoms|Molecules|Organisms/...`), controles globais `themeMode` (claro/escuro) e `dataSource`, e entrada separada via `STORYBOOK_ENABLED` — sem embutir o Storybook no bundle de produção.
 
 ```bash
 pnpm storybook
 # depois abra no Expo Go / emulador
 ```
 
-Stories do Design System em `packages/ds/**/*.stories.tsx` (títulos `DS/Atoms|Molecules|Organisms/...`). Controles globais `themeMode` e `dataSource` no preview.
+## Funcionalidades (enunciado §4)
 
-## Funcionalidades
+| Requisito | Como está no app |
+| --- | --- |
+| §4.1 Seletor GitHub/GitLab | Toggle no header (`SessionSourceHeader`) + label da fonte ativa em Config; troca em runtime sem restart |
+| §4.2 Busca | Query + infinite scroll (nome, owner, stars, linguagem, descrição) + pull-to-refresh; idle / loading / empty / erro (rate limit, rede) |
+| §4.3 Detalhes | Nome completo, owner (avatar + nome), description, stars, forks, watchers, linguagem; ação para Issues |
+| §4.4 Issues | Lista paginada (título, labels, autor, data relativa) + pull-to-refresh |
+| §4.5 Showcase DS | Storybook no dispositivo (`pnpm storybook`) — variações, tamanhos, disabled, loading, tema claro/escuro |
+| §7 Cache | TanStack Query (stale-while-revalidate; `queryKey` com `dataSource`) |
 
-- Seletor de fonte de dados (GitHub / GitLab) em tempo de execução
-- Busca de repositórios com paginação / rolagem infinita e pull-to-refresh
-- Detalhes do repositório
-- Lista de issues paginada
-- Design System tipado + tela Showcase (claro/escuro)
-- Cache via biblioteca de data fetching (TanStack Query)
-- Estados de carregamento, vazio e erro (limite de taxa, sem conexão)
+Além do escopo mínimo: **Favoritos** (persistidos) e **Explore** (trending da fonte ativa).
+
+## Checklist de entrega (§9)
+
+- [x] App Expo + TypeScript sobe sem erros (`pnpm start`)
+- [x] Busca com paginação / infinite scroll
+- [x] Detalhes ao tocar em um repositório
+- [x] Seletor de fonte GitHub/GitLab em runtime
+- [x] Design System tipado (tokens + componentes base)
+- [x] Showcase (Storybook) com variações
+- [x] Cache via biblioteca (TanStack Query)
+- [x] Testes cobrindo domínio + use cases de application
+- [x] Commits pequenos e descritivos
 
 ## Decisões
 
-Seção dedicada às escolhas técnicas do projeto — o *porquê*, não só o *o quê*.
+Seção dedicada às escolhas técnicas do projeto — o *porquê*, não só o *o quê* (README obrigatório do enunciado).
 
 ### Arquitetura (Clean Architecture)
 
-Optei por Clean Architecture porque o requisito central é **desacoplamento** e **troca de fonte em tempo de execução**:
+Optei por Clean Architecture porque o requisito central é **desacoplamento** e **troca de fonte em tempo de execução** (§3 / §3.3):
 
-1. O **domínio** define contratos (`Repository`, entidades `Repo` / `Issue`) sem depender de React Native, HTTP ou bibliotecas de cache.
+1. O **domínio** define contratos (`RepoRepository`, entidades `Repo` / `Issue` / `Favorite`) sem depender de React Native, HTTP ou bibliotecas de cache.
 2. Os **casos de uso** orquestram a regra de negócio sem saber se a fonte é GitHub ou GitLab.
-3. A **infraestrutura** traduz cada API (formatos e paginação diferentes) para o mesmo contrato.
-4. A **apresentação** consome hooks e casos de uso — nunca Axios ou fetch direto.
+3. A **infraestrutura** traduz cada API (formatos e paginação diferentes) para o mesmo contrato — Anti-Corruption Layer.
+4. A **apresentação** consome hooks e o composition root — nunca `fetch`/Axios direto nas telas.
 
-Assim, a interface permanece idêntica ao trocar a fonte: mesma lista, mesmos estados, mesma paginação.
+Assim, a interface permanece idêntica ao trocar a fonte: mesmos campos, mesmos estados, mesma paginação.
 
 #### Camadas
 
 | Camada | Responsabilidade |
 | --- | --- |
 | `domain/` | Entidades e interfaces de repositório — zero dependência externa |
-| `application/` | Casos de uso (busca, detalhes, issues) |
-| `infrastructure/` | Implementações GitHub/GitLab, HTTP, mappers, injeção de dependências, tema |
-| `presentation/` | Telas, hooks, providers, stores Zustand (sessão/favoritos), bridge de tema (`AppThemeProvider`) |
+| `application/` | Use cases (busca, detalhes, issues, trending, favoritos) + tipo `DataSource` |
+| `infrastructure/` | Adapters GitHub/GitLab, HTTP, mappers, DI (`createContainer`), SecureStore, AsyncStorage de favoritos |
+| `presentation/` | Telas, navegação, hooks, providers, stores Zustand, bridge de tema |
 | `packages/ds/` | Design System (lib `@ds`) — tokens, atoms, molecules, organisms |
 
-A estrutura de pastas pode evoluir; o que importa é a inversão de dependências: alto nível não importa baixo nível concreto.
+Diferença em relação ao exemplo do enunciado: **navegação e tema** ficam em `presentation/` + `packages/ds/`, não em `infrastructure/` — a infra só implementa ports e wiring. O que importa é a inversão de dependências: alto nível não importa baixo nível concreto.
 
 #### Domínio — contratos e testes como guarda de camada (obrigatório para humanos e IA)
 
@@ -121,26 +135,31 @@ Para que agentes e contribuidores **não quebrem a Dependency Rule** nem reintro
 
 O projeto usa **React Navigation** (Stack + Tabs) a partir do `App.tsx`, sem roteamento baseado em arquivos. Motivos:
 
-1. **Familiaridade** — o fluxo de navegadores tipados (`createNativeStackNavigator`, `createBottomTabNavigator`, listas de parâmetros) é o que já domino no dia a dia; menos atrito para montar fluxos (busca → detalhes → issues, modal, abas) sem renegociar convenções de rotas por arquivo.
-2. **Acoplamento** — o Expo Router amarra o ponto de entrada, a estrutura de pastas (`app/`), deep linking e layouts ao sistema de arquivos. Com React Navigation a navegação fica em `src/presentation/navigation/`, as telas em `src/presentation/screens/`, e o ponto de entrada (`App.tsx`) só compõe provedores e o navegador — alinhado à apresentação desacoplada da infraestrutura de roteamento do Expo.
-3. **Gestão de telas e controle** — com nomes repetidos (por exemplo, várias stacks com “Details” / “Issues”) e fluxos aninhados, listas de parâmetros explícitas e `navigate` / `goBack` tipados dão mais controle do que rotas implícitas por caminho. Evita ambiguidade de `href` iguais em grupos diferentes e deixa claro *qual* navegador recebe a ação.
+1. **Familiaridade** — o fluxo de navegadores tipados (`createNativeStackNavigator`, `createBottomTabNavigator`, listas de parâmetros) é o que já domino no dia a dia; menos atrito para montar fluxos (busca → detalhes → issues, abas) sem renegociar convenções de rotas por arquivo.
+2. **Acoplamento** — o Expo Router amarra o ponto de entrada, a estrutura de pastas (`app/`), deep linking e layouts ao sistema de arquivos. Com React Navigation a navegação fica em `src/presentation/navigation/`, as telas em `src/presentation/screens/`, e o ponto de entrada (`App.tsx`) só compõe provedores e o navegador — alinhado à apresentação desacoplada.
+3. **Gestão de telas e controle** — com stacks aninhadas e nomes repetidos, listas de parâmetros explícitas e `navigate` / `goBack` tipados dão mais controle do que rotas implícitas por caminho.
 
 Compromisso consciente: perdemos o roteamento baseado em arquivos e as rotas tipadas “de graça” do Expo Router; ganhamos previsibilidade e um grafo de navegação explícito, fácil de ler e de testar.
 
 ### Troca de fonte (GitHub / GitLab) sem impactar a interface
 
-1. **Contrato único** no domínio (ex.: `RepoRepository` com `search`, `getById`, `listIssues`).
-2. **Duas implementações** na infraestrutura (`GitHubRepositoryImpl`, `GitLabRepositoryImpl`), cada uma com HTTP e mappers próprios.
-3. **Uma decisão em um único lugar** (fábrica / store / injeção de dependências) escolhe a implementação ativa.
-4. Telas e hooks dependem do **contrato**, não de `if (provider === 'github')` espalhados.
+Alinhado ao §3.3 — diferença de formato encapsulada; UI idêntica:
 
-Resultado: trocar GitHub ↔ GitLab não exige reiniciar o aplicativo nem alterar a interface; a fonte ativa fica visível (rótulo ou indicador no cabeçalho) e pode ser alterada a qualquer momento.
+1. **Contrato único** no domínio (`RepoRepository`: `search`, `getById`, `listIssues`, `listTrending`).
+2. **Duas implementações** na infraestrutura (`createGithubRepoRepository`, `createGitlabRepoRepository`), cada uma com HTTP e mappers próprios.
+3. **Uma decisão em um único lugar** — `dataSource` na session store → `createContainer({ dataSource, tokens })` escolhe o adapter.
+4. Telas e hooks dependem do **contrato** / hooks de presentation, não de `if (provider === 'github')` espalhados.
+5. Cache isolado por fonte: `queryKey` sempre inclui `dataSource` (sem `invalidateQueries` no toggle — caches A e B convivem).
 
-### Design System
+Resultado: trocar GitHub ↔ GitLab não exige reiniciar o app nem alterar a UI; a fonte ativa fica visível no header e pode ser alterada a qualquer momento.
 
-O Design System vive em **`packages/ds`**, importado via alias **`@ds`** / **`@ds/*`** (fora de `src/`). Segue **Atomic Design**.
+### Design System (§6)
 
-**Motivação das props (AD-028):** eixos claros no mental model do MUI (`color` / `bg` / `variant` × paleta / `size` / `width` / `style`) para montar telas sem adivinhar o que `tone` significava. Hex, tipografia e spacing do tema atual permanecem a fonte de verdade visual — só a API de props mudou. Migração **big-bang** (sem aliases `tone`). Sem prop `sx`.
+O Design System vive em **`packages/ds`**, importado via alias **`@ds`** / **`@ds/*`**. Segue **Atomic Design**. Tokens tipados cobrem spacing, sizes, colors (light/dark + primary por marca), radius — conforme §6.1. Componentes base tipados (§6.2): Typography, Button, Input / InputField, Card, Badge, Avatar, mais Spacer, Loading, Icon, Header, etc.
+
+**Restrições do enunciado (§6.3):** props controladas (`variant` / `size` / `color` / `bg`) em vez de estilo solto ad hoc; ThemeProvider + `useTheme`; `style` existe como escape tipado no host, sem sistema `sx`.
+
+**Motivação das props (AD-028):** eixos claros no mental model do MUI (`color` / `bg` / `variant` × paleta / `size` / `width` / `style`) para montar telas sem adivinhar o que `tone` significava. Migração **big-bang** (sem aliases `tone`).
 
 | Eixo | Prop | Onde | Valores |
 | --- | --- | --- | --- |
@@ -156,8 +175,8 @@ O Design System vive em **`packages/ds`**, importado via alias **`@ds`** / **`@d
 | --- | --- | --- |
 | Tokens | `tokens/` | `spacing` (+ `SpacerEdge`), `sizes`, `colors`, `radius`, `ContentColor` / `SurfaceBg`, tipografia / `IconSize` / `LoadingSize` / `AvatarSize` / badge metrics / button (`variant`×`color`×`width`) / input / card (`defaultBg`), mapa de `primary` por **`Brand`** (`github` \| `gitlab`) |
 | Atoms | `atoms/` | Typography (`variant` + `color`), Icon (`size` + `color`), Spacer, Loading (`size`), Button (`variant`×`color`×`size`×`width`), Input, Avatar (`uri?` + `name` + `size`), Badge (`swatch?`) — `style` público em todos |
-| Molecules | `molecules/` | Container (`bg` opcional), KeyboardAvoid, Header, InputField (helper `muted` / error `danger`), Card (`bg`) |
-| Organisms | `organisms/` | `DataSourceLogo`; `Hyperlink`; `SourceHeader` (toggle fonte, store-free); `BackHeader` (voltar com `arrow-back`, `onBack` controlado); assets em `packages/ds/assets/` |
+| Molecules | `molecules/` | Container (`bg` opcional), KeyboardAvoid, Header, InputField (helper `muted` / error `danger`), Card (`bg`), SettingsRow, FlatList |
+| Organisms | `organisms/` | `DataSourceLogo`; `Hyperlink`; `SourceHeader` (toggle fonte, store-free); `BackHeader`; `RepoItem`; `IssueItem`; assets em `packages/ds/assets/` |
 | Utils | `utils/` | `formatRelativeDate` (puro, sem `Intl` — Hermes; default `pt-BR`; inválido → `—`) |
 | Theme (lib) | `theme/` | `getTheme(mode, brand)`, `DsThemeProvider({ theme })`, `useTheme` — **sem** Zustand |
 
@@ -169,38 +188,34 @@ O Design System vive em **`packages/ds`**, importado via alias **`@ds`** / **`@d
 | --- | --- |
 | `index.ts` | export público (`Name` + `NameProps`) |
 | `<Name>.tsx` | composição + defaults de a11y + `...rest` (Spacer: edges exclusivos + `style`) |
-| `<Name>.stories.tsx` | Storybook |
+| `<Name>.stories.tsx` | Storybook / Showcase |
 | `styles.tsx` | **único** lugar que instancia `styled(...)` — sem unions de domínio |
 
 Estilos do DS usam sempre `styled-components` (template para CSS; `.attrs` só para props de host third-party como Ionicons/ActivityIndicator). Lookups via object maps nos tokens, não `switch`.
 
-**Por que logos de marca são organisms:** assets oficiais (GitHub Invertocat claro/escuro, GitLab SVG) e regras de marca não são ícones de UI genéricos. Imports de SVG de marca ficam **somente** em `DataSourceLogo` — molecules/telas consomem o organism, nunca o arquivo SVG direto.
-
-**Tema:** lib resolve `primary` por `(mode, brand)`; a presentation bridge conecta isso à sessão (`mode` + `dataSource`).
-
-**Storybook** no dispositivo (`pnpm storybook`): catálogo Atomic ao lado dos componentes; toolbar/globals para `themeMode` e `dataSource`. Não embute a UI do Storybook no pacote de produção (`STORYBOOK_ENABLED`).
+**Por que logos de marca são organisms:** assets oficiais (GitHub Invertocat claro/escuro, GitLab SVG) e regras de marca não são ícones de UI genéricos. Imports de SVG de marca ficam **somente** em `DataSourceLogo`.
 
 Não reaproveitei o tema do template Expo (`ThemedText` com override de cor por instância) como Design System final — não atende tokens / props controladas do enunciado.
 
-### Cache
+### Cache (§7)
 
-TanStack Query para:
+TanStack Query na borda presentation:
 
-- exibir dados desatualizados enquanto revalida
-- carregamento discreto em nova busca
-- invalidação coerente ao trocar a fonte de dados
+- stale-while-revalidate (dados exibidos enquanto revalida)
+- loading discreto em refetch / páginas seguintes
+- isolamento por fonte: toda `queryKey` inclui `dataSource` — toggle não chama `invalidateQueries` / `removeQueries`; voltar à fonte anterior reaproveita cache quente
 
-A biblioteca fica fora do domínio: casos de uso puros; cache e orquestração de fetch na borda presentation / infrastructure.
+A biblioteca fica fora do domínio: use cases puros; orquestração de fetch nos hooks.
 
 ### Testes
 
 | Camada | Ferramenta | Motivo |
 | --- | --- | --- |
-| Unitário / componente | Jest + React Native Testing Library | Casos de uso em Node puro; componentes do Design System |
-| Guarda de domínio | Jest (source-scan + unitário puro) | Trava isolation / API pública / shapes — ver **Domínio — contratos e testes como guarda de camada** |
-| Ponta a ponta | [Maestro](https://docs.maestro.dev/) | Fluxos em YAML; no Expo Go usa `openLink` + `appId: host.exp.Exponent` (indicado no ecossistema Expo) |
+| Domínio + use cases | Jest (Node puro) | Exigência §9 — cobertura mínima dos use cases; guardas de camada no domínio |
+| Componente | Jest + RNTL | Design System e telas críticas |
+| Ponta a ponta | [Maestro](https://docs.maestro.dev/) | Fluxos YAML no Expo Go (`openLink` + `appId: host.exp.Exponent`) |
 
-Prioridade unitária: **guarda do domínio** (sempre verde ao tocar `src/domain/`) + casos de use application. Escopo ponta a ponta previsto: troca de fonte, busca → detalhes → issues, vazio / erro quando reproduzível.
+Prioridade: **guarda do domínio** + use cases de application (`searchRepos`, detalhes, issues, trending, favoritos). E2E: troca de fonte, busca → detalhes → issues, config/tema, explore.
 
 ### Compromissos (trade-offs)
 
@@ -208,11 +223,11 @@ Prioridade unitária: **guarda do domínio** (sempre verde ao tocar `src/domain/
 | --- | --- | --- |
 | Clean Architecture | Testável, troca de provedor isolada, interface estável | Mais arquivos e boilerplate no início |
 | React Navigation (sem Expo Router) | Familiaridade, menos acoplamento ao sistema de arquivos, controle tipado de stacks | Sem roteamento por arquivo / rotas tipadas do Expo Router |
-| Interfaces no domínio + implementações na infraestrutura | Diferenças de API encapsuladas em mappers | Precisa de injeção de dependências / fábrica cuidadosa |
-| Testes de isolation / shapes no domínio | IA e PRs não reintroduzem frameworks ou `source`/`DataSource` no núcleo | Source-scan é frágil a renomes extremos; ainda assim barra regressões óbvias de camada |
-| TanStack Query em presentation / infrastructure | Cache e experiência de uso boas | Não “vaza” para o domínio — consultas fora dos casos de uso puros |
-| Design System próprio + Storybook | Tipagem, consistência e catálogo no dispositivo | Custo de manter tokens e stories |
-| Maestro para ponta a ponta | Fluxos YAML simples, alinhado ao Expo | Precisa de emulador ou dispositivo; configuração separada do Jest |
+| Interfaces no domínio + implementações na infraestrutura | Diferenças de API encapsuladas em mappers | Precisa de DI / fábrica cuidadosa |
+| Testes de isolation / shapes no domínio | IA e PRs não reintroduzem frameworks ou `DataSource` no núcleo | Source-scan é frágil a renomes extremos |
+| TanStack Query + `queryKey` com fonte | Cache e UX boas; toggle sem wipe | Consultas fora dos use cases puros |
+| Design System próprio + Storybook como Showcase | Tipagem, consistência e catálogo no dispositivo | Sem aba Showcase dentro do app de produto |
+| Maestro para ponta a ponta | Fluxos YAML simples, alinhado ao Expo | Precisa de emulador ou dispositivo; config separada do Jest |
 
 ## Como rodar os testes
 
@@ -220,6 +235,8 @@ Prioridade unitária: **guarda do domínio** (sempre verde ao tocar `src/domain/
 
 ```bash
 pnpm test
+# foco domínio / use cases:
+pnpm test -- src/domain src/application
 ```
 
 ### Ponta a ponta (Maestro)
@@ -248,9 +265,7 @@ O fluxo usa `openLink: exp://10.0.2.2:8081` (host do Mac visto do emulador Andro
 
 Pré-condições: rede ok (APIs GitHub/GitLab); rate limit pode falhar o suite (sem soft-pass).
 
-Integração contínua / insights: [testes ponta a ponta no EAS](https://docs.expo.dev/eas/workflows/examples/e2e-tests/) · [Maestro insights](https://docs.expo.dev/eas-insights/maestro/).
-
-## Declaração de uso de IA
+## Declaração de uso de IA (§8)
 
 O projeto foi desenvolvido com o **Cursor** como editor e assistente de código. Após o setup inicial, as funcionalidades passaram a seguir o processo de **Spec-Driven Development (SDD)** da skill [`tlc-spec-driven`](.cursor/skills/tlc-spec-driven/SKILL.md): especificação → desenho quando necessário → tarefas → implementação → verificação.
 
@@ -282,19 +297,36 @@ O RTK não reduz diretamente os tokens gerados pelo modelo nem garante a mesma r
 ### O que foi adaptado / revisado
 
 - Decisões de camadas (domínio isolado, mappers por API, injeção de dependências em um ponto só)
-- Escopo do Design System (tokens e props controladas conforme a seção 6 do teste)
+- Escopo do Design System (tokens e props controladas conforme a seção 6 do teste; remoção de `tone` / `sx`)
 - Escolha do Maestro como executor dos testes ponta a ponta
+- Cache por `queryKey` + `dataSource` em vez de invalidar no toggle
 - Scripts e pacotes alinhados ao Expo SDK 54 e ao uso de pnpm
 - Código e testes confrontados com os critérios de aceitação definidos antes da implementação
 
 ### O que foi rejeitado / evitado
 
 - Aceitar o tema e componentes do template Expo como Design System final
-- Espalhar `if (github|gitlab)` na interface
+- Expo Router — navegação ficou em React Navigation (Stack + Tabs) a partir do `App.tsx`
+- Espalhar `if (github|gitlab)` na interface (e `DataSource` / nomes de provedor no domínio)
+- Domínio DDD OO (classes / entity methods) — Functional Core: types + helpers puros
+- Use cases com `.execute` — factories `(input) => Promise`; DI sem importar Zustand e sem `AppContainerProvider`
+- Tokens via `.env` como fonte de verdade; tokens no AsyncStorage — só SecureStore + mapa no DI
+- `invalidateQueries` / `removeQueries` no toggle de fonte — isolamento por `queryKey` com `dataSource`
+- Prop `tone` (e aliases) e `sx` no Design System; lookups com `switch` — object maps + eixos `color` / `bg` / `variant` / `size`
+- Importar SVG de marca fora de `DataSourceLogo`; organisms do DS com Zustand (adapters em presentation)
+- Query mágica de trending na UI; favoritos com `persist` no Zustand (I/O no adapter AsyncStorage)
+- Detalhes/Issues como organisms do DS (DS não conhece `Repo`/`Issue`); campos extras de Issue (assignees, body, milestone…)
+- N+1 HTTP para gaps do GitLab; pacote pnpm workspace formal do DS; biometria / `requireAuthentication` no SecureStore
 - Commitar tokens de API ou `.env` com credenciais
 - Entregar código de IA sem entendimento, revisão e validação das decisões (inversão de dependência, contratos, cache)
 
-Instruções típicas: análise do enunciado, especificação de regras e critérios de aceitação, plano de passos (Design System → arquitetura → múltiplos provedores), implementação de tarefas e redação do README com as seções obrigatórias do teste.
+### Prompts / instruções típicas
+
+- Analisar o enunciado (`Teste_Tecnico_React_Native_v3.md`) e extrair requisitos / critérios de aceite
+- Spec → design → tasks em `.specs/features/` (SDD) antes de implementar
+- Plano por fatias: Design System → domínio → application → infra multi-provider → presentation → e2e
+- Implementar só o escopo da task; confrontar com ACs; não enfraquecer testes de guarda de camada
+- Redigir/atualizar o README com as seções obrigatórias do §8–§9
 
 ## O que eu faria diferente com mais tempo
 

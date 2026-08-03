@@ -137,7 +137,11 @@ export function RepoDetailsScreen({ route, navigation }: Props) {
       accessibilityLabel={favorited ? 'Remover dos favoritos' : 'Favoritar'}
       testID="repo-details-favorite"
       onPress={handleToggleFavorite}>
-      <Icon name={favorited ? 'star' : 'star-outline'} size="lg" />
+      <Icon
+        name={favorited ? 'star' : 'star-outline'}
+        size="lg"
+        testID={favorited ? 'repo-details-favorite-filled' : 'repo-details-favorite-outline'}
+      />
     </Pressable>
   ) : undefined;
 

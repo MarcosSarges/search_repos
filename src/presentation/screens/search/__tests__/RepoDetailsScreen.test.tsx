@@ -305,6 +305,8 @@ describe('RepoDetailsScreen (DIC-01, DIC-02, DIC-03)', () => {
         expect(screen.getByTestId('repo-details-favorite')).toBeTruthy();
       });
       expect(screen.getByLabelText('Favoritar')).toBeTruthy();
+      expect(screen.getByTestId('repo-details-favorite-outline')).toBeTruthy();
+      expect(screen.queryByTestId('repo-details-favorite-filled')).toBeNull();
       expect(useFavoritesStore.getState().isFavorite('github', 'facebook/react')).toBe(false);
 
       await act(async () => {
@@ -313,6 +315,8 @@ describe('RepoDetailsScreen (DIC-01, DIC-02, DIC-03)', () => {
 
       await waitFor(() => {
         expect(useFavoritesStore.getState().isFavorite('github', 'facebook/react')).toBe(true);
+        expect(screen.getByTestId('repo-details-favorite-filled')).toBeTruthy();
+        expect(screen.queryByTestId('repo-details-favorite-outline')).toBeNull();
       });
       const item = useFavoritesStore.getState().items.find((f) => f.id === 'facebook/react');
       expect(item).toMatchObject({
@@ -346,6 +350,7 @@ describe('RepoDetailsScreen (DIC-01, DIC-02, DIC-03)', () => {
 
       await waitFor(() => {
         expect(screen.getByLabelText('Remover dos favoritos')).toBeTruthy();
+        expect(screen.getByTestId('repo-details-favorite-filled')).toBeTruthy();
       });
 
       await act(async () => {
@@ -354,6 +359,8 @@ describe('RepoDetailsScreen (DIC-01, DIC-02, DIC-03)', () => {
 
       await waitFor(() => {
         expect(useFavoritesStore.getState().isFavorite('github', 'facebook/react')).toBe(false);
+        expect(screen.getByTestId('repo-details-favorite-outline')).toBeTruthy();
+        expect(screen.queryByTestId('repo-details-favorite-filled')).toBeNull();
       });
     });
   });

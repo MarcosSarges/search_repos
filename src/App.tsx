@@ -1,6 +1,6 @@
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
-import 'react-native-gesture-handler';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import 'react-native-reanimated';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
@@ -13,7 +13,7 @@ void SplashScreen.preventAutoHideAsync().catch(() => {
   /* native splash unavailable (e.g. tests / web) */
 });
 
-function App() {
+function Application() {
   return (
     <SafeAreaProvider>
       <AppThemeProvider>
@@ -26,7 +26,7 @@ function App() {
   );
 }
 // Default to rendering your app
-let AppEntryPoint = App;
+let AppEntryPoint = Application;
 
 // Render Storybook if storybookEnabled is true
 if (Constants.expoConfig?.extra?.storybookEnabled === 'true') {
@@ -34,4 +34,12 @@ if (Constants.expoConfig?.extra?.storybookEnabled === 'true') {
   AppEntryPoint = require('../.rnstorybook').default;
 }
 
-export default AppEntryPoint;
+export default function App() {
+  const EntryPoint = AppEntryPoint;
+
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <EntryPoint />
+    </GestureHandlerRootView>
+  );
+}
