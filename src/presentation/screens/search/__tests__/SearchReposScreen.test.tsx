@@ -9,7 +9,7 @@ import { createInMemoryRepoRepository } from '@/infrastructure';
 import type { SearchStackParamList } from '@/presentation/navigation/types';
 import { SEARCH_DEBOUNCE_MS } from '@/presentation/constants/search';
 import { mapAppErrorToMessage } from '@/presentation/errors/map-app-error-to-message';
-import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
+import { useSessionPreferencesStore } from '@/presentation/stores/session-preferences-store';
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@/test';
 
 import { RepoDetailsScreen } from '../RepoDetailsScreen';

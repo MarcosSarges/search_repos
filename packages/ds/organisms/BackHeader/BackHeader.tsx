@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import type { StyleProp, ViewStyle } from 'react-native';
 
 import { Icon, Spacer } from '@ds/atoms';
@@ -8,6 +9,7 @@ import { BackButton, BackHeaderRoot } from './styles';
 export type BackHeaderProps = {
   title: string;
   onBack: () => void;
+  trailing?: ReactNode;
   safe?: boolean;
   style?: StyleProp<ViewStyle>;
   testID?: string;
@@ -20,6 +22,7 @@ export type BackHeaderProps = {
 export function BackHeader({
   title,
   onBack,
+  trailing,
   safe,
   style,
   testID = 'ds-back-header',
@@ -30,6 +33,7 @@ export function BackHeader({
         title={title}
         safe={safe}
         style={style}
+        trailing={trailing}
         leading={
           <BackButton
             accessibilityRole="button"

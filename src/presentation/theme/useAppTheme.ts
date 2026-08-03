@@ -1,5 +1,5 @@
 import type { ThemeMode } from '@ds/theme';
-import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
+import { useSessionPreferencesStore } from '@/presentation/stores/session-preferences-store';
 
 import type { AppThemeControls } from './AppThemeProvider';
 

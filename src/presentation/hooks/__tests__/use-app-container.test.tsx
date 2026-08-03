@@ -9,11 +9,15 @@ import {
 } from '@testing-library/react-native';
 
 import type { Repo } from '@/domain';
-import { createInMemoryRepoRepository } from '@/infrastructure';
-import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
+import { createInMemoryFavoritesRepository, createInMemoryRepoRepository } from '@/infrastructure';
+import { useSessionPreferencesStore } from '@/presentation/stores/session-preferences-store';
 import { act, screen } from '@/test/render';
 
-import { setAppContainerTestRepository, useAppContainer } from '../use-app-container';
+import {
+  setAppContainerTestFavoritesRepository,
+  setAppContainerTestRepository,
+  useAppContainer,
+} from '../use-app-container';
 
 const sampleRepo: Repo = {
   id: 'facebook/react',
@@ -41,10 +45,12 @@ describe('useAppContainer (Zustand-derived DI, no Context)', () => {
   beforeEach(() => {
     seedReadySession();
     setAppContainerTestRepository(undefined);
+    setAppContainerTestFavoritesRepository(undefined);
   });
 
   afterEach(() => {
     setAppContainerTestRepository(undefined);
+    setAppContainerTestFavoritesRepository(undefined);
   });
 
   it('creates a container from session dataSource and tokens', async () => {
@@ -122,6 +128,28 @@ describe('useAppContainer (Zustand-derived DI, no Context)', () => {
     await expect(
       result.current.container.getRepoDetails({ repoId: 'facebook/react' }),
     ).resolves.toMatchObject({ id: 'facebook/react' });
+  });
+
+  it('forwards optional test favorites repository for Fake injection', async () => {
+    setAppContainerTestFavoritesRepository(
+      createInMemoryFavoritesRepository([
+        {
+          id: 'seed',
+          source: 'github',
+          name: 'seed',
+          fullName: 'org/seed',
+          ownerName: 'org',
+          stars: 1,
+          favoritedAt: 1,
+        },
+      ]),
+    );
+
+    const { result } = await rtlRenderHook(() => useAppContainer());
+
+    await expect(
+      result.current.container.isFavorite({ source: 'github', id: 'seed' }),
+    ).resolves.toBe(true);
   });
 
   it('hook source does not use React Context', () => {

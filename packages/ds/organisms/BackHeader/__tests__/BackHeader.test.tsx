@@ -1,5 +1,6 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
+import { View } from 'react-native';
 
 import { fireEvent, render, screen } from '@/test';
 
@@ -21,6 +22,21 @@ describe('BackHeader organism', () => {
 
     fireEvent.press(screen.getByRole('button', { name: 'Voltar' }));
 
+    expect(onBack).toHaveBeenCalledTimes(1);
+  });
+
+  it('WHEN trailing is provided THEN it renders the trailing node and back still works', async () => {
+    const onBack = jest.fn();
+    await render(
+      <BackHeader
+        title="Detalhes"
+        onBack={onBack}
+        trailing={<View testID="ds-back-header-trailing" />}
+      />,
+    );
+
+    expect(screen.getByTestId('ds-back-header-trailing')).toBeTruthy();
+    fireEvent.press(screen.getByRole('button', { name: 'Voltar' }));
     expect(onBack).toHaveBeenCalledTimes(1);
   });
 

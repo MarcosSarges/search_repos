@@ -5,7 +5,7 @@ import { createAppError, isAppError, type Issue, type Repo, type RepoRepository 
 import { createInMemoryRepoRepository } from '@/infrastructure';
 import { queryKeys } from '@/presentation/constants/query-keys';
 import { createQueryClient } from '@/presentation/providers/create-query-client';
-import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
+import { useSessionPreferencesStore } from '@/presentation/stores/session-preferences-store';
 import { act, renderHook, waitFor } from '@/test/render';
 
 import { useRepoIssues } from '../use-repo-issues';

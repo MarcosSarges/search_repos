@@ -1,7 +1,7 @@
 import type { StyleProp, ViewStyle } from 'react-native';
 
 import { mapDataSourceToBrand } from '@/presentation/theme/map-data-source-to-brand';
-import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
+import { useSessionPreferencesStore } from '@/presentation/stores/session-preferences-store';
 import { SourceHeader } from '@ds/organisms';
 
 export type SessionSourceHeaderProps = {

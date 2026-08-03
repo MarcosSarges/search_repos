@@ -3,8 +3,8 @@ import { useEffect, useLayoutEffect, useMemo, useRef, type ReactNode } from 'rea
 
 import type { DataSource } from '@/application';
 import { DsThemeProvider, getTheme, type ThemeMode } from '@ds/theme';
-import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
-import { useHydration } from '@/stores/use-hydration';
+import { useSessionPreferencesStore } from '@/presentation/stores/session-preferences-store';
+import { useHydration } from '@/presentation/stores/use-hydration';
 
 import { mapDataSourceToBrand } from './map-data-source-to-brand';
 

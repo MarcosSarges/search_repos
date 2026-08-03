@@ -7,6 +7,7 @@ import type { Repo } from '@/domain';
 import { server } from '@/test/msw/server';
 import { useMswServer } from '@/test/msw/use-msw-server';
 
+import { createInMemoryFavoritesRepository } from '../../repositories/in-memory-favorites-repository';
 import { createInMemoryRepoRepository } from '../../repositories/in-memory-repo-repository';
 import { createContainer } from '../create-container';
 
@@ -36,6 +37,11 @@ describe('createContainer (INFRA-29, INFRA-30, INFRA-32)', () => {
     expect(typeof container.getRepoDetails).toBe('function');
     expect(typeof container.listRepoIssues).toBe('function');
     expect(typeof container.listTrendingRepos).toBe('function');
+    expect(typeof container.listFavorites).toBe('function');
+    expect(typeof container.listFavoritesBySource).toBe('function');
+    expect(typeof container.toggleFavorite).toBe('function');
+    expect(typeof container.removeFavorite).toBe('function');
+    expect(typeof container.isFavorite).toBe('function');
     expect(container).not.toHaveProperty('searchRepos.execute');
     expect(Object.prototype.hasOwnProperty.call(container.searchRepos, 'execute')).toBe(false);
     expect(Object.prototype.hasOwnProperty.call(container.listTrendingRepos, 'execute')).toBe(
@@ -63,6 +69,27 @@ describe('createContainer (INFRA-29, INFRA-30, INFRA-32)', () => {
     const trending = await container.listTrendingRepos({ page: 1, perPage: 10 });
     expect(trending.items).toHaveLength(1);
     expect(trending.items[0]?.id).toBe('facebook/react');
+  });
+
+  it('WHEN favoritesRepository Fake is injected THEN favorites use cases use that repository', async () => {
+    const favoritesRepository = createInMemoryFavoritesRepository([
+      {
+        id: 'seed',
+        source: 'github',
+        name: 'seed',
+        fullName: 'org/seed',
+        ownerName: 'org',
+        stars: 1,
+        favoritedAt: 10,
+      },
+    ]);
+    const container = createContainer({ dataSource: 'github', favoritesRepository });
+
+    await expect(container.isFavorite({ source: 'github', id: 'seed' })).resolves.toBe(true);
+    const listed = await container.listFavorites();
+    expect(listed).toHaveLength(1);
+    await container.removeFavorite({ source: 'github', id: 'seed' });
+    await expect(container.isFavorite({ source: 'github', id: 'seed' })).resolves.toBe(false);
   });
 
   it('WHEN tokens bag is given with dataSource github THEN only github token is forwarded as Bearer', async () => {

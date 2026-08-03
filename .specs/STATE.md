@@ -216,7 +216,7 @@
 - **Trade-off**: Longer import paths; historical specs still mention old paths.
 - **Scope**: `src/presentation/screens/**`, `src/presentation/navigation/**`, `App.tsx`, README
 - **Date**: 2026-08-02
-- **Status**: active (DS path later moved to `packages/ds` in feature ds-as-lib; presentation paths still stand)
+- **Status**: partially superseded by AD-031 (Zustand stores path); screens/nav under presentation still stand (DS later `packages/ds`)
 
 ### AD-028
 - **Decision**: Public DS props follow MUI-like axes: content `color` (`text`\|`muted`\|`primary`\|`danger`), surface `bg` (`background`\|`surface`), Button `variant` (`contained`\|`outlined`\|`text`) × `color` (`primary`\|`success`\|`warning`\|`danger`) × `size` × `width` (`hug`\|`full`), scale via `size` on Icon/Loading/Logo/Button, and `style` passthrough on every public export — **no** `sx`, **no** `tone` / `Tone` / `SurfaceTone` / `toneColorMap` aliases. Tokens: `ContentColor` + `SurfaceBg` (replace `tone.ts`); Container omits fill when `bg` omitted; Card defaults to `card.defaultBg` (`surface`). Migration is big-bang across DS + presentation.
@@ -242,12 +242,28 @@
 - **Date**: 2026-08-03
 - **Status**: active
 
+### AD-031
+- **Decision**: Zustand client/session stores live under `src/presentation/stores/` (session preferences, favorites, hydration helpers). Alias imports use `@/presentation/stores`. `src/stores/` is removed. Domain and application must not import Zustand or presentation stores.
+- **Reason**: Client/UI state is presentation-adjacent (same spirit as TanStack Query / AD-005); folder symmetry with Clean Arch; favorites feature locks Option 2 from specify/discuss.
+- **Trade-off**: Broader import rewrite once; stores are not a fifth business layer — do not put domain rules here.
+- **Scope**: `src/presentation/stores/**`, App theme/session consumers, favorites feature, README architecture table
+- **Date**: 2026-08-03
+- **Status**: partially superseded by AD-032 (favorites write-model); session prefs + store folder under presentation still stand
+
+### AD-032
+- **Decision**: Favoritos seguem Clean Arch: entidade `Favorite` + porta `FavoritesRepository` no domínio (`source` opaco, sem importar `DataSource`); use cases em application (`listFavorites`, `toggleFavorite`, `removeFavorite`, `isFavorite`, `createFavoriteFromRepo`); adapter AsyncStorage (+ Fake in-memory) na infrastructure; DI em `createContainer` (repo de favoritos independente do `DataSource` HTTP). Zustand em presentation é **somente cache reativo / hydrate** — sem `persist` AsyncStorage e sem regras de toggle/sanitize.
+- **Reason**: Favoritar é write-model de produto (offline snapshot, identidade composta), não chrome de sessão; Option 2 do discuss era pragmática demais e vazava I/O + regras para presentation.
+- **Trade-off**: Mais arquivos que store-only; `DataSource` continua em application e é mapeado para `Favorite.source` string na borda application.
+- **Scope**: `src/domain/**` (Favorite + porta), `src/application/use-cases/**` favorites, `src/infrastructure/**` favorites adapter, `src/presentation/stores` favorites cache, DI
+- **Date**: 2026-08-03
+- **Status**: active
+
 ## Handoff
 
 - **Feature**: maestro-e2e
-- **Phase / Task**: Execute T1–T6 committed; full Maestro gate pending (emulator flaky)
-- **Completed**: Spec + context + tasks; flows in `.maestro/`; README; 7 atomic commits on `feat/maestro-e2e`
-- **In-progress**: none
-- **Next step**: Run `pnpm test:e2e` with Metro + Expo Go + emulator; then Verifier
-- **Blockers**: Emulator disconnects between runs; smoke passed once earlier in session
+- **Phase / Task**: Suite Maestro 5/5 passed; resolving merge with `origin/main`
+- **Completed**: Spec + flows + stabilize fix (`4c7388c`); gate `pnpm test:e2e` green on emulator-5554
+- **In-progress**: merge conflict resolution (STATE handoff)
+- **Next step**: push merge commit; confirm PR #17 mergeable
+- **Blockers**: none
 - **Branch**: `feat/maestro-e2e`

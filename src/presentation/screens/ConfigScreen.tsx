@@ -1,5 +1,5 @@
 import { useAppTheme } from '@/presentation/theme';
-import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
+import { useSessionPreferencesStore } from '@/presentation/stores/session-preferences-store';
 import { Button, Icon } from '@ds/atoms';
 import { Container, Header, SettingsRow } from '@ds/molecules';
 

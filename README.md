@@ -92,7 +92,7 @@ Assim, a interface permanece idêntica ao trocar a fonte: mesma lista, mesmos es
 | `domain/` | Entidades e interfaces de repositório — zero dependência externa |
 | `application/` | Casos de uso (busca, detalhes, issues) |
 | `infrastructure/` | Implementações GitHub/GitLab, HTTP, mappers, injeção de dependências, tema |
-| `presentation/` | Telas, hooks, providers, bridge de tema (`AppThemeProvider`) |
+| `presentation/` | Telas, hooks, providers, stores Zustand (sessão/favoritos), bridge de tema (`AppThemeProvider`) |
 | `packages/ds/` | Design System (lib `@ds`) — tokens, atoms, molecules, organisms |
 
 A estrutura de pastas pode evoluir; o que importa é a inversão de dependências: alto nível não importa baixo nível concreto.

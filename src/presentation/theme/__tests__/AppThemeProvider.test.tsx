@@ -6,7 +6,7 @@ import { Text, View } from 'react-native';
 import { useTheme } from '@ds/theme';
 import { useAppTheme } from '@/presentation/theme';
 import { act, render, renderHook, screen } from '@/test';
-import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
+import { useSessionPreferencesStore } from '@/presentation/stores/session-preferences-store';
 
 describe('AppThemeProvider dataSource (DS-02 / TPH-05..06)', () => {
   it('WHEN provider mounts without initialDataSource THEN dataSource defaults to github', async () => {

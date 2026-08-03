@@ -1,4 +1,4 @@
-import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
+import { useSessionPreferencesStore } from '@/presentation/stores/session-preferences-store';
 
 /**
  * Product UI ready only when prefs AsyncStorage hydrate AND tokens SecureStore
