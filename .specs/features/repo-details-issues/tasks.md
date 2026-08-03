@@ -302,9 +302,9 @@ T11 → T12 → T13 → T14
 
 **Done when**:
 
-- [ ] Source toggle visible on Search via adapter
-- [ ] No regression on idle/loading/list ACs
-- [ ] Gate: `pnpm test -- src/presentation/screens/search`
+- [x] Source toggle visible on Search via adapter
+- [x] No regression on idle/loading/list ACs
+- [x] Gate: `pnpm test -- src/presentation/screens/search`
 
 **Tests**: unit
 **Gate**: quick
