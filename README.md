@@ -237,7 +237,16 @@ pnpm test:e2e
 
 O fluxo usa `openLink: exp://10.0.2.2:8081` (host do Mac visto do emulador Android). Em dispositivo físico, troque pelo endereço IP do Metro (ex.: `exp://192.168.x.x:8081`).
 
-Smoke: `.maestro/home.yml` — abre o projeto e verifica que `Welcome!` está visível.
+| Flow | Arquivo | O que prova |
+| --- | --- | --- |
+| Boot / smoke | `.maestro/00-smoke-boot.yml` | Expo Go abre e cai em Search (`search-repos-idle`) |
+| Shared boot | `.maestro/shared/boot.yml` | Subfluxo reutilizado pelos demais |
+| Search → Details → Issues | `.maestro/10-search-details-issues.yml` | Busca live `react` → detalhe → issues |
+| Source toggle | `.maestro/20-source-toggle.yml` | Toggle no header Search; Config fonte GitHub ↔ GitLab |
+| Config | `.maestro/30-config-theme.yml` | Seções Config + flip de tema |
+| Explore | `.maestro/40-explore.yml` | Trending live → detalhe |
+
+Pré-condições: rede ok (APIs GitHub/GitLab); rate limit pode falhar o suite (sem soft-pass).
 
 Integração contínua / insights: [testes ponta a ponta no EAS](https://docs.expo.dev/eas/workflows/examples/e2e-tests/) · [Maestro insights](https://docs.expo.dev/eas-insights/maestro/).
 

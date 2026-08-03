@@ -1,0 +1,101 @@
+appId: host.exp.Exponent
+name: Search → Details → Issues (live API)
+tags:
+  - p1
+  - search
+---
+- runFlow: shared/boot.yml
+# Prefer GitHub for stable public search results (session may be left on GitLab).
+- tapOn: Config
+- extendedWaitUntil:
+    visible:
+      id: config-source-section
+    timeout: 15000
+- runFlow:
+    when:
+      visible: "GitLab"
+    commands:
+      - tapOn: Search
+      - tapOn:
+          id: ds-source-header-toggle
+      - tapOn: Config
+      - assertVisible: "GitHub"
+- tapOn: Search
+- extendedWaitUntil:
+    visible:
+      id: search-repos-idle
+    timeout: 15000
+- tapOn:
+    id: ds-input-field
+    label: Focus search TextInput
+- eraseText
+- inputText: "react"
+# Blur field / dismiss keyboard without hideKeyboard (that blanked Expo Go).
+- tapOn:
+    id: ds-header
+    label: Dismiss keyboard via header tap
+- extendedWaitUntil:
+    visible:
+      id: search-repos-loading
+    timeout: 10000
+    optional: true
+- extendedWaitUntil:
+    visible:
+      id: search-repos-list
+    timeout: 90000
+    label: E2E-03 — search results list
+- extendedWaitUntil:
+    visible:
+      id: repo-list-item
+    timeout: 15000
+- extendedWaitUntil:
+    notVisible:
+      id: ds-flat-list-footer-loading
+    timeout: 15000
+    optional: true
+    label: Wait for pagination spinner to clear
+- tapOn:
+    id: repo-list-item
+    index: 0
+    label: Open first search result
+# Retry once if the first tap was swallowed (keyboard / list settle).
+- runFlow:
+    when:
+      notVisible:
+        id: "repo-details-(content|loading|error)"
+    commands:
+      - tapOn:
+          id: repo-list-item
+          index: 0
+- extendedWaitUntil:
+    visible:
+      id: "repo-details-(content|loading|error)"
+    timeout: 30000
+    label: E2E-04 — details screen appeared
+- extendedWaitUntil:
+    visible:
+      id: repo-details-content
+    timeout: 60000
+    label: E2E-04 — details content loaded
+- assertVisible:
+    id: repo-details-full-name
+- tapOn:
+    id: repo-details-issues-cta
+    label: Open issues
+- extendedWaitUntil:
+    visible:
+      id: "repo-issues-(list|empty)"
+    timeout: 60000
+    label: E2E-05 — issues list or empty
+- tapOn:
+    id: ds-back-header-back
+    label: Back to details
+- assertVisible:
+    id: repo-details-content
+    label: E2E-06 — back to details
+- tapOn:
+    id: ds-back-header-back
+    label: Back to search list
+- assertVisible:
+    id: search-repos-list
+    label: E2E-06 — back to search list

@@ -1,0 +1,76 @@
+appId: host.exp.Exponent
+name: Source toggle GitHub ↔ GitLab
+tags:
+  - p1
+  - source
+---
+- runFlow: shared/boot.yml
+- assertVisible:
+    id: ds-source-header-toggle
+    label: E2E-07 — source toggle visible on Search
+- tapOn: Config
+- extendedWaitUntil:
+    visible:
+      id: config-source-section
+    timeout: 15000
+- runFlow:
+    when:
+      visible: "GitHub"
+    commands:
+      - evalScript: ${output.sourceBefore = 'GitHub'}
+- runFlow:
+    when:
+      visible: "GitLab"
+    commands:
+      - evalScript: ${output.sourceBefore = 'GitLab'}
+- assertTrue:
+    condition: ${output.sourceBefore == 'GitHub' || output.sourceBefore == 'GitLab'}
+    label: Captured fonte ativa before toggle
+- tapOn: Search
+- extendedWaitUntil:
+    visible:
+      id: ds-source-header-toggle
+    timeout: 15000
+- tapOn:
+    id: ds-source-header-toggle
+    label: Toggle data source once
+- tapOn: Config
+- extendedWaitUntil:
+    visible:
+      id: config-source-section
+    timeout: 15000
+- runFlow:
+    when:
+      true: ${output.sourceBefore == 'GitHub'}
+    commands:
+      - assertVisible:
+          text: "GitLab"
+          label: E2E-08 — flipped to GitLab
+- runFlow:
+    when:
+      true: ${output.sourceBefore == 'GitLab'}
+    commands:
+      - assertVisible:
+          text: "GitHub"
+          label: E2E-08 — flipped to GitHub
+- tapOn: Search
+- tapOn:
+    id: ds-source-header-toggle
+    label: Toggle data source twice (restore)
+- tapOn: Config
+- runFlow:
+    when:
+      true: ${output.sourceBefore == 'GitHub'}
+    commands:
+      - assertVisible:
+          text: "GitHub"
+          label: E2E-09 — restored GitHub
+- runFlow:
+    when:
+      true: ${output.sourceBefore == 'GitLab'}
+    commands:
+      - assertVisible:
+          text: "GitLab"
+          label: E2E-09 — restored GitLab
+# Leave product on Search so the next flow's boot is not stuck on Config.
+- tapOn: Search

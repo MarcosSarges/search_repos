@@ -260,11 +260,10 @@
 
 ## Handoff
 
-- **Feature**: favorites — merging main into PR #16
-- **Phase / Task**: Resolve merge conflicts with `origin/main` (details-issues-config-ui)
-- **Completed**: MVP P1 + AD-032 CA; Verifier PASS prior to merge
-- **In-progress**: conflict resolution
-- **Next step**: finish merge commit, push, confirm PR mergeable
+- **Feature**: maestro-e2e
+- **Phase / Task**: Suite Maestro 5/5 passed; resolving merge with `origin/main`
+- **Completed**: Spec + flows + stabilize fix (`4c7388c`); gate `pnpm test:e2e` green on emulator-5554
+- **In-progress**: merge conflict resolution (STATE handoff)
+- **Next step**: push merge commit; confirm PR #17 mergeable
 - **Blockers**: none
-- **Branch**: `feat/favorites`
-- **Worktree**: `/Users/marcos/searchrepos-favorites`
+- **Branch**: `feat/maestro-e2e`
