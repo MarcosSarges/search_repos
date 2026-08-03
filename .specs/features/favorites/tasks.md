@@ -202,9 +202,9 @@ T10 → T11
 
 **Done when**:
 
-- [ ] Trailing prop typed and forwarded
-- [ ] Test asserts trailing content mounted
-- [ ] Gate: `pnpm test -- src/presentation/components`
+- [x] Trailing prop typed and forwarded
+- [x] Test asserts trailing content mounted
+- [x] Gate: `pnpm test -- src/presentation/components`
 
 **Tests**: unit  
 **Gate**: quick  

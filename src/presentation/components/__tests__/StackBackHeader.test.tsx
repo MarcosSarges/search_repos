@@ -23,6 +23,18 @@ function SecondScreen() {
   );
 }
 
+function SecondScreenWithTrailing() {
+  return (
+    <View testID="second-screen-trailing">
+      <StackBackHeader
+        title="Detalhes"
+        safe
+        trailing={<View testID="stack-back-header-trailing" />}
+      />
+    </View>
+  );
+}
+
 describe('StackBackHeader', () => {
   it('WHEN rendered on a stack screen THEN it shows title and Voltar without source toggle', async () => {
     await render(
@@ -60,5 +72,25 @@ describe('StackBackHeader', () => {
 
     expect(await screen.findByTestId('go-details')).toBeTruthy();
     expect(screen.queryByTestId('second-screen')).toBeNull();
+  });
+
+  it('WHEN trailing is provided THEN it is forwarded to BackHeader', async () => {
+    await render(
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="First" component={FirstScreen} />
+          <Stack.Screen
+            name="Second"
+            component={SecondScreenWithTrailing}
+            options={{ headerShown: false }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>,
+    );
+
+    fireEvent.press(screen.getByTestId('go-details'));
+
+    expect(await screen.findByTestId('stack-back-header-trailing')).toBeTruthy();
+    expect(screen.getByLabelText('Voltar')).toBeTruthy();
   });
 });
