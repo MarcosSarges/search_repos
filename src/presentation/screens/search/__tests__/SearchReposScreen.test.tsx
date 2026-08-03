@@ -6,7 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { createAppError, type Repo, type RepoRepository } from '@/domain';
 import { createInMemoryRepoRepository } from '@/infrastructure';
-import type { SearchStackParamList } from '@/navigation/types';
+import type { SearchStackParamList } from '@/presentation/navigation/types';
 import { SEARCH_DEBOUNCE_MS } from '@/presentation/constants/search';
 import { mapAppErrorToMessage } from '@/presentation/errors/map-app-error-to-message';
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@/test';

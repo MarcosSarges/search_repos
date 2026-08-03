@@ -5,7 +5,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Button, Loading, Typography } from '@/components/ds/atoms';
 import { Container, Header, InputField } from '@/components/ds/molecules';
 import type { Repo } from '@/domain';
-import type { SearchStackParamList } from '@/navigation/types';
+import type { SearchStackParamList } from '@/presentation/navigation/types';
 import { mapAppErrorToMessage } from '@/presentation/errors/map-app-error-to-message';
 import { useDebouncedValue } from '@/presentation/hooks/use-debounced-value';
 import { useSearchRepos } from '@/presentation/hooks/use-search-repos';

@@ -5,7 +5,7 @@ import 'react-native-reanimated';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { AppThemeProvider } from '@/components/ds';
-import { RootNavigator } from '@/navigation/RootNavigator';
+import { RootNavigator } from '@/presentation/navigation/RootNavigator';
 import { AppQueryProvider } from '@/presentation/providers/AppQueryProvider';
 import Constants from 'expo-constants';
 

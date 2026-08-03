@@ -4,11 +4,11 @@ import React from 'react';
 import { useTheme } from '@/components/ds';
 import { HapticTab } from '@/components/haptic-tab';
 import { IconSymbol } from '@/components/ui/icon-symbol';
-import { SearchStackNavigator } from '@/navigation/SearchStackNavigator';
-import type { TabsParamList } from '@/navigation/types';
-import { ConfigScreen } from '@/screens/ConfigScreen';
-import { ExploreScreen } from '@/screens/ExploreScreen';
-import { FavoritosScreen } from '@/screens/FavoritosScreen';
+import { SearchStackNavigator } from '@/presentation/navigation/SearchStackNavigator';
+import type { TabsParamList } from '@/presentation/navigation/types';
+import { ConfigScreen } from '@/presentation/screens/ConfigScreen';
+import { ExploreScreen } from '@/presentation/screens/ExploreScreen';
+import { FavoritosScreen } from '@/presentation/screens/FavoritosScreen';
 
 const Tabs = createBottomTabNavigator<TabsParamList>();
 

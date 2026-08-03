@@ -20,9 +20,9 @@ Implement these tasks with the `tlc-spec-driven` skill: **activate it by name an
 | Code Layer | Required Test Type | Coverage Expectation | Location Pattern | Run Command |
 | ---------- | ------------------ | -------------------- | ---------------- | ----------- |
 | Presentation hooks (`useDebouncedValue`) | unit | Delay behavior + latest-value wins (fake timers) | `src/presentation/hooks/__tests__/*.test.ts(x)` | `pnpm test -- src/presentation/hooks --watchman=false` |
-| Screens (Search / Config / mocks / stubs) | unit (RNTL) | Spec ACs + listed edge cases for that screen | `src/screens/**/__tests__/*.test.tsx` | `pnpm test -- src/screens --watchman=false` |
-| Navigation wiring | unit (RNTL) | Tabs present; Modal gone; Search→Details→Issues params | `src/navigation/__tests__/*.test.tsx` and/or screen nav tests | `pnpm test -- src/navigation src/screens --watchman=false` |
-| List row (`RepoListItem`) | unit (RNTL) | Fields render; press calls onPress with id | colocated under `src/screens/search/__tests__` | `pnpm test -- src/screens/search --watchman=false` |
+| Screens (Search / Config / mocks / stubs) | unit (RNTL) | Spec ACs + listed edge cases for that screen | `src/presentation/screens/**/__tests__/*.test.tsx` | `pnpm test -- src/screens --watchman=false` |
+| Navigation wiring | unit (RNTL) | Tabs present; Modal gone; Search→Details→Issues params | `src/presentation/navigation/__tests__/*.test.tsx` and/or screen nav tests | `pnpm test -- src/navigation src/screens --watchman=false` |
+| List row (`RepoListItem`) | unit (RNTL) | Fields render; press calls onPress with id | colocated under `src/presentation/screens/search/__tests__` | `pnpm test -- src/presentation/screens/search --watchman=false` |
 | Types / constants only | none | — (typecheck via tests/lint) | — | build/lint gate |
 | Maestro E2E | none (this feature) | Deferred per spec OOS | — | — |
 
@@ -107,7 +107,7 @@ T8 → T9 → T10
 ### T3: Navigation param types (tabs + Search stack)
 
 **What**: Replace template types with `TabsParamList` (Search/Favoritos/Explore/Config) and `SearchStackParamList` (SearchRepos/RepoDetails/RepoIssues with `repoId`); remove Modal.  
-**Where**: `src/navigation/types.ts`  
+**Where**: `src/presentation/navigation/types.ts`  
 **Depends on**: None (can parallel conceptually; listed after T2 for phase order only — **Depends on: None**)  
 **Reuses**: existing types file  
 **Requirement**: NAV-01, NAV-04
@@ -127,7 +127,7 @@ T8 → T9 → T10
 ### T4: Favoritos + Explore mock screens
 
 **What**: Product mock screens with title + placeholder PT-BR + `testID`s; replace Expo Explore boilerplate.  
-**Where**: `src/screens/FavoritosScreen.tsx`, `src/screens/ExploreScreen.tsx` (+ `__tests__`)  
+**Where**: `src/presentation/screens/FavoritosScreen.tsx`, `src/presentation/screens/ExploreScreen.tsx` (+ `__tests__`)  
 **Depends on**: None  
 **Reuses**: DS `Container`, `Typography`, `Header`  
 **Requirement**: NAV-02
@@ -136,7 +136,7 @@ T8 → T9 → T10
 
 - [x] Both mocks render without fetching APIs / writing favorites
 - [x] Tests assert title/testID
-- [x] Gate: `pnpm test -- src/screens/__tests__/FavoritosScreen.test.tsx src/screens/__tests__/ExploreScreen.test.tsx --watchman=false` (paths as created)
+- [x] Gate: `pnpm test -- src/presentation/screens/__tests__/FavoritosScreen.test.tsx src/presentation/screens/__tests__/ExploreScreen.test.tsx --watchman=false` (paths as created)
 
 **Tests**: unit (RNTL)  
 **Gate**: quick  
@@ -147,7 +147,7 @@ T8 → T9 → T10
 ### T5: ConfigScreen (data source, theme, token placeholder)
 
 **What**: Config tab UI wired to session store toggles; token section placeholder only. Migrate Home toggle tests here.  
-**Where**: `src/screens/ConfigScreen.tsx` + `__tests__/ConfigScreen.test.tsx`  
+**Where**: `src/presentation/screens/ConfigScreen.tsx` + `__tests__/ConfigScreen.test.tsx`  
 **Depends on**: None  
 **Reuses**: HomeScreen toggle patterns, `DataSourceLogo`, session store  
 **Requirement**: CFG-01, CFG-02, CFG-03
@@ -168,7 +168,7 @@ T8 → T9 → T10
 ### T6: Search stack stubs + SearchStackNavigator
 
 **What**: `RepoDetailsScreen` / `RepoIssuesScreen` stubs + nested `SearchStackNavigator` registering SearchRepos placeholder **or** temporary stub until T9 — prefer register screens: Details/Issues real stubs; SearchRepos can be thin placeholder screen file created in T6 and replaced/filled in T9.  
-**Where**: `src/navigation/SearchStackNavigator.tsx`, `src/screens/search/RepoDetailsScreen.tsx`, `RepoIssuesScreen.tsx`, thin `SearchReposScreen.tsx` placeholder  
+**Where**: `src/presentation/navigation/SearchStackNavigator.tsx`, `src/presentation/screens/search/RepoDetailsScreen.tsx`, `RepoIssuesScreen.tsx`, thin `SearchReposScreen.tsx` placeholder  
 **Depends on**: T3  
 **Reuses**: native stack pattern from RootNavigator  
 **Requirement**: NAV-04, NAV-06, NAV-07, NAV-08
@@ -189,7 +189,7 @@ T8 → T9 → T10
 ### T7: TabsNavigator + RootNavigator (product shell)
 
 **What**: Wire four tabs; Root = Tabs only (delete Modal); remove `ModalScreen` / obsolete Home registration.  
-**Where**: `src/navigation/TabsNavigator.tsx`, `src/navigation/RootNavigator.tsx`, delete `src/screens/ModalScreen.tsx`  
+**Where**: `src/presentation/navigation/TabsNavigator.tsx`, `src/presentation/navigation/RootNavigator.tsx`, delete `src/presentation/screens/ModalScreen.tsx`  
 **Depends on**: T3, T4, T5, T6  
 **Reuses**: tab bar theme colors  
 **Requirement**: NAV-01, NAV-03
@@ -210,7 +210,7 @@ T8 → T9 → T10
 ### T8: `RepoListItem` Card row
 
 **What**: List row showing name, owner, stars, language, description; press → `onPress(repo.id)`.  
-**Where**: `src/screens/search/RepoListItem.tsx` + `__tests__/RepoListItem.test.tsx`  
+**Where**: `src/presentation/screens/search/RepoListItem.tsx` + `__tests__/RepoListItem.test.tsx`  
 **Depends on**: None  
 **Reuses**: DS `Card`, `Typography`  
 **Requirement**: SRCH-05, SRCH-11
@@ -230,7 +230,7 @@ T8 → T9 → T10
 ### T9: SearchReposScreen (full search UX)
 
 **What**: Replace placeholder with InputField + debounce + `useSearchRepos` + FlatList infinite scroll + pull-to-refresh + idle/loading/empty/error+Retry; navigate to Details on row press; no Config toggles on this screen (CFG-04). Delete `HomeScreen.tsx` + obsolete Home tests.  
-**Where**: `src/screens/search/SearchReposScreen.tsx` + `__tests__/SearchReposScreen.test.tsx`; delete `HomeScreen*`  
+**Where**: `src/presentation/screens/search/SearchReposScreen.tsx` + `__tests__/SearchReposScreen.test.tsx`; delete `HomeScreen*`  
 **Depends on**: T2, T6, T7, T8  
 **Reuses**: `useSearchRepos`, `mapAppErrorToMessage`, Fake repo via test harness  
 **Requirement**: SRCH-01..11, CFG-04, NAV-05
@@ -251,7 +251,7 @@ T8 → T9 → T10
 ### T10: Nav E2E-smoke + barrel export + green suite
 
 **What**: Integration-style test Search → Details → Issues; export `useDebouncedValue` / constant from presentation barrel; fix any leftover template orphans blocking lint/tests.  
-**Where**: `src/navigation/__tests__/` or `src/screens/search/__tests__/search-stack.nav.test.tsx`; `src/presentation/index.ts`  
+**Where**: `src/presentation/navigation/__tests__/` or `src/presentation/screens/search/__tests__/search-stack.nav.test.tsx`; `src/presentation/index.ts`  
 **Depends on**: T9  
 **Reuses**: NavigationContainer test patterns  
 **Requirement**: NAV-05, NAV-06, NAV-07, NAV-08

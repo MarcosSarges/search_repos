@@ -3,7 +3,7 @@ import { join } from 'node:path';
 
 import { NavigationContainer } from '@react-navigation/native';
 
-import { TabsNavigator } from '@/navigation/TabsNavigator';
+import { TabsNavigator } from '@/presentation/navigation/TabsNavigator';
 import { act, fireEvent, render, screen } from '@/test';
 
 function pressTabLabel(label: string) {

@@ -1,9 +1,9 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import type { SearchStackParamList } from '@/navigation/types';
-import { RepoDetailsScreen } from '@/screens/search/RepoDetailsScreen';
-import { RepoIssuesScreen } from '@/screens/search/RepoIssuesScreen';
-import { SearchReposScreen } from '@/screens/search/SearchReposScreen';
+import type { SearchStackParamList } from '@/presentation/navigation/types';
+import { RepoDetailsScreen } from '@/presentation/screens/search/RepoDetailsScreen';
+import { RepoIssuesScreen } from '@/presentation/screens/search/RepoIssuesScreen';
+import { SearchReposScreen } from '@/presentation/screens/search/SearchReposScreen';
 
 const Stack = createNativeStackNavigator<SearchStackParamList>();
 

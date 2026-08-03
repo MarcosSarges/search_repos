@@ -83,7 +83,7 @@ flowchart TB
 ### Navigation types
 
 - **Purpose**: Typed param lists for tabs + Search stack.
-- **Location**: `src/navigation/types.ts`
+- **Location**: `src/presentation/navigation/types.ts`
 - **Interfaces**:
   - `TabsParamList`: `{ Search: undefined; Favoritos: undefined; Explore: undefined; Config: undefined }`
   - `SearchStackParamList`: `{ SearchRepos: undefined; RepoDetails: { repoId: string }; RepoIssues: { repoId: string } }`
@@ -94,21 +94,21 @@ flowchart TB
 ### `RootNavigator`
 
 - **Purpose**: Theme-aware `NavigationContainer`; mount tabs (no Modal).
-- **Location**: `src/navigation/RootNavigator.tsx`
+- **Location**: `src/presentation/navigation/RootNavigator.tsx`
 - **Dependencies**: `TabsNavigator`, `useAppTheme`
 - **Reuses**: Existing theme sync
 
 ### `TabsNavigator`
 
 - **Purpose**: Four product tabs.
-- **Location**: `src/navigation/TabsNavigator.tsx`
+- **Location**: `src/presentation/navigation/TabsNavigator.tsx`
 - **Screens**: `SearchStackNavigator`, `FavoritosScreen`, `ExploreScreen` (new product mock — **replace** Expo file), `ConfigScreen`
 - **Reuses**: Tab bar theming from current file; swap `IconSymbol` for DS `Icon` where practical (agent discretion / debt note)
 
 ### `SearchStackNavigator`
 
 - **Purpose**: Nested stack under Search tab.
-- **Location**: `src/navigation/SearchStackNavigator.tsx` (new)
+- **Location**: `src/presentation/navigation/SearchStackNavigator.tsx` (new)
 - **Screens**: `SearchReposScreen`, `RepoDetailsScreen`, `RepoIssuesScreen`
 - **Options**: `headerShown` per screen — SearchRepos can use in-screen DS `Header`; stack header for Details/Issues stubs (native back) **or** custom Header — prefer **native stack header** on stubs for free back affordance; SearchRepos `headerShown: false` + DS Header title “Search”.
 
@@ -123,7 +123,7 @@ flowchart TB
 ### `SearchReposScreen`
 
 - **Purpose**: Product search UI.
-- **Location**: `src/screens/search/SearchReposScreen.tsx` (folder `search/` optional — or `src/screens/SearchReposScreen.tsx`; prefer `src/screens/search/` + stubs colocated)
+- **Location**: `src/presentation/screens/search/SearchReposScreen.tsx` (folder `search/` optional — or `src/presentation/screens/SearchReposScreen.tsx`; prefer `src/presentation/screens/search/` + stubs colocated)
 - **Behavior**: local `query` state → `useDebouncedValue` → `useSearchRepos`; FlatList `data={pages.flatMap}`; `onEndReached` → `fetchNextPage`; `RefreshControl` → `refetch`; states idle/loading/empty/error+Retry; `RepoListItem` press → navigate Details.
 - **Dependencies**: presentation hooks, DS, navigation
 - **Reuses**: Home chrome title pattern; **no** dataSource/theme toggles
@@ -131,21 +131,21 @@ flowchart TB
 ### `RepoListItem`
 
 - **Purpose**: Card row for one `Repo`.
-- **Location**: `src/screens/search/RepoListItem.tsx` (screen-local) or `src/components/` only if reused — **screen-local** first
+- **Location**: `src/presentation/screens/search/RepoListItem.tsx` (screen-local) or `src/components/` only if reused — **screen-local** first
 - **Interfaces**: `{ repo: Repo; onPress: (repoId: string) => void }`
 - **Reuses**: `Card`, `Typography`
 
 ### `RepoDetailsScreen` / `RepoIssuesScreen` (stubs)
 
 - **Purpose**: Typed stubs showing `repoId` + CTA Issues (Details only).
-- **Location**: `src/screens/search/RepoDetailsScreen.tsx`, `RepoIssuesScreen.tsx`
+- **Location**: `src/presentation/screens/search/RepoDetailsScreen.tsx`, `RepoIssuesScreen.tsx`
 - **Params**: `NativeStackScreenProps<SearchStackParamList, 'RepoDetails' | 'RepoIssues'>`
 
 ### Mock tabs
 
-- **FavoritosScreen** — `src/screens/FavoritosScreen.tsx` — title + “Em breve” (AsyncStorage favoritos depois)
-- **ExploreScreen** — replace Expo boilerplate at `src/screens/ExploreScreen.tsx` with product mock (“Repos em alta — em breve”)
-- **ConfigScreen** — `src/screens/ConfigScreen.tsx` — sections: Data source (`DataSourceLogo` + toggle), Theme toggle, Token placeholder
+- **FavoritosScreen** — `src/presentation/screens/FavoritosScreen.tsx` — title + “Em breve” (AsyncStorage favoritos depois)
+- **ExploreScreen** — replace Expo boilerplate at `src/presentation/screens/ExploreScreen.tsx` with product mock (“Repos em alta — em breve”)
+- **ConfigScreen** — `src/presentation/screens/ConfigScreen.tsx` — sections: Data source (`DataSourceLogo` + toggle), Theme toggle, Token placeholder
 
 ### Delete / migrate
 
@@ -198,8 +198,8 @@ List flattening: `data = query.data?.pages.flatMap((p) => p.items) ?? []` (confi
 
 | Concern | Location | Impact | Mitigation |
 | ------- | -------- | ------ | ---------- |
-| HomeScreen tests couple to dataSource/theme toggles | `src/screens/__tests__/HomeScreen.test.tsx` | Break on move to Config | Rewrite as ConfigScreen tests; new SearchRepos tests for SRCH |
-| Expo ExploreScreen is large boilerplate | `src/screens/ExploreScreen.tsx` | Confusion with product Explore | Replace file contents with thin mock; delete unused template imports |
+| HomeScreen tests couple to dataSource/theme toggles | `src/presentation/screens/__tests__/HomeScreen.test.tsx` | Break on move to Config | Rewrite as ConfigScreen tests; new SearchRepos tests for SRCH |
+| Expo ExploreScreen is large boilerplate | `src/presentation/screens/ExploreScreen.tsx` | Confusion with product Explore | Replace file contents with thin mock; delete unused template imports |
 | Tabs still use `IconSymbol` / HapticTab (template) | `TabsNavigator.tsx` | Inconsistent with DS | Prefer DS `Icon` in this feature if low-cost; else follow-up debt |
 | Nested stack + tab focus | React Navigation | Deep links later | Standard nested pattern; no deep links this slice |
 | Card not pressable by default | `Card.tsx` | Need Pressable wrapper | Wrap Card in `Pressable` / Button ghost in `RepoListItem` |
@@ -215,7 +215,7 @@ List flattening: `data = query.data?.pages.flatMap((p) => p.items) ?? []` (confi
 | Search Header | Title only (+ optional read-only dataSource caption) | Config owns toggles |
 | Stub headers | Native stack header + back | Free affordance |
 | Favoritos persistence | Document only | Spec OOS |
-| Screen folders | `src/screens/search/*` for stack; top-level mocks | Clear ownership |
+| Screen folders | `src/presentation/screens/search/*` for stack; top-level mocks | Clear ownership |
 
 ### Project-level (→ STATE AD-026)
 

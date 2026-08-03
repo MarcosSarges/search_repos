@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import type { SearchStackParamList } from '@/navigation/types';
+import type { SearchStackParamList } from '@/presentation/navigation/types';
 import { act, fireEvent, render, screen } from '@/test';
 
 import { RepoDetailsScreen } from '../RepoDetailsScreen';

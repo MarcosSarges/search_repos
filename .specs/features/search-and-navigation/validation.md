@@ -32,7 +32,7 @@
 
 | Criterion (WHEN X THEN Y) | Spec-defined outcome | `file:line` + assertion | Result |
 | ------------------------- | -------------------- | ----------------------- | ------ |
-| WHEN app boots THEN bottom tabs Search, Favoritos, Explore, Config | Exactly four product tabs reachable | `src/navigation/__tests__/TabsNavigator.test.tsx:23-44` — `getAllByText` for each label; Favoritos/Explore/Config `testID`s after press | ✅ PASS |
+| WHEN app boots THEN bottom tabs Search, Favoritos, Explore, Config | Exactly four product tabs reachable | `src/presentation/navigation/__tests__/TabsNavigator.test.tsx:23-44` — `getAllByText` for each label; Favoritos/Explore/Config `testID`s after press | ✅ PASS |
 | WHEN Favoritos/Explore/Config opened THEN dedicated mock (title + copy + testID), no product API fetch | Static mock UI | `FavoritosScreen.test.tsx:9-11`; `ExploreScreen.test.tsx:9-11`; Config sections `ConfigScreen.test.tsx:16-19` | ✅ PASS |
 | WHEN Expo template cleaned THEN Modal gone; boilerplate Home/Explore not product tabs | No Modal route/file; product screens | `TabsNavigator.test.tsx:51-59` — `typesSource`/`rootSource` not match `/Modal/`; `:69` — `ModalScreen.tsx` exists=false; `:53` — no Home in types | ✅ PASS |
 | WHEN Search tab focused THEN native stack SearchRepos → RepoDetails → RepoIssues with `repoId: string` | Typed stack hosts three screens | `types.ts:8-12` — `RepoDetails`/`RepoIssues` `{ repoId: string }`; `SearchStackNavigator.tsx:13-23` registers all three; smoke `search-stack.nav.test.tsx:52-58` | ✅ PASS |
@@ -80,8 +80,8 @@
 | Mutation | File:line | Description | Killed? |
 | -------- | --------- | ----------- | ------- |
 | 1 | `src/presentation/hooks/use-debounced-value.ts` | Bypass debounce — return live `value` immediately | ✅ Killed — `use-debounced-value` suite + `SearchReposScreen` SRCH-02 (`searchCalls` expected 0, got 1 at `:105`) |
-| 2 | `src/screens/search/SearchReposScreen.tsx:44` | Navigate with `{ repoId: 'mutated-wrong-id' }` | ✅ Killed — NAV-05 `toHaveTextContent('facebook/react')` received `mutated-wrong-id` (`:287`); nav smoke also failed |
-| 3 | `src/screens/search/SearchReposScreen.tsx:20` | `isIdle = false` (empty query still takes non-idle UI path) | ✅ Killed — SRCH-03 missing `search-repos-idle` (`:82`); empty copy shown instead |
+| 2 | `src/presentation/screens/search/SearchReposScreen.tsx:44` | Navigate with `{ repoId: 'mutated-wrong-id' }` | ✅ Killed — NAV-05 `toHaveTextContent('facebook/react')` received `mutated-wrong-id` (`:287`); nav smoke also failed |
+| 3 | `src/presentation/screens/search/SearchReposScreen.tsx:20` | `isIdle = false` (empty query still takes non-idle UI path) | ✅ Killed — SRCH-03 missing `search-repos-idle` (`:82`); empty copy shown instead |
 
 **Sensor depth**: lightweight (3 behavior-level mutations)
 **Result**: 3/3 killed — PASS ✅

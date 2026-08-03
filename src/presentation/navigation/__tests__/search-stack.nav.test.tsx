@@ -2,7 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import { createInMemoryRepoRepository } from '@/infrastructure';
 import type { Repo } from '@/domain';
-import { SearchStackNavigator } from '@/navigation/SearchStackNavigator';
+import { SearchStackNavigator } from '@/presentation/navigation/SearchStackNavigator';
 import { SEARCH_DEBOUNCE_MS } from '@/presentation/constants/search';
 import { act, fireEvent, render, screen, waitFor } from '@/test';
 

@@ -67,7 +67,7 @@ describe('ConfigScreen (CFG-01..03)', () => {
   it('WHEN ConfigScreen source is inspected THEN it composes DataSourceLogo and Header does not', () => {
     const configSource = readFileSync(join(__dirname, '../ConfigScreen.tsx'), 'utf8');
     const headerSource = readFileSync(
-      join(__dirname, '../../components/ds/molecules/Header/Header.tsx'),
+      join(__dirname, '../../../components/ds/molecules/Header/Header.tsx'),
       'utf8',
     );
     expect(configSource).toMatch(/DataSourceLogo/);
