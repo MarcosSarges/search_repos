@@ -117,7 +117,7 @@ describe('Button atom (PROP-09..16, PROP-20)', () => {
     expect(node).toHaveStyleRule('padding-right', token.paddingHorizontal);
   });
 
-  it('WHEN width is full or omitted THEN pressable stretches full width', async () => {
+  it('WHEN width is full THEN pressable stretches full width', async () => {
     await render(
       <Button width="full" testID="btn-full">
         Full
@@ -125,6 +125,14 @@ describe('Button atom (PROP-09..16, PROP-20)', () => {
     );
 
     const node = screen.getByTestId('btn-full');
+    expect(node).toHaveStyleRule('align-self', 'stretch');
+    expect(node).toHaveStyleRule('width', '100%');
+  });
+
+  it('WHEN width is omitted THEN pressable stretches full width (default full)', async () => {
+    await render(<Button testID="btn-default-width">Default width</Button>);
+
+    const node = screen.getByTestId('btn-default-width');
     expect(node).toHaveStyleRule('align-self', 'stretch');
     expect(node).toHaveStyleRule('width', '100%');
   });
@@ -137,6 +145,35 @@ describe('Button atom (PROP-09..16, PROP-20)', () => {
     );
 
     expect(screen.getByTestId('btn-hug')).toHaveStyleRule('align-self', 'flex-start');
+  });
+
+  it('WHEN color is success with outlined THEN border uses theme.colors.success', async () => {
+    await render(
+      <Button variant="outlined" color="success" testID="btn-success">
+        Ok
+      </Button>,
+      { themeMode: 'light' },
+    );
+
+    const theme = getTheme('light', 'github');
+    const node = screen.getByTestId('btn-success');
+    expect(node).toHaveStyleRule('border-color', theme.colors.success);
+    expect(node).toHaveStyleRule('background-color', 'transparent');
+  });
+
+  it('WHEN color is warning with text THEN label chrome uses theme.colors.warning border transparent', async () => {
+    await render(
+      <Button variant="text" color="warning" testID="btn-warning">
+        Warn
+      </Button>,
+      { themeMode: 'light' },
+    );
+
+    const theme = getTheme('light', 'github');
+    const node = screen.getByTestId('btn-warning');
+    expect(node).toHaveStyleRule('border-color', 'transparent');
+    expect(node).toHaveStyleRule('background-color', 'transparent');
+    expect(screen.getByText('Warn')).toHaveStyleRule('color', theme.colors.warning);
   });
 
   it('WHEN loading is true THEN Loading uses size from button token loadingSize', async () => {

@@ -63,4 +63,24 @@ describe('DS MUI props migration (PROP-08)', () => {
       expect(source).not.toMatch(/tone=/);
     }
   });
+
+  it('WHEN public DS sources are scanned THEN sx prop is absent (PROP-21)', () => {
+    const offenders: string[] = [];
+    const sxPatterns = [
+      { name: 'sx=', re: /\bsx=/ },
+      { name: 'sx?:', re: /\bsx\?:/ },
+      { name: 'sx:', re: /\bsx:/ },
+    ] as const;
+
+    for (const file of listSourceFiles(join(ROOT, 'packages/ds'))) {
+      const source = readFileSync(file, 'utf8');
+      for (const { name, re } of sxPatterns) {
+        if (re.test(source)) {
+          offenders.push(`${relative(ROOT, file)} (${name})`);
+        }
+      }
+    }
+
+    expect(offenders).toEqual([]);
+  });
 });
