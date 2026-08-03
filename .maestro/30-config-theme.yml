@@ -1,0 +1,51 @@
+appId: host.exp.Exponent
+name: Config theme + sections
+tags:
+  - p1
+  - config
+---
+- runFlow: shared/boot.yml
+- tapOn: Config
+- extendedWaitUntil:
+    visible:
+      id: config-theme-section
+    timeout: 15000
+- assertVisible:
+    id: config-theme-section
+    label: E2E-10 — theme section
+- assertVisible:
+    id: config-source-section
+    label: E2E-10 — source section
+- assertVisible:
+    id: config-token-section
+    label: E2E-10 — token section
+- assertVisible:
+    text: "Em breve.*"
+    label: E2E-13 — token placeholder
+- assertVisible:
+    text: "GitHub|GitLab"
+    label: E2E-12 — fonte subtitle GitHub or GitLab
+- evalScript: ${output.themeFlipped = false}
+- runFlow:
+    when:
+      visible: "Switch to dark mode"
+    commands:
+      - tapOn:
+          id: config-theme-toggle
+      - assertVisible:
+          text: "Switch to light mode"
+          label: E2E-11 — flipped to dark
+      - evalScript: ${output.themeFlipped = true}
+- runFlow:
+    when:
+      true: ${output.themeFlipped != true}
+      visible: "Switch to light mode"
+    commands:
+      - tapOn:
+          id: config-theme-toggle
+      - assertVisible:
+          text: "Switch to dark mode"
+          label: E2E-11 — flipped to light
+- assertTrue:
+    condition: ${output.themeFlipped == true}
+    label: E2E-11 — theme toggle executed once
