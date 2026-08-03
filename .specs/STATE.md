@@ -245,9 +245,9 @@
 ## Handoff
 
 - **Feature**: maestro-e2e
-- **Phase / Task**: Specify complete — awaiting Execute
-- **Completed**: Discuss (1B + Explore, 2A live net, 3A Search toggle); `spec.md` + `context.md`
+- **Phase / Task**: Execute T1–T6 committed; full Maestro gate pending (emulator flaky)
+- **Completed**: Spec + context + tasks; flows in `.maestro/`; README; 7 atomic commits on `feat/maestro-e2e`
 - **In-progress**: none
-- **Next step**: Confirm spec → Execute Maestro flows under `.maestro/` (skip Design — YAML-only; Tasks if >5 steps)
-- **Blockers**: Android emulator must be connected for gate (`emulator-5554` / Expo Go + Metro)
-- **Branch**: `feat/details-issues-config-ui` (or new branch for e2e)
+- **Next step**: Run `pnpm test:e2e` with Metro + Expo Go + emulator; then Verifier
+- **Blockers**: Emulator disconnects between runs; smoke passed once earlier in session
+- **Branch**: `feat/maestro-e2e`
