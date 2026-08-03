@@ -32,7 +32,7 @@ pnpm install
 
 Tokens GitHub/GitLab são **opcionais** e **não** usam `.env` como fonte de verdade (AD-021). O composition root (`createContainer`) recebe um mapa `tokens?: { github?: string; gitlab?: string }` e encaminha só o token da fonte ativa aos adapters HTTP.
 
-Sem token, as APIs públicas funcionam anonimamente (limites mais baixos — trate HTTP 429 na interface). UI e persistência de credenciais ficam para uma feature futura.
+Sem token, as APIs públicas funcionam anonimamente (limites mais baixos — trate HTTP 429 na interface). Persistência via SecureStore e o mapa no DI já existem; a UI de Config para informar o token ainda é placeholder.
 
 ### Scripts
 
@@ -298,17 +298,15 @@ Instruções típicas: análise do enunciado, especificação de regras e crité
 
 ## O que eu faria diferente com mais tempo
 
-- Persistência da fonte ativa e do tema (AsyncStorage)
-- UI para o usuário informar tokens GitHub/GitLab + persistência local (mapa já suportado no DI)
-- Cobertura de testes mais ampla (mappers, hooks de interface, fluxos de erro)
-- Suite Maestro mais completa (smoke + regressão crítica) e integração contínua com Maestro Cloud / GitHub Actions
-- Acessibilidade (rótulos, contraste, tamanhos de toque)
-- Offline-first mais agressivo e tratamento fino de limite de taxa por provedor
-- Integração contínua (lint + Jest + ponta a ponta) no GitHub Actions
+O ganho maior seria **estender o modelo de `dataSource`**, não reescrever a app:
+
+- Novos provedores (ex.: **Bitbucket**) como mais uma implementação do mesmo contrato `RepoRepository` + mapper + entrada no DI / seletor — UI e use cases intactos
+- **Repositórios privados**: completar a UI de tokens na Config (SecureStore + DI já prontos) e autenticar as buscas/detalhes/issues por fonte
+- Generalizar o seletor e o tema de marca para N fontes, sem `if (provider)` na presentation
 
 ## Status
 
-Projeto em evolução a partir do template Expo. A seção **Decisões** descreve as escolhas-alvo do teste; funcionalidades e pastas serão preenchidas conforme a implementação (começando pelo Design System).
+Entrega alinhada ao escopo do teste técnico (busca, detalhes, issues, favoritos, troca de fonte, Design System, cache, testes). Itens acima são evoluções pós-entrega.
 
 ## Licença
 
