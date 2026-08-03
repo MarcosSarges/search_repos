@@ -244,10 +244,10 @@
 
 ## Handoff
 
-- **Feature**: none — repo-details-issues **Done** (Verifier PASS); merge conflict with main resolved (AD-030 from explore-trending)
-- **Phase / Task**: —
-- **Completed**: T1–T14 + validation; PR #13
-- **In-progress**: none
-- **Next step**: merge PR #13
+- **Feature**: ds-repo-item — Execute in progress (Batch 1: T1–T4)
+- **Phase / Task**: Phase 1–2 via subagent
+- **Completed**: Spec/Design/Tasks approved; hand DS header padding commit on branch
+- **In-progress**: T1–T4 (toTitleCase, Divider, RepoItem, RepoListItem)
+- **Next step**: Batch 2 (T5–T6 FlatList + screens) after Batch 1 summary; then Verifier
 - **Blockers**: none
-- **Branch**: `feat/repo-details-issues`
+- **Branch**: `feat/ds-repo-item`
