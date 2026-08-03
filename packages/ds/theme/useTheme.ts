@@ -5,5 +5,3 @@ import type { AppTheme } from './theme';
 export function useTheme(): AppTheme {
   return useStyledTheme();
 }
-
-export { useAppTheme } from './AppThemeProvider';

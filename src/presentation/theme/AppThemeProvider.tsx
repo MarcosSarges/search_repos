@@ -1,12 +1,12 @@
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useLayoutEffect, useMemo, useRef, type ReactNode } from 'react';
-import { ThemeProvider as StyledThemeProvider } from 'styled-components/native';
 
 import type { DataSource } from '@/application';
+import { DsThemeProvider, getTheme, type ThemeMode } from '@ds/theme';
 import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
 import { useHydration } from '@/stores/use-hydration';
 
-import { getTheme, type Brand, type ThemeMode } from './theme';
+import { mapDataSourceToBrand } from './map-data-source-to-brand';
 
 export type AppThemeControls = {
   mode: ThemeMode;
@@ -61,32 +61,11 @@ export function AppThemeProvider({
     });
   }, [hydrated]);
 
-  // DataSource and Brand share the same union today; explicit map lands in presentation (T6).
-  const theme = useMemo(
-    () => getTheme(mode, dataSource as Brand),
-    [mode, dataSource],
-  );
+  const theme = useMemo(() => getTheme(mode, mapDataSourceToBrand(dataSource)), [mode, dataSource]);
 
   if (!hydrated) {
     return null;
   }
 
-  return <StyledThemeProvider theme={theme}>{children}</StyledThemeProvider>;
-}
-
-/** Thin store wrapper — keeps the historical `useAppTheme` API for DS consumers. */
-export function useAppTheme(): AppThemeControls {
-  const mode = useSessionPreferencesStore((state) => state.mode);
-  const dataSource = useSessionPreferencesStore((state) => state.dataSource);
-  const setMode = useSessionPreferencesStore((state) => state.setMode);
-  const setDataSource = useSessionPreferencesStore((state) => state.setDataSource);
-  const toggleMode = useSessionPreferencesStore((state) => state.toggleMode);
-
-  return {
-    mode,
-    setMode,
-    toggleMode,
-    dataSource,
-    setDataSource,
-  };
+  return <DsThemeProvider theme={theme}>{children}</DsThemeProvider>;
 }

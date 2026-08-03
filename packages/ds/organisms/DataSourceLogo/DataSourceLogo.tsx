@@ -1,19 +1,18 @@
 import type { DataSource } from '@/application';
 import type { Size } from '@ds/tokens';
-import { useAppTheme, useTheme } from '@ds/theme';
+import { useTheme } from '@ds/theme';
 
 import { logoComponentMap, resolveLogoAsset, StyledLogo } from './styles';
 
 export type DataSourceLogoProps = {
-  /** Overrides theme context data source when provided. */
+  /** Overrides theme context brand when provided (same union as Brand until T7 rename). */
   dataSource?: DataSource;
   size?: Size;
 };
 
 export function DataSourceLogo({ dataSource: dataSourceProp, size = 'md' }: DataSourceLogoProps) {
-  const { dataSource: contextDataSource } = useAppTheme();
   const theme = useTheme();
-  const dataSource = dataSourceProp ?? contextDataSource;
+  const dataSource = dataSourceProp ?? theme.brand;
   const asset = resolveLogoAsset(dataSource, theme.mode);
   const Logo = logoComponentMap[asset];
   const dimension = theme.sizes[size];

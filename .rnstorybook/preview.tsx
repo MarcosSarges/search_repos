@@ -1,7 +1,8 @@
 import type { Preview } from '@storybook/react-native';
 import { View } from 'react-native';
 
-import { AppThemeProvider, spacing, type ThemeMode } from '../packages/ds';
+import { spacing, type ThemeMode } from '../packages/ds';
+import { AppThemeProvider } from '../src/presentation/theme';
 import type { DataSource } from '../src/application';
 
 const preview: Preview = {

@@ -5,11 +5,10 @@ import {
   waitFor,
 } from '@testing-library/react-native';
 
+import { AppThemeProvider } from '@/presentation/theme';
 import { act, render, screen } from '@/test';
 import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
 import { useHydration } from '@/stores/use-hydration';
-
-import { AppThemeProvider } from '../AppThemeProvider';
 
 /**
  * PRES-05e / PRES-05f: product UI waits for prefs + tokens hydrate.

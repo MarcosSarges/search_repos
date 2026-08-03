@@ -4,10 +4,10 @@ import { join } from 'node:path';
 import { Text, View } from 'react-native';
 import { waitFor } from '@testing-library/react-native';
 
+import { useTheme } from '@ds/theme';
+import { useAppTheme } from '@/presentation/theme';
 import { act, render, renderHook, screen } from '@/test';
 import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
-
-import { useAppTheme, useTheme } from '../';
 
 describe('AppThemeProvider dataSource (DS-02 / TPH-05..06)', () => {
   it('WHEN provider mounts without initialDataSource THEN dataSource defaults to github', async () => {
@@ -115,6 +115,8 @@ describe('AppThemeProvider dataSource (DS-02 / TPH-05..06)', () => {
     expect(source).not.toMatch(/useState<\s*ThemeMode/);
     expect(source).not.toMatch(/useState<\s*DataSource/);
     expect(source).toMatch(/useSessionPreferencesStore/);
+    expect(source).toMatch(/mapDataSourceToBrand/);
+    expect(source).toMatch(/DsThemeProvider/);
   });
 
   it('WHEN provider source is inspected THEN it returns null until hydrated', () => {
