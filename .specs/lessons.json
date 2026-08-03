@@ -3,7 +3,7 @@
   "promote_threshold": 2,
   "window_days": 45,
   "quarantine_threshold": 2,
-  "next_id": 36,
+  "next_id": 37,
   "lessons": [
     {
       "id": "L-001",
@@ -635,6 +635,24 @@
       ],
       "created": "2026-08-03T15:37:53Z",
       "last_seen": "2026-08-03T15:37:53Z"
+    },
+    {
+      "id": "L-036",
+      "key": "gate_fail::before declaring a feature gate green ensure every feature touched storybook stories file ends with a prettier compliant newline so pnpm lint exits 0",
+      "text": "Before declaring a feature gate green, ensure every feature-touched Storybook/stories file ends with a prettier-compliant newline so pnpm lint exits 0",
+      "signal": "gate_fail",
+      "scope": "packages/ds",
+      "status": "candidate",
+      "features": [
+        "favorites"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "packages/ds/organisms/BackHeader/BackHeader.stories.tsx:49 (packages/ds)"
+      ],
+      "created": "2026-08-03T19:09:22Z",
+      "last_seen": "2026-08-03T19:09:22Z"
     }
   ]
 }

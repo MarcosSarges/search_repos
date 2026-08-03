@@ -260,11 +260,11 @@
 
 ## Handoff
 
-- **Feature**: favorites — CA/DDD refactor (AD-032)
-- **Phase / Task**: Re-design + implement domain→app→infra→thin presentation
-- **Completed**: MVP UX on branch; architecture correction in progress
-- **In-progress**: AD-032 refactor
-- **Next step**: Land domain/app/infra + thin store; re-verify
+- **Feature**: favorites — Done locally
+- **Phase / Task**: Verifier PASS (re-check 1/3 after lint fix `f9008ba`)
+- **Completed**: MVP P1 (FAV-01..13, FAV-15) + AD-032 CA; gate `pnpm test` 635 + `pnpm lint` exit 0; sensor 3/3 prior
+- **In-progress**: none
+- **Next step**: optional PR; P2 (FAV-14) deferred
 - **Blockers**: none
 - **Branch**: `feat/favorites`
 - **Worktree**: `/Users/marcos/searchrepos-favorites`
