@@ -221,10 +221,10 @@
 ## Handoff
 
 - **Feature**: ds-as-lib (`.specs/features/ds-as-lib/`)
-- **Phase / Task**: Execute interrupted after T9 — branch `feat/ds-as-lib` + draft PR
-- **Completed**: T1–T9 (aliases → move → Brand → bridge → Logo → resolveBoxSpacing → Container)
-- **In-progress**: none (Batch 2 stopped before T10)
-- **Next step**: Resume Execute T10–T12 (KeyboardAvoid, Search View→Container, README/isolation) then Verifier
+- **Phase / Task**: Execute complete (T1–T12) — Verifier pending
+- **Completed**: T1–T12 on `feat/ds-as-lib`
+- **In-progress**: Verifier sub-agent
+- **Next step**: Dispatch Verifier; write validation.md; push PR #11
 - **Blockers**: none
-- **Uncommitted files**: none after specs commit
-- **Branch**: `feat/ds-as-lib` (base: `feat/search-and-navigation`)
+- **Uncommitted files**: none after T12 commit
+- **Branch**: `feat/ds-as-lib`

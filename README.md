@@ -58,7 +58,7 @@ pnpm storybook
 # depois abra no Expo Go / emulador
 ```
 
-Stories do Design System em `src/components/ds/**/*.stories.tsx` (títulos `DS/Atoms|Molecules|Organisms/...`). Controles globais `themeMode` e `dataSource` no preview.
+Stories do Design System em `packages/ds/**/*.stories.tsx` (títulos `DS/Atoms|Molecules|Organisms/...`). Controles globais `themeMode` e `dataSource` no preview.
 
 ## Funcionalidades
 
@@ -92,7 +92,8 @@ Assim, a interface permanece idêntica ao trocar a fonte: mesma lista, mesmos es
 | `domain/` | Entidades e interfaces de repositório — zero dependência externa |
 | `application/` | Casos de uso (busca, detalhes, issues) |
 | `infrastructure/` | Implementações GitHub/GitLab, HTTP, mappers, injeção de dependências, tema |
-| `presentation/` | Telas, hooks de interface, Design System |
+| `presentation/` | Telas, hooks, providers, bridge de tema (`AppThemeProvider`) |
+| `packages/ds/` | Design System (lib `@ds`) — tokens, atoms, molecules, organisms |
 
 A estrutura de pastas pode evoluir; o que importa é a inversão de dependências: alto nível não importa baixo nível concreto.
 
@@ -137,14 +138,17 @@ Resultado: trocar GitHub ↔ GitLab não exige reiniciar o aplicativo nem altera
 
 ### Design System
 
-O Design System em `src/components/ds/` segue **Atomic Design**:
+O Design System vive em **`packages/ds`**, importado via alias **`@ds`** / **`@ds/*`** (fora de `src/`, AD-028). Segue **Atomic Design**:
 
 | Nível | Pasta | O que entra |
 | --- | --- | --- |
-| Tokens | `tokens/` | `spacing` (+ `SpacerEdge`), `sizes`, `colors`, `radius`, `tone` / `toneColorMap`, tipografia / icon / loading / button / input / card por **variant** ou maps, mapa de `primary` por data-source |
+| Tokens | `tokens/` | `spacing` (+ `SpacerEdge`), `sizes`, `colors`, `radius`, `tone` / `toneColorMap`, tipografia / icon / loading / button / input / card por **variant** ou maps, mapa de `primary` por **`Brand`** (`github` \| `gitlab`) |
 | Atoms | `atoms/` | Typography, Icon, Spacer, Loading, Button, Input — selecionam `variant` / `tone` / edge / state dos tokens; sem `style` público; Icon/Loading sem `size` na API |
-| Molecules | `molecules/` | Container, Header, InputField, Card — compostos de tokens/atoms (+ organism de logo no Header); Badge/Avatar deferidos |
-| Organisms | `organisms/` | `DataSourceLogo` nesta fatia; **telas de produto** (busca, detalhes, issues) serão organisms sob o DS nas features seguintes |
+| Molecules | `molecules/` | Container (layout box), KeyboardAvoid, Header, InputField, Card — compostos de tokens/atoms (+ organism de logo no Header); Badge/Avatar deferidos |
+| Organisms | `organisms/` | `DataSourceLogo` (prop `brand`); assets de marca em `packages/ds/assets/` |
+| Theme (lib) | `theme/` | `getTheme(mode, brand)`, `DsThemeProvider({ theme })`, `useTheme` — **sem** Zustand |
+
+**Bridge de tema (app):** `src/presentation/theme` — `AppThemeProvider` / `useAppTheme` leem a session store, mapeiam `DataSource` → `Brand`, montam o tema e wrapam `DsThemeProvider`.
 
 **Shape de cada componente** (`atoms` / `molecules` / `organisms`):
 
@@ -159,7 +163,7 @@ Estilos do DS usam sempre `styled-components` (template para CSS; `.attrs` só p
 
 **Por que logos de marca são organisms:** assets oficiais (GitHub Invertocat claro/escuro, GitLab SVG) e regras de marca não são ícones de UI genéricos. Imports de SVG de marca ficam **somente** em `DataSourceLogo` — molecules/telas consomem o organism, nunca o arquivo SVG direto.
 
-**Tema:** `AppThemeProvider` + `getTheme(mode, dataSource)` — light/dark para o restante da paleta; só `primary` muda entre GitHub e GitLab.
+**Tema:** lib resolve `primary` por `(mode, brand)`; a presentation bridge conecta isso à sessão (`mode` + `dataSource`).
 
 **Storybook** no dispositivo (`pnpm storybook`): catálogo Atomic ao lado dos componentes; toolbar/globals para `themeMode` e `dataSource`. Não embute a UI do Storybook no pacote de produção (`STORYBOOK_ENABLED`).
 

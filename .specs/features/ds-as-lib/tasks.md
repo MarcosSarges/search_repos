@@ -9,7 +9,7 @@ Implement these tasks with the `tlc-spec-driven` skill: **activate it by name an
 ---
 
 **Design**: `.specs/features/ds-as-lib/design.md`  
-**Status**: Approved  
+**Status**: Done — Execute complete; Verifier pending  
 
 **Tools (locked):** `tlc-spec-driven` + código (Shell/Read/Write/Edit/Grep). **Sem** Maestro MCP nesta feature.
 ---
@@ -387,11 +387,11 @@ T11 → T12
 
 **Done when**:
 
-- [ ] README documents `packages/ds`, `@ds`, and presentation bridge
-- [ ] Isolation test fails if lib imports app layers
-- [ ] `rg "src/components/ds"` / `@/components/ds` clean
-- [ ] Gate: `pnpm test` && `pnpm lint`
-- [ ] Test count: full suite green; no silent test deletions
+- [x] README documents `packages/ds`, `@ds`, and presentation bridge
+- [x] Isolation test fails if lib imports app layers
+- [x] `rg "src/components/ds"` / `@/components/ds` clean
+- [x] Gate: `pnpm test` && `pnpm lint`
+- [x] Test count: full suite green; no silent test deletions
 
 **Tests**: unit  
 **Gate**: build  
