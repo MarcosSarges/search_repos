@@ -244,10 +244,10 @@
 
 ## Handoff
 
-- **Feature**: none — repo-details-issues **Done** (Verifier PASS); merge conflict with main resolved (AD-030 from explore-trending)
+- **Feature**: ds-repo-item — Explore adoption (RITEM-13) Done locally
 - **Phase / Task**: —
-- **Completed**: T1–T14 + validation; PR #13
+- **Completed**: T1–T6 + Verifier PASS; Explore → RepoItem + DS FlatList
 - **In-progress**: none
-- **Next step**: merge PR #13
+- **Next step**: push commit to PR #14
 - **Blockers**: none
-- **Branch**: `feat/repo-details-issues`
+- **Branch**: `feat/ds-repo-item`

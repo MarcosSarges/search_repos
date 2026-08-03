@@ -212,6 +212,18 @@ Seen once or not yet corroborated. Tracked, not trusted.
 - evidence: validation.md:P2 Search polish AC1 (spacing/typography tightened) (presentation/screens)
 - last seen: 2026-08-03T13:55:08Z
 
+### L-034 — Keep TypeScript type expressions prettier-clean (avoid unnecessary parentheses around unions) so pnpm lint stays green
+- signal: `gate_fail` · recurrence: 1 feature(s) · scope: `packages/ds` · harmful: 0
+- features: ds-repo-item
+- evidence: packages/ds/atoms/Divider/__tests__/Divider.test.tsx:37 (packages/ds)
+- last seen: 2026-08-03T15:37:53Z
+
+### L-035 — When migrating lists to contentContainerStyle padding, assert in screen source tests that the parent Container does not also apply the same horizontal px while the list is showing
+- signal: `ac_gap` · recurrence: 1 feature(s) · scope: `src/presentation/screens` · harmful: 0
+- features: ds-repo-item
+- evidence: RITEM-12 AC3 no double-pad (src/presentation/screens)
+- last seen: 2026-08-03T15:37:53Z
+
 ## Quarantined (failed when applied — ignore)
 
 A confirmed lesson that recurred alongside failure. Kept for the maintainer to review.

@@ -21,3 +21,6 @@ export type { AvatarProps } from './Avatar';
 
 export { Badge, normalizeHex } from './Badge';
 export type { BadgeProps } from './Badge';
+
+export { Divider } from './Divider';
+export type { DividerOrientation, DividerProps } from './Divider';

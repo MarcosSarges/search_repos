@@ -45,7 +45,7 @@ describe('Search stack nav smoke (NAV-05..08, RDI-08)', () => {
     await typeAndWaitForDebounce('react');
 
     await waitFor(() => {
-      expect(screen.getByText('react')).toBeTruthy();
+      expect(screen.getByText('React')).toBeTruthy();
     });
 
     await act(async () => {

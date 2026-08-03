@@ -1,38 +1,34 @@
 import { Pressable } from 'react-native';
 
 import type { Repo } from '@/domain';
-import { Typography } from '@ds/atoms';
-import { Card } from '@ds/molecules';
+import { mapRepoToRepoItemProps } from '@/presentation/mappers/map-repo-to-repo-item-props';
+import { RepoItem } from '@ds/organisms';
 
 export type RepoListItemProps = {
   repo: Repo;
-  onPress: (repoId: string) => void;
+  /** When omitted, the row is presentational only. */
+  onPress?: (repoId: string) => void;
+  testID?: string;
 };
 
-export function RepoListItem({ repo, onPress }: RepoListItemProps) {
+/**
+ * Presentation adapter: maps domain `Repo` → DS `RepoItem`.
+ * Optional `onPress` wraps Pressable; without it the card is not interactive.
+ */
+export function RepoListItem({ repo, onPress, testID = 'repo-list-item' }: RepoListItemProps) {
+  const item = <RepoItem {...mapRepoToRepoItemProps(repo)} />;
+
+  if (!onPress) {
+    return item;
+  }
+
   return (
     <Pressable
       accessibilityRole="button"
       accessibilityLabel={repo.fullName}
-      testID="repo-list-item"
+      testID={testID}
       onPress={() => onPress(repo.id)}>
-      <Card>
-        <Card.Header>
-          <Typography variant="heading">{repo.name}</Typography>
-          <Typography variant="caption" color="muted">
-            {repo.ownerName}
-          </Typography>
-        </Card.Header>
-        <Card.Content>
-          {repo.description ? (
-            <Typography variant="body" color="muted">
-              {repo.description}
-            </Typography>
-          ) : null}
-          <Typography variant="caption">{String(repo.stars)}</Typography>
-          {repo.language ? <Typography variant="caption">{repo.language}</Typography> : null}
-        </Card.Content>
-      </Card>
+      {item}
     </Pressable>
   );
 }

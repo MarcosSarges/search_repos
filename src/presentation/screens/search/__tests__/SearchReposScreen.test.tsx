@@ -154,7 +154,7 @@ describe('SearchReposScreen (SRCH-01..11, CFG-04, NAV-05)', () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText('react')).toBeTruthy();
+      expect(screen.getByText('React')).toBeTruthy();
     });
   });
 
@@ -163,14 +163,14 @@ describe('SearchReposScreen (SRCH-01..11, CFG-04, NAV-05)', () => {
     await typeAndWaitForDebounce('react');
 
     await waitFor(() => {
-      expect(screen.getByText('react')).toBeTruthy();
+      expect(screen.getByText('React')).toBeTruthy();
     });
 
-    expect(screen.getByText('facebook')).toBeTruthy();
-    expect(screen.getByText('1000')).toBeTruthy();
+    expect(screen.getByLabelText('facebook')).toBeTruthy();
+    expect(screen.getByLabelText('1000 stars')).toBeTruthy();
     expect(screen.getAllByText('JavaScript').length).toBeGreaterThanOrEqual(1);
     expect(screen.getByText('A JavaScript library for building user interfaces')).toBeTruthy();
-    expect(screen.getAllByTestId('ds-card').length).toBeGreaterThanOrEqual(1);
+    expect(screen.getAllByTestId('ds-repo-item').length).toBeGreaterThanOrEqual(1);
   });
 
   it('WHEN scrolling near the end with hasNextPage THEN fetchNextPage runs (SRCH-06)', async () => {
@@ -188,7 +188,7 @@ describe('SearchReposScreen (SRCH-01..11, CFG-04, NAV-05)', () => {
     await typeAndWaitForDebounce('e');
 
     await waitFor(() => {
-      expect(screen.getByText('react')).toBeTruthy();
+      expect(screen.getByText('React')).toBeTruthy();
     });
     expect(searchCalls).toBe(1);
 
@@ -269,7 +269,7 @@ describe('SearchReposScreen (SRCH-01..11, CFG-04, NAV-05)', () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText('react')).toBeTruthy();
+      expect(screen.getByText('React')).toBeTruthy();
     });
   });
 
@@ -282,7 +282,7 @@ describe('SearchReposScreen (SRCH-01..11, CFG-04, NAV-05)', () => {
     });
 
     await act(async () => {
-      fireEvent.press(screen.getByText('react'));
+      fireEvent.press(screen.getByText('React'));
     });
 
     await waitFor(() => {
@@ -327,7 +327,25 @@ describe('SearchReposScreen (SRCH-01..11, CFG-04, NAV-05)', () => {
     const source = readFileSync(join(__dirname, '../SearchReposScreen.tsx'), 'utf8');
     expect(source).toMatch(/<Container[^>]*testID="search-repos-list-region"/);
     expect(source).not.toMatch(/<View[^>]*testID="search-repos-list-region"/);
-    expect(source).toMatch(/\bFlatList\b/);
-    expect(source).toMatch(/\bRefreshControl\b/);
+    expect(source).toMatch(/\bonRefresh\b/);
+    expect(source).not.toMatch(/\bRefreshControl\b/);
+  });
+
+  it('WHEN SearchRepos list is inspected THEN it uses DS FlatList without RN FlatList (RITEM-12)', () => {
+    const source = readFileSync(join(__dirname, '../SearchReposScreen.tsx'), 'utf8');
+    expect(source).toMatch(/import\s*\{[^}]*\bFlatList\b[^}]*\}\s*from\s*['"]@ds\/molecules['"]/);
+    expect(source).not.toMatch(/import\s*\{[^}]*\bFlatList\b[^}]*\}\s*from\s*['"]react-native['"]/);
+    expect(source).not.toMatch(/ItemSeparatorComponent/);
+    expect(source).not.toMatch(/initialNumToRender/);
+    expect(source).not.toMatch(/onEndReachedThreshold/);
+  });
+
+  it('WHEN SearchRepos list region wraps the list THEN it does not double-apply horizontal px (RITEM-12)', () => {
+    const source = readFileSync(join(__dirname, '../SearchReposScreen.tsx'), 'utf8');
+    expect(source).toMatch(/testID="search-repos-list-region"/);
+    expect(source).toMatch(/px=\{showingList \? undefined : ['"]md['"]\}/);
+    expect(source).not.toMatch(
+      /testID="search-repos-list-region"[\s\S]*?px=['"]md['"][\s\S]*?\{listBody\}/,
+    );
   });
 });

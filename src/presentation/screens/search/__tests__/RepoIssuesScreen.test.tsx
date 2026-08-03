@@ -259,4 +259,21 @@ describe('RepoIssuesScreen (RDI-06, RDI-07)', () => {
     expect(source).not.toMatch(/\bfetch\s*\(/);
     expect(source).not.toMatch(/useSessionPreferencesStore/);
   });
+
+  it('WHEN RepoIssues list is inspected THEN it uses DS FlatList without RN FlatList (RITEM-12)', () => {
+    const source = readFileSync(join(__dirname, '../RepoIssuesScreen.tsx'), 'utf8');
+    expect(source).toMatch(/import\s*\{[^}]*\bFlatList\b[^}]*\}\s*from\s*['"]@ds\/molecules['"]/);
+    expect(source).not.toMatch(/import\s*\{[^}]*\bFlatList\b[^}]*\}\s*from\s*['"]react-native['"]/);
+    expect(source).not.toMatch(/ItemSeparatorComponent/);
+    expect(source).not.toMatch(/initialNumToRender/);
+    expect(source).not.toMatch(/onEndReachedThreshold/);
+  });
+
+  it('WHEN RepoIssues list is shown THEN it is not wrapped in a parent Container with px (RITEM-12)', () => {
+    const source = readFileSync(join(__dirname, '../RepoIssuesScreen.tsx'), 'utf8');
+    expect(source).toMatch(
+      /showingList \? listBody : <Container px=['"]md['"]>\{listBody\}<\/Container>/,
+    );
+    expect(source).not.toMatch(/<Container[^>]*px=['"]md['"][^>]*>[\s\S]*?<FlatList/);
+  });
 });

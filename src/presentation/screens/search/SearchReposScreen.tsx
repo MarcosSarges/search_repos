@@ -1,15 +1,14 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useCallback, useMemo, useState, type ReactNode } from 'react';
-import { FlatList, RefreshControl } from 'react-native';
 
-import { Button, Loading, Spacer, Typography } from '@ds/atoms';
-import { Container, InputField } from '@ds/molecules';
 import type { Repo } from '@/domain';
 import { SessionSourceHeader } from '@/presentation/components';
 import { mapAppErrorToMessage } from '@/presentation/errors/map-app-error-to-message';
 import { useDebouncedValue } from '@/presentation/hooks/use-debounced-value';
 import { useSearchRepos } from '@/presentation/hooks/use-search-repos';
 import type { SearchStackParamList } from '@/presentation/navigation/types';
+import { Button, Loading, Spacer, Typography } from '@ds/atoms';
+import { Container, FlatList, InputField } from '@ds/molecules';
 
 import { RepoListItem } from './RepoListItem';
 
@@ -26,6 +25,7 @@ export function SearchReposScreen({ navigation }: Props) {
     isError,
     isLoading,
     isFetchingNextPage,
+    isFetchNextPageError,
     isRefetching,
     hasNextPage,
     fetchNextPage,
@@ -54,6 +54,8 @@ export function SearchReposScreen({ navigation }: Props) {
   const handleRefresh = useCallback(() => {
     void refetch();
   }, [refetch]);
+
+  const showingList = !isIdle && !isLoading && !isError && items.length > 0;
 
   let listBody: ReactNode;
   if (isIdle) {
@@ -93,15 +95,11 @@ export function SearchReposScreen({ navigation }: Props) {
         keyExtractor={(item: Repo) => item.id}
         renderItem={({ item }) => <RepoListItem repo={item} onPress={handlePress} />}
         onEndReached={handleEndReached}
-        onEndReachedThreshold={0.5}
-        initialNumToRender={20}
         extraData={items.length}
-        refreshControl={
-          <RefreshControl
-            refreshing={isRefetching && !isFetchingNextPage}
-            onRefresh={handleRefresh}
-          />
-        }
+        loadingMore={isFetchingNextPage}
+        footerError={isFetchNextPageError ? mapAppErrorToMessage(error) : undefined}
+        refreshing={isRefetching && !isFetchingNextPage}
+        onRefresh={handleRefresh}
       />
     );
   }
@@ -120,7 +118,11 @@ export function SearchReposScreen({ navigation }: Props) {
         />
       </Container>
       <Spacer top size="xs" />
-      <Container testID="search-repos-list-region" px="md" flex={1} gap="sm">
+      <Container
+        testID="search-repos-list-region"
+        flex={1}
+        gap="sm"
+        px={showingList ? undefined : 'md'}>
         {listBody}
       </Container>
     </Container>

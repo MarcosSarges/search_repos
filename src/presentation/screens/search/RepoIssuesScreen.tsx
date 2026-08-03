@@ -1,6 +1,5 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useCallback, useMemo, type ReactNode } from 'react';
-import { FlatList, RefreshControl } from 'react-native';
 
 import type { Issue } from '@/domain';
 import { StackBackHeader } from '@/presentation/components';
@@ -8,8 +7,8 @@ import { mapAppErrorToMessage } from '@/presentation/errors/map-app-error-to-mes
 import { useRepoDetails } from '@/presentation/hooks/use-repo-details';
 import { useRepoIssues } from '@/presentation/hooks/use-repo-issues';
 import type { SearchStackParamList } from '@/presentation/navigation/types';
-import { Button, Loading, Spacer, Typography } from '@ds/atoms';
-import { Container } from '@ds/molecules';
+import { Button, Loading, Typography } from '@ds/atoms';
+import { Container, FlatList } from '@ds/molecules';
 import { Hyperlink } from '@ds/organisms';
 
 import { IssueListItem } from './IssueListItem';
@@ -25,6 +24,7 @@ export function RepoIssuesScreen({ route }: Props) {
     isError,
     isLoading,
     isFetchingNextPage,
+    isFetchNextPageError,
     isRefetching,
     hasNextPage,
     fetchNextPage,
@@ -46,6 +46,8 @@ export function RepoIssuesScreen({ route }: Props) {
   const handleRefresh = useCallback(() => {
     void refetch();
   }, [refetch]);
+
+  const showingList = !isLoading && !isError && items.length > 0;
 
   let listBody: ReactNode;
   if (isLoading) {
@@ -79,16 +81,11 @@ export function RepoIssuesScreen({ route }: Props) {
         keyExtractor={(item: Issue) => item.id}
         renderItem={({ item }) => <IssueListItem issue={item} />}
         onEndReached={handleEndReached}
-        onEndReachedThreshold={0.5}
-        initialNumToRender={20}
-        ItemSeparatorComponent={() => <Spacer top size="lg" />}
         extraData={items.length}
-        refreshControl={
-          <RefreshControl
-            refreshing={isRefetching && !isFetchingNextPage}
-            onRefresh={handleRefresh}
-          />
-        }
+        loadingMore={isFetchingNextPage}
+        footerError={isFetchNextPageError ? mapAppErrorToMessage(error) : undefined}
+        refreshing={isRefetching && !isFetchingNextPage}
+        onRefresh={handleRefresh}
       />
     );
   }
@@ -98,13 +95,15 @@ export function RepoIssuesScreen({ route }: Props) {
   return (
     <Container bg="background" flex={1} gap="sm">
       <StackBackHeader safe title="Issues" />
-      <Container px="md" gap="sm" flex={1}>
+      <Container gap="sm" flex={1}>
         {repo ? (
-          <Hyperlink href={repo.htmlUrl} testID="repo-issues-repo-link">
-            {repo.fullName}
-          </Hyperlink>
+          <Container px="md">
+            <Hyperlink href={repo.htmlUrl} testID="repo-issues-repo-link">
+              {repo.fullName}
+            </Hyperlink>
+          </Container>
         ) : null}
-        {listBody}
+        {showingList ? listBody : <Container px="md">{listBody}</Container>}
       </Container>
     </Container>
   );

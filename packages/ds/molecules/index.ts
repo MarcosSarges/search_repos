@@ -16,3 +16,6 @@ export {
   resolveKeyboardAvoidBehavior,
 } from './KeyboardAvoid';
 export type { KeyboardAvoidBehavior, KeyboardAvoidProps } from './KeyboardAvoid';
+
+export { FlatList } from './FlatList';
+export type { FlatListProps } from './FlatList';

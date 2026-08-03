@@ -5,6 +5,9 @@ export const StyledHeader = styled(View)<{ safeTop: number | null }>`
   background-color: ${({ theme }) => theme.colors.background};
   flex-direction: row;
   align-items: center;
+  padding-left: ${({ theme }) => theme.spacing.md}px;
+  padding-right: ${({ theme }) => theme.spacing.md}px;
+  padding-bottom: ${({ theme }) => theme.spacing.xs}px;
   border-bottom-width: ${StyleSheet.hairlineWidth}px;
   border-bottom-color: ${({ theme }) => theme.colors.border};
   elevation: 2;

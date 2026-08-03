@@ -27,24 +27,28 @@ const minimalRepo: Repo = {
   htmlUrl: 'https://github.com/owner/minimal',
 };
 
-describe('RepoListItem (SRCH-05, SRCH-11)', () => {
-  it('WHEN a repo with all fields is rendered THEN name, owner, stars, language, and description show', async () => {
+describe('RepoListItem (SRCH-05, SRCH-11, RITEM-10)', () => {
+  it('WHEN a repo with all fields is rendered THEN Capitalize name, Badge language, stars/forks, and description show', async () => {
     await render(<RepoListItem repo={fullRepo} onPress={() => undefined} />);
 
-    expect(screen.getByText('react')).toBeTruthy();
-    expect(screen.getByText('facebook')).toBeTruthy();
-    expect(screen.getByText('1000')).toBeTruthy();
+    expect(screen.getByText('React')).toBeTruthy();
+    expect(screen.getByLabelText('facebook')).toBeTruthy();
+    expect(screen.getByLabelText('1000 stars')).toBeTruthy();
+    expect(screen.getByLabelText('200 forks')).toBeTruthy();
     expect(screen.getByText('JavaScript')).toBeTruthy();
+    expect(screen.getByTestId('ds-badge')).toBeTruthy();
     expect(screen.getByText('A JavaScript library for building user interfaces')).toBeTruthy();
-    expect(screen.getByTestId('ds-card')).toBeTruthy();
+    expect(screen.getByTestId('ds-repo-item')).toBeTruthy();
   });
 
   it('WHEN optional description and language are missing THEN the row still renders without crashing', async () => {
     await render(<RepoListItem repo={minimalRepo} onPress={() => undefined} />);
 
-    expect(screen.getByText('minimal')).toBeTruthy();
-    expect(screen.getByText('owner')).toBeTruthy();
-    expect(screen.getByText('0')).toBeTruthy();
+    expect(screen.getByText('Minimal')).toBeTruthy();
+    expect(screen.getByLabelText('owner')).toBeTruthy();
+    expect(screen.getByLabelText('0 stars')).toBeTruthy();
+    expect(screen.getByLabelText('0 forks')).toBeTruthy();
+    expect(screen.queryByTestId('ds-badge')).toBeNull();
     expect(screen.queryByText('JavaScript')).toBeNull();
   });
 

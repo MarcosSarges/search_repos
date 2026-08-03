@@ -1,8 +1,8 @@
 import type { StyleProp, ViewStyle } from 'react-native';
 
-import { SourceHeader } from '@ds/organisms';
 import { mapDataSourceToBrand } from '@/presentation/theme/map-data-source-to-brand';
 import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
+import { SourceHeader } from '@ds/organisms';
 
 export type SessionSourceHeaderProps = {
   title: string;
@@ -13,7 +13,7 @@ export type SessionSourceHeaderProps = {
 
 /**
  * Presentation adapter: session store dataSource ↔ DS SourceHeader (AD-029).
- * Search (and other root chrome) use this for source toggle — not Details/Issues.
+ * Search / Explore (and other root chrome) use this for source toggle — not Details/Issues.
  */
 export function SessionSourceHeader({ title, safe, style, testID }: SessionSourceHeaderProps) {
   const dataSource = useSessionPreferencesStore((state) => state.dataSource);
