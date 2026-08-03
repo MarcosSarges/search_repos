@@ -352,10 +352,10 @@ T11 → T12 → T13 → T14
 
 **Done when**:
 
-- [ ] §4.3 fields visible from Fake repo
-- [ ] Hyperlink href = `htmlUrl`; CTA navigates to Issues
-- [ ] `headerShown: false` + back via leading
-- [ ] Gate: `pnpm test -- src/presentation/screens/search`
+- [x] §4.3 fields visible from Fake repo
+- [x] Hyperlink href = `htmlUrl`; CTA navigates to Issues
+- [x] `headerShown: false` + back via leading
+- [x] Gate: `pnpm test -- src/presentation/screens/search`
 
 **Tests**: unit
 **Gate**: quick

@@ -285,7 +285,9 @@ describe('SearchReposScreen (SRCH-01..11, CFG-04, NAV-05)', () => {
       fireEvent.press(screen.getByText('react'));
     });
 
-    expect(screen.getByTestId('repo-details-repo-id')).toHaveTextContent('facebook/react');
+    await waitFor(() => {
+      expect(screen.getByTestId('repo-details-full-name')).toHaveTextContent('facebook/react');
+    });
   });
 
   it('WHEN SearchRepos renders THEN SessionSourceHeader exposes source toggle (RDI-08, CFG-04)', async () => {

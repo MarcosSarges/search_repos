@@ -49,7 +49,9 @@ describe('Search stack nav smoke (NAV-05..08)', () => {
       fireEvent.press(screen.getByTestId('repo-list-item'));
     });
 
-    expect(screen.getByTestId('repo-details-repo-id')).toHaveTextContent('facebook/react');
+    await waitFor(() => {
+      expect(screen.getByTestId('repo-details-full-name')).toHaveTextContent('facebook/react');
+    });
 
     await act(async () => {
       fireEvent.press(screen.getByTestId('repo-details-issues-cta'));
