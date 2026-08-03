@@ -228,10 +228,10 @@
 
 ## Handoff
 
-- **Feature**: ds-mui-props (`.specs/features/ds-mui-props/`) — **Done** (Verifier PASS)
-- **Phase / Task**: Execute T1–T13 + gap fix + re-verify complete
-- **Completed**: T1–T13 on `feat/ds-as-lib`; fix `5b737a8`; validation `781c72e` (PASS 23/23, gate 426, sensor 3/3)
+- **Feature**: none — ds-as-lib + ds-mui-props **Done** (Verifier PASS)
+- **Phase / Task**: —
+- **Completed**: Both features on `feat/ds-as-lib`; PR https://github.com/MarcosSarges/search_repos/pull/11
 - **In-progress**: none
-- **Next step**: optional PR for `feat/ds-as-lib` (includes ds-as-lib + ds-mui-props); clean unrelated dirty tree (legacy logos/hooks) if desired
+- **Next step**: review/merge PR #11; clean unrelated dirty tree (legacy logos/hooks) if desired
 - **Blockers**: none
 - **Branch**: `feat/ds-as-lib`

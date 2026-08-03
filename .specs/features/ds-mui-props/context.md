@@ -2,7 +2,7 @@
 
 **Gathered:** 2026-08-03
 **Spec:** `.specs/features/ds-mui-props/spec.md`
-**Status:** Ready for design
+**Status:** Done — feature Verifier PASS (2026-08-03)
 
 ---
 

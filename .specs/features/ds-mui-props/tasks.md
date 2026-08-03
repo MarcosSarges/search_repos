@@ -530,4 +530,4 @@ Execution is sequential within a batch. Offer sub-agents when Execute starts (2 
 
 ---
 
-**Status:** Draft — confirm matrix/gates/tools before Execute.
+**Status:** Done — Verifier PASS (2026-08-03).

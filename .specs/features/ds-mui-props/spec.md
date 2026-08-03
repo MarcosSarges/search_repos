@@ -6,11 +6,11 @@ A API pública do Design System em `packages/ds` usa `tone` para dois domínios 
 
 ## Goals
 
-- [ ] Remover `tone` / `Tone` / `SurfaceTone` da API pública; content usa `color`, superfície usa `bg`
-- [ ] Button no modelo MUI-like: `variant` (chrome) × `color` (paleta) × `size` × `width`
-- [ ] Escala unificada via `size` em Icon, Loading e DataSourceLogo; Typography permanece só `variant`
-- [ ] Todo componente DS aceita e repassa `style` (sem `sx`)
-- [ ] Consumers, stories e testes verdes; README + STATE documentam o padrão e supersedem ADs de `tone`
+- [x] Remover `tone` / `Tone` / `SurfaceTone` da API pública; content usa `color`, superfície usa `bg`
+- [x] Button no modelo MUI-like: `variant` (chrome) × `color` (paleta) × `size` × `width`
+- [x] Escala unificada via `size` em Icon, Loading e DataSourceLogo; Typography permanece só `variant`
+- [x] Todo componente DS aceita e repassa `style` (sem `sx`)
+- [x] Consumers, stories e testes verdes; README + STATE documentam o padrão e supersedem ADs de `tone`
 
 ## Out of Scope
 
@@ -164,39 +164,39 @@ A API pública do Design System em `packages/ds` usa `tone` para dois domínios 
 
 | Requirement ID | Story | Phase | Status |
 | --- | --- | --- | --- |
-| PROP-01 | P1: content color | Design | Pending |
-| PROP-02 | P1: content default text | Design | Pending |
-| PROP-03 | P1: remove tone exports | Design | Pending |
-| PROP-04 | P1: Container bg | Design | Pending |
-| PROP-05 | P1: Container no default bg | Design | Pending |
-| PROP-06 | P1: Card bg API | Design | Pending |
-| PROP-07 | P1: InputField colors | Design | Pending |
-| PROP-08 | P1: big-bang consumers | Design | Pending |
-| PROP-09 | P1: Button variant chrome | Design | Pending |
-| PROP-10 | P1: Button color palette | Design | Pending |
-| PROP-11 | P1: Button defaults | Design | Pending |
-| PROP-12 | P1: Button size | Design | Pending |
-| PROP-13 | P1: Button width full | Design | Pending |
-| PROP-14 | P1: Button width hug | Design | Pending |
-| PROP-15 | P1: no legacy Button variants | Design | Pending |
-| PROP-16 | P1: Button→Loading size | Design | Pending |
-| PROP-17 | P1: Icon size | Design | Pending |
-| PROP-18 | P1: Loading size | Design | Pending |
-| PROP-19 | P1: Logo size unchanged contract | Design | Pending |
-| PROP-20 | P1: style passthrough | Design | Pending |
-| PROP-21 | P1: no sx | Design | Pending |
-| PROP-22 | P2: README | Design | Pending |
-| PROP-23 | P2: STATE AD supersession | Design | Pending |
+| PROP-01 | P1: content color | Validate | Verified |
+| PROP-02 | P1: content default text | Validate | Verified |
+| PROP-03 | P1: remove tone exports | Validate | Verified |
+| PROP-04 | P1: Container bg | Validate | Verified |
+| PROP-05 | P1: Container no default bg | Validate | Verified |
+| PROP-06 | P1: Card bg API | Validate | Verified |
+| PROP-07 | P1: InputField colors | Validate | Verified |
+| PROP-08 | P1: big-bang consumers | Validate | Verified |
+| PROP-09 | P1: Button variant chrome | Validate | Verified |
+| PROP-10 | P1: Button color palette | Validate | Verified |
+| PROP-11 | P1: Button defaults | Validate | Verified |
+| PROP-12 | P1: Button size | Validate | Verified |
+| PROP-13 | P1: Button width full | Validate | Verified |
+| PROP-14 | P1: Button width hug | Validate | Verified |
+| PROP-15 | P1: no legacy Button variants | Validate | Verified |
+| PROP-16 | P1: Button→Loading size | Validate | Verified |
+| PROP-17 | P1: Icon size | Validate | Verified |
+| PROP-18 | P1: Loading size | Validate | Verified |
+| PROP-19 | P1: Logo size unchanged contract | Validate | Verified |
+| PROP-20 | P1: style passthrough | Validate | Verified |
+| PROP-21 | P1: no sx | Validate | Verified |
+| PROP-22 | P2: README | Validate | Verified |
+| PROP-23 | P2: STATE AD supersession | Validate | Verified |
 
-**Coverage:** 23 total, 0 mapped to tasks, 23 unmapped ⚠️ (tasks phase next)
+**Coverage:** 23 total, 23 verified — see `.specs/features/ds-mui-props/validation.md` (PASS)
 
 ---
 
 ## Success Criteria
 
-- [ ] Zero public `tone` / `Tone` / `SurfaceTone` in DS API and product call sites
-- [ ] Button usable as contained/outlined/text × primary/success/warning/danger with hug|full width
-- [ ] Icon/Loading use `size`; Typography uses `variant` + `color`
-- [ ] `style` accepted on public DS components; no `sx`
-- [ ] `pnpm test` green; stories reflect new props
-- [ ] README + STATE document the pattern and supersede tone ADs
+- [x] Zero public `tone` / `Tone` / `SurfaceTone` in DS API and product call sites
+- [x] Button usable as contained/outlined/text × primary/success/warning/danger with hug|full width
+- [x] Icon/Loading use `size`; Typography uses `variant` + `color`
+- [x] `style` accepted on public DS components; no `sx`
+- [x] `pnpm test` green; stories reflect new props
+- [x] README + STATE document the pattern and supersede tone ADs

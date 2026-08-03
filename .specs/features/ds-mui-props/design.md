@@ -2,7 +2,7 @@
 
 **Spec**: `.specs/features/ds-mui-props/spec.md`  
 **Context**: `.specs/features/ds-mui-props/context.md`  
-**Status**: Approved
+**Status**: Done — Verifier PASS (2026-08-03)
 
 ---
 
@@ -310,4 +310,4 @@ type LoadingSize = 'sm' | 'lg'
 | PROP-20..21 | style passthrough; no sx |
 | PROP-22..23 | README + STATE AD-028 |
 
-**Status:** Draft — aguarda aprovação antes de Tasks.
+**Status:** Done — Verifier PASS (2026-08-03).
