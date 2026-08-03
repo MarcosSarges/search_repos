@@ -228,10 +228,10 @@
 
 ## Handoff
 
-- **Feature**: ds-mui-props (`.specs/features/ds-mui-props/`) — Execute batch 2 (T8–T13) complete; Verifier pending
-- **Phase / Task**: Phases 4–5 done (T8–T13)
-- **Completed**: T1–T13 code/docs commits on `feat/ds-as-lib`
-- **In-progress**: none (orchestrator Verifier next)
-- **Next step**: Run feature Verifier against PROP ACs
+- **Feature**: ds-mui-props (`.specs/features/ds-mui-props/`) — **Done** (Verifier PASS)
+- **Phase / Task**: Execute T1–T13 + gap fix + re-verify complete
+- **Completed**: T1–T13 on `feat/ds-as-lib`; fix `5b737a8`; validation `781c72e` (PASS 23/23, gate 426, sensor 3/3)
+- **In-progress**: none
+- **Next step**: optional PR for `feat/ds-as-lib` (includes ds-as-lib + ds-mui-props); clean unrelated dirty tree (legacy logos/hooks) if desired
 - **Blockers**: none
 - **Branch**: `feat/ds-as-lib`

@@ -9,7 +9,13 @@ Implement these tasks with the `tlc-spec-driven` skill: **activate it by name an
 ---
 
 **Design**: `.specs/features/ds-mui-props/design.md`  
-**Status**: In Progress — Batch 1 (T1–T7) running
+**Status**: Done — Verifier PASS (2026-08-03)
+
+**Batch 1 results** (2026-08-03): T1 `54ba41f` · T2 `c2a4edc` · T3 `dd3bf9c` · T4 `afeb75a` · T5 `515ef4d` · T6 `5a7aa23` · T7 `e3bcf15` — 71 tests passed scoped. Deviation: early consumer bridges for husky (Typography/Icon/Button call sites partially migrated).
+
+**Batch 2 results** (2026-08-03): T8 `696be46` · T9 `e602863` · T10 `a68d78c` · T11 `ce6eda1` · T12 `4f2fe84` · T13 `2e14173` — 277 passed (`packages/ds` + `src/presentation`). Deviation: screens `bg` in T8; T12 mostly PROP-08 regression test.
+
+**Verifier**: FAIL → fix `5b737a8` → re-verify PASS `781c72e` (23/23 ACs, 426 tests, sensor 3/3). Report: `.specs/features/ds-mui-props/validation.md`
 
 **Tools (locked):** `tlc-spec-driven` + `frontend-design` (stories/visual args) + código (Shell/Read/Write/Edit/Grep). **Sem** Maestro MCP. Branch: `feat/ds-as-lib`.
 
