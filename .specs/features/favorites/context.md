@@ -16,11 +16,11 @@ Entregar **favoritos locais** com snapshot persistido (AsyncStorage), tab Favori
 
 ### 1. Destino do store (arquitetura)
 
-- **Opção 2 locked:** Zustand stores vivem em **`src/presentation/stores/`**.
-- Motivo: estado de cliente / sessão / cache local — presentation-adjacent; simetria Clean Arch; domain + application permanecem Functional Core.
-- **Rejeitado:** porta `RepoRepository` + use cases + adapter AsyncStorage só para array de favoritos (overengineering).
-- Migrar session-preferences (+ hydration helpers) junto com a nova favorites store; atualizar imports/`@/` alias consumers.
-
+- **Original Option 2 locked (discuss):** Zustand stores vivem em **`src/presentation/stores/`**.
+- Motivo à época: estado de cliente / sessão / cache local — presentation-adjacent; simetria Clean Arch; domain + application permanecem Functional Core.
+- **Rejeitado no discuss:** porta `RepoRepository` + use cases + adapter AsyncStorage só para array de favoritos (overengineering).
+- Migrar session-preferences (+ hydration helpers) junto; atualizar imports/`@/` alias consumers.
+- **Superseded by AD-032 (favorites write-model only):** favoritos passam a entidade `Favorite` + porta `FavoritesRepository` + use cases + adapter AsyncStorage na infrastructure. Zustand em presentation fica **somente cache reativo / hydrate** (sem `persist`). Session preferences continuam Option 2 / AD-031.
 ### 2. Payload persistido (snapshot)
 
 - Persistir **snapshot**, não só `repoId`.

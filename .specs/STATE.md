@@ -248,15 +248,23 @@
 - **Trade-off**: Broader import rewrite once; stores are not a fifth business layer — do not put domain rules here.
 - **Scope**: `src/presentation/stores/**`, App theme/session consumers, favorites feature, README architecture table
 - **Date**: 2026-08-03
+- **Status**: partially superseded by AD-032 (favorites write-model); session prefs + store folder under presentation still stand
+
+### AD-032
+- **Decision**: Favoritos seguem Clean Arch: entidade `Favorite` + porta `FavoritesRepository` no domínio (`source` opaco, sem importar `DataSource`); use cases em application (`listFavorites`, `toggleFavorite`, `removeFavorite`, `isFavorite`, `createFavoriteFromRepo`); adapter AsyncStorage (+ Fake in-memory) na infrastructure; DI em `createContainer` (repo de favoritos independente do `DataSource` HTTP). Zustand em presentation é **somente cache reativo / hydrate** — sem `persist` AsyncStorage e sem regras de toggle/sanitize.
+- **Reason**: Favoritar é write-model de produto (offline snapshot, identidade composta), não chrome de sessão; Option 2 do discuss era pragmática demais e vazava I/O + regras para presentation.
+- **Trade-off**: Mais arquivos que store-only; `DataSource` continua em application e é mapeado para `Favorite.source` string na borda application.
+- **Scope**: `src/domain/**` (Favorite + porta), `src/application/use-cases/**` favorites, `src/infrastructure/**` favorites adapter, `src/presentation/stores` favorites cache, DI
+- **Date**: 2026-08-03
 - **Status**: active
 
 ## Handoff
 
-- **Feature**: favorites — Execute Batch B
-- **Phase / Task**: Batch B (Phase 4 / T6–T9) in progress via sub-agent
-- **Completed**: Batch A T1–T5 (`fc81cec`…`9ca9111`)
-- **In-progress**: Batch worker T6–T9
-- **Next step**: On Batch B summary → Verifier (MVP complete; P2 deferred)
+- **Feature**: favorites — CA/DDD refactor (AD-032)
+- **Phase / Task**: Re-design + implement domain→app→infra→thin presentation
+- **Completed**: MVP UX on branch; architecture correction in progress
+- **In-progress**: AD-032 refactor
+- **Next step**: Land domain/app/infra + thin store; re-verify
 - **Blockers**: none
 - **Branch**: `feat/favorites`
 - **Worktree**: `/Users/marcos/searchrepos-favorites`

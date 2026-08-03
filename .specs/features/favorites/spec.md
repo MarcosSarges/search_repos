@@ -30,10 +30,11 @@ A tab Favoritos ainda é placeholder (“Em breve”). O usuário precisa salvar
 | Assumption / decision | Chosen default | Rationale | Confirmed? |
 | --------------------- | -------------- | --------- | ---------- |
 | Lar dos stores | `src/presentation/stores/` | Discuss — simetria CA; não é 5ª camada de negócio | y |
-| Persistência | Zustand `persist` + AsyncStorage | AD-026 + session pattern (AD-018) | y |
-| Payload | Snapshot (não só id) | Offline + sem N fetches | y |
+| Persistência (favoritos) | Infra `FavoritesRepository` adapter (AsyncStorage); Zustand = cache only | AD-032 (supersedes Zustand `persist` for favorites) | y |
+| Persistência (session) | Zustand `persist` + AsyncStorage | AD-026 + session pattern (AD-018) | y |
+| Payload | Snapshot entity `Favorite` (não só id) | Offline + sem N fetches | y |
 | Lista | **Duas seções/listas** — GitHub e GitLab | User revision (não unificada) | y |
-| Identidade | Chave `(dataSource, id)` | Evita colisão entre provedores | y |
+| Identidade | Chave `(source, id)` / UI `(dataSource, id)` | Evita colisão entre provedores; domain `source` opaco | y |
 | Toggle P1 | Header Detalhes | Discuss | y |
 | Remoção na tab | Swipe-to-delete | Discuss | y |
 | Empty CTA | Navega para Search **ou** Explore | Discuss — Design escolhe um ou ambos | y (detalhe Design) |

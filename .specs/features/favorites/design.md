@@ -8,32 +8,32 @@
 
 ## Architecture Overview
 
-**Approach locked by context:** client-state Zustand under `src/presentation/stores/` (no domain port / AsyncStorage adapter). Favorites are a second persisted store alongside session preferences. Presentation owns UI + store wiring; DS organisms stay store-free (AD-029).
+**Approach locked by AD-032** (supersedes context Option 2 for the favorites **write-model**): Clean Arch / DDD — domain `Favorite` + `FavoritesRepository` port → application use cases → infrastructure AsyncStorage adapter (+ in-memory Fake) → presentation Zustand as a **thin in-memory cache** (hydrate only; no persist, no toggle/sanitize rules). Session preferences remain Zustand+persist under `src/presentation/stores/` (AD-031 still stands for that). DS organisms stay store-free (AD-029).
 
 ```mermaid
 flowchart TD
   subgraph boot [Cold start]
     AS1[AsyncStorage session] -->|rehydrate| Sess[session-preferences store]
-    AS2[AsyncStorage favorites] -->|rehydrate| Fav[favorites store]
   end
 
   Sess --> Gate[AppThemeProvider splash gate]
   Gate --> Nav[Tabs]
 
-  Details[RepoDetailsScreen] -->|trailing toggle| Adapter[StackBackHeader + trailing]
-  Adapter -->|toggleFavorite| Fav
-  Details -->|snapshot from Repo + dataSource| Fav
+  Details[RepoDetailsScreen] -->|trailing toggle| Hook[useFavorites]
+  Hook -->|createFavoriteFromRepo + toggleFavorite| UC[application use cases]
+  UC --> Port[FavoritesRepository]
+  Port --> Adapter[AsyncStorage adapter]
+  Adapter --> AS2[AsyncStorage favorites]
 
-  FavTab[FavoritosScreen] -->|select by dataSource| Fav
+  FavTab[FavoritosScreen] -->|hydrate / listBySource filter| Cache[favorites Zustand cache]
+  Hook -->|setItems after list/toggle/remove| Cache
   FavTab -->|two sections omit empty| UI[ScrollView sections + Swipeable rows]
   UI -->|tap| Sess
   Sess -->|setDataSource if needed| SearchNav[Search / RepoDetails]
-  UI -->|swipe delete| Fav
-  Fav -->|persist| AS2
+  UI -->|swipe delete| Hook
 ```
 
-**Rejected:** domain `FavoritesRepository` + use cases (context). **Rejected:** unified flat list (spec revision).
-
+**Superseded for favorites write-model:** presentation Zustand as source of truth + `persist` AsyncStorage (context Option 2). **Rejected:** unified flat list (spec revision). Session prefs store location (AD-031) unchanged.
 ---
 
 ## Code Reuse Analysis
@@ -78,30 +78,25 @@ flowchart TD
 - **Dependencies**: Update all `@/stores` consumers (presentation, theme, tests, `src/test/render.tsx`)
 - **Reuses**: File move + import rewrite; behavior parity tests for session
 
-### favorites store
+### Domain + application + infrastructure (AD-032)
 
-- **Purpose**: Source of truth for favorited repo snapshots, partitioned by `dataSource`, persisted offline.
+- **Entity**: `Favorite` in `src/domain/entities/favorite.ts` — `source: string` (opaque; not typed as `DataSource`); key `(source, id)`
+- **Port**: `FavoritesRepository` — `listAll`, `upsert`, `remove`, `exists`
+- **Use cases**: `listFavorites`, `listFavoritesBySource`, `toggleFavorite`, `removeFavorite`, `isFavorite`; mapper `createFavoriteFromRepo(repo, dataSource)`
+- **Adapter**: `createAsyncStorageFavoritesRepository` — key `searchrepos:favorites`, JSON `{ items: Favorite[] }`, sanitize corrupt root → `[]`, drop invalid entries (`isDataSource` on `source` in adapter only)
+- **Fake**: `createInMemoryFavoritesRepository` for tests / DI override
+- **DI**: `createContainer` wires favorites use cases independently of HTTP `RepoRepository`
+
+### favorites Zustand cache (thin)
+
+- **Purpose**: Reactive in-memory mirror for UI; **not** persistence SoT.
 - **Location**: `src/presentation/stores/favorites-store.ts`
 - **Interfaces**:
-  - State: `{ items: FavoriteSnapshot[]; hasHydrated: boolean }`
-  - `isFavorite(dataSource, id): boolean`
-  - `toggleFavorite(snapshot: FavoriteSnapshot): void` — idempotent add (upsert + bump `favoritedAt`) or remove
-  - `removeFavorite(dataSource, id): void`
-  - `listBySource(dataSource): FavoriteSnapshot[]` — sorted `favoritedAt` desc (helper or selector)
-  - `setHasHydrated` / rehydrate `onRehydrateStorage` → always mark hydrated (parity with session TPH-04)
-  - Persist key: `searchrepos:favorites`; `partialize: ({ items }) => ({ items })`
-  - `merge`/`sanitize`: invalid entries dropped; bad root → `items: []`
-- **Dependencies**: zustand persist, AsyncStorage, `DataSource` from `@/application`
-- **Reuses**: session-preferences factory + injectable `storage?` for tests
-
-### `toFavoriteSnapshot(repo, dataSource)`
-
-- **Purpose**: Build snapshot from domain `Repo` + active source at favorite time.
-- **Location**: `src/presentation/stores/favorite-snapshot.ts` (or colocated mapper under `presentation/mappers/`)
-- **Interfaces**: `toFavoriteSnapshot(repo: Repo, dataSource: DataSource): FavoriteSnapshot`
-- **Dependencies**: domain `Repo`, application `DataSource`
-- **Reuses**: field subset of `Repo` + `favoritedAt: Date.now()`
-
+  - State: `{ items: Favorite[]; hasHydrated: boolean }`
+  - `setItems` / `setHasHydrated` / `hydrate(loader)`
+  - Sync helpers: `isFavorite(source, id)` / `listBySource` from `items` (optional)
+- **Writes**: via `useFavorites` → container use cases → re-hydrate `setItems`
+- **Dependencies**: zustand only (no persist middleware)
 ### BackHeader + StackBackHeader trailing
 
 - **Purpose**: Allow favorite control in details chrome without store in DS.
@@ -144,12 +139,12 @@ flowchart TD
 
 ## Data Models
 
-### FavoriteSnapshot
+### Favorite (domain)
 
 ```typescript
-type FavoriteSnapshot = {
+type Favorite = {
   id: string;
-  dataSource: DataSource;
+  source: string; // opaque provider id; application maps DataSource → string
   name: string;
   fullName: string;
   ownerName: string;
@@ -161,24 +156,23 @@ type FavoriteSnapshot = {
 };
 ```
 
-**Relationships**: Presentation-only; not a domain entity. Key = `(dataSource, id)`. `RepoItem` mapping uses `name`, `description`, `languages` from `language`, owner fields, `stars` (no forks on snapshot — omit forks prop).
+**Relationships**: Domain entity (AD-032). Key = `(source, id)`. `RepoItem` mapping uses `name`, `description`, `languages` from `language`, owner fields, `stars` (no forks — omit forks prop). UI sections filter `source === 'github' | 'gitlab'`.
 
-### Persisted shape
+### Persisted shape (infrastructure)
 
 ```typescript
-type FavoritesPersisted = { items: FavoriteSnapshot[] };
+type FavoritesPersisted = { items: Favorite[] };
 ```
 
-Single array in storage; UI splits with `items.filter(i => i.dataSource === 'github' | 'gitlab')`.
-
+Single array in AsyncStorage via adapter; UI splits with `items.filter(i => i.source === 'github' | 'gitlab')`.
 ---
 
 ## Error Handling Strategy
 
 | Error Scenario | Handling | User Impact |
 | --- | --- | --- |
-| AsyncStorage read/parse failure | `onRehydrateStorage` marks hydrated; merge → `items: []` | Empty Favoritos, no crash |
-| Corrupt item in array | Drop invalid entries in sanitize | Partial list kept |
+| AsyncStorage read/parse failure | Adapter / `hydrate` → `items: []`, `hasHydrated: true` | Empty Favoritos, no crash |
+| Corrupt item in array | Drop invalid entries in adapter sanitize | Partial list kept |
 | Favorite while details error/loading | Control absent/disabled | No incomplete snapshot |
 | Swipe cancelled | No `removeFavorite` | Item stays |
 | Navigate with wrong source | Always `setDataSource` before navigate when mismatch | Correct provider fetch |
@@ -202,15 +196,17 @@ Single array in storage; UI splits with `items.filter(i => i.dataSource === 'git
 
 | Decision | Choice | Rationale |
 | --- | --- | --- |
-| Store folder | `src/presentation/stores/` | Context Option 2; AD-031 |
-| Storage model | Flat `items[]` + filter by source | Simple persist; two UI lists |
+| Favorites write-model | Domain port + use cases + AsyncStorage adapter (AD-032) | Product write-model; not session chrome |
+| Presentation cache | Thin Zustand hydrate mirror | Reactive UI without persist leakage |
+| Session store folder | `src/presentation/stores/` | AD-031 (session prefs only for persist) |
+| Storage model | Flat `items[]` + filter by `source` | Simple persist; two UI lists |
 | Order | `favoritedAt` desc per section | Spec “most recent first” |
 | Empty sections | Omit entirely | Cleaner than dual empty placeholders |
 | Empty CTAs | Both Search **and** Explore buttons | Spec allows both; clearer discovery |
 | List container | ScrollView + sections | Small N; avoids nested FlatList |
 | Swipe | `Swipeable` from RNGH | Already in deps; mobile idiom |
 | Toggle icons | `star-outline` / `star` | Ionicons already used; matches repo “stars” metaphor |
-| Snapshot type name | `FavoriteSnapshot` | Emphasizes offline copy, not live entity |
+| Entity name | `Favorite` (domain) | AD-032; `source` opaque string |
 | Display fields | `name` + `fullName` both stored | `RepoItem` uses `name`; `fullName` for a11y label |
 | Session reset | Does not clear favorites | Orthogonal prefs vs bookmarks |
 | App splash | Unchanged | Favorites hydrate is screen-local |
@@ -220,4 +216,6 @@ Single array in storage; UI splits with `items.filter(i => i.dataSource === 'git
 
 ## Project-level decision (STATE)
 
-Append **AD-031**: Zustand client stores live under `src/presentation/stores/`; supersedes AD-027 stores-path clause (screens/nav under presentation still stand). AD-018 persist/hydration pattern remains active; path scope updates to `src/presentation/stores/**`.
+**AD-031**: Zustand client stores live under `src/presentation/stores/`; supersedes AD-027 stores-path clause (screens/nav under presentation still stand). AD-018 persist/hydration pattern remains active for **session preferences**.
+
+**AD-032**: Favorites write-model is Clean Arch (domain `Favorite` + port → application use cases → infrastructure AsyncStorage/Fake → thin presentation cache). Partially supersedes AD-031 / context Option 2 for favorites persistence only.

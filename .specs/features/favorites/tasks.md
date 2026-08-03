@@ -9,7 +9,7 @@ Implement these tasks with the `tlc-spec-driven` skill: **activate it by name an
 ---
 
 **Design**: `.specs/features/favorites/design.md`  
-**Status**: Approved — Execute in progress (MVP T1–T9; P2 deferred)
+**Status**: Done — MVP T1–T9 complete; P2 T10–T11 deferred; Verifier running
 
 ---
 
