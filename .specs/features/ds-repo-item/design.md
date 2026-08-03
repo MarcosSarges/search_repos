@@ -2,7 +2,7 @@
 
 **Spec**: `.specs/features/ds-repo-item/spec.md`  
 **Context**: `.specs/features/ds-repo-item/context.md`  
-**Status**: Approved
+**Status**: Approved — shipped (Verifier PASS)
 
 ---
 

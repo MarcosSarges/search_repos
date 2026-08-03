@@ -9,7 +9,7 @@ Implement these tasks with the `tlc-spec-driven` skill: **activate it by name an
 ---
 
 **Design**: `.specs/features/ds-repo-item/design.md`  
-**Status**: Approved — Execute in progress
+**Status**: Done — Verifier PASS (2026-08-03)
 
 ---
 
@@ -81,14 +81,15 @@ T6
 
 **Done when**:
 
-- [ ] `toTitleCase('react native')` → `'React Native'`; single token; empty/whitespace → `''`
-- [ ] Exported from utils barrel
-- [ ] Gate: `pnpm test`
-- [ ] Test count: ≥3 tests pass (no silent deletions)
+- [x] `toTitleCase('react native')` → `'React Native'`; single token; empty/whitespace → `''`
+- [x] Exported from utils barrel
+- [x] Gate: `pnpm test`
+- [x] Test count: ≥3 tests pass (no silent deletions)
 
 **Tests**: unit  
 **Gate**: quick  
-**Commit**: `feat(ds): add toTitleCase util for display labels`
+**Commit**: `feat(ds): add toTitleCase util for display labels`  
+**Status**: Done (`7be1411`)
 
 ---
 
@@ -107,14 +108,15 @@ T6
 
 **Done when**:
 
-- [ ] Horizontal/vertical chrome via object map; `testID="ds-divider"`
-- [ ] Stories + atoms barrel export
-- [ ] Gate: `pnpm test`
-- [ ] Test count: ≥2 orientation tests pass
+- [x] Horizontal/vertical chrome via object map; `testID="ds-divider"`
+- [x] Stories + atoms barrel export
+- [x] Gate: `pnpm test`
+- [x] Test count: ≥2 orientation tests pass
 
 **Tests**: unit  
 **Gate**: quick  
-**Commit**: `feat(ds): add Divider atom with horizontal and vertical orientations`
+**Commit**: `feat(ds): add Divider atom with horizontal and vertical orientations`  
+**Status**: Done (`a56057f`)
 
 ---
 
@@ -133,14 +135,15 @@ T6
 
 **Done when**:
 
-- [ ] Props primitivas; forks condicional; isolation OK
-- [ ] Stories: full / no description / empty languages / no avatar uri
-- [ ] Gate: `pnpm test`
-- [ ] Test count: ≥6 AC/edge tests pass
+- [x] Props primitivas; forks condicional; isolation OK
+- [x] Stories: full / no description / empty languages / no avatar uri
+- [x] Gate: `pnpm test`
+- [x] Test count: ≥6 AC/edge tests pass
 
 **Tests**: unit  
 **Gate**: quick  
-**Commit**: `feat(ds): add RepoItem organism card`
+**Commit**: `feat(ds): add RepoItem organism card`  
+**Status**: Done (`f3b5de9`)
 
 ---
 
@@ -159,14 +162,15 @@ T6
 
 **Done when**:
 
-- [ ] Maps name/description/languages/owner/stars/forks; no Card layout local
-- [ ] Tests green (Capitalize, Badge, stats, press)
-- [ ] Gate: `pnpm test`
-- [ ] Test count: ≥3 tests pass
+- [x] Maps name/description/languages/owner/stars/forks; no Card layout local
+- [x] Tests green (Capitalize, Badge, stats, press)
+- [x] Gate: `pnpm test`
+- [x] Test count: ≥3 tests pass
 
 **Tests**: unit  
 **Gate**: quick  
-**Commit**: `feat(search): render repo rows with RepoItem organism`
+**Commit**: `feat(search): render repo rows with RepoItem organism`  
+**Status**: Done (`78e80f8`)
 
 ---
 
@@ -185,16 +189,17 @@ T6
 
 **Done when**:
 
-- [ ] Spacing props → `contentContainerStyle` only; default `px="md"`; root `style` sem padding
-- [ ] Default Separator = Spacer top `lg`; `separator={false}` / custom `ItemSeparatorComponent` override
-- [ ] Perf defaults applied; consumer overrides win; other RN props forwarded; contentContainerStyle merge
-- [ ] Stories + molecules barrel
-- [ ] Gate: `pnpm test`
-- [ ] Test count: ≥5 tests covering padding host, separator, perf defaults/override (no silent deletions)
+- [x] Spacing props → `contentContainerStyle` only; default `px="md"`; root `style` sem padding
+- [x] Default Separator = Spacer top `lg`; `separator={false}` / custom `ItemSeparatorComponent` override
+- [x] Perf defaults applied; consumer overrides win; other RN props forwarded; contentContainerStyle merge
+- [x] Stories + molecules barrel
+- [x] Gate: `pnpm test`
+- [x] Test count: ≥5 tests covering padding host, separator, perf defaults/override (no silent deletions)
 
 **Tests**: unit  
 **Gate**: quick  
-**Commit**: `feat(ds): add FlatList molecule with content padding and defaults`
+**Commit**: `feat(ds): add FlatList molecule with content padding and defaults`  
+**Status**: Done (`790adbd`)
 
 ---
 
@@ -213,15 +218,16 @@ T6
 
 **Done when**:
 
-- [ ] Neither screen imports RN `FlatList` for the product lists
-- [ ] No duplicate horizontal padding on parent Container + list content
-- [ ] Screen tests pass (list testIDs, endReached, etc.)
-- [ ] Gate: `pnpm test` && `pnpm lint`
-- [ ] Test count: Search + Issues suites green (no silent deletions)
+- [x] Neither screen imports RN `FlatList` for the product lists
+- [x] No duplicate horizontal padding on parent Container + list content
+- [x] Screen tests pass (list testIDs, endReached, etc.)
+- [x] Gate: `pnpm test` && `pnpm lint`
+- [x] Test count: Search + Issues suites green (no silent deletions)
 
 **Tests**: unit  
 **Gate**: full  
-**Commit**: `feat(search): use DS FlatList on Search and Issues screens`
+**Commit**: `feat(search): use DS FlatList on Search and Issues screens`  
+**Status**: Done (`ca48e62`)
 
 ---
 

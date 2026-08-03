@@ -244,10 +244,10 @@
 
 ## Handoff
 
-- **Feature**: ds-repo-item — Execute in progress (Batch 1: T1–T4)
-- **Phase / Task**: Phase 1–2 via subagent
-- **Completed**: Spec/Design/Tasks approved; hand DS header padding commit on branch
-- **In-progress**: T1–T4 (toTitleCase, Divider, RepoItem, RepoListItem)
-- **Next step**: Batch 2 (T5–T6 FlatList + screens) after Batch 1 summary; then Verifier
+- **Feature**: none — ds-repo-item **Done** (Verifier PASS)
+- **Phase / Task**: —
+- **Completed**: T1–T6 + fix commits + validation (`2b3de38`); report in `.specs/features/ds-repo-item/validation.md`
+- **In-progress**: none
+- **Next step**: review/merge `feat/ds-repo-item`; optional PR
 - **Blockers**: none
 - **Branch**: `feat/ds-repo-item`

@@ -2,7 +2,7 @@
 
 **Gathered:** 2026-08-03
 **Spec:** `.specs/features/ds-repo-item/spec.md`
-**Status:** Ready for execute (design + tasks — awaiting approval after FlatList amend)
+**Status:** Done — Verifier PASS
 
 ---
 
