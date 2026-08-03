@@ -378,9 +378,9 @@ T11 → T12 → T13 → T14
 
 **Done when**:
 
-- [ ] Zero labels → no Badge crash
-- [ ] Relative date string rendered
-- [ ] Gate: `pnpm test -- src/presentation/screens/search/__tests__/IssueListItem.test.tsx`
+- [x] Zero labels → no Badge crash
+- [x] Relative date string rendered
+- [x] Gate: `pnpm test -- src/presentation/screens/search/__tests__/IssueListItem.test.tsx`
 
 **Tests**: unit
 **Gate**: quick
