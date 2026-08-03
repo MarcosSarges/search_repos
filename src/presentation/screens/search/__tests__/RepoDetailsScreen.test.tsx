@@ -6,9 +6,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as Linking from 'expo-linking';
 
 import { createAppError, type Repo, type RepoRepository } from '@/domain';
-import { createInMemoryRepoRepository } from '@/infrastructure';
+import { createInMemoryFavoritesRepository, createInMemoryRepoRepository } from '@/infrastructure';
 import { mapAppErrorToMessage } from '@/presentation/errors/map-app-error-to-message';
+import { setAppContainerTestFavoritesRepository } from '@/presentation/hooks/use-app-container';
 import type { SearchStackParamList } from '@/presentation/navigation/types';
+import { useFavoritesStore } from '@/presentation/stores';
 import { act, fireEvent, render, screen, waitFor } from '@/test';
 
 import { RepoDetailsScreen } from '../RepoDetailsScreen';
@@ -54,7 +56,12 @@ const whitespaceDescriptionRepo: Repo = {
   htmlUrl: 'https://github.com/owner/whitespace',
 };
 
-async function renderDetails(repoId: string, repository?: RepoRepository) {
+async function renderDetails(
+  repoId: string,
+  repository?: RepoRepository,
+  favoritesRepository = createInMemoryFavoritesRepository(),
+) {
+  setAppContainerTestFavoritesRepository(favoritesRepository);
   return render(
     <NavigationContainer>
       <Stack.Navigator>
@@ -67,7 +74,7 @@ async function renderDetails(repoId: string, repository?: RepoRepository) {
         <Stack.Screen name="RepoIssues" component={RepoIssuesScreen} />
       </Stack.Navigator>
     </NavigationContainer>,
-    { repository, dataSource: 'github' },
+    { repository, dataSource: 'github', favoritesRepository },
   );
 }
 
@@ -75,6 +82,12 @@ describe('RepoDetailsScreen (DIC-01, DIC-02, DIC-03)', () => {
   beforeEach(() => {
     jest.mocked(Linking.openURL).mockReset();
     jest.mocked(Linking.openURL).mockResolvedValue(undefined as never);
+    useFavoritesStore.setState({ items: [], hasHydrated: false });
+    setAppContainerTestFavoritesRepository(createInMemoryFavoritesRepository());
+  });
+
+  afterEach(() => {
+    setAppContainerTestFavoritesRepository(undefined);
   });
 
   it('WHEN RepoDetails loads THEN it shows loading until data is ready', async () => {
@@ -243,5 +256,105 @@ describe('RepoDetailsScreen (DIC-01, DIC-02, DIC-03)', () => {
     expect(existsSync(join(__dirname, '../../../../packages/ds/organisms/RepoDetails'))).toBe(
       false,
     );
+  });
+
+  describe('favorite toggle (FAV-06/07/08)', () => {
+    it('WHEN loading THEN favorite control is absent', async () => {
+      const repository: RepoRepository = {
+        search: async () => ({ items: [], page: 1, perPage: 20, hasNextPage: false }),
+        getById: () => new Promise(() => {}),
+        listIssues: async () => ({ items: [], page: 1, perPage: 20, hasNextPage: false }),
+        listTrending: async () => ({ items: [], page: 1, perPage: 20, hasNextPage: false }),
+      };
+
+      await renderDetails('facebook/react', repository);
+
+      await waitFor(() => {
+        expect(screen.getByTestId('repo-details-loading')).toBeTruthy();
+      });
+      expect(screen.queryByTestId('repo-details-favorite')).toBeNull();
+    });
+
+    it('WHEN error THEN favorite control is absent', async () => {
+      const repository: RepoRepository = {
+        search: async () => ({ items: [], page: 1, perPage: 20, hasNextPage: false }),
+        getById: async () => {
+          throw createAppError('rate_limit');
+        },
+        listIssues: async () => ({ items: [], page: 1, perPage: 20, hasNextPage: false }),
+        listTrending: async () => ({ items: [], page: 1, perPage: 20, hasNextPage: false }),
+      };
+
+      await renderDetails('facebook/react', repository);
+
+      await waitFor(() => {
+        expect(screen.getByTestId('repo-details-error')).toBeTruthy();
+      });
+      expect(screen.queryByTestId('repo-details-favorite')).toBeNull();
+    });
+
+    it('WHEN data loaded and not favorited THEN shows Favoritar and toggle adds snapshot', async () => {
+      const favoritesRepository = createInMemoryFavoritesRepository();
+      await renderDetails(
+        'facebook/react',
+        createInMemoryRepoRepository([sampleRepo]),
+        favoritesRepository,
+      );
+
+      await waitFor(() => {
+        expect(screen.getByTestId('repo-details-favorite')).toBeTruthy();
+      });
+      expect(screen.getByLabelText('Favoritar')).toBeTruthy();
+      expect(useFavoritesStore.getState().isFavorite('github', 'facebook/react')).toBe(false);
+
+      await act(async () => {
+        fireEvent.press(screen.getByTestId('repo-details-favorite'));
+      });
+
+      await waitFor(() => {
+        expect(useFavoritesStore.getState().isFavorite('github', 'facebook/react')).toBe(true);
+      });
+      const item = useFavoritesStore.getState().items.find((f) => f.id === 'facebook/react');
+      expect(item).toMatchObject({
+        id: 'facebook/react',
+        source: 'github',
+        name: 'react',
+        fullName: 'facebook/react',
+        ownerName: 'facebook',
+        stars: 1000,
+      });
+    });
+
+    it('WHEN already favorited THEN shows Remover dos favoritos and toggle removes', async () => {
+      const favoritesRepository = createInMemoryFavoritesRepository([
+        {
+          id: 'facebook/react',
+          source: 'github',
+          name: 'react',
+          fullName: 'facebook/react',
+          ownerName: 'facebook',
+          stars: 1000,
+          favoritedAt: 1,
+        },
+      ]);
+
+      await renderDetails(
+        'facebook/react',
+        createInMemoryRepoRepository([sampleRepo]),
+        favoritesRepository,
+      );
+
+      await waitFor(() => {
+        expect(screen.getByLabelText('Remover dos favoritos')).toBeTruthy();
+      });
+
+      await act(async () => {
+        fireEvent.press(screen.getByTestId('repo-details-favorite'));
+      });
+
+      await waitFor(() => {
+        expect(useFavoritesStore.getState().isFavorite('github', 'facebook/react')).toBe(false);
+      });
+    });
   });
 });

@@ -1,20 +1,26 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useCallback } from 'react';
-import { ScrollView } from 'react-native';
+import { Pressable, ScrollView } from 'react-native';
 
+import { createFavoriteFromRepo } from '@/application';
 import { Avatar, Button, Icon, Loading, Typography } from '@ds/atoms';
 import { Container } from '@ds/molecules';
 import { Hyperlink } from '@ds/organisms';
 import { StackBackHeader } from '@/presentation/components';
 import { mapAppErrorToMessage } from '@/presentation/errors/map-app-error-to-message';
+import { useFavorites } from '@/presentation/hooks/use-favorites';
 import { useRepoDetails } from '@/presentation/hooks/use-repo-details';
 import type { SearchStackParamList } from '@/presentation/navigation/types';
+import { useAppTheme } from '@/presentation/theme';
 
 type Props = NativeStackScreenProps<SearchStackParamList, 'RepoDetails'>;
 
 export function RepoDetailsScreen({ route, navigation }: Props) {
   const { repoId } = route.params;
+  const { dataSource } = useAppTheme();
   const { data, error, isError, isLoading, refetch } = useRepoDetails({ repoId });
+  const { isFavorite, toggleFavorite } = useFavorites();
+  const favorited = isFavorite(dataSource, repoId);
 
   const handleRetry = useCallback(() => {
     void refetch();
@@ -23,6 +29,13 @@ export function RepoDetailsScreen({ route, navigation }: Props) {
   const handleIssues = useCallback(() => {
     navigation.navigate('RepoIssues', { repoId });
   }, [navigation, repoId]);
+
+  const handleToggleFavorite = useCallback(() => {
+    if (!data) {
+      return;
+    }
+    void toggleFavorite(createFavoriteFromRepo(data, dataSource));
+  }, [data, dataSource, toggleFavorite]);
 
   let body = null;
   if (isLoading) {
@@ -118,9 +131,19 @@ export function RepoDetailsScreen({ route, navigation }: Props) {
     );
   }
 
+  const favoriteTrailing = data ? (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={favorited ? 'Remover dos favoritos' : 'Favoritar'}
+      testID="repo-details-favorite"
+      onPress={handleToggleFavorite}>
+      <Icon name={favorited ? 'star' : 'star-outline'} size="lg" />
+    </Pressable>
+  ) : undefined;
+
   return (
     <Container bg="background" flex={1} gap="sm">
-      <StackBackHeader safe title="Detalhes" />
+      <StackBackHeader safe title="Detalhes" trailing={favoriteTrailing} />
       {body}
     </Container>
   );

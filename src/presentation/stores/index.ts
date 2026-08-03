@@ -1,3 +1,5 @@
+export { createFavoritesStore, useFavoritesStore } from './favorites-store';
+export type { FavoritesState } from './favorites-store';
 export {
   createSessionPreferencesStore,
   sanitizePersistedPreferences,

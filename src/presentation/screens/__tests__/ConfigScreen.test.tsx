@@ -6,7 +6,7 @@ import { act, fireEvent, render, screen } from '@/test';
 import {
   SESSION_PREFERENCES_STORAGE_KEY,
   useSessionPreferencesStore,
-} from '@/stores/session-preferences-store';
+} from '@/presentation/stores/session-preferences-store';
 
 import { ConfigScreen } from '../ConfigScreen';
 

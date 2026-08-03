@@ -7,8 +7,8 @@ import {
 
 import { AppThemeProvider } from '@/presentation/theme';
 import { act, render, screen } from '@/test';
-import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
-import { useHydration } from '@/stores/use-hydration';
+import { useSessionPreferencesStore } from '@/presentation/stores/session-preferences-store';
+import { useHydration } from '@/presentation/stores/use-hydration';
 
 /**
  * PRES-05e / PRES-05f: product UI waits for prefs + tokens hydrate.

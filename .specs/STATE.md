@@ -216,7 +216,7 @@
 - **Trade-off**: Longer import paths; historical specs still mention old paths.
 - **Scope**: `src/presentation/screens/**`, `src/presentation/navigation/**`, `App.tsx`, README
 - **Date**: 2026-08-02
-- **Status**: active (DS path later moved to `packages/ds` in feature ds-as-lib; presentation paths still stand)
+- **Status**: partially superseded by AD-031 (Zustand stores path); screens/nav under presentation still stand (DS later `packages/ds`)
 
 ### AD-028
 - **Decision**: Public DS props follow MUI-like axes: content `color` (`text`\|`muted`\|`primary`\|`danger`), surface `bg` (`background`\|`surface`), Button `variant` (`contained`\|`outlined`\|`text`) × `color` (`primary`\|`success`\|`warning`\|`danger`) × `size` × `width` (`hug`\|`full`), scale via `size` on Icon/Loading/Logo/Button, and `style` passthrough on every public export — **no** `sx`, **no** `tone` / `Tone` / `SurfaceTone` / `toneColorMap` aliases. Tokens: `ContentColor` + `SurfaceBg` (replace `tone.ts`); Container omits fill when `bg` omitted; Card defaults to `card.defaultBg` (`surface`). Migration is big-bang across DS + presentation.
@@ -242,13 +242,29 @@
 - **Date**: 2026-08-03
 - **Status**: active
 
+### AD-031
+- **Decision**: Zustand client/session stores live under `src/presentation/stores/` (session preferences, favorites, hydration helpers). Alias imports use `@/presentation/stores`. `src/stores/` is removed. Domain and application must not import Zustand or presentation stores.
+- **Reason**: Client/UI state is presentation-adjacent (same spirit as TanStack Query / AD-005); folder symmetry with Clean Arch; favorites feature locks Option 2 from specify/discuss.
+- **Trade-off**: Broader import rewrite once; stores are not a fifth business layer — do not put domain rules here.
+- **Scope**: `src/presentation/stores/**`, App theme/session consumers, favorites feature, README architecture table
+- **Date**: 2026-08-03
+- **Status**: partially superseded by AD-032 (favorites write-model); session prefs + store folder under presentation still stand
+
+### AD-032
+- **Decision**: Favoritos seguem Clean Arch: entidade `Favorite` + porta `FavoritesRepository` no domínio (`source` opaco, sem importar `DataSource`); use cases em application (`listFavorites`, `toggleFavorite`, `removeFavorite`, `isFavorite`, `createFavoriteFromRepo`); adapter AsyncStorage (+ Fake in-memory) na infrastructure; DI em `createContainer` (repo de favoritos independente do `DataSource` HTTP). Zustand em presentation é **somente cache reativo / hydrate** — sem `persist` AsyncStorage e sem regras de toggle/sanitize.
+- **Reason**: Favoritar é write-model de produto (offline snapshot, identidade composta), não chrome de sessão; Option 2 do discuss era pragmática demais e vazava I/O + regras para presentation.
+- **Trade-off**: Mais arquivos que store-only; `DataSource` continua em application e é mapeado para `Favorite.source` string na borda application.
+- **Scope**: `src/domain/**` (Favorite + porta), `src/application/use-cases/**` favorites, `src/infrastructure/**` favorites adapter, `src/presentation/stores` favorites cache, DI
+- **Date**: 2026-08-03
+- **Status**: active
+
 ## Handoff
 
-- **Feature**: details-issues-config-ui
-- **Phase / Task**: Verifier complete — PASS ✅ (3 minor spec-precision gaps)
-- **Completed**: Specify + Design + Tasks; Execute T1–T6; Verifier — `.specs/features/details-issues-config-ui/validation.md`
-- **In-progress**: none
-- **Next step**: Optional precision-gap fixes (avatar `size="lg"` assert; Config icon/theme-subtitle asserts; SettingsRow AD-012 file test) or merge/PR
-- **Verifier**: PASS — 10/10 ACs primary evidence; gate 619 passed / lint 0 errors; sensor 3/3 killed; gaps are precision-only (not uncovered ACs)
+- **Feature**: favorites — merging main into PR #16
+- **Phase / Task**: Resolve merge conflicts with `origin/main` (details-issues-config-ui)
+- **Completed**: MVP P1 + AD-032 CA; Verifier PASS prior to merge
+- **In-progress**: conflict resolution
+- **Next step**: finish merge commit, push, confirm PR mergeable
 - **Blockers**: none
-- **Branch**: `feat/details-issues-config-ui`
+- **Branch**: `feat/favorites`
+- **Worktree**: `/Users/marcos/searchrepos-favorites`

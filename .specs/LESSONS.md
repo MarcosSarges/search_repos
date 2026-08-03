@@ -242,6 +242,12 @@ Seen once or not yet corroborated. Tracked, not trusted.
 - evidence: DIC-10 SettingsRow AD-012 files (packages/ds)
 - last seen: 2026-08-03T18:09:37Z
 
+### L-039 — Before declaring a feature gate green, ensure every feature-touched Storybook/stories file ends with a prettier-compliant newline so pnpm lint exits 0
+- signal: `gate_fail` · recurrence: 1 feature(s) · scope: `packages/ds` · harmful: 0
+- features: favorites
+- evidence: packages/ds/organisms/BackHeader/BackHeader.stories.tsx:49 (packages/ds)
+- last seen: 2026-08-03T19:09:22Z
+
 ## Quarantined (failed when applied — ignore)
 
 A confirmed lesson that recurred alongside failure. Kept for the maintainer to review.

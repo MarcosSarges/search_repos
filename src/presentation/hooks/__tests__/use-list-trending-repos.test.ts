@@ -5,7 +5,7 @@ import { createAppError, isAppError, type Repo, type RepoRepository } from '@/do
 import { createInMemoryRepoRepository } from '@/infrastructure';
 import { queryKeys } from '@/presentation/constants/query-keys';
 import { createQueryClient } from '@/presentation/providers/create-query-client';
-import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
+import { useSessionPreferencesStore } from '@/presentation/stores/session-preferences-store';
 import { act, renderHook, waitFor } from '@/test/render';
 
 import { useListTrendingRepos } from '../use-list-trending-repos';
