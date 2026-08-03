@@ -1,12 +1,12 @@
 import { type TextProps as RNTextProps } from 'react-native';
 
-import type { Tone, TypographyVariant } from '@ds/tokens';
+import type { TypographyVariant } from '@ds/tokens';
 
-import { StyledTypography } from './styles';
+import { StyledTypography, type LegacyTone } from './styles';
 
 export type TypographyProps = Omit<RNTextProps, 'style'> & {
   variant?: TypographyVariant;
-  tone?: Tone;
+  tone?: LegacyTone;
 };
 
 export function Typography({

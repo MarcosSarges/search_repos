@@ -1,4 +1,4 @@
-import type { SurfaceTone } from '@ds/tokens';
+import type { SurfaceBg } from '@ds/tokens';
 import { css, styled } from 'styled-components/native';
 
 export type ContainerJustify = 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly';
@@ -103,7 +103,7 @@ export const StyledContainer = styled.View<{
   $marginBottom: number;
   $marginLeft: number;
   $gap: number;
-  $tone?: SurfaceTone;
+  $tone?: SurfaceBg;
   $flex?: number;
   $direction?: ContainerDirection;
   $justify?: ContainerJustify;

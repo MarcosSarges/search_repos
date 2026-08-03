@@ -27,8 +27,11 @@ export type { InputState } from './input';
 
 export { card } from './card';
 
-export { toneColorMap } from './tone';
-export type { SurfaceTone, Tone } from './tone';
+export { contentColors } from './content-color';
+export type { ContentColor } from './content-color';
+
+export { surfaceBgs } from './surface';
+export type { SurfaceBg } from './surface';
 
 export { typography, SYSTEM_FONT_FAMILY } from './typography';
 export type { TypographyToken, TypographyVariant } from './typography';

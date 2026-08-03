@@ -3,7 +3,7 @@ import { Keyboard, Pressable } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from 'styled-components/native';
 
-import type { Spacing, SurfaceTone } from '@ds/tokens';
+import type { Spacing, SurfaceBg } from '@ds/tokens';
 
 import { resolveBoxSpacing } from './resolveBoxSpacing';
 import {
@@ -39,7 +39,7 @@ function resolveSafeEdgeSet(
 
 export type ContainerProps = {
   children?: ReactNode;
-  tone?: SurfaceTone;
+  tone?: SurfaceBg;
   testID?: string;
   p?: Spacing;
   px?: Spacing;
