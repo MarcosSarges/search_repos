@@ -132,11 +132,11 @@ T8 → T9 → T10
 
 **Done when**:
 
-- [ ] Defaults `DEFAULT_PAGE` / `DEFAULT_PER_PAGE`
-- [ ] Rejects invalid page/perPage via domain asserts
-- [ ] Delegates to `repository.listTrending`
-- [ ] Application barrel + public-api tests updated
-- [ ] Gate: `pnpm test -- src/application`
+- [x] Defaults `DEFAULT_PAGE` / `DEFAULT_PER_PAGE`
+- [x] Rejects invalid page/perPage via domain asserts
+- [x] Delegates to `repository.listTrending`
+- [x] Application barrel + public-api tests updated
+- [x] Gate: `pnpm test -- src/application`
 
 **Tests**: unit  
 **Gate**: quick  
