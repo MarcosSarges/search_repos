@@ -251,10 +251,10 @@ T10 → T11
 
 **Done when**:
 
-- [ ] `testID="repo-details-favorite"`; a11y labels PT-BR
-- [ ] Toggle adds/removes snapshot for `(activeDataSource, repoId)`
-- [ ] Control absent or disabled without loaded repo
-- [ ] Gate: `pnpm test -- src/presentation/screens/search`
+- [x] `testID="repo-details-favorite"`; a11y labels PT-BR
+- [x] Toggle adds/removes snapshot for `(activeDataSource, repoId)`
+- [x] Control absent or disabled without loaded repo
+- [x] Gate: `pnpm test -- src/presentation/screens/search`
 
 **Tests**: unit  
 **Gate**: quick  
