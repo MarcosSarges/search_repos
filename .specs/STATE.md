@@ -244,11 +244,10 @@
 
 ## Handoff
 
-- **Feature**: details-issues-config-ui
-- **Phase / Task**: Verifier complete — PASS ✅ (3 minor spec-precision gaps)
-- **Completed**: Specify + Design + Tasks; Execute T1–T6; Verifier — `.specs/features/details-issues-config-ui/validation.md`
+- **Feature**: maestro-e2e
+- **Phase / Task**: Specify complete — awaiting Execute
+- **Completed**: Discuss (1B + Explore, 2A live net, 3A Search toggle); `spec.md` + `context.md`
 - **In-progress**: none
-- **Next step**: Optional precision-gap fixes (avatar `size="lg"` assert; Config icon/theme-subtitle asserts; SettingsRow AD-012 file test) or merge/PR
-- **Verifier**: PASS — 10/10 ACs primary evidence; gate 619 passed / lint 0 errors; sensor 3/3 killed; gaps are precision-only (not uncovered ACs)
-- **Blockers**: none
-- **Branch**: `feat/details-issues-config-ui`
+- **Next step**: Confirm spec → Execute Maestro flows under `.maestro/` (skip Design — YAML-only; Tasks if >5 steps)
+- **Blockers**: Android emulator must be connected for gate (`emulator-5554` / Expo Go + Metro)
+- **Branch**: `feat/details-issues-config-ui` (or new branch for e2e)
