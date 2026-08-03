@@ -226,7 +226,7 @@ T4 → T5 → T6
 
 **Tests**: unit
 **Gate**: full
-**Commit**: `feat(presentation): redesign Config as settings rows` (`c62157b`)
+**Commit**: `feat(presentation): redesign Config as settings rows` (`d41d38c`)
 
 ---
 

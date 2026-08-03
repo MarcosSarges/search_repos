@@ -246,7 +246,7 @@
 
 - **Feature**: details-issues-config-ui
 - **Phase / Task**: Execute complete (T1–T6); next Verifier
-- **Completed**: Specify + Design + Tasks; Execute — T1 (`1c7c7ee`), T2 (`8773b86`), T3 (`e00061f`), T4 (`be8562c`), T5 (`559b3ac`), T6 (`c62157b`)
+- **Completed**: Specify + Design + Tasks; Execute — T1 (`1c7c7ee`), T2 (`8773b86`), T3 (`e00061f`), T4 (`be8562c`), T5 (`559b3ac`), T6 (`d41d38c`)
 - **In-progress**: none
 - **Next step**: Verifier (author ≠ verifier) — write validation.md
 - **Blockers**: none
