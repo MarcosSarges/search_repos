@@ -277,9 +277,9 @@ T11 → T12 → T13 → T14
 
 **Done when**:
 
-- [ ] Toggle updates store `dataSource`
-- [ ] Screens can pass `leading` through
-- [ ] Gate: `pnpm test -- src/presentation/components`
+- [x] Toggle updates store `dataSource`
+- [x] Screens can pass `leading` through
+- [x] Gate: `pnpm test -- src/presentation/components`
 
 **Tests**: unit
 **Gate**: quick
