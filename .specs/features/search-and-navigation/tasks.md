@@ -196,10 +196,10 @@ T8 → T9 → T10
 
 **Done when**:
 
-- [ ] Tabs: Search / Favoritos / Explore / Config
-- [ ] No Modal route; ModalScreen deleted
-- [ ] Nav smoke test: four tabs reachable / types exclude Modal
-- [ ] Gate: `pnpm test -- src/navigation src/screens --watchman=false` + `pnpm lint`
+- [x] Tabs: Search / Favoritos / Explore / Config
+- [x] No Modal route; ModalScreen deleted
+- [x] Nav smoke test: four tabs reachable / types exclude Modal
+- [x] Gate: `pnpm test -- src/navigation src/screens --watchman=false` + `pnpm lint`
 
 **Tests**: unit (RNTL)  
 **Gate**: full  

@@ -4,9 +4,11 @@ import React from 'react';
 import { useTheme } from '@/components/ds';
 import { HapticTab } from '@/components/haptic-tab';
 import { IconSymbol } from '@/components/ui/icon-symbol';
+import { SearchStackNavigator } from '@/navigation/SearchStackNavigator';
 import type { TabsParamList } from '@/navigation/types';
+import { ConfigScreen } from '@/screens/ConfigScreen';
 import { ExploreScreen } from '@/screens/ExploreScreen';
-import { HomeScreen } from '@/screens/HomeScreen';
+import { FavoritosScreen } from '@/screens/FavoritosScreen';
 
 const Tabs = createBottomTabNavigator<TabsParamList>();
 
@@ -24,11 +26,19 @@ export function TabsNavigator() {
         tabBarButton: HapticTab,
       }}>
       <Tabs.Screen
-        name="Home"
-        component={HomeScreen}
+        name="Search"
+        component={SearchStackNavigator}
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          title: 'Search',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="magnifyingglass" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="Favoritos"
+        component={FavoritosScreen}
+        options={{
+          title: 'Favoritos',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="heart.fill" color={color} />,
         }}
       />
       <Tabs.Screen
@@ -37,6 +47,14 @@ export function TabsNavigator() {
         options={{
           title: 'Explore',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="Config"
+        component={ConfigScreen}
+        options={{
+          title: 'Config',
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="gearshape.fill" color={color} />,
         }}
       />
     </Tabs.Navigator>
