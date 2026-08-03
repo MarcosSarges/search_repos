@@ -8,10 +8,14 @@ Use este arquivo como checklist das próximas features de produto. Riscar quando
 
 ## Produto (enunciado §4)
 
-- [ ] **Busca de repositórios** — InputField + lista (nome, owner, stars, language, description) + infinite scroll / paginação + pull-to-refresh + loading / empty / erro
-- [ ] **Detalhes do repositório** — full name, owner (avatar + nome), description, stars, forks, watchers, language + CTA para Issues
-- [ ] **Issues** — lista paginada (título, labels, autor, data relativa) + pull-to-refresh
-- [ ] **Navegação de produto** — Stack tipada lista → detalhe → issues; remover/substituir tabs Explore + Modal do template Expo
+- [~] **Busca de repositórios** — → spec `search-and-navigation` (em Specify)
+- [ ] **Detalhes do repositório** — full name, owner (avatar + nome), description, stars, forks, watchers, language + CTA para Issues _(stubs de rota já em `search-and-navigation`)_
+- [ ] **Issues** — lista paginada (título, labels, autor, data relativa) + pull-to-refresh _(stubs de rota já em `search-and-navigation`)_
+- [~] **Navegação de produto** — → `search-and-navigation` (tabs Search / Favoritos / Explore / Config; stack sob Search; mocks Favoritos/Explore/Config)
+- [ ] **Favoritos** (AsyncStorage) — tab mock na `search-and-navigation`; CRUD depois
+- [ ] **Explore trending** — tab mock na `search-and-navigation`; feature depois
+- [ ] **Config** (fonte + tema + token UI) — fonte/tema movidos na `search-and-navigation`; form token depois
+
 
 ## Credenciais / rate limit (AD-021)
 

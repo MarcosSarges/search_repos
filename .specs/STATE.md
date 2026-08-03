@@ -24,7 +24,7 @@
 - **Trade-off**: Sem file-based routing / rotas tipadas “de graça” do Expo Router.
 - **Scope**: `App.tsx`, `src/navigation/`, telas
 - **Date**: 2026-07-30
-- **Status**: active
+- **Status**: superseded by AD-027 (paths moved under `src/presentation/`; React Navigation choice still stands)
 
 ### AD-004
 - **Decision**: Design System próprio tipado em `src/components/ds/` com styled-components + ThemeProvider; Storybook no dispositivo via `STORYBOOK_ENABLED`.
@@ -181,10 +181,10 @@
 ### AD-023
 - **Decision**: Providers/hooks de dados de produto vivem em `src/presentation/`; TanStack Query na borda com `queryKey` sempre incluindo `dataSource`; toggle de fonte **não** usa `invalidateQueries`/`removeQueries` (isolamento + reuse de cache). Session store expõe `tokens: ProviderTokens` em memória para o DI.
 - **Reason**: Simetria Clean Arch; AD-005; UX A→B→A com cache quente; AD-021 wiring.
-- **Trade-off**: Pasta `presentation/` + stores/screens ainda fora dela até features seguintes.
+- **Trade-off**: Pasta `presentation/` + stores ainda fora dela até features seguintes (screens/nav moved in AD-027).
 - **Scope**: `src/presentation/**`, session store tokens slot, App providers, product query hooks
 - **Date**: 2026-08-02
-- **Status**: superseded by AD-025 (Context `AppContainerProvider` removed; rest still active — see AD-025)
+- **Status**: superseded by AD-025 (Context `AppContainerProvider` removed; rest still active — see AD-025); path note updated by AD-027
 
 ### AD-024
 - **Decision**: Tokens de API (`ProviderTokens`) persistem **somente** via `expo-secure-store` (SDK 54); **nunca** AsyncStorage nem `partialize` do Zustand. Hydrate SecureStore → bag em memória no boot; gate de UI espera prefs + tokens; web/unavailable → memória only. Sem UI de token nesta fatia; `requireAuthentication` off.
@@ -202,13 +202,31 @@
 - **Date**: 2026-08-02
 - **Status**: active
 
+### AD-026
+- **Decision**: Product bottom tabs are **Search | Favoritos | Explore | Config**. Tab **Search** hosts the nested stack lista → detalhe → issues. Session chrome (**data source** + **theme**) lives on **Config** (not on Search). Favoritos persistence (AsyncStorage) and Explore trending are separate features; tabs may ship as mocks first.
+- **Reason**: Product IA locked in search-and-navigation specify/discuss; keeps Search focused and reserves tabs for upcoming functions.
+- **Trade-off**: Four tabs early; Config grows over time (token UI later).
+- **Scope**: `src/presentation/navigation/**`, `src/presentation/screens/**`, session controls UX
+- **Date**: 2026-08-02
+- **Status**: active
+
+### AD-027
+- **Decision**: Product `screens/` and `navigation/` live under `src/presentation/` (`src/presentation/screens/**`, `src/presentation/navigation/**`). Imports use `@/presentation/screens` and `@/presentation/navigation`. Session Zustand stores remain in `src/stores/`. Design System stays in `src/components/ds/`.
+- **Reason**: Close Clean Arch symmetry (AD-001/AD-023); search-and-navigation delivered product UI outside presentation by inertia — move completes the layer boundary.
+- **Trade-off**: Longer import paths; historical specs still mention old paths.
+- **Scope**: `src/presentation/screens/**`, `src/presentation/navigation/**`, `App.tsx`, README
+- **Date**: 2026-08-02
+- **Status**: active
+
 ## Handoff
 
-- **Feature**: none (idle) — last closed: `presentation-layer` (bridge)
-- **Phase / Task**: n/a
-- **Completed**: presentation-layer T1–T14 + Verifier PASS; AD-025 (`useAppContainer`); `src/presentation/constants/`; PR #9
+- **Feature**: search-and-navigation — DONE + AD-027 path move (screens/nav → presentation)
+- **Phase / Task**: Post-feature cleanup — colocate product UI under presentation
+- **Completed**: Verifier PASS; screens+navigation moved under `src/presentation/`
 - **In-progress**: none
-- **Next step**: Specify next product feature from `.specs/features/presentation-layer/NEXT.md` (search UI / details / issues)
+- **Next step**: Optional PR for `feat/search-and-navigation`; next specs from NEXT.md
 - **Blockers**: none
-- **Uncommitted files**: local only if any (`HomeScreen` / `Teste_Tecnico_*` not part of closed feature)
-- **Branch**: `feat/presentation-layer` (PR https://github.com/MarcosSarges/search_repos/pull/9)
+- **Uncommitted files**: path move + AD-027
+- **Branch**: `feat/search-and-navigation`
+
+
