@@ -114,9 +114,9 @@ T8 → T9 → T10
 
 **Done when**:
 
-- [ ] Types match design
-- [ ] No `Modal` / `Home` in param lists
-- [ ] Project still typechecks once consumers updated in later tasks (T3 alone may leave temporary TS errors in navigators — **restructure**: T3 only edits `types.ts`; navigators updated in T7. Accept brief red navigators until T7 **or** leave stub aliases — prefer update navigators minimally to compile: if T3 breaks build, merge type consumers into T7 and keep T3 types-only with `// @ts-expect` forbidden. **Fix**: T3 Depends on none; T7 must fix all type errors. Gate for T3 = none beyond file correctness; Full gate at T7.
+- [x] Types match design
+- [x] No `Modal` / `Home` in param lists
+- [x] Project still typechecks once consumers updated in later tasks (T3 alone may leave temporary TS errors in navigators — **restructure**: T3 only edits `types.ts`; navigators updated in T7. Accept brief red navigators until T7 **or** leave stub aliases — prefer update navigators minimally to compile: if T3 breaks build, merge type consumers into T7 and keep T3 types-only with `// @ts-expect` forbidden. **Fix**: T3 Depends on none; T7 must fix all type errors. Gate for T3 = none beyond file correctness; Full gate at T7.
 
 **Tests**: none  
 **Gate**: build (types file only — full green at T7)  
