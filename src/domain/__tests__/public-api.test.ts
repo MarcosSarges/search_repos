@@ -28,6 +28,8 @@ describe('domain public API (DOM-01, DOM-16)', () => {
   it('WHEN the domain barrel source is inspected THEN it re-exports entities, port, errors, and validation', () => {
     const barrelSource = fs.readFileSync(path.join(__dirname, '../index.ts'), 'utf8');
 
+    expect(barrelSource).toMatch(/\bFavorite\b/);
+    expect(barrelSource).toMatch(/\bFavoritesRepository\b/);
     expect(barrelSource).toMatch(/\bRepo\b/);
     expect(barrelSource).toMatch(/\bIssue\b/);
     expect(barrelSource).toMatch(/\bIssueLabel\b/);

@@ -8,11 +8,22 @@ import { join } from 'node:path';
 describe('domain entity shapes (DOM-02, DOM-04, DOM-05)', () => {
   const repoSource = readFileSync(join(__dirname, '../repo.ts'), 'utf8');
   const issueSource = readFileSync(join(__dirname, '../issue.ts'), 'utf8');
+  const favoriteSource = readFileSync(join(__dirname, '../favorite.ts'), 'utf8');
   const paginationSource = readFileSync(join(__dirname, '../pagination.ts'), 'utf8');
 
   it('WHEN Repo / Issue sources are inspected THEN they SHALL NOT include a source field (DOM-02)', () => {
     expect(repoSource).not.toMatch(/\bsource\s*[?:]/);
     expect(issueSource).not.toMatch(/\bsource\s*[?:]/);
+  });
+
+  it('WHEN Favorite is inspected THEN it MAY include opaque source string and uses ?: optionals', () => {
+    expect(favoriteSource).toMatch(/\bsource\s*:/);
+    expect(favoriteSource).toMatch(/\bownerAvatarUrl\?\s*:/);
+    expect(favoriteSource).toMatch(/\bdescription\?\s*:/);
+    expect(favoriteSource).toMatch(/\blanguage\?\s*:/);
+    expect(favoriteSource).not.toMatch(/\|\s*null\b/);
+    expect(favoriteSource).not.toMatch(/@\/application/);
+    expect(favoriteSource).not.toMatch(/\bDataSource\b/);
   });
 
   it('WHEN PaginatedResult is inspected THEN it SHALL include pagination fields and SHALL NOT include totalCount (DOM-04)', () => {
