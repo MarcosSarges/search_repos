@@ -1,4 +1,4 @@
-const DIVISIONS: ReadonlyArray<{ amount: number; unit: Intl.RelativeTimeFormatUnit }> = [
+const DIVISIONS: readonly { amount: number; unit: Intl.RelativeTimeFormatUnit }[] = [
   { amount: 60, unit: 'second' },
   { amount: 60, unit: 'minute' },
   { amount: 24, unit: 'hour' },
@@ -17,10 +17,7 @@ export type FormatRelativeDateOptions = {
  * Formats an ISO date as a relative time string (default locale `pt-BR`).
  * Invalid or empty input returns an em dash.
  */
-export function formatRelativeDate(
-  iso: string,
-  options: FormatRelativeDateOptions = {},
-): string {
+export function formatRelativeDate(iso: string, options: FormatRelativeDateOptions = {}): string {
   if (!iso.trim()) {
     return '—';
   }

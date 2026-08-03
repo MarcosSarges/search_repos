@@ -10,7 +10,8 @@ const meta = {
   component: Badge,
   decorators: [
     (Story) => (
-      <View style={{ padding: spacing.lg, gap: spacing.sm, flexDirection: 'row', flexWrap: 'wrap' }}>
+      <View
+        style={{ padding: spacing.lg, gap: spacing.sm, flexDirection: 'row', flexWrap: 'wrap' }}>
         <Story />
       </View>
     ),

@@ -17,9 +17,7 @@ describe('SourceHeader organism (RDI-03)', () => {
 
   it('WHEN trailing control is pressed THEN it calls onToggleBrand', async () => {
     const onToggleBrand = jest.fn();
-    await render(
-      <SourceHeader title="Home" brand="github" onToggleBrand={onToggleBrand} />,
-    );
+    await render(<SourceHeader title="Home" brand="github" onToggleBrand={onToggleBrand} />);
 
     fireEvent.press(screen.getByRole('button', { name: 'Alternar fonte de dados' }));
 
@@ -27,19 +25,17 @@ describe('SourceHeader organism (RDI-03)', () => {
   });
 
   it('WHEN brand is gitlab THEN logo reflects gitlab', async () => {
-    await render(
-      <SourceHeader title="Home" brand="gitlab" onToggleBrand={() => undefined} />,
-      { themeMode: 'light' },
-    );
+    await render(<SourceHeader title="Home" brand="gitlab" onToggleBrand={() => undefined} />, {
+      themeMode: 'light',
+    });
 
     expect(screen.getByTestId('ds-datasource-logo-gitlab')).toBeTruthy();
   });
 
   it('WHEN brand is github THEN logo reflects github', async () => {
-    await render(
-      <SourceHeader title="Home" brand="github" onToggleBrand={() => undefined} />,
-      { themeMode: 'light' },
-    );
+    await render(<SourceHeader title="Home" brand="github" onToggleBrand={() => undefined} />, {
+      themeMode: 'light',
+    });
 
     expect(screen.getByTestId('ds-datasource-logo-github-black')).toBeTruthy();
   });
@@ -58,9 +54,7 @@ describe('SourceHeader organism (RDI-03)', () => {
   });
 
   it('WHEN rendered THEN root testID defaults to ds-source-header', async () => {
-    await render(
-      <SourceHeader title="Home" brand="github" onToggleBrand={() => undefined} />,
-    );
+    await render(<SourceHeader title="Home" brand="github" onToggleBrand={() => undefined} />);
 
     expect(screen.getByTestId('ds-source-header')).toBeTruthy();
   });
