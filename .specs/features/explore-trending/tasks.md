@@ -159,9 +159,9 @@ T8 → T9 → T10
 
 **Done when**:
 
-- [ ] 30-day window documented in code
-- [ ] Date formats match GitHub (`YYYY-MM-DD`) and GitLab ISO Z
-- [ ] Gate: `pnpm test -- src/infrastructure/trending`
+- [x] 30-day window documented in code
+- [x] Date formats match GitHub (`YYYY-MM-DD`) and GitLab ISO Z
+- [x] Gate: `pnpm test -- src/infrastructure/trending`
 
 **Tests**: unit  
 **Gate**: quick  
