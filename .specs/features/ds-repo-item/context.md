@@ -76,5 +76,5 @@ Atom `Divider` + organism `RepoItem` + molecule `FlatList` (padding em `contentC
 
 - Footer com watchers / data relativa (data exigiria `updatedAt` no domínio)
 - Tabela canônica de cores por linguagem (GitHub linguist)
-- Migração de Favoritos / Explore para RepoItem ou FlatList
+- Migração de Favoritos para RepoItem ou FlatList
 - FlashList / SectionList

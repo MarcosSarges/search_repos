@@ -11,6 +11,7 @@ A lista de repositórios ainda usa um `RepoListItem` de apresentação com Card 
 - [ ] `RepoListItem` de apresentação passa a compor o organism (adapter fino; sem estilos de card na tela)
 - [ ] Molecule **FlatList** em `packages/ds/molecules/FlatList`: padding via `contentContainerStyle` (não no wrapper externo), `Spacer` como separator default, defaults de performance, restante das props RN encaminháveis
 - [ ] **SearchReposScreen** e **RepoIssuesScreen** passam a usar a molécula FlatList (sem `FlatList` direto de `react-native` nessas listas)
+- [ ] **ExploreScreen** usa `RepoItem` (sem press — EXP read-only) + molécula FlatList
 - [ ] Pasta AD-012 + stories Storybook + testes Jest+RNTL para Divider, RepoItem e FlatList; exports no barrel do DS
 
 ## Out of Scope
@@ -22,7 +23,7 @@ A lista de repositórios ainda usa um `RepoListItem` de apresentação com Card 
 | Favoritar / botão de ação no card | Feature Favoritos é separada (AD-026) |
 | Alterar radius/tokens globais do Card para “pill” do mock | RepoItem compõe Card existente; chrome do Card permanece (AD-028) |
 | Divider com label/texto no meio | Atom puro de linha; sem conteúdo |
-| Migração de Favoritos / Explore para FlatList ou RepoItem | Tabs mock / features futuras |
+| Migração de Favoritos para FlatList ou RepoItem | Feature Favoritos separada (AD-026) |
 | SectionList / FlashList | Fora do pedido; só FlatList tipada |
 
 ---
@@ -153,6 +154,23 @@ A lista de repositórios ainda usa um `RepoListItem` de apresentação com Card 
 
 ---
 
+### P1: Explore adopts RepoItem + FlatList ⭐ MVP
+
+**User Story**: As a user on Explore, I want trending repos to use the same RepoItem card and list chrome as Search so the product feels consistent.
+
+**Why P1**: Pedido explícito pós-ship; Explore ainda usa Typography solta + RN FlatList.
+
+**Acceptance Criteria**:
+
+1. WHEN `ExploreScreen` renders trending rows THEN each row SHALL use DS `RepoItem` (via shared domain→props mapping) showing Capitalize `name`, optional description, language Badge when present, owner Avatar, stars, and forks when defined
+2. WHEN `ExploreScreen` renders the list THEN it SHALL use `@ds/molecules` FlatList (not RN `FlatList`) with default Spacer/perf/content padding; parent SHALL NOT double-apply horizontal `px` while the list is showing
+3. WHEN Explore rows are inspected THEN they SHALL remain non-interactive (no `onPress` / navigation / Linking on the row) — EXP read-only constraint preserved
+4. WHEN ExploreScreen unit tests run THEN they SHALL assert RepoItem-visible outcomes (Title Case name, star/fork labels, language Badge) and FlatList adoption
+
+**Independent Test**: `ExploreScreen.test.tsx` green.
+
+---
+
 ## Edge Cases
 
 - WHEN `description` is only whitespace THEN RepoItem SHALL treat it as absent (no description node)
@@ -183,13 +201,14 @@ A lista de repositórios ainda usa um `RepoListItem` de apresentação com Card 
 | RITEM-09 | P1: Stories + unit tests Divider/RepoItem | Tasks | Pending |
 | RITEM-10 | P1: RepoListItem adapter + Search wiring | Tasks | Pending |
 | RITEM-11 | P1: FlatList molecule (content padding + Spacer + perf) | Tasks | Pending |
-| RITEM-12 | P1: Search + Issues adopt FlatList | Tasks | Pending |
+| RITEM-12 | P1: Search + Issues adopt FlatList | Tasks | Verified |
+| RITEM-13 | P1: Explore adopts RepoItem + FlatList | Implementing | Pending |
 
 **ID format:** `RITEM-NN`
 
 **Status values:** Pending → In Design → In Tasks → Implementing → Verified
 
-**Coverage:** 12 total, mapped in tasks.md (T1–T6)
+**Coverage:** 13 total (RITEM-13 amend)
 
 ---
 
@@ -198,5 +217,5 @@ A lista de repositórios ainda usa um `RepoListItem` de apresentação com Card 
 - [ ] Divider horizontal e vertical catalogados no Storybook e cobertos por teste
 - [ ] RepoItem reproduz a hierarquia do mock (título → descrição opcional → badges/avatar → divider → estrela+stars; fork+forks quando `forks` definido)
 - [ ] Search lista usa RepoItem via adapter; testes de `RepoListItem` verdes
-- [ ] FlatList molecule aplica padding só em `contentContainerStyle`, Spacer default, perf defaults; Search + Issues migrados
+- [ ] FlatList molecule aplica padding só em `contentContainerStyle`, Spacer default, perf defaults; Search + Issues + Explore migrados
 - [ ] Pacote DS continua isolado (sem imports de app/domain no organism/molecule)

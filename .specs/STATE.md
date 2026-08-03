@@ -244,10 +244,10 @@
 
 ## Handoff
 
-- **Feature**: none — ds-repo-item **Done** (Verifier PASS)
+- **Feature**: ds-repo-item — Explore adoption (RITEM-13) Done locally
 - **Phase / Task**: —
-- **Completed**: T1–T6 + fix commits + validation (`2b3de38`); report in `.specs/features/ds-repo-item/validation.md`
+- **Completed**: T1–T6 + Verifier PASS; Explore → RepoItem + DS FlatList
 - **In-progress**: none
-- **Next step**: review/merge `feat/ds-repo-item`; optional PR
+- **Next step**: push commit to PR #14
 - **Blockers**: none
 - **Branch**: `feat/ds-repo-item`
