@@ -48,6 +48,18 @@ describe('ConfigScreen (DIC-09)', () => {
     expect(configSource).toMatch(/git-branch-outline/);
   });
 
+  it('WHEN theme trailing Button is used THEN it hugs content (not width full) so title stays visible', () => {
+    const configSource = readFileSync(join(__dirname, '../ConfigScreen.tsx'), 'utf8');
+    expect(configSource).toMatch(/width=["']hug["']/);
+  });
+
+  it('WHEN Config renders with theme trailing THEN Tema title remains visible beside the toggle', async () => {
+    await render(<ConfigScreen />);
+    expect(screen.getByText('Tema')).toBeTruthy();
+    expect(screen.getByText('Alternar entre claro e escuro')).toBeTruthy();
+    expect(screen.getByTestId('config-theme-toggle')).toBeTruthy();
+  });
+
   it('WHEN theme control is tapped THEN mode toggles light ↔ dark and persists', async () => {
     await render(<ConfigScreen />, { themeMode: 'light' });
     expect(useSessionPreferencesStore.getState().mode).toBe('light');

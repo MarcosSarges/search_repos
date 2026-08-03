@@ -1,7 +1,7 @@
-import { Button, Icon } from '@ds/atoms';
-import { Container, Header, SettingsRow } from '@ds/molecules';
 import { useAppTheme } from '@/presentation/theme';
 import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
+import { Button, Icon } from '@ds/atoms';
+import { Container, Header, SettingsRow } from '@ds/molecules';
 
 const sourceLabelByDataSource = {
   github: 'GitHub',
@@ -16,7 +16,7 @@ export function ConfigScreen() {
   const themeA11yLabel = mode === 'light' ? 'Switch to dark mode' : 'Switch to light mode';
 
   return (
-    <Container bg="background" gap="sm">
+    <Container flex={1} bg="background" gap="sm">
       <Header safe title="Config" />
 
       <SettingsRow
@@ -27,6 +27,7 @@ export function ConfigScreen() {
         trailing={
           <Button
             variant="text"
+            width="hug"
             accessibilityRole="button"
             accessibilityLabel={themeA11yLabel}
             onPress={() => toggleMode()}

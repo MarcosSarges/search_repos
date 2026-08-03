@@ -27,15 +27,21 @@ export function SettingsRow({
   const body = (
     <>
       <Icon name={icon} size="md" color="muted" />
-      <Container flex={1} gap="xs">
-        <Typography variant="body">{title}</Typography>
+      <Container flex={1} gap="xs" style={{ minWidth: 0 }}>
+        <Typography variant="body" numberOfLines={2}>
+          {title}
+        </Typography>
         {subtitle ? (
-          <Typography variant="caption" color="muted" testID="ds-settings-row-subtitle">
+          <Typography
+            variant="caption"
+            color="muted"
+            numberOfLines={3}
+            testID="ds-settings-row-subtitle">
             {subtitle}
           </Typography>
         ) : null}
       </Container>
-      {trailing}
+      {trailing ? <Container style={{ flexGrow: 0, flexShrink: 0 }}>{trailing}</Container> : null}
     </>
   );
 
