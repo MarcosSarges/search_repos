@@ -243,4 +243,55 @@ describe('createGitlabRepoRepository', () => {
       }
     }
   });
+
+  describe('listTrending (EXP-14)', () => {
+    it('calls /projects with star order, public visibility, last_activity_after, and no search', async () => {
+      let capturedUrl: URL | null = null;
+
+      server.use(
+        http.get('https://gitlab.com/api/v4/projects', ({ request }) => {
+          capturedUrl = new URL(request.url);
+          return HttpResponse.json(searchFixture, {
+            headers: { 'X-Next-Page': '2' },
+          });
+        }),
+      );
+
+      const repo = createGitlabRepoRepository();
+      const result = await repo.listTrending({ page: 1, perPage: 20 });
+
+      expect(capturedUrl).not.toBeNull();
+      expect(capturedUrl!.searchParams.get('order_by')).toBe('star_count');
+      expect(capturedUrl!.searchParams.get('sort')).toBe('desc');
+      expect(capturedUrl!.searchParams.get('visibility')).toBe('public');
+      expect(capturedUrl!.searchParams.get('last_activity_after')).toMatch(
+        /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/,
+      );
+      expect(capturedUrl!.searchParams.has('search')).toBe(false);
+      expect(capturedUrl!.searchParams.get('page')).toBe('1');
+      expect(capturedUrl!.searchParams.get('per_page')).toBe('20');
+
+      expect(result.items).toHaveLength(2);
+      expect(result.items[0]?.id).toBe('278964');
+      expect(result.items[0]?.fullName).toBe('gitlab-org/gitlab');
+      expect(result.hasNextPage).toBe(true);
+      expect(result).not.toHaveProperty('totalCount');
+    });
+
+    it('sends PRIVATE-TOKEN when configured for listTrending', async () => {
+      let privateToken: string | null = null;
+
+      server.use(
+        http.get('https://gitlab.com/api/v4/projects', ({ request }) => {
+          privateToken = request.headers.get('PRIVATE-TOKEN');
+          return HttpResponse.json([]);
+        }),
+      );
+
+      const repo = createGitlabRepoRepository({ token: 'gl-trending' });
+      await repo.listTrending({ page: 1 });
+
+      expect(privateToken).toBe('gl-trending');
+    });
+  });
 });

@@ -211,9 +211,9 @@ T8 → T9 → T10
 
 **Done when**:
 
-- [ ] No `search` query param on trending calls
-- [ ] MSW asserts star order + activity + visibility params
-- [ ] Gate: `pnpm test -- src/infrastructure/gitlab`
+- [x] No `search` query param on trending calls
+- [x] MSW asserts star order + activity + visibility params
+- [x] Gate: `pnpm test -- src/infrastructure/gitlab`
 
 **Tests**: unit (MSW)  
 **Gate**: quick  
