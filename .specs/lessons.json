@@ -3,7 +3,7 @@
   "promote_threshold": 2,
   "window_days": 45,
   "quarantine_threshold": 2,
-  "next_id": 33,
+  "next_id": 34,
   "lessons": [
     {
       "id": "L-001",
@@ -581,6 +581,24 @@
       ],
       "created": "2026-08-03T12:39:45Z",
       "last_seen": "2026-08-03T12:39:45Z"
+    },
+    {
+      "id": "L-033",
+      "key": "spec_precision_gap::specify measurable spacing or typography outcomes token gap variant before asserting visual polish acs",
+      "text": "Specify measurable spacing or typography outcomes (token/gap/variant) before asserting visual polish ACs",
+      "signal": "spec_precision_gap",
+      "scope": "presentation/screens",
+      "status": "candidate",
+      "features": [
+        "repo-details-issues"
+      ],
+      "recurrence": 1,
+      "harmful": 0,
+      "evidence": [
+        "validation.md:P2 Search polish AC1 (spacing/typography tightened) (presentation/screens)"
+      ],
+      "created": "2026-08-03T13:55:08Z",
+      "last_seen": "2026-08-03T13:55:08Z"
     }
   ]
 }

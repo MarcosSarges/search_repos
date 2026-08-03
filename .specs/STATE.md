@@ -227,6 +227,14 @@
 - **Status**: active
 
 ### AD-029
+- **Decision**: DS organisms that need session state (e.g. source toggle header) are **controlled and store-free** in `packages/ds` (props like `brand` + `onToggleBrand`). Real Zustand wiring lives in `src/presentation/components/` adapters (e.g. `SessionSourceHeader`) that map `DataSource` ↔ DS `Brand` and call store actions. Product screens import the presentation adapter, not the store, for that chrome. Navigation back chrome follows the same pattern (`BackHeader` + `StackBackHeader`).
+- **Reason**: Preserve DS isolation (no `@/stores` / app layers in `packages/ds`) while keeping product headers reusable and testable.
+- **Trade-off**: Thin adapter layer per wired organism; Brand and DataSource stay parallel unions.
+- **Scope**: `packages/ds/organisms/**`, `src/presentation/components/**`, product screens using session/stack chrome
+- **Date**: 2026-08-03
+- **Status**: active
+
+### AD-030
 - **Decision**: `RepoRepository.listTrending` é a única porta para discovery trending; parâmetros de janela/API vivem na ACL (`infrastructure/trending` + adapters). Presentation só chama o use case via container.
 - **Reason**: Mesma regra AD-002 para search; evita query mágica `stars:>1` na UI.
 - **Trade-off**: Proxy “trending” ≠ algoritmo oficial GitHub Trending; GitLab usa `last_activity_after` (não created-at).
@@ -236,11 +244,10 @@
 
 ## Handoff
 
-- **Feature**: `explore-trending`
-- **Phase / Task**: Execute complete (T1–T10); ready for Verifier
-- **Completed**: Batch A T1–T7 (domain→DI); Batch B T8–T10 (hook, ExploreScreen `@ds`, isolation + gate) on `feat/explore-trending`
+- **Feature**: none — repo-details-issues **Done** (Verifier PASS); merge conflict with main resolved (AD-030 from explore-trending)
+- **Phase / Task**: —
+- **Completed**: T1–T14 + validation; PR #13
 - **In-progress**: none
-- **Next step**: Verifier (automatic) — write `validation.md`
+- **Next step**: merge PR #13
 - **Blockers**: none
-- **Branch**: `feat/explore-trending`
-
+- **Branch**: `feat/repo-details-issues`

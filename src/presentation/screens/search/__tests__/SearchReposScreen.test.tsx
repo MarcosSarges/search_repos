@@ -9,6 +9,7 @@ import { createInMemoryRepoRepository } from '@/infrastructure';
 import type { SearchStackParamList } from '@/presentation/navigation/types';
 import { SEARCH_DEBOUNCE_MS } from '@/presentation/constants/search';
 import { mapAppErrorToMessage } from '@/presentation/errors/map-app-error-to-message';
+import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@/test';
 
 import { RepoDetailsScreen } from '../RepoDetailsScreen';
@@ -284,16 +285,31 @@ describe('SearchReposScreen (SRCH-01..11, CFG-04, NAV-05)', () => {
       fireEvent.press(screen.getByText('react'));
     });
 
-    expect(screen.getByTestId('repo-details-repo-id')).toHaveTextContent('facebook/react');
+    await waitFor(() => {
+      expect(screen.getByTestId('repo-details-full-name')).toHaveTextContent('facebook/react');
+    });
   });
 
-  it('WHEN SearchRepos renders THEN it is not the primary home of dataSource/theme toggles (CFG-04)', async () => {
+  it('WHEN SearchRepos renders THEN SessionSourceHeader exposes source toggle (RDI-08, CFG-04)', async () => {
     await renderSearchStack(createInMemoryRepoRepository());
 
+    expect(screen.getByTestId('ds-source-header')).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Alternar fonte de dados' })).toBeTruthy();
     expect(screen.queryByTestId('home-data-source-toggle')).toBeNull();
     expect(screen.queryByTestId('home-theme-toggle')).toBeNull();
     expect(screen.queryByTestId('config-data-source-toggle')).toBeNull();
     expect(screen.queryByTestId('config-theme-toggle')).toBeNull();
+  });
+
+  it('WHEN source toggle is pressed on Search THEN session dataSource flips (RDI-03)', async () => {
+    await renderSearchStack(createInMemoryRepoRepository());
+    expect(useSessionPreferencesStore.getState().dataSource).toBe('github');
+
+    await act(async () => {
+      fireEvent.press(screen.getByRole('button', { name: 'Alternar fonte de dados' }));
+    });
+
+    expect(useSessionPreferencesStore.getState().dataSource).toBe('gitlab');
   });
 
   it('WHEN SearchRepos source is inspected THEN it uses presentation hooks only (SRCH-10)', () => {
@@ -303,6 +319,8 @@ describe('SearchReposScreen (SRCH-01..11, CFG-04, NAV-05)', () => {
     expect(source).toMatch(/useSearchRepos/);
     expect(source).toMatch(/useDebouncedValue/);
     expect(source).toMatch(/mapAppErrorToMessage/);
+    expect(source).toMatch(/SessionSourceHeader/);
+    expect(source).not.toMatch(/useSessionPreferencesStore/);
   });
 
   it('WHEN SearchRepos list region is inspected THEN it uses Container not View (DSLIB-13)', () => {

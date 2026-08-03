@@ -148,16 +148,17 @@ O Design System vive em **`packages/ds`**, importado via alias **`@ds`** / **`@d
 | Superfície | `bg` | Container, Card | `background` \| `surface` — Container sem default (sem fill); Card default `surface` via `card.defaultBg` |
 | Chrome | `variant` | Button; Typography (papel tipográfico) | Button: `contained` \| `outlined` \| `text` |
 | Paleta ação | `color` | Button | `primary` \| `success` \| `warning` \| `danger` |
-| Escala | `size` | Icon, Loading, Logo, Button, Spacer | tokens atuais por peça |
+| Escala | `size` | Icon, Loading, Logo, Button, Spacer, Avatar | tokens atuais por peça (`AvatarSize` próprio: sm/md/lg/xl) |
 | Largura | `width` | Button | `hug` \| `full` (default `full`) |
 | Escape | `style` | Todo export público DS | RN `StyleProp` → host styled (sem `sx`) |
 
 | Nível | Pasta | O que entra |
 | --- | --- | --- |
-| Tokens | `tokens/` | `spacing` (+ `SpacerEdge`), `sizes`, `colors`, `radius`, `ContentColor` / `SurfaceBg`, tipografia / `IconSize` / `LoadingSize` / button (`variant`×`color`×`width`) / input / card (`defaultBg`), mapa de `primary` por **`Brand`** (`github` \| `gitlab`) |
-| Atoms | `atoms/` | Typography (`variant` + `color`), Icon (`size` + `color`), Spacer, Loading (`size`), Button (`variant`×`color`×`size`×`width`), Input — `style` público em todos |
+| Tokens | `tokens/` | `spacing` (+ `SpacerEdge`), `sizes`, `colors`, `radius`, `ContentColor` / `SurfaceBg`, tipografia / `IconSize` / `LoadingSize` / `AvatarSize` / badge metrics / button (`variant`×`color`×`width`) / input / card (`defaultBg`), mapa de `primary` por **`Brand`** (`github` \| `gitlab`) |
+| Atoms | `atoms/` | Typography (`variant` + `color`), Icon (`size` + `color`), Spacer, Loading (`size`), Button (`variant`×`color`×`size`×`width`), Input, Avatar (`uri?` + `name` + `size`), Badge (`swatch?`) — `style` público em todos |
 | Molecules | `molecules/` | Container (`bg` opcional), KeyboardAvoid, Header, InputField (helper `muted` / error `danger`), Card (`bg`) |
-| Organisms | `organisms/` | `DataSourceLogo` (prop `brand` + `size`); assets de marca em `packages/ds/assets/` |
+| Organisms | `organisms/` | `DataSourceLogo`; `Hyperlink`; `SourceHeader` (toggle fonte, store-free); `BackHeader` (voltar com `arrow-back`, `onBack` controlado); assets em `packages/ds/assets/` |
+| Utils | `utils/` | `formatRelativeDate` (puro, sem `Intl` — Hermes; default `pt-BR`; inválido → `—`) |
 | Theme (lib) | `theme/` | `getTheme(mode, brand)`, `DsThemeProvider({ theme })`, `useTheme` — **sem** Zustand |
 
 **Bridge de tema (app):** `src/presentation/theme` — `AppThemeProvider` / `useAppTheme` leem a session store, mapeiam `DataSource` → `Brand`, montam o tema e wrapam `DsThemeProvider`.

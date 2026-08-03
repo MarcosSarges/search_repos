@@ -48,7 +48,8 @@ describe('TabsNavigator product shell (NAV-01, NAV-03)', () => {
     await act(async () => {
       pressTabLabel('Config');
     });
-    expect(screen.getByTestId('config-data-source-section')).toBeTruthy();
+    expect(screen.getByTestId('config-theme-section')).toBeTruthy();
+    expect(screen.queryByTestId('config-data-source-section')).toBeNull();
   });
 
   it('WHEN navigation types and RootNavigator are inspected THEN Modal is gone', () => {

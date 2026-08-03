@@ -2,9 +2,10 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useCallback, useMemo, useState, type ReactNode } from 'react';
 import { FlatList, RefreshControl } from 'react-native';
 
-import { Button, Loading, Typography } from '@ds/atoms';
-import { Container, Header, InputField } from '@ds/molecules';
+import { Button, Loading, Spacer, Typography } from '@ds/atoms';
+import { Container, InputField } from '@ds/molecules';
 import type { Repo } from '@/domain';
+import { SessionSourceHeader } from '@/presentation/components';
 import { mapAppErrorToMessage } from '@/presentation/errors/map-app-error-to-message';
 import { useDebouncedValue } from '@/presentation/hooks/use-debounced-value';
 import { useSearchRepos } from '@/presentation/hooks/use-search-repos';
@@ -106,17 +107,22 @@ export function SearchReposScreen({ navigation }: Props) {
   }
 
   return (
-    <Container bg="background">
-      <Header safe title="Search" />
-      <InputField
-        label="Buscar"
-        placeholder="Buscar repositórios"
-        value={query}
-        onChangeText={setQuery}
-        accessibilityLabel="Buscar repositórios"
-        testID="search-repos-input"
-      />
-      <Container testID="search-repos-list-region">{listBody}</Container>
+    <Container bg="background" gap="md" flex={1}>
+      <SessionSourceHeader safe title="Search" />
+      <Container px="md" gap="sm">
+        <InputField
+          label="Buscar"
+          placeholder="Buscar repositórios"
+          value={query}
+          onChangeText={setQuery}
+          accessibilityLabel="Buscar repositórios"
+          testID="search-repos-input"
+        />
+      </Container>
+      <Spacer top size="xs" />
+      <Container testID="search-repos-list-region" px="md" flex={1} gap="sm">
+        {listBody}
+      </Container>
     </Container>
   );
 }

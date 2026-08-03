@@ -15,3 +15,9 @@ export type { ButtonProps } from './Button';
 
 export { Input } from './Input';
 export type { InputProps } from './Input';
+
+export { Avatar } from './Avatar';
+export type { AvatarProps } from './Avatar';
+
+export { Badge, normalizeHex } from './Badge';
+export type { BadgeProps } from './Badge';

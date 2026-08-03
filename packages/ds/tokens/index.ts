@@ -16,6 +16,12 @@ export type { SpacerEdge, Spacing } from './spacing';
 export { icon } from './icon';
 export type { IconToken, IconSize } from './icon';
 
+export { avatar } from './avatar';
+export type { AvatarToken, AvatarSize } from './avatar';
+
+export { badge } from './badge';
+export type { BadgeToken } from './badge';
+
 export { loading } from './loading';
 export type { LoadingIndicatorSize, LoadingToken, LoadingSize } from './loading';
 

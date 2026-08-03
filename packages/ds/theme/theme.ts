@@ -1,3 +1,5 @@
+import { avatar } from '../tokens/avatar';
+import { badge } from '../tokens/badge';
 import { primaryByBrand, type Brand } from '../tokens/brand-primary';
 import { button } from '../tokens/button';
 import { card } from '../tokens/card';
@@ -22,6 +24,8 @@ export type AppTheme = {
   radius: typeof radius;
   typography: typeof typography;
   icon: typeof icon;
+  avatar: typeof avatar;
+  badge: typeof badge;
   loading: typeof loading;
   button: typeof button;
   input: typeof input;
@@ -45,6 +49,8 @@ export function getTheme(mode: ThemeMode, brand: Brand = DEFAULT_BRAND): AppThem
     radius,
     typography,
     icon,
+    avatar,
+    badge,
     loading,
     button,
     input,

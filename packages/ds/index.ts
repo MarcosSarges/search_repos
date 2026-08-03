@@ -4,3 +4,4 @@ export type { AppTheme, DsThemeProviderProps, ThemeMode } from './theme';
 export * from './atoms';
 export * from './molecules';
 export * from './organisms';
+export * from './utils';

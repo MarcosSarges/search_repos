@@ -18,9 +18,13 @@ export function SearchStackNavigator() {
       <Stack.Screen
         name="RepoDetails"
         component={RepoDetailsScreen}
-        options={{ title: 'Detalhes' }}
+        options={{ headerShown: false }}
       />
-      <Stack.Screen name="RepoIssues" component={RepoIssuesScreen} options={{ title: 'Issues' }} />
+      <Stack.Screen
+        name="RepoIssues"
+        component={RepoIssuesScreen}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 }
