@@ -1,6 +1,4 @@
-import type { DataSource } from '@/application';
-
-import { primaryByDataSource } from '../tokens/brand-primary';
+import { primaryByBrand, type Brand } from '../tokens/brand-primary';
 import { button } from '../tokens/button';
 import { card } from '../tokens/card';
 import { colors, type ColorToken } from '../tokens/colors';
@@ -13,10 +11,11 @@ import { spacing } from '../tokens/spacing';
 import { typography } from '../tokens/typography';
 
 export type ThemeMode = 'light' | 'dark';
+export type { Brand };
 
 export type AppTheme = {
   mode: ThemeMode;
-  dataSource: DataSource;
+  brand: Brand;
   colors: Record<ColorToken, string>;
   spacing: typeof spacing;
   sizes: typeof sizes;
@@ -29,17 +28,17 @@ export type AppTheme = {
   card: typeof card;
 };
 
-const DEFAULT_DATA_SOURCE: DataSource = 'github';
+const DEFAULT_BRAND: Brand = 'github';
 
-export function getTheme(mode: ThemeMode, dataSource: DataSource = DEFAULT_DATA_SOURCE): AppTheme {
-  const resolvedSource = dataSource ?? DEFAULT_DATA_SOURCE;
+export function getTheme(mode: ThemeMode, brand: Brand = DEFAULT_BRAND): AppTheme {
+  const resolvedBrand = brand ?? DEFAULT_BRAND;
 
   return {
     mode,
-    dataSource: resolvedSource,
+    brand: resolvedBrand,
     colors: {
       ...colors[mode],
-      primary: primaryByDataSource[resolvedSource][mode],
+      primary: primaryByBrand[resolvedBrand][mode],
     },
     spacing,
     sizes,

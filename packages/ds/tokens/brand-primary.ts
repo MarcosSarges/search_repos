@@ -1,13 +1,13 @@
-import type { DataSource } from '@/application';
+export type Brand = 'github' | 'gitlab';
 
 type BrandThemeMode = 'light' | 'dark';
 
 /**
- * Official brand primary hexes by data source × theme mode.
+ * Official brand primary hexes by brand × theme mode.
  * GitHub: brand.github.com/foundations/color
  * GitLab: design.gitlab.com/brand-design/color
  */
-export const primaryByDataSource: Record<DataSource, Record<BrandThemeMode, string>> = {
+export const primaryByBrand: Record<Brand, Record<BrandThemeMode, string>> = {
   github: {
     light: '#0FBF3E',
     dark: '#5FED83',
@@ -18,4 +18,4 @@ export const primaryByDataSource: Record<DataSource, Record<BrandThemeMode, stri
   },
 };
 
-export type PrimaryBrandMap = typeof primaryByDataSource;
+export type PrimaryBrandMap = typeof primaryByBrand;

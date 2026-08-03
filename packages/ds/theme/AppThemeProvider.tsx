@@ -6,7 +6,7 @@ import type { DataSource } from '@/application';
 import { useSessionPreferencesStore } from '@/stores/session-preferences-store';
 import { useHydration } from '@/stores/use-hydration';
 
-import { getTheme, type ThemeMode } from './theme';
+import { getTheme, type Brand, type ThemeMode } from './theme';
 
 export type AppThemeControls = {
   mode: ThemeMode;
@@ -61,7 +61,11 @@ export function AppThemeProvider({
     });
   }, [hydrated]);
 
-  const theme = useMemo(() => getTheme(mode, dataSource), [mode, dataSource]);
+  // DataSource and Brand share the same union today; explicit map lands in presentation (T6).
+  const theme = useMemo(
+    () => getTheme(mode, dataSource as Brand),
+    [mode, dataSource],
+  );
 
   if (!hydrated) {
     return null;

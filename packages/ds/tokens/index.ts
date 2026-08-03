@@ -1,8 +1,8 @@
 export { colors } from './colors';
 export type { ColorScheme, ColorToken } from './colors';
 
-export { primaryByDataSource } from './brand-primary';
-export type { PrimaryBrandMap } from './brand-primary';
+export { primaryByBrand } from './brand-primary';
+export type { Brand, PrimaryBrandMap } from './brand-primary';
 
 export { radius } from './radius';
 export type { Radius } from './radius';
