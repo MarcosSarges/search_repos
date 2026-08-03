@@ -24,6 +24,7 @@ export function RepoListItem({ repo, onPress, testID = 'repo-list-item' }: RepoL
 
   return (
     <Pressable
+      accessible
       accessibilityRole="button"
       accessibilityLabel={repo.fullName}
       testID={testID}

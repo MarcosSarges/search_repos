@@ -72,3 +72,5 @@ tags:
       - assertVisible:
           text: "GitLab"
           label: E2E-09 — restored GitLab
+# Leave product on Search so the next flow's boot is not stuck on Config.
+- tapOn: Search

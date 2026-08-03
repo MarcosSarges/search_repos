@@ -1,0 +1,7 @@
+# Maestro workspace config — sequential flows, ignore debug leftovers.
+flows:
+  - "00-smoke-boot.yml"
+  - "10-search-details-issues.yml"
+  - "20-source-toggle.yml"
+  - "30-config-theme.yml"
+  - "40-explore.yml"

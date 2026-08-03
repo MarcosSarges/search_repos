@@ -1,10 +1,36 @@
 appId: host.exp.Exponent
 ---
-# Shared boot: open the Expo project in Expo Go and wait for Search idle.
+# Shared boot: open Expo Go, land on Search idle (regardless of last tab / leftover query).
 # 10.0.2.2 = host loopback from inside the Android emulator (Metro :8081).
+# Avoid hideKeyboard / pressKey Enter — both have blanked Expo Go on this emulator.
 - openLink: exp://10.0.2.2:8081
+- extendedWaitUntil:
+    visible: "Search"
+    timeout: 120000
+    label: Wait for product tabs after Expo Go hydrate
+- tapOn:
+    text: "Search"
+    label: Ensure Search tab (flows may leave app on Config/Explore)
+- waitForAnimationToEnd:
+    timeout: 2000
+- extendedWaitUntil:
+    visible:
+      id: search-repos-input
+    timeout: 60000
+    label: Wait for Search screen chrome
+# Leftover query hides idle — clear TextInput only (no hideKeyboard).
+- runFlow:
+    when:
+      notVisible:
+        id: search-repos-idle
+    commands:
+      - tapOn:
+          id: ds-input-field
+      - eraseText
+      - waitForAnimationToEnd:
+          timeout: 1000
 - extendedWaitUntil:
     visible:
       id: search-repos-idle
-    timeout: 120000
-    label: Wait for Search idle after Expo Go hydrate
+    timeout: 30000
+    label: Wait for Search idle

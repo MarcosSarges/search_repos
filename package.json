@@ -10,7 +10,7 @@
     "web": "expo start --web",
     "lint": "expo lint",
     "test": "jest --watchman=false",
-    "test:e2e": "maestro --device emulator-5554 test .maestro/",
+    "test:e2e": "maestro --device emulator-5554 test .maestro/00-smoke-boot.yml .maestro/10-search-details-issues.yml .maestro/20-source-toggle.yml .maestro/30-config-theme.yml .maestro/40-explore.yml",
     "storybook": "cross-env STORYBOOK_ENABLED=true expo start",
     "storybook:ios": "cross-env STORYBOOK_ENABLED=true expo start --ios",
     "storybook:android": "cross-env STORYBOOK_ENABLED=true expo start --android",

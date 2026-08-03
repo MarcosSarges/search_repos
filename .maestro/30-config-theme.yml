@@ -25,6 +25,7 @@ tags:
 - assertVisible:
     text: "GitHub|GitLab"
     label: E2E-12 — fonte subtitle GitHub or GitLab
+# Toggle once from whichever mode is active; assert the a11y label flips.
 - evalScript: ${output.themeFlipped = false}
 - runFlow:
     when:
@@ -46,6 +47,7 @@ tags:
       - assertVisible:
           text: "Switch to dark mode"
           label: E2E-11 — flipped to light
+      - evalScript: ${output.themeFlipped = true}
 - assertTrue:
     condition: ${output.themeFlipped == true}
     label: E2E-11 — theme toggle executed once
