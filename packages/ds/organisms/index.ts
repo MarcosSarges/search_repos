@@ -9,3 +9,6 @@ export type { SourceHeaderProps } from './SourceHeader';
 
 export { BackHeader } from './BackHeader';
 export type { BackHeaderProps } from './BackHeader';
+
+export { RepoItem } from './RepoItem';
+export type { RepoItemProps, RepoLanguage } from './RepoItem';
