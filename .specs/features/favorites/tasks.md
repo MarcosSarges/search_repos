@@ -123,10 +123,10 @@ T10 → T11
 
 **Done when**:
 
-- [ ] Type matches design (`id`, `dataSource`, `name`, `fullName`, owner/stars/description/language?, `favoritedAt`)
-- [ ] Corrupt root → empty items; invalid entries dropped
-- [ ] `toFavoriteSnapshot` sets `favoritedAt` and copies repo fields
-- [ ] Gate: `pnpm test -- src/presentation/stores`
+- [x] Type matches design (`id`, `dataSource`, `name`, `fullName`, owner/stars/description/language?, `favoritedAt`)
+- [x] Corrupt root → empty items; invalid entries dropped
+- [x] `toFavoriteSnapshot` sets `favoritedAt` and copies repo fields
+- [x] Gate: `pnpm test -- src/presentation/stores`
 
 **Tests**: unit  
 **Gate**: quick  
