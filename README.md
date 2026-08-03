@@ -138,14 +138,26 @@ Resultado: trocar GitHub ↔ GitLab não exige reiniciar o aplicativo nem altera
 
 ### Design System
 
-O Design System vive em **`packages/ds`**, importado via alias **`@ds`** / **`@ds/*`** (fora de `src/`, AD-028). Segue **Atomic Design**:
+O Design System vive em **`packages/ds`**, importado via alias **`@ds`** / **`@ds/*`** (fora de `src/`). Segue **Atomic Design**.
+
+**Motivação das props (AD-028):** eixos claros no mental model do MUI (`color` / `bg` / `variant` × paleta / `size` / `width` / `style`) para montar telas sem adivinhar o que `tone` significava. Hex, tipografia e spacing do tema atual permanecem a fonte de verdade visual — só a API de props mudou. Migração **big-bang** (sem aliases `tone`). Sem prop `sx`.
+
+| Eixo | Prop | Onde | Valores |
+| --- | --- | --- | --- |
+| Conteúdo | `color` | Typography, Icon, captions | `text` \| `muted` \| `primary` \| `danger` (default `text`) |
+| Superfície | `bg` | Container, Card | `background` \| `surface` — Container sem default (sem fill); Card default `surface` via `card.defaultBg` |
+| Chrome | `variant` | Button; Typography (papel tipográfico) | Button: `contained` \| `outlined` \| `text` |
+| Paleta ação | `color` | Button | `primary` \| `success` \| `warning` \| `danger` |
+| Escala | `size` | Icon, Loading, Logo, Button, Spacer | tokens atuais por peça |
+| Largura | `width` | Button | `hug` \| `full` (default `full`) |
+| Escape | `style` | Todo export público DS | RN `StyleProp` → host styled (sem `sx`) |
 
 | Nível | Pasta | O que entra |
 | --- | --- | --- |
-| Tokens | `tokens/` | `spacing` (+ `SpacerEdge`), `sizes`, `colors`, `radius`, `tone` / `toneColorMap`, tipografia / icon / loading / button / input / card por **variant** ou maps, mapa de `primary` por **`Brand`** (`github` \| `gitlab`) |
-| Atoms | `atoms/` | Typography, Icon, Spacer, Loading, Button, Input — selecionam `variant` / `tone` / edge / state dos tokens; sem `style` público; Icon/Loading sem `size` na API |
-| Molecules | `molecules/` | Container (layout box), KeyboardAvoid, Header, InputField, Card — compostos de tokens/atoms (+ organism de logo no Header); Badge/Avatar deferidos |
-| Organisms | `organisms/` | `DataSourceLogo` (prop `brand`); assets de marca em `packages/ds/assets/` |
+| Tokens | `tokens/` | `spacing` (+ `SpacerEdge`), `sizes`, `colors`, `radius`, `ContentColor` / `SurfaceBg`, tipografia / `IconSize` / `LoadingSize` / button (`variant`×`color`×`width`) / input / card (`defaultBg`), mapa de `primary` por **`Brand`** (`github` \| `gitlab`) |
+| Atoms | `atoms/` | Typography (`variant` + `color`), Icon (`size` + `color`), Spacer, Loading (`size`), Button (`variant`×`color`×`size`×`width`), Input — `style` público em todos |
+| Molecules | `molecules/` | Container (`bg` opcional), KeyboardAvoid, Header, InputField (helper `muted` / error `danger`), Card (`bg`) |
+| Organisms | `organisms/` | `DataSourceLogo` (prop `brand` + `size`); assets de marca em `packages/ds/assets/` |
 | Theme (lib) | `theme/` | `getTheme(mode, brand)`, `DsThemeProvider({ theme })`, `useTheme` — **sem** Zustand |
 
 **Bridge de tema (app):** `src/presentation/theme` — `AppThemeProvider` / `useAppTheme` leem a session store, mapeiam `DataSource` → `Brand`, montam o tema e wrapam `DsThemeProvider`.
@@ -155,7 +167,7 @@ O Design System vive em **`packages/ds`**, importado via alias **`@ds`** / **`@d
 | Arquivo | Papel |
 | --- | --- |
 | `index.ts` | export público (`Name` + `NameProps`) |
-| `<Name>.tsx` | composição + defaults de a11y + `...rest` (exceto Spacer: props fechadas) |
+| `<Name>.tsx` | composição + defaults de a11y + `...rest` (Spacer: edges exclusivos + `style`) |
 | `<Name>.stories.tsx` | Storybook |
 | `styles.tsx` | **único** lugar que instancia `styled(...)` — sem unions de domínio |
 

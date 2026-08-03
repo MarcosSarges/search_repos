@@ -1,9 +1,5 @@
 import type { ReactNode } from 'react';
-import {
-  type StyleProp,
-  type TextInputProps,
-  type ViewStyle,
-} from 'react-native';
+import { type StyleProp, type TextInputProps, type ViewStyle } from 'react-native';
 
 import type { InputState } from '@ds/tokens';
 

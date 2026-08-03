@@ -6,7 +6,5 @@ import type { ColorToken } from './colors';
  */
 export type SurfaceBg = 'background' | 'surface';
 
-export const surfaceBgs = [
-  'background',
-  'surface',
-] as const satisfies readonly SurfaceBg[] & readonly ColorToken[];
+export const surfaceBgs = ['background', 'surface'] as const satisfies readonly SurfaceBg[] &
+  readonly ColorToken[];

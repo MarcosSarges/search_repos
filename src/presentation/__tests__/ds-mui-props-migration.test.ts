@@ -4,13 +4,7 @@ import { join, relative } from 'node:path';
 const ROOT = join(__dirname, '../../..');
 const SCAN_ROOTS = [join(ROOT, 'packages/ds'), join(ROOT, 'src/presentation')] as const;
 
-const SKIP_DIR_NAMES = new Set([
-  'node_modules',
-  '__tests__',
-  '__mocks__',
-  'dist',
-  'coverage',
-]);
+const SKIP_DIR_NAMES = new Set(['node_modules', '__tests__', '__mocks__', 'dist', 'coverage']);
 
 function listSourceFiles(dir: string): string[] {
   const out: string[] = [];

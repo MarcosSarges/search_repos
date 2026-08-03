@@ -53,10 +53,7 @@ describe('Typography atom (PROP-01, PROP-02, PROP-20)', () => {
   });
 
   it('WHEN color is omitted THEN foreground uses theme.colors.text', async () => {
-    await render(
-      <Typography testID="typo">Default text</Typography>,
-      { themeMode: 'light' },
-    );
+    await render(<Typography testID="typo">Default text</Typography>, { themeMode: 'light' });
 
     const theme = getTheme('light');
     expect(screen.getByTestId('typo')).toHaveStyleRule('color', theme.colors.text);

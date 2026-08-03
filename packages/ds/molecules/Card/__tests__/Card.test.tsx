@@ -43,10 +43,7 @@ describe('Card molecule (PROP-06,20)', () => {
     await render(<Card testID="card" bg="background" />, { themeMode: 'light' });
 
     const theme = getTheme('light');
-    expect(screen.getByTestId('card')).toHaveStyleRule(
-      'background-color',
-      theme.colors.background,
-    );
+    expect(screen.getByTestId('card')).toHaveStyleRule('background-color', theme.colors.background);
   });
 
   it('WHEN style is passed THEN it is accepted on the public props type and forwarded', async () => {

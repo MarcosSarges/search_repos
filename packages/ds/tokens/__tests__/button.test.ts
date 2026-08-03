@@ -1,10 +1,5 @@
 import { button, buttonVariants, buttonColors, buttonWidths } from '../button';
-import type {
-  ButtonSize,
-  ButtonVariant,
-  ButtonColor,
-  ButtonWidth,
-} from '../button';
+import type { ButtonSize, ButtonVariant, ButtonColor, ButtonWidth } from '../button';
 
 describe('button tokens (PROP-09..12, PROP-15, PROP-16)', () => {
   it('WHEN size keys are inspected THEN sm md lg exist with padding minHeight and loadingSize', () => {

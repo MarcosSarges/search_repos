@@ -105,9 +105,7 @@ describe('InputField molecule (CTRL-03)', () => {
     const hasStyle: HasStyle = true;
     expect(hasStyle).toBe(true);
 
-    await render(
-      <InputField style={{ opacity: 0.45 }} value="" onChangeText={() => undefined} />,
-    );
+    await render(<InputField style={{ opacity: 0.45 }} value="" onChangeText={() => undefined} />);
 
     expect(screen.getByTestId('ds-input-field-root')).toHaveStyle({ opacity: 0.45 });
   });

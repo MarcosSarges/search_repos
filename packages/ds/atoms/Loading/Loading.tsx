@@ -15,11 +15,6 @@ export function Loading({
   ...rest
 }: LoadingProps) {
   return (
-    <StyledLoading
-      $size={size}
-      accessibilityRole={accessibilityRole}
-      testID={testID}
-      {...rest}
-    />
+    <StyledLoading $size={size} accessibilityRole={accessibilityRole} testID={testID} {...rest} />
   );
 }
