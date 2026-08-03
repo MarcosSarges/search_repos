@@ -12,6 +12,12 @@ describe('application public API (APP-13, APP-15)', () => {
     expect(typeof application.createGetRepoDetails).toBe('function');
     expect(typeof application.createListRepoIssues).toBe('function');
     expect(typeof application.createListTrendingRepos).toBe('function');
+    expect(typeof application.createFavoriteFromRepo).toBe('function');
+    expect(typeof application.createListFavorites).toBe('function');
+    expect(typeof application.createListFavoritesBySource).toBe('function');
+    expect(typeof application.createToggleFavorite).toBe('function');
+    expect(typeof application.createRemoveFavorite).toBe('function');
+    expect(typeof application.createIsFavorite).toBe('function');
     expect(typeof application.isDataSource).toBe('function');
     expect(application.isDataSource('github')).toBe(true);
     expect(application.isDataSource('gitlab')).toBe(true);
@@ -40,6 +46,12 @@ describe('application public API (APP-13, APP-15)', () => {
     expect(barrelSource).toMatch(/\bcreateGetRepoDetails\b/);
     expect(barrelSource).toMatch(/\bcreateListRepoIssues\b/);
     expect(barrelSource).toMatch(/\bcreateListTrendingRepos\b/);
+    expect(barrelSource).toMatch(/\bcreateFavoriteFromRepo\b/);
+    expect(barrelSource).toMatch(/\bcreateListFavorites\b/);
+    expect(barrelSource).toMatch(/\bcreateListFavoritesBySource\b/);
+    expect(barrelSource).toMatch(/\bcreateToggleFavorite\b/);
+    expect(barrelSource).toMatch(/\bcreateRemoveFavorite\b/);
+    expect(barrelSource).toMatch(/\bcreateIsFavorite\b/);
     expect(barrelSource).toMatch(/\bSearchRepos\b/);
     expect(barrelSource).toMatch(/\bGetRepoDetails\b/);
     expect(barrelSource).toMatch(/\bListRepoIssues\b/);
