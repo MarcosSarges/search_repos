@@ -49,7 +49,9 @@ async function renderFavoritosTab() {
   );
 }
 
-function seedFavorite(partial: Partial<FavoriteSnapshot> & Pick<FavoriteSnapshot, 'id' | 'dataSource'>) {
+function seedFavorite(
+  partial: Partial<FavoriteSnapshot> & Pick<FavoriteSnapshot, 'id' | 'dataSource'>,
+) {
   useFavoritesStore.getState().toggleFavorite({
     name: partial.name ?? partial.id,
     fullName: partial.fullName ?? partial.id,
@@ -80,9 +82,7 @@ describe('FavoritosScreen (FAV-03/04/10/12/13)', () => {
 
     expect(screen.getAllByText('Favoritos').length).toBeGreaterThanOrEqual(1);
     expect(screen.getByTestId('ds-source-header-toggle')).toBeTruthy();
-    expect(screen.getByTestId('favoritos-empty')).toHaveTextContent(
-      /Você ainda não tem favoritos/,
-    );
+    expect(screen.getByTestId('favoritos-empty')).toHaveTextContent(/Você ainda não tem favoritos/);
     expect(screen.getByTestId('favoritos-cta-search')).toBeTruthy();
     expect(screen.getByTestId('favoritos-cta-explore')).toBeTruthy();
   });
@@ -175,5 +175,33 @@ describe('FavoritosScreen (FAV-03/04/10/12/13)', () => {
         'details:gitlab-org/gitlab',
       );
     });
+  });
+
+  it('WHEN Remover action is pressed THEN removes that favorite from store and UI (FAV-11)', async () => {
+    seedFavorite({
+      id: 'gh/one',
+      dataSource: 'github',
+      name: 'one',
+      fullName: 'gh/one',
+    });
+    seedFavorite({
+      id: 'gh/two',
+      dataSource: 'github',
+      name: 'two',
+      fullName: 'gh/two',
+    });
+
+    await renderFavoritosTab();
+
+    expect(screen.getByTestId('favoritos-row-github-gh/one')).toBeTruthy();
+
+    await act(async () => {
+      fireEvent.press(screen.getByTestId('favoritos-remove-github-gh/one'));
+    });
+
+    expect(useFavoritesStore.getState().isFavorite('github', 'gh/one')).toBe(false);
+    expect(useFavoritesStore.getState().isFavorite('github', 'gh/two')).toBe(true);
+    expect(screen.queryByTestId('favoritos-row-github-gh/one')).toBeNull();
+    expect(screen.getByTestId('favoritos-row-github-gh/two')).toBeTruthy();
   });
 });

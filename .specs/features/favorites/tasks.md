@@ -305,9 +305,9 @@ T10 → T11
 
 **Done when**:
 
-- [ ] Swipe confirm removes `(dataSource, id)` from store and UI
-- [ ] Test covers remove path (press action button if gesture hard to simulate)
-- [ ] Gate: `pnpm test -- src/presentation/screens`
+- [x] Swipe confirm removes `(dataSource, id)` from store and UI
+- [x] Test covers remove path (press action button if gesture hard to simulate)
+- [x] Gate: `pnpm test -- src/presentation/screens`
 
 **Tests**: unit  
 **Gate**: full  

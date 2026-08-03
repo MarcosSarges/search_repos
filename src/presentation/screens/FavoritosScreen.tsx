@@ -2,14 +2,12 @@ import type { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 import { useCallback } from 'react';
 import { Pressable, ScrollView } from 'react-native';
+import { Swipeable } from 'react-native-gesture-handler';
 
 import { SessionSourceHeader } from '@/presentation/components';
 import { mapFavoriteToRepoItemProps } from '@/presentation/mappers/map-favorite-to-repo-item-props';
 import type { TabsParamList } from '@/presentation/navigation/types';
-import {
-  type FavoriteSnapshot,
-  useFavoritesStore,
-} from '@/presentation/stores';
+import { type FavoriteSnapshot, useFavoritesStore } from '@/presentation/stores';
 import { useAppTheme } from '@/presentation/theme';
 import { Button, Loading, Typography } from '@ds/atoms';
 import { Container } from '@ds/molecules';
@@ -24,11 +22,47 @@ function sortByFavoritedAtDesc(a: FavoriteSnapshot, b: FavoriteSnapshot) {
   return b.favoritedAt - a.favoritedAt;
 }
 
+type FavoriteSwipeRowProps = {
+  item: FavoriteSnapshot;
+  onPress: (item: FavoriteSnapshot) => void;
+  onRemove: (item: FavoriteSnapshot) => void;
+};
+
+function FavoriteSwipeRow({ item, onPress, onRemove }: FavoriteSwipeRowProps) {
+  const renderRightActions = useCallback(
+    () => (
+      <Button
+        accessibilityRole="button"
+        accessibilityLabel="Remover"
+        testID={`favoritos-remove-${item.dataSource}-${item.id}`}
+        color="danger"
+        width="hug"
+        onPress={() => onRemove(item)}>
+        Remover
+      </Button>
+    ),
+    [item, onRemove],
+  );
+
+  return (
+    <Swipeable renderRightActions={renderRightActions}>
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel={item.fullName}
+        testID={`favoritos-row-${item.dataSource}-${item.id}`}
+        onPress={() => onPress(item)}>
+        <RepoItem {...mapFavoriteToRepoItemProps(item)} />
+      </Pressable>
+    </Swipeable>
+  );
+}
+
 export function FavoritosScreen() {
   const navigation = useNavigation<BottomTabNavigationProp<TabsParamList, 'Favoritos'>>();
   const { dataSource, setDataSource } = useAppTheme();
   const items = useFavoritesStore((state) => state.items);
   const hasHydrated = useFavoritesStore((state) => state.hasHydrated);
+  const removeFavorite = useFavoritesStore((state) => state.removeFavorite);
 
   const githubItems = items
     .filter((item) => item.dataSource === 'github')
@@ -51,6 +85,13 @@ export function FavoritosScreen() {
       });
     },
     [dataSource, navigation, setDataSource],
+  );
+
+  const handleRemove = useCallback(
+    (item: FavoriteSnapshot) => {
+      removeFavorite(item.dataSource, item.id);
+    },
+    [removeFavorite],
   );
 
   let body = null;
@@ -97,14 +138,12 @@ export function FavoritosScreen() {
                 <Typography variant="heading">{label}</Typography>
               </Container>
               {sectionItems.map((item) => (
-                <Pressable
+                <FavoriteSwipeRow
                   key={`${item.dataSource}-${item.id}`}
-                  accessibilityRole="button"
-                  accessibilityLabel={item.fullName}
-                  testID={`favoritos-row-${item.dataSource}-${item.id}`}
-                  onPress={() => handlePress(item)}>
-                  <RepoItem {...mapFavoriteToRepoItemProps(item)} />
-                </Pressable>
+                  item={item}
+                  onPress={handlePress}
+                  onRemove={handleRemove}
+                />
               ))}
             </Container>
           );
