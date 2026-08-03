@@ -175,10 +175,10 @@ T8 → T9 → T10
 
 **Done when**:
 
-- [ ] Stack types: Details/Issues require `repoId`
-- [ ] Details shows `repoId` + Issues CTA; Issues shows `repoId`
-- [ ] Tests for stubs (render with params via NavigationContainer test harness)
-- [ ] Gate: scoped screen/nav tests pass
+- [x] Stack types: Details/Issues require `repoId`
+- [x] Details shows `repoId` + Issues CTA; Issues shows `repoId`
+- [x] Tests for stubs (render with params via NavigationContainer test harness)
+- [x] Gate: scoped screen/nav tests pass
 
 **Tests**: unit (RNTL)  
 **Gate**: quick  
