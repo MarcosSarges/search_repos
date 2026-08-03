@@ -332,12 +332,12 @@ T11 → T12
 
 **Done when**:
 
-- [ ] `KeyboardAvoid` exists with documented defaults + overridable `behavior` / `offset`
-- [ ] Not a prop on Container
-- [ ] Story shows composition with Container
-- [ ] Unit tests: mounts; offset prop passed; default behavior map exists (object map, not switch)
-- [ ] Gate: `pnpm test -- packages/ds/molecules/KeyboardAvoid`
-- [ ] Test count: ≥2 cases (mount + offset/defaults)
+- [x] `KeyboardAvoid` exists with documented defaults + overridable `behavior` / `offset`
+- [x] Not a prop on Container
+- [x] Story shows composition with Container
+- [x] Unit tests: mounts; offset prop passed; default behavior map exists (object map, not switch)
+- [x] Gate: `pnpm test -- packages/ds/molecules/KeyboardAvoid`
+- [x] Test count: ≥2 cases (mount + offset/defaults)
 
 **Tests**: unit  
 **Gate**: quick  
