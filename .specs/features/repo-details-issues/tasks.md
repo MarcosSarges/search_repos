@@ -15,6 +15,8 @@ Implement these tasks with the `tlc-spec-driven` skill: **activate it by name an
 
 **Batch plan:** Batch 1 = T1–T7 (Phases 1–2) · Batch 2 = T8–T14 (Phases 3–4) · Verifier after last commit.
 
+**Batch 1 results** ([T1–T7 DS](07056ee3-a0e1-452f-b8aa-0f70a3645d2e)): T1 `60ab124` · T2 `f3626b9` · T3 `c5ca2c9` · T4 `c357168` · T5 `ed6e893` · T6 `e38a4a0` · T7 `6e52297` — 236 passed scoped. Deviations: none.
+
 ---
 
 ## Test Coverage Matrix
@@ -93,10 +95,10 @@ T11 → T12 → T13 → T14
 
 **Done when**:
 
-- [ ] `AvatarSize` keys `sm|md|lg|xl` with px `24|40|56|72`
-- [ ] Badge padding/radius tokens via object maps
-- [ ] Theme exposes `avatar` for styled consumers
-- [ ] Gate: `pnpm test -- packages/ds/tokens packages/ds/theme`
+- [x] `AvatarSize` keys `sm|md|lg|xl` with px `24|40|56|72`
+- [x] Badge padding/radius tokens via object maps
+- [x] Theme exposes `avatar` for styled consumers
+- [x] Gate: `pnpm test -- packages/ds/tokens packages/ds/theme`
 
 **Tests**: unit
 **Gate**: quick
@@ -119,11 +121,11 @@ T11 → T12 → T13 → T14
 
 **Done when**:
 
-- [ ] `formatRelativeDate(iso, { now?, locale? })` implemented with `Intl.RelativeTimeFormat`
-- [ ] Invalid/empty input returns `'—'`
-- [ ] Exported from packages/ds root barrel
-- [ ] No `@/` app imports (isolation)
-- [ ] Gate: `pnpm test -- packages/ds/utils`
+- [x] `formatRelativeDate(iso, { now?, locale? })` implemented with `Intl.RelativeTimeFormat`
+- [x] Invalid/empty input returns `'—'`
+- [x] Exported from packages/ds root barrel
+- [x] No `@/` app imports (isolation)
+- [x] Gate: `pnpm test -- packages/ds/utils`
 
 **Tests**: unit
 **Gate**: quick
@@ -146,10 +148,10 @@ T11 → T12 → T13 → T14
 
 **Done when**:
 
-- [ ] Props: `uri?`, `name`, `size?`, `style?`
-- [ ] Fallback initials when no uri / image error
-- [ ] Barrel export
-- [ ] Gate: `pnpm test -- packages/ds/atoms/Avatar`
+- [x] Props: `uri?`, `name`, `size?`, `style?`
+- [x] Fallback initials when no uri / image error
+- [x] Barrel export
+- [x] Gate: `pnpm test -- packages/ds/atoms/Avatar`
 
 **Tests**: unit
 **Gate**: quick
@@ -172,9 +174,9 @@ T11 → T12 → T13 → T14
 
 **Done when**:
 
-- [ ] `normalizeHex` handles `ff0000` and `#ff0000`
-- [ ] Omit swatch → theme surface/border
-- [ ] Gate: `pnpm test -- packages/ds/atoms/Badge`
+- [x] `normalizeHex` handles `ff0000` and `#ff0000`
+- [x] Omit swatch → theme surface/border
+- [x] Gate: `pnpm test -- packages/ds/atoms/Badge`
 
 **Tests**: unit
 **Gate**: quick
@@ -197,10 +199,10 @@ T11 → T12 → T13 → T14
 
 **Done when**:
 
-- [ ] Press calls `Linking.openURL(href)`; reject swallowed
-- [ ] `accessibilityRole="link"`
-- [ ] No Zustand / `@/` imports
-- [ ] Gate: `pnpm test -- packages/ds/organisms/Hyperlink`
+- [x] Press calls `Linking.openURL(href)`; reject swallowed
+- [x] `accessibilityRole="link"`
+- [x] No Zustand / `@/` imports
+- [x] Gate: `pnpm test -- packages/ds/organisms/Hyperlink`
 
 **Tests**: unit
 **Gate**: quick
@@ -223,11 +225,11 @@ T11 → T12 → T13 → T14
 
 **Done when**:
 
-- [ ] Trailing press calls `onToggleBrand`
-- [ ] Logo reflects `brand` prop
-- [ ] `leading` forwarded to Header
-- [ ] No store imports
-- [ ] Gate: `pnpm test -- packages/ds/organisms/SourceHeader`
+- [x] Trailing press calls `onToggleBrand`
+- [x] Logo reflects `brand` prop
+- [x] `leading` forwarded to Header
+- [x] No store imports
+- [x] Gate: `pnpm test -- packages/ds/organisms/SourceHeader`
 
 **Tests**: unit
 **Gate**: quick
@@ -250,9 +252,9 @@ T11 → T12 → T13 → T14
 
 **Done when**:
 
-- [ ] Public exports resolve from `@ds`
-- [ ] README lists new pieces
-- [ ] Gate: `pnpm lint` (+ smoke `pnpm test -- packages/ds`)
+- [x] Public exports resolve from `@ds`
+- [x] README lists new pieces
+- [x] Gate: `pnpm lint` (+ smoke `pnpm test -- packages/ds`)
 
 **Tests**: none
 **Gate**: build
